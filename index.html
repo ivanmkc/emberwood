@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Emberwood — a tiny exploration RPG</title>
+<style>
+  :root { color-scheme: dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: #0c0c12;
+    color: #9a9aa2;
+    font-family: monospace;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    touch-action: none;
+  }
+  #stage {
+    position: relative;
+    width: min(100vw, calc((100vh - 40px) * 4 / 3));
+    aspect-ratio: 4 / 3;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background: #0c0c12;
+  }
+  #bar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 12px;
+  }
+  #bar button {
+    background: #1c1c28;
+    color: #c19a49;
+    border: 1px solid #c19a49;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 3px 10px;
+    cursor: pointer;
+  }
+  #bar button:hover { background: #2a2a3a; }
+  /* touch controls */
+  #touch { display: none; }
+  @media (pointer: coarse) {
+    #touch { display: block; }
+  }
+  .tbtn {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  #t-up    { left: 64px;  bottom: 116px; }
+  #t-down  { left: 64px;  bottom: 8px; }
+  #t-left  { left: 8px;   bottom: 62px; }
+  #t-right { left: 120px; bottom: 62px; }
+  #t-a {
+    right: 16px;
+    bottom: 40px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(247, 201, 72, 0.18);
+    border-color: rgba(247, 201, 72, 0.5);
+    color: rgba(247, 201, 72, 0.8);
+  }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game" width="320" height="240"></canvas>
+    <div id="touch">
+      <div class="tbtn" id="t-up" data-dir="up">&#9650;</div>
+      <div class="tbtn" id="t-down" data-dir="down">&#9660;</div>
+      <div class="tbtn" id="t-left" data-dir="left">&#9664;</div>
+      <div class="tbtn" id="t-right" data-dir="right">&#9654;</div>
+      <div class="tbtn" id="t-a" data-action>A</div>
+    </div>
+  </div>
+  <div id="bar">
+    <span>Arrows/WASD move &middot; Space talk/attack</span>
+    <button id="new-game">New Game</button>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

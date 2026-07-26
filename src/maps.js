@@ -1,0 +1,165 @@
+// Map data: ASCII tile grids + entities + portals. Pure data, node-testable.
+//
+// Tile legend (see tiles.js): . grass  , flowers  # tree  ~ water  = bridge
+// s sand  M rock  p path  w wall  f floor  h house  o doormat  C cave mouth
+// d cave floor  W cave wall  c carpet
+
+const M30 = 'M'.repeat(30);
+const D30 = '.'.repeat(30);
+const D44 = '.'.repeat(44);
+
+// Forest maze occupies x2..15 (14 wide), y3..12.
+const overworldRows = [
+  'M'.repeat(48),                                              // y0
+  'M'.repeat(48),                                              // y1
+  '##' + '##############' + M30 + '##',                        // y2
+  '##' + '#............#' + M30 + '##',                        // y3
+  '##' + '#.####.#####.#' + 'M'.repeat(14) + 'C' + 'M'.repeat(15) + '##', // y4
+  '##' + '#.#........#.#' + 'M'.repeat(14) + '.' + 'M'.repeat(15) + '##', // y5
+  '##' + '#.#.######.#.#' + 'M'.repeat(14) + '.' + 'M'.repeat(15) + '##', // y6
+  '##' + '#.#........#.#' + 'MM' + '.'.repeat(27) + 'M' + '##',           // y7
+  '##' + '#.########.#.#' + D30 + '##',                        // y8
+  '##' + '#..........#.#' + D30 + '##',                        // y9
+  '##' + '######.#####.#' + D30 + '##',                        // y10
+  '##' + '######.#####.#' + D30 + '##',                        // y11
+  '##' + '######.#####.#' + D30 + '##',                        // y12
+  '##' + D44 + '##',                                           // y13
+  '##' + D44 + '##',                                           // y14
+  '##' + D44 + '##',                                           // y15
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '.'.repeat(16) + '##',           // y16
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '...hhhh...hhhh..' + '##',       // y17
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '...HDHH...HHHH..' + '##',       // y18
+  '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '....o...........' + '##', // y19
+  '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '.'.repeat(16) + '##',     // y20
+  '##' + '.'.repeat(14) + '~~~' + '.....' + '======' + '.'.repeat(16) + '##',     // y21
+  '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '..pppppppp......' + '##', // y22
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '..pppppppp......' + '##',       // y23
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '..pppppppp......' + '##',       // y24
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '..pppppppp......' + '##',       // y25
+  '##' + '.'.repeat(11) + 's'.repeat(16) + '...pppppppp......' + '##',      // y26
+  '##' + '.'.repeat(11) + 's'.repeat(16) + '...pppppppp......' + '##',      // y27
+  '##' + D44 + '##',                                           // y28
+  '##' + D44 + '##',                                           // y29
+  '##' + '......##' + '.'.repeat(36) + '##',                   // y30
+  '##' + D44 + '##',                                           // y31
+  '##' + D44 + '##',                                           // y32
+  '##' + D44 + '##',                                           // y33
+  '#'.repeat(48),                                              // y34
+  '#'.repeat(48),                                              // y35
+];
+
+// Flower / decor overrides applied after parsing: [x, y, char]
+const overworldDecor = [
+  [7, 14, ','], [11, 15, ','], [20, 13, ','], [33, 14, ','],
+  [5, 29, ','], [14, 31, ','], [25, 30, ','], [36, 31, ','], [42, 30, ','],
+  [40, 14, ','], [44, 21, ','], [19, 29, ','], [31, 12, ','],
+  [40, 32, '#'], [6, 32, '#'], [22, 32, '#'], [44, 13, '#'],
+];
+
+const houseRows = [
+  'wwwwwwwwwwwwww', // y0
+  'wffffffffffffw', // y1
+  'wffffffffffffw', // y2
+  'wfffccccccfffw', // y3
+  'wfffccccccfffw', // y4
+  'wfffccccccfffw', // y5
+  'wffffffffffffw', // y6
+  'wffffffffffffw', // y7
+  'wffffffffffffw', // y8
+  'wwwwwwoowwwwww', // y9
+];
+
+const caveRows = [
+  'W'.repeat(26),                          // y0
+  'W'.repeat(26),                          // y1
+  'WW' + 'd'.repeat(22) + 'WW',            // y2
+  'WW' + 'd'.repeat(22) + 'WW',            // y3
+  'WW' + 'd'.repeat(22) + 'WW',            // y4
+  'WW' + 'd'.repeat(22) + 'WW',            // y5
+  'WW' + 'd'.repeat(22) + 'WW',            // y6
+  'WW' + 'd'.repeat(22) + 'WW',            // y7
+  'W'.repeat(12) + 'd' + 'W'.repeat(13),   // y8
+  'W'.repeat(12) + 'd' + 'W'.repeat(13),   // y9  (locked door entity here)
+  'W'.repeat(12) + 'd' + 'W'.repeat(13),   // y10
+  'WW' + 'd'.repeat(22) + 'WW',            // y11
+  'WW' + 'd'.repeat(22) + 'WW',            // y12
+  'WW' + 'd'.repeat(22) + 'WW',            // y13
+  'WW' + 'd'.repeat(22) + 'WW',            // y14
+  'WW' + 'd'.repeat(22) + 'WW',            // y15
+  'W'.repeat(12) + 'd' + 'W'.repeat(13),   // y16 (exit portal)
+  'W'.repeat(26),                          // y17
+];
+
+export const MAPS = {
+  overworld: {
+    id: 'overworld',
+    rows: overworldRows,
+    decor: overworldDecor,
+    dark: false,
+    portals: [
+      { x: 30, y: 4, to: 'cave', tx: 12, ty: 15 },   // cave mouth
+      { x: 34, y: 19, to: 'house', tx: 6, ty: 8 },   // elder's doormat
+    ],
+    entities: [
+      { kind: 'chest', id: 'shard1', x: 9, y: 7, loot: { shard: 1 } },
+      { kind: 'chest', id: 'forestCoins', x: 12, y: 6, loot: { coins: 8 } },
+      { kind: 'chest', id: 'shard2', x: 20, y: 20, loot: { shard: 2 } },
+      { kind: 'sparkle', id: 'ring', x: 17, y: 27 },
+      { kind: 'beacon', id: 'beacon', x: 38, y: 25 },
+      { kind: 'sign', id: 'beaconSign', x: 36, y: 25, text: ['The Beacon of Emberwood.', 'Dark since the shards were scattered...'] },
+      { kind: 'sign', id: 'forestSign', x: 8, y: 13, text: ['Emberwood Forest.', 'They say something glints deep in the maze.'] },
+      { kind: 'npc', id: 'merchant', x: 39, y: 23, sprite: 'merchant', name: 'Maro the Merchant' },
+      { kind: 'npc', id: 'fisherman', x: 24, y: 26, sprite: 'fisherman', name: 'Old Finn' },
+      { kind: 'npc', id: 'villager', x: 37, y: 27, sprite: 'villager', name: 'Pip' },
+      { kind: 'enemy', id: 'sl1', x: 10, y: 14, type: 'slime' },
+      { kind: 'enemy', id: 'sl2', x: 26, y: 13, type: 'slime' },
+      { kind: 'enemy', id: 'sl3', x: 21, y: 21, type: 'slime' },
+      { kind: 'enemy', id: 'sl4', x: 22, y: 20, type: 'slime' },
+      { kind: 'enemy', id: 'sl5', x: 12, y: 30, type: 'slime' },
+      { kind: 'enemy', id: 'sl6', x: 30, y: 10, type: 'slime' },
+      { kind: 'enemy', id: 'sl7', x: 36, y: 13, type: 'slime' },
+    ],
+  },
+  house: {
+    id: 'house',
+    rows: houseRows,
+    decor: [],
+    dark: false,
+    portals: [
+      { x: 6, y: 9, to: 'overworld', tx: 34, ty: 20 },
+      { x: 7, y: 9, to: 'overworld', tx: 34, ty: 20 },
+    ],
+    entities: [
+      { kind: 'npc', id: 'elder', x: 6, y: 3, sprite: 'elder', name: 'Elder Rowan' },
+      { kind: 'chest', id: 'houseCoins', x: 2, y: 1, loot: { coins: 5 } },
+    ],
+  },
+  cave: {
+    id: 'cave',
+    rows: caveRows,
+    decor: [],
+    dark: true,
+    portals: [
+      { x: 12, y: 16, to: 'overworld', tx: 30, ty: 5 },
+    ],
+    entities: [
+      { kind: 'lockedDoor', id: 'caveDoor', x: 12, y: 9 },
+      { kind: 'chest', id: 'shard3', x: 12, y: 2, loot: { shard: 3 } },
+      { kind: 'chest', id: 'caveCoins', x: 3, y: 3, loot: { coins: 10 } },
+      { kind: 'enemy', id: 'boss', x: 12, y: 5, type: 'boss' },
+      { kind: 'enemy', id: 'bat1', x: 6, y: 4, type: 'bat' },
+      { kind: 'enemy', id: 'bat2', x: 19, y: 5, type: 'bat' },
+      { kind: 'enemy', id: 'bat3', x: 5, y: 13, type: 'bat' },
+      { kind: 'enemy', id: 'bat4', x: 20, y: 12, type: 'bat' },
+    ],
+  },
+};
+
+export const START = { map: 'overworld', x: 38, y: 26 };
+
+// Parse rows + decor into a 2D char grid.
+export function buildGrid(map) {
+  const grid = map.rows.map((r) => r.split(''));
+  for (const [x, y, ch] of map.decor) grid[y][x] = ch;
+  return grid;
+}

@@ -1,0 +1,11 @@
+{
+  "name": "emberwood",
+  "version": "1.0.0",
+  "description": "A tiny top-down exploration RPG for the browser. No dependencies, no build step.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8787"
+  },
+  "license": "MIT"
+}
