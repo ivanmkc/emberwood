@@ -244,13 +244,51 @@ def main():
     sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
     emissive = (mx > 0.82) & (sat > 0.35)
 
-    # collision: prefer the gated NBP walkability mask (gameplay judgment —
-    # bridge decks walkable, background floor not), intersected with the
-    # complement of blocking instances as belt-and-braces
+    # collision: FOOTPRINT mechanic. Tall freestanding objects (pylon, tanks,
+    # lamps, bridge railings) block only at their ground-contact band; their
+    # upper body is overhang that occludes but never blocks. An instance is
+    # freestanding iff walkable ground exists just above its top edge
+    # (you could stand behind it). Buildings fail that test -> full block.
+    nwalk_probe = None
+    wpath_p = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
+    if os.path.exists(wpath_p):
+        nwalk_probe = np.asarray(Image.open(wpath_p).convert('L')
+                                 .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
     blocked = np.zeros((OUT_H, OUT_W), dtype=bool)
+    overhang_all = np.zeros((OUT_H, OUT_W), dtype=bool)
     for inst in instances:
-        if inst['blocking']:
-            blocked |= (inst_arr == inst['id'])
+        if not inst['blocking']:
+            continue
+        m = (inst_arr == inst['id'])
+        if inst['kind'] == 'water':
+            blocked |= m
+            continue
+        x0b, y0b, x1b, y1b = inst['box']
+        # mixed structure (bridge): the walk mask already distinguishes its
+        # walkable deck from railings — trust it within the instance
+        inner_walk = 0.0
+        if nwalk_probe is not None:
+            inner_walk = float((m & nwalk_probe).sum()) / max(1, int(m.sum()))
+        if inner_walk > 0.15:
+            blocked |= (m & ~nwalk_probe)
+            inst['footprint'] = 'mixed'
+            continue
+        freestanding = False
+        if nwalk_probe is not None and y0b > 20:
+            band = nwalk_probe[max(0, y0b - 26):y0b - 4, x0b:x1b + 1]
+            freestanding = band.size > 0 and band.mean() > 0.35
+        if freestanding:
+            fdepth = max(14, int(0.28 * (y1b - y0b)))
+            fp = m.copy()
+            fp[:max(0, inst['baseY'] - fdepth), :] = False
+            blocked |= fp
+            # the body above the footprint is overhang: hidden floor the
+            # player may walk on while the cutout occludes them
+            overhang_all |= (m & ~fp)
+            inst['footprint'] = True
+        else:
+            blocked |= m
+            inst['footprint'] = False
     walk_src = ~blocked
     wpath = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
     wmet = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk-metrics.json')
@@ -264,11 +302,31 @@ def main():
             clsb = np.asarray(Image.open(npb).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
             nwalk = nwalk | pipes
-        walk_src = nwalk & ~blocked
+        if chars_removed:
+            # ground under removed characters is walkable: take the yellow
+            # class pixels near each recorded spawn and open them up
+            spawns_d = json.load(open(spawns_f))
+            import cv2 as _cvc
+            nbp2 = np.asarray(Image.open(nbp_path).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
+            ym = (np.linalg.norm(nbp2 - np.array([255, 255, 0], np.int16), axis=2) < 90).astype(np.uint8)
+            for sp in spawns_d:
+                sxs = int(sp['x'] * OUT_W / 640)
+                sys2 = int(sp['y'] * OUT_H / 448)
+                r = 130
+                y0r, y1r = max(0, sys2 - 2 * r), min(OUT_H, sys2 + r // 2)
+                x0r, x1r = max(0, sxs - r), min(OUT_W, sxs + r)
+                cm = np.zeros_like(ym)
+                cm[y0r:y1r, x0r:x1r] = ym[y0r:y1r, x0r:x1r]
+                cm = _cvc.dilate(cm, np.ones((35, 35), np.uint8)).astype(bool)
+                nwalk = nwalk | cm
+        walk_src = (nwalk | overhang_all) & ~blocked
     import cv2 as _cv
     # grates/slatted decks: thin dark lines fragment the mask — close them
     walk_src = _cv.morphologyEx(walk_src.astype(np.uint8), _cv.MORPH_CLOSE,
                                 np.ones((9, 9), np.uint8)).astype(bool) & ~blocked
+    # erode NOW, before the island connector, so connector corridors are not
+    # severed by a later erosion pass
+    walk_src = _cv.erode(walk_src.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool)
     # island connector: large walkable islands (bridge deck!) get a corridor
     # to the main region, routed ONLY through class-mask floor pixels — can
     # cross a red-marked shore strip, can never tunnel through buildings/water
@@ -323,7 +381,8 @@ def main():
                     node = prev[node]
                 print(f'connected island {isl} ({sizes[isl - 1]}px) to main region')
     walk = Image.fromarray((walk_src * 255).astype(np.uint8))
-    walk = walk.filter(ImageFilter.MinFilter(3))  # light erode (mask is already conservative)
+    if not use_nbp:
+        walk = walk.filter(ImageFilter.MinFilter(3))  # nbp path erodes pre-connector
     walk_arr = np.asarray(walk) > 127
     # border walls
     walk_arr[:8, :] = False
