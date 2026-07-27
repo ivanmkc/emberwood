@@ -86,19 +86,22 @@ def border_median_key(img, thresh=95):
 def gen(client, anchor, prompt, raw_path):
     if os.path.exists(raw_path):
         return Image.open(raw_path)
-    resp = client.models.generate_content(
-        model='gemini-3-pro-image',
-        contents=[anchor, prompt],
-        config=types.GenerateContentConfig(
-            image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
-        ),
-    )
     img = None
-    for part in resp.parts:
-        if part.inline_data is not None:
-            img = Image.open(io.BytesIO(part.inline_data.data))
+    for attempt in range(3):
+        resp = client.models.generate_content(
+            model='gemini-3-pro-image',
+            contents=[anchor, prompt],
+            config=types.GenerateContentConfig(
+                image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
+            ),
+        )
+        for part in (resp.parts or []):
+            if part.inline_data is not None:
+                img = Image.open(io.BytesIO(part.inline_data.data))
+        if img is not None:
+            break
     if img is None:
-        raise RuntimeError('no image: ' + (resp.text or '?')[:150])
+        raise RuntimeError('no image after retries')
     img.save(raw_path)
     return img
 

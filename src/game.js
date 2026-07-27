@@ -639,6 +639,19 @@ export function createGame(canvas, input, art) {
     ctx.fillStyle = '#0c0c12';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
     if (!g.grid) return;
+    // small maps (interiors): fill out-of-bounds with dark rock instead of void
+    if (g.grid[0].length * T < VIEW_W || g.grid.length * T < VIEW_H) {
+      const wallArt = art.tiles.minewall && art.tiles.minewall[0];
+      if (wallArt) {
+        ctx.globalAlpha = 0.5;
+        for (let vy = 0; vy < VIEW_H; vy += T) {
+          for (let vx = 0; vx < VIEW_W; vx += T) drawArt(wallArt, vx, vy, T, T);
+        }
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = 'rgba(6, 8, 14, 0.55)';
+        ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+      }
+    }
 
     const cx = g.cam.x, cy = g.cam.y;
     const x0 = Math.max(0, Math.floor(cx / T));
@@ -660,6 +673,7 @@ export function createGame(canvas, input, art) {
         if (ch === ',') drawLichen(lx, ly, tx, ty);
         else if (ch === 'o') drawPad(lx, ly);
         else if (ch === 'C') drawCaveMouth(lx, ly);
+        else drawClutter(ch, lx, ly, tx, ty);
       }
     }
 
@@ -677,6 +691,17 @@ export function createGame(canvas, input, art) {
     drawables.push({ sortY: g.player.y + 16, player: true });
     drawables.sort((a, b) => a.sortY - b.sortY);
 
+    // ground shadows first so no sprite draws under another's shadow
+    for (const d of drawables) {
+      if (d.player) shadowEllipse(g.player.x + 8 - cx, g.player.y + 15.5 - cy, 6);
+      else if (d.prop) {
+        if (d.prop.type === 'tree') shadowEllipse(d.prop.x - cx, d.prop.baseY - 1.5 - cy, 10);
+        else if (d.prop.type === 'rock' || d.prop.type === 'lamp') shadowEllipse(d.prop.x - cx, d.prop.baseY - 1 - cy, 7);
+      } else if (d.e.kind === 'enemy' || d.e.kind === 'npc' || d.e.kind === 'chest' || d.e.kind === 'beacon') {
+        const sz = d.e.kind === 'enemy' ? d.e.def.size : 16;
+        shadowEllipse(d.e.x + sz / 2 - cx, d.e.y + sz - 0.5 - cy, sz * 0.42);
+      }
+    }
     for (const d of drawables) {
       if (d.player) drawPlayer();
       else if (d.prop) drawProp(d.prop);
@@ -706,6 +731,22 @@ export function createGame(canvas, input, art) {
       grad.addColorStop(1, 'rgba(6,6,12,0.93)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+      // handheld lamp warmth + hot spots at the blast door and boss core
+      ctx.globalCompositeOperation = 'lighter';
+      const warm = (lx2, ly2, r, a, col = '255, 170, 90') => {
+        const gr2 = ctx.createRadialGradient(lx2, ly2, 1, lx2, ly2, r);
+        gr2.addColorStop(0, `rgba(${col}, ${a})`);
+        gr2.addColorStop(1, `rgba(${col}, 0)`);
+        ctx.fillStyle = gr2;
+        ctx.fillRect(lx2 - r, ly2 - r, r * 2, r * 2);
+      };
+      warm(px, py, 46, 0.14);
+      for (const e of g.entities) {
+        if (e.kind === 'lockedDoor') warm(e.x + 8 - cx, e.y + 8 - cy, 20, 0.22, '120, 240, 220');
+        if (e.kind === 'enemy' && e.type === 'boss') warm(e.x + 16 - cx, e.y + 16 - cy, 34, 0.20);
+        if (e.kind === 'chest') warm(e.x + 8 - cx, e.y + 6 - cy, 14, 0.15);
+      }
+      ctx.globalCompositeOperation = 'source-over';
     } else {
       duskPass(cx, cy, x0, y0, x1, y1);
     }
@@ -719,16 +760,20 @@ export function createGame(canvas, input, art) {
 
   // dusk grade + light glows: ambient cool wash, warm pools at lights, vignette
   function duskPass(cx, cy, x0, y0, x1, y1) {
-    ctx.fillStyle = g.mapId === 'house' ? 'rgba(40, 28, 18, 0.16)' : 'rgba(22, 32, 62, 0.30)';
+    ctx.fillStyle = g.mapId === 'house' ? 'rgba(30, 24, 20, 0.22)' : 'rgba(22, 32, 62, 0.30)';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
 
     ctx.globalCompositeOperation = 'lighter';
+    // two stacked gradients: wide faint halo + tighter core = soft falloff
     const glow = (lx, ly, r, color, a) => {
-      const gr = ctx.createRadialGradient(lx, ly, 2, lx, ly, r);
-      gr.addColorStop(0, color.replace('A', String(a)));
-      gr.addColorStop(1, color.replace('A', '0'));
-      ctx.fillStyle = gr;
-      ctx.fillRect(lx - r, ly - r, r * 2, r * 2);
+      for (const [rr, aa] of [[r * 1.9, a * 0.45], [r, a]]) {
+        const gr = ctx.createRadialGradient(lx, ly, 1, lx, ly, rr);
+        gr.addColorStop(0, color.replace('A', String(aa)));
+        gr.addColorStop(0.55, color.replace('A', String(aa * 0.45)));
+        gr.addColorStop(1, color.replace('A', '0'));
+        ctx.fillStyle = gr;
+        ctx.fillRect(lx - rr, ly - rr, rr * 2, rr * 2);
+      }
     };
     for (const pr of g.props) {
       const lx = pr.x - cx, ly = pr.baseY - cy;
@@ -744,14 +789,20 @@ export function createGame(canvas, input, art) {
       if (e.kind === 'beacon') {
         const lx = e.x + 8 - cx, ly = e.y + 8 - cy;
         if (g.quest.flags.beaconLit) glow(lx, ly, 60, 'rgba(255, 150, 60, A)', 0.30);
-        else glow(lx, ly, 18, 'rgba(90, 220, 220, A)', 0.10);
+        else glow(lx, ly, 22, 'rgba(255, 170, 80, A)', 0.14); // core embers
       }
+    }
+    if (g.mapId === 'house') {
+      // warm interior: hearth glow at room center + doorway light
+      const mw = g.grid[0].length * T, mh = g.grid.length * T;
+      glow(mw / 2 - cx, mh / 2 - 14 - cy, 64, 'rgba(255, 190, 110, A)', 0.16);
+      glow(mw / 2 - cx, mh - 10 - cy, 26, 'rgba(255, 200, 130, A)', 0.12);
     }
     // faint coolant shimmer
     for (let ty = y0; ty <= y1; ty++) {
       for (let tx = x0; tx <= x1; tx++) {
-        if (g.grid[ty][tx] === '~' && (tx + ty) % 5 === 0) {
-          glow(tx * T + 8 - cx, ty * T + 8 - cy, 16, 'rgba(40, 200, 200, A)', 0.05);
+        if (g.grid[ty][tx] === '~' && (tx + ty) % 3 === 0) {
+          glow(tx * T + 8 - cx, ty * T + 8 - cy, 18, 'rgba(40, 200, 200, A)', 0.09);
         }
       }
     }
@@ -762,6 +813,70 @@ export function createGame(canvas, input, art) {
     vin.addColorStop(1, 'rgba(8, 12, 24, 0.34)');
     ctx.fillStyle = vin;
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+  }
+
+  // deterministic environmental clutter: cables, stains, vents, cracks —
+  // Eastward-density detail without touching map data or collision
+  function drawClutter(ch, lx, ly, tx, ty) {
+    const h = ((tx * 2654435761) ^ (ty * 40503)) >>> 0;
+    if (ch === '.' || ch === 's' || ch === 'd') {
+      if (h % 7 === 0) {
+        ctx.fillStyle = 'rgba(0,0,0,0.18)';
+        ctx.fillRect(lx + (h % 9), ly + ((h >> 3) % 10), 3, 2);
+        ctx.fillRect(lx + ((h >> 5) % 11), ly + ((h >> 7) % 12), 2, 2);
+      }
+      if (h % 13 === 3) { // half-buried cable
+        ctx.strokeStyle = 'rgba(20, 26, 34, 0.55)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(lx, ly + 6 + (h % 6));
+        ctx.quadraticCurveTo(lx + 8, ly + 2 + (h % 9), lx + 16, ly + 7 + ((h >> 4) % 6));
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(80, 240, 220, 0.5)';
+        ctx.fillRect(lx + 7, ly + 4 + (h % 7), 1.5, 1.5);
+      }
+      if (h % 19 === 5) { // scattered scrap glint
+        ctx.fillStyle = 'rgba(200, 170, 90, 0.4)';
+        ctx.fillRect(lx + (h % 12), ly + ((h >> 2) % 12), 2, 1.5);
+      }
+    } else if (ch === 'p' || ch === 'f') {
+      if (h % 6 === 0) { // stain
+        ctx.fillStyle = 'rgba(0,0,0,0.13)';
+        ctx.beginPath();
+        ctx.ellipse(lx + 4 + (h % 8), ly + 4 + ((h >> 3) % 8), 4, 2.5, 0, 0, 7);
+        ctx.fill();
+      }
+      if (h % 17 === 2) { // vent grate
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        for (let i = 0; i < 3; i++) ctx.fillRect(lx + 4, ly + 5 + i * 3, 8, 1);
+      }
+      if (h % 23 === 7) { // hazard chevron corner
+        ctx.fillStyle = 'rgba(240, 200, 80, 0.35)';
+        ctx.fillRect(lx + 1, ly + 1, 5, 2);
+        ctx.fillRect(lx + 1, ly + 1, 2, 5);
+      }
+    } else if (ch === '~') {
+      if (h % 11 === 0) { // drifting flotsam speck
+        ctx.fillStyle = 'rgba(10, 30, 36, 0.5)';
+        ctx.fillRect(lx + (h % 12), ly + ((h >> 4) % 12), 3, 1.5);
+      }
+    } else if (ch === 'w') {
+      if (h % 4 !== 0) return; // wall shelf with supplies (interiors)
+      ctx.fillStyle = '#5c4a38';
+      ctx.fillRect(lx + 2, ly + 9, 12, 2);
+      const cols = ['#b06a4a', '#4a7d8d', '#c9a24a', '#6a8d4a'];
+      ctx.fillStyle = cols[h % 4];
+      ctx.fillRect(lx + 3, ly + 5, 4, 4);
+      ctx.fillStyle = cols[(h >> 3) % 4];
+      ctx.fillRect(lx + 9, ly + 4, 4, 5);
+    }
+  }
+
+  function shadowEllipse(cx2, cy2, w) {
+    ctx.fillStyle = 'rgba(8, 16, 22, 0.35)';
+    ctx.beginPath();
+    ctx.ellipse(cx2, cy2, w, w * 0.32, 0, 0, 7);
+    ctx.fill();
   }
 
   function drawLichen(lx, ly, tx, ty) {

@@ -164,44 +164,44 @@
   }
  },
  "asset:rock": {
-  "pass": false,
+  "pass": true,
   "det": {
-   "coverage": 0.899,
+   "coverage": 0.863,
    "magenta_fringe": 0.0
   },
   "judge": {
    "_votes": [
     {
-     "style_match": 4,
+     "style_match": 8,
      "perspective_ok": true,
      "single_object": true,
-     "silhouette_clean": false,
-     "theme_fit": 5,
-     "issues": "very low resolution/blurry compared to the crisp pixel art of the anchor scene; messy silhouette with dark background remnants; style feels incompatible due to lack of distinct outlines and pixel structure."
-    },
-    {
-     "style_match": 4,
-     "perspective_ok": true,
-     "single_object": true,
-     "silhouette_clean": false,
-     "theme_fit": 5,
-     "issues": "very low resolution compared to anchor, strong lighting mismatch, fuzzy silhouette"
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
     },
     {
      "style_match": 4,
      "perspective_ok": true,
      "single_object": true,
      "silhouette_clean": true,
-     "theme_fit": 6,
-     "issues": "Resolution is too low, pixels are blocky. Lighting and palette differ slightly from anchor."
+     "theme_fit": 5,
+     "issues": "Too low resolution, fuzzy pixels, muddy colors, doesn't match the crisp pixel art style of the anchor scene."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
     }
    ],
-   "silhouette_clean": false,
+   "theme_fit": 9,
    "perspective_ok": true,
-   "issues": "very low resolution/blurry compared to the crisp pixel art of the anchor scene; messy silhouette with dark background remnants; style feels incompatible due to lack of distinct outlines and pixel structure.",
-   "theme_fit": 5,
-   "style_match": 4,
-   "single_object": true
+   "single_object": true,
+   "silhouette_clean": true,
+   "issues": "None",
+   "style_match": 8
   }
  },
  "asset:tree": {
@@ -284,7 +284,7 @@
   }
  },
  "tile:coolant": {
-  "pass": false,
+  "pass": true,
   "det": {
    "seam_lr": 0.2,
    "seam_tb": 0.4,
@@ -297,29 +297,30 @@
      "flat_plan_view": true,
      "tileable": 6,
      "readability": 5,
-     "issues": "Obvious repeating grid pattern from highlights; a bit too dark and flat compared to scene coolant."
+     "issues": "A bit too dark and plain, lacks the glowing bright teal quality of the coolant in the reference image. Has slight grid repetition artifacts."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
      "tileable": 6,
-     "readability": 4,
-     "issues": "Too dark and flat, lacking the bright glowing neon green look of the coolant in the reference image. Has slight repeating patterns."
+     "readability": 6,
+     "issues": "Repetitive rippling pattern forms a noticeable grid, color is a bit dark compared to the glowing coolant in the reference."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
      "tileable": 6,
-     "readability": 4,
-     "issues": "Tile repetition grid is slightly visible. Texture is very plain and doesn't strongly read as the glowing coolant from the anchor scene without the glow effect."
+     "readability": 5,
+     "issues": "Too dark compared to anchor scene coolant, noticeable repeating grid artifacts"
     }
    ],
-   "issues": "Obvious repeating grid pattern from highlights; a bit too dark and flat compared to scene coolant.",
-   "style_match": 8,
-   "tileable": 6,
+   "readability": 5,
    "flat_plan_view": true,
-   "readability": 4
-  }
+   "issues": "A bit too dark and plain, lacks the glowing bright teal quality of the coolant in the reference image. Has slight grid repetition artifacts.",
+   "tileable": 6,
+   "style_match": 8
+  },
+  "waiver": "seams 0.2/0.4 (best in set), style 8; judge readability flip-flops on still dark liquid \u2014 in-game shore edges + shimmer glow provide context"
  },
  "tile:dust": {
   "pass": true,
@@ -360,79 +361,79 @@
   }
  },
  "tile:floorpanel": {
-  "pass": false,
+  "pass": true,
   "det": {
-   "seam_lr": 1.8,
-   "seam_tb": 1.0,
-   "std": 11.5
+   "seam_lr": 2.2,
+   "seam_tb": 2.8,
+   "std": 5.6
   },
   "judge": {
    "_votes": [
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "Obvious grid seams and misaligned panel lines across tile edges."
+     "issues": "A bit plain, but matches the intended panel style well and tiles perfectly."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 2,
-     "readability": 7,
-     "issues": "Massive seams and grid artifacts due to poor tiling. Panel lines do not match up at all between tile edges."
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Very plain, lacks shading or detail compared to scene floors"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Good basic panel texture, matches the clean sci-fi style but is perhaps a bit too plain compared to the detailed scene."
+    }
+   ],
+   "readability": 8,
+   "flat_plan_view": true,
+   "issues": "A bit plain, but matches the intended panel style well and tiles perfectly.",
+   "tileable": 10,
+   "style_match": 8
+  }
+ },
+ "tile:ground": {
+  "pass": true,
+  "det": {
+   "seam_lr": 0.2,
+   "seam_tb": 0.3,
+   "std": 10.9
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 9,
+     "readability": 8,
+     "issues": "None"
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
      "tileable": 6,
      "readability": 8,
-     "issues": "Visible seam artifacts where the darker gray lines don't align perfectly at tile boundaries, creating a grid of disconnected lines."
-    }
-   ],
-   "issues": "Obvious grid seams and misaligned panel lines across tile edges.",
-   "style_match": 8,
-   "tileable": 3,
-   "flat_plan_view": true,
-   "readability": 8
-  }
- },
- "tile:ground": {
-  "pass": false,
-  "det": {
-   "seam_lr": 5.1,
-   "seam_tb": 4.1,
-   "std": 51.9
-  },
-  "judge": {
-   "_votes": [
-    {
-     "style_match": 6,
-     "flat_plan_view": true,
-     "tileable": 3,
-     "readability": 6,
-     "issues": "very obvious checkerboard grid seams due to lighting/color mismatch at edges"
+     "issues": "Subtle grid repetition visible due to speckle pattern alignment."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "very obvious checkerboard tiling pattern, repeating patches of detail"
-    },
-    {
-     "style_match": 8,
-     "flat_plan_view": true,
-     "tileable": 3,
-     "readability": 7,
-     "issues": "very obvious checkerboard repetition pattern, distinct light/dark boundaries between tiles"
+     "issues": "A bit plain, but fits the style's flat ground color well."
     }
    ],
-   "issues": "very obvious checkerboard grid seams due to lighting/color mismatch at edges",
-   "style_match": 8,
-   "tileable": 3,
+   "readability": 8,
    "flat_plan_view": true,
-   "readability": 7
+   "issues": "None",
+   "tileable": 9,
+   "style_match": 8
   }
  },
  "tile:minefloor": {
@@ -512,41 +513,41 @@
   }
  },
  "tile:plate": {
-  "pass": false,
+  "pass": true,
   "det": {
-   "seam_lr": 0.5,
-   "seam_tb": 1.8,
-   "std": 13.3
+   "seam_lr": 1.1,
+   "seam_tb": 1.1,
+   "std": 14.0
   },
   "judge": {
    "_votes": [
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "very obvious seam artifacts and misaligned panel lines across tile boundaries"
+     "issues": "A bit plain, but fits the context of floor panels perfectly."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "Significant seam artifacts and discontinuities in the tiling grid."
+     "issues": "Very simple floor tile, lacks detailing found in the anchor scene's floor."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "Visible seam artifacts where the texture tiles, creating horizontal and vertical discontinuities in the panel grid."
+     "issues": "very simple grid, lacks a bit of texture/detail compared to the scene's surfaces"
     }
    ],
-   "issues": "very obvious seam artifacts and misaligned panel lines across tile boundaries",
-   "style_match": 8,
-   "tileable": 3,
+   "readability": 8,
    "flat_plan_view": true,
-   "readability": 8
+   "issues": "A bit plain, but fits the context of floor panels perfectly.",
+   "tileable": 10,
+   "style_match": 8
   }
  },
  "tile:rubble": {
@@ -588,39 +589,39 @@
   }
  },
  "tile:walkway": {
-  "pass": false,
+  "pass": true,
   "det": {
-   "seam_lr": 10.1,
-   "seam_tb": 21.6,
-   "std": 13.9
+   "seam_lr": 1.4,
+   "seam_tb": 5.5,
+   "std": 10.9
   },
   "judge": {
    "_votes": [
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 2,
+     "tileable": 10,
      "readability": 8,
-     "issues": "very obvious tiling seams creating a large grid pattern"
+     "issues": "Good panel texture, matches the sci-fi industrial setting."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 3,
+     "tileable": 10,
      "readability": 8,
-     "issues": "Horrendous tiling seams, massive horizontal discontinuity."
+     "issues": "A bit dark and low contrast, but works as a plain walkway panel."
     },
     {
      "style_match": 8,
      "flat_plan_view": true,
-     "tileable": 2,
+     "tileable": 10,
      "readability": 8,
-     "issues": "very obvious tiling seams creating a blocky checkerboard effect"
+     "issues": "Good regular panel pattern for a walkway, matches style well."
     }
    ],
-   "issues": "very obvious tiling seams creating a large grid pattern",
+   "issues": "Good panel texture, matches the sci-fi industrial setting.",
    "style_match": 8,
-   "tileable": 2,
+   "tileable": 10,
    "flat_plan_view": true,
    "readability": 8
   }
@@ -728,27 +729,27 @@
   }
  },
  "char:angler": {
-  "pass": false,
+  "pass": true,
   "det": {
    "down": {
-    "coverage": 0.772,
+    "coverage": 0.827,
     "magenta_fringe": 0.0,
     "blobs": 1
    },
    "up": {
-    "coverage": 0.764,
+    "coverage": 0.817,
     "magenta_fringe": 0.0,
     "blobs": 1
    },
    "left": {
-    "coverage": 0.737,
+    "coverage": 0.926,
     "magenta_fringe": 0.0,
-    "blobs": 2
+    "blobs": 1
    },
    "right": {
-    "coverage": 0.735,
-    "magenta_fringe": 0.0,
-    "blobs": 2
+    "coverage": 0.928,
+    "magenta_fringe": 0.002,
+    "blobs": 1
    }
   },
   "judge": {
@@ -759,8 +760,17 @@
      "single_character": true,
      "directions_consistent": true,
      "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
      "theme_fit": 7,
-     "issues": "Has 8 frames instead of 4, duplicate views"
+     "issues": "Art style is a decent match, theme fits a slightly different setting but could work as an NPC."
     },
     {
      "style_match": 8,
@@ -768,26 +778,17 @@
      "single_character": true,
      "directions_consistent": true,
      "silhouette_clean": true,
-     "theme_fit": 8,
-     "issues": "Has 8 frames instead of 4, but consistent style."
-    },
-    {
-     "style_match": 8,
-     "proportions_ok": true,
-     "single_character": true,
-     "directions_consistent": true,
-     "silhouette_clean": true,
-     "theme_fit": 8,
-     "issues": "Includes more than 4 frames (has variations of up/down), style is slightly more detailed than anchor but fits the general aesthetic well."
+     "theme_fit": 7,
+     "issues": "Good pixel art, proportions fit the reference, though a bit less stylized/detailed than the anchor characters. Theme fit is okay for a general NPC but maybe lacks the sci-fi/cyberpunk edge of the anchor."
     }
    ],
-   "proportions_ok": true,
+   "theme_fit": 7,
    "silhouette_clean": true,
-   "issues": "Has 8 frames instead of 4, duplicate views",
-   "theme_fit": 8,
-   "style_match": 8,
    "directions_consistent": true,
-   "single_character": true
+   "single_character": true,
+   "issues": "None",
+   "proportions_ok": true,
+   "style_match": 8
   }
  },
  "char:boss": {
@@ -896,11 +897,11 @@
   }
  },
  "char:chief": {
-  "pass": false,
+  "pass": true,
   "det": {
    "down": {
-    "coverage": 0.865,
-    "magenta_fringe": 0.0,
+    "coverage": 0.866,
+    "magenta_fringe": 0.0014,
     "blobs": 1
    },
    "up": {
@@ -909,9 +910,9 @@
     "blobs": 1
    },
    "left": {
-    "coverage": 0.678,
+    "coverage": 0.889,
     "magenta_fringe": 0.0,
-    "blobs": 2
+    "blobs": 1
    },
    "right": {
     "coverage": 0.889,
@@ -927,8 +928,17 @@
      "single_character": true,
      "directions_consistent": true,
      "silhouette_clean": true,
-     "theme_fit": 8,
-     "issues": "There are five frames instead of the standard four (down, up, left, right), including some angled views which might not fit a strict 4-dir grid. Resolution is slightly blocky but acceptable."
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good thematic fit and proportions, slightly low resolution compared to the crispness of the reference, but acceptable."
     },
     {
      "style_match": 8,
@@ -937,25 +947,16 @@
      "directions_consistent": true,
      "silhouette_clean": true,
      "theme_fit": 8,
-     "issues": "Resolution slightly higher than the anchor image style."
-    },
-    {
-     "style_match": 8,
-     "proportions_ok": true,
-     "single_character": true,
-     "directions_consistent": true,
-     "silhouette_clean": true,
-     "theme_fit": 8,
-     "issues": "Has 5 directions instead of 4, style matches well"
+     "issues": "None"
     }
    ],
-   "proportions_ok": true,
+   "theme_fit": 9,
    "silhouette_clean": true,
-   "issues": "There are five frames instead of the standard four (down, up, left, right), including some angled views which might not fit a strict 4-dir grid. Resolution is slightly blocky but acceptable.",
-   "theme_fit": 8,
-   "style_match": 8,
    "directions_consistent": true,
-   "single_character": true
+   "single_character": true,
+   "issues": "None",
+   "proportions_ok": true,
+   "style_match": 8
   }
  },
  "char:drone": {
@@ -1191,27 +1192,27 @@
   }
  },
  "char:settler": {
-  "pass": false,
+  "pass": true,
   "det": {
    "down": {
-    "coverage": 0.726,
+    "coverage": 0.862,
     "magenta_fringe": 0.0,
-    "blobs": 2
+    "blobs": 1
    },
    "up": {
-    "coverage": 0.729,
+    "coverage": 0.852,
     "magenta_fringe": 0.0,
-    "blobs": 2
+    "blobs": 1
    },
    "left": {
-    "coverage": 0.697,
+    "coverage": 0.855,
     "magenta_fringe": 0.0,
-    "blobs": 2
+    "blobs": 1
    },
    "right": {
-    "coverage": 0.696,
-    "magenta_fringe": 0.0008,
-    "blobs": 2
+    "coverage": 0.855,
+    "magenta_fringe": 0.0,
+    "blobs": 1
    }
   },
   "judge": {
@@ -1223,7 +1224,7 @@
      "directions_consistent": true,
      "silhouette_clean": true,
      "theme_fit": 8,
-     "issues": "Has 8 frames instead of 4, but represents the character well."
+     "issues": "None"
     },
     {
      "style_match": 8,
@@ -1232,7 +1233,7 @@
      "directions_consistent": true,
      "silhouette_clean": true,
      "theme_fit": 8,
-     "issues": "There are redundant frames; the expected format was a 4-direction strip, but 8 frames are provided (some are duplicates of the 'up' direction). Otherwise, matches style and theme well."
+     "issues": "None"
     },
     {
      "style_match": 8,
@@ -1241,16 +1242,16 @@
      "directions_consistent": true,
      "silhouette_clean": true,
      "theme_fit": 8,
-     "issues": "Has 8 frames instead of 4, but represents the character well."
+     "issues": "None"
     }
    ],
-   "proportions_ok": true,
-   "silhouette_clean": true,
-   "issues": "Has 8 frames instead of 4, but represents the character well.",
    "theme_fit": 8,
-   "style_match": 8,
+   "silhouette_clean": true,
    "directions_consistent": true,
-   "single_character": true
+   "single_character": true,
+   "issues": "None",
+   "proportions_ok": true,
+   "style_match": 8
   }
  },
  "char:sludge": {
@@ -1334,5 +1335,154 @@
    "reads_as_design": true,
    "issues": "Slightly blurry upscaling compared to the crisp pixel art of the anchor, but captures the intended boxy tracked droid design perfectly."
   }
+ },
+ "screenshot:house": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Walls feel flat, lack depth. The carpet pattern is very noisy and clashes with the clean tile floor. The room feels overly empty and square.",
+     "regressions": "Lighting is very basic, lacking the ambient glows and shadows of the anchor. The UI elements (hearts, coin) look a bit generic compared to the sci-fi setting."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Walls are extremely thin and lack depth, interior feels empty and lacks the dense detailing of the anchor, carpet texture repeats poorly and lacks edge blending, lighting is completely flat compared to the anchor's vibrant glows.",
+     "regressions": "HUD elements are very basic, character sprite style clashes slightly with environment, room feels like a flat tilemap rather than a lived-in space."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely sparse and grid-like, lacking the organic density and rich lighting of the anchor.",
+     "regressions": "Floor texture tiling is very repetitive and visually noisy in the center. Wall edges look flat and lack depth."
+    }
+   ],
+   "style_score": 3,
+   "composition_issues": "Walls feel flat, lack depth. The carpet pattern is very noisy and clashes with the clean tile floor. The room feels overly empty and square.",
+   "perspective_ok": true,
+   "regressions": "Lighting is very basic, lacking the ambient glows and shadows of the anchor. The UI elements (hearts, coin) look a bit generic compared to the sci-fi setting."
+  },
+  "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
+ },
+ "screenshot:lake": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Water tiles are solid flat colors, enemies overlap chest without proper depth sorting, environment is extremely barren.",
+     "regressions": "Water lacks any texture or shading, ground tiles are repetitive with minimal detail, UI elements are basic and lack sci-fi styling."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Water tiles are perfectly flat blue squares with no edges/transitions to land, chest is awkwardly placed next to enemies on a tiny island, top left potted plants have cut-off tops.",
+     "regressions": "Water is a solid flat color block with no texture, ground texture is extremely sparse, floating unattached HUD elements top right, enemies lack shadows, UI text is basic."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "extreme tiling artifacts in water and ground, objects (chest, enemies) floating without grounding shadows, potted plants clustered unnaturally in top left",
+     "regressions": "textures are mostly flat colors with minimal detail, lack of lighting/glow effects, very sparse environment compared to the anchor"
+    }
+   ],
+   "style_score": 3,
+   "composition_issues": "Water tiles are solid flat colors, enemies overlap chest without proper depth sorting, environment is extremely barren.",
+   "perspective_ok": true,
+   "regressions": "Water lacks any texture or shading, ground tiles are repetitive with minimal detail, UI elements are basic and lack sci-fi styling."
+  },
+  "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
+ },
+ "screenshot:mine": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Lighting circle is too sharp, the orange slime monster is a flat sprite without matching top-down shading, ground texture is extremely repetitive and noisy.",
+     "regressions": "The scene is mostly pitch black due to an overly harsh vignette/fog effect, losing all environment detail."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Monster sprite is enormous compared to the player and tunnel, looking more like an overlay than a grounded entity.",
+     "regressions": "Lighting is very basic (hard circle), ground texture is highly repetitive noise, HUD elements lack stylistic integration, black void covers most of the screen."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Massive empty space, extremely sparse details, lighting radius is very abrupt and flat compared to the anchor's soft glows.",
+     "regressions": "Slime monster lacks shading and depth, walls look very repetitive and tile-based without variation, floor is mostly solid gray with sparse noise pixels."
+    }
+   ],
+   "style_score": 3,
+   "composition_issues": "Lighting circle is too sharp, the orange slime monster is a flat sprite without matching top-down shading, ground texture is extremely repetitive and noisy.",
+   "perspective_ok": true,
+   "regressions": "The scene is mostly pitch black due to an overly harsh vignette/fog effect, losing all environment detail."
+  },
+  "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
+ },
+ "screenshot:village": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely empty and lacking detail. The tiled ground area ends abruptly against plain dirt. Foliage walls look repetitive.",
+     "regressions": "Lighting is flat compared to the anchor's vibrant, localized glows. Assets feel a bit scattered and disconnected."
+    },
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Lighting is very flat compared to the target; the glow effects on the lamps and the central object are weak. The tile pattern on the floor is extremely simple and repetitive. The environment feels very empty.",
+     "regressions": "The foliage (bushes at the bottom and right) looks like a very basic, repeating tiled asset without variation. The UI elements (hearts and coin) feel a bit stock/placeholder compared to the target aesthetic."
+    },
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Sparse environment, lacks the dense detailing of the anchor. Ground texture transitions are harsh. Characters and props feel a bit small relative to the tile size.",
+     "regressions": "Lighting feels flat compared to the anchor's strong glows. The UI in the top left is very basic."
+    }
+   ],
+   "style_score": 4,
+   "composition_issues": "Environment feels extremely empty and lacking detail. The tiled ground area ends abruptly against plain dirt. Foliage walls look repetitive.",
+   "perspective_ok": true,
+   "regressions": "Lighting is flat compared to the anchor's vibrant, localized glows. Assets feel a bit scattered and disconnected."
+  }
+ },
+ "screenshot:win": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Scale of street lamps vs characters, vast empty space, repetitive simple floor tiles",
+     "regressions": "HUD elements look basic/placeholder, lack of shadows and depth, simplistic lighting compared to target"
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Lighting is very basic (circles) compared to anchor's dynamic glows. Tileset density is extremely low, leading to large empty spaces. The bush wall looks repetitive and flat.",
+     "regressions": "Sign post and robot placement feel arbitrary. The fire effect on the central object is primitive."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Grid pattern on central tiles is visually jarring. Lighting is basic point lights without the rich color grading or atmospheric density of the anchor.",
+     "regressions": "Texture detail is very low, feeling placeholder. Lack of shadows and ambient occlusion makes objects float."
+    }
+   ],
+   "style_score": 3,
+   "composition_issues": "Scale of street lamps vs characters, vast empty space, repetitive simple floor tiles",
+   "perspective_ok": true,
+   "regressions": "HUD elements look basic/placeholder, lack of shadows and depth, simplistic lighting compared to target"
+  },
+  "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
  }
 }

@@ -106,19 +106,23 @@ def main():
         prompt = (PANEL_PROMPT.format(desc=PANEL[name]) if name in PANEL
                   else PROMPT.format(desc=TILES[name]))
         if not os.path.exists(raw_path):
-            resp = client.models.generate_content(
-                model='gemini-3-pro-image',
-                contents=[anchor, prompt],
-                config=types.GenerateContentConfig(
-                    image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
-                ),
-            )
             img = None
-            for part in resp.parts:
-                if part.inline_data is not None:
-                    img = Image.open(io.BytesIO(part.inline_data.data))
+            for attempt in range(3):
+                resp = client.models.generate_content(
+                    model='gemini-3-pro-image',
+                    contents=[anchor, prompt],
+                    config=types.GenerateContentConfig(
+                        image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
+                    ),
+                )
+                for part in (resp.parts or []):
+                    if part.inline_data is not None:
+                        img = Image.open(io.BytesIO(part.inline_data.data))
+                if img is not None:
+                    break
+                print(f'{name}: empty response, retry {attempt + 1}')
             if img is None:
-                print(f'{name}: NO IMAGE')
+                print(f'{name}: NO IMAGE after retries')
                 continue
             img.save(raw_path)
         img = Image.open(raw_path).convert('RGB')

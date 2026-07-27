@@ -103,19 +103,22 @@ def process(name, desc, target_h, client, anchor):
     raw_path = os.path.join(RAW_DIR, f'{name}.png')
     if not os.path.exists(raw_path):
         prompt = BASE_PROMPT.format(desc=desc, bg=KEY_BG)
-        resp = client.models.generate_content(
-            model='gemini-3-pro-image',
-            contents=[anchor, prompt],
-            config=types.GenerateContentConfig(
-                image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
-            ),
-        )
         img = None
-        for part in resp.parts:
-            if part.inline_data is not None:
-                img = Image.open(io.BytesIO(part.inline_data.data))
+        for attempt in range(3):
+            resp = client.models.generate_content(
+                model='gemini-3-pro-image',
+                contents=[anchor, prompt],
+                config=types.GenerateContentConfig(
+                    image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
+                ),
+            )
+            for part in (resp.parts or []):
+                if part.inline_data is not None:
+                    img = Image.open(io.BytesIO(part.inline_data.data))
+            if img is not None:
+                break
         if img is None:
-            print(f'{name}: NO IMAGE ({resp.text[:120] if resp.text else "?"})')
+            print(f'{name}: NO IMAGE after retries')
             return None
         img.save(raw_path)
     img = Image.open(raw_path)

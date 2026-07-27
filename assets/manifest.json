@@ -1,0 +1,109 @@
+{
+ "tiles": {
+  "ground": [
+   "tiles/ground-0.png",
+   "tiles/ground-1.png",
+   "tiles/ground-2.png",
+   "tiles/ground-3.png",
+   "tiles/ground-4.png",
+   "tiles/ground-5.png"
+  ],
+  "plate": [
+   "tiles/plate-0.png"
+  ],
+  "dust": [
+   "tiles/dust-0.png",
+   "tiles/dust-1.png",
+   "tiles/dust-2.png",
+   "tiles/dust-3.png",
+   "tiles/dust-4.png",
+   "tiles/dust-5.png"
+  ],
+  "coolant": [
+   "tiles/coolant-0.png",
+   "tiles/coolant-1.png",
+   "tiles/coolant-2.png",
+   "tiles/coolant-3.png",
+   "tiles/coolant-4.png",
+   "tiles/coolant-5.png"
+  ],
+  "walkway": [
+   "tiles/walkway-0.png"
+  ],
+  "rubble": [
+   "tiles/rubble-0.png",
+   "tiles/rubble-1.png",
+   "tiles/rubble-2.png",
+   "tiles/rubble-3.png",
+   "tiles/rubble-4.png",
+   "tiles/rubble-5.png"
+  ],
+  "minefloor": [
+   "tiles/minefloor-0.png",
+   "tiles/minefloor-1.png",
+   "tiles/minefloor-2.png",
+   "tiles/minefloor-3.png",
+   "tiles/minefloor-4.png",
+   "tiles/minefloor-5.png"
+  ],
+  "minewall": [
+   "tiles/minewall-0.png",
+   "tiles/minewall-1.png",
+   "tiles/minewall-2.png",
+   "tiles/minewall-3.png",
+   "tiles/minewall-4.png",
+   "tiles/minewall-5.png"
+  ],
+  "floorpanel": [
+   "tiles/floorpanel-0.png"
+  ],
+  "wallpanel": [
+   "tiles/wallpanel-0.png",
+   "tiles/wallpanel-1.png",
+   "tiles/wallpanel-2.png"
+  ],
+  "carpet": [
+   "tiles/carpet-0.png",
+   "tiles/carpet-1.png",
+   "tiles/carpet-2.png"
+  ]
+ },
+ "props": {
+  "tree": "props/tree.png",
+  "rock": "props/rock.png",
+  "chest": "props/chest.png",
+  "beacon": "props/beacon.png",
+  "lamp": "props/lamp.png",
+  "house": "props/house.png"
+ },
+ "chars": {
+  "player": {
+   "down": "chars/player-down.png",
+   "up": "chars/player-up.png",
+   "left": "chars/player-left.png",
+   "right": "chars/player-right.png"
+  },
+  "chief": {
+   "down": "chars/chief-down.png",
+   "up": "chars/chief-up.png",
+   "left": "chars/chief-left.png",
+   "right": "chars/chief-right.png"
+  },
+  "angler": {
+   "down": "chars/angler-down.png",
+   "up": "chars/angler-up.png",
+   "left": "chars/angler-left.png",
+   "right": "chars/angler-right.png"
+  },
+  "settler": {
+   "down": "chars/settler-down.png",
+   "up": "chars/settler-up.png",
+   "left": "chars/settler-left.png",
+   "right": "chars/settler-right.png"
+  },
+  "trader": "chars/trader.png",
+  "sludge": "chars/sludge.png",
+  "drone": "chars/drone.png",
+  "boss": "chars/boss.png"
+ }
+}
