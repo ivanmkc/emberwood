@@ -1,5 +1,12 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## UI PASS SHIPPED 2026-07-27 (third run)
+Judge-audited (new 'ui' rubric in judge.py) before/after: HUD cohesion 5->8,
+polish 4->6; dialogue cohesion 6->8; mobile polish 4->7. Changes: HUD plates
++ cell sockets, speaker name tags on pixel dialogue panel + advance chevron,
+ember logotype title w/ motes, hurt vignette, shoreline foam, styled page
+shell + favicon + og meta. 22/22 tests, zero console errors, live verified.
+
 ## EXPANSION SHIPPED 2026-07-27 (second autonomous run)
 Story bible docs/LORE.md; 3 new maps (biodome/mine2/home) with BFS gates;
 4 side quests + lore terminals + intro transmission + post-win dialogue;
