@@ -1,5 +1,17 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## PIXEL-LEVEL SEGMENTATION SHIPPED 2026-07-27 (tenth run)
+Mask stack (segment_room.py): instance map (Gemini boxes -> GrabCut pixel
+masks; box-fill fallback when glow defeats GrabCut; 2-call union de-flake) +
+collision.png (blocking instances + DETERMINISTIC teal-color water mask,
+MinFilter erode, pixel-BFS gate on 8px lattice) + per-instance baseY cutout
+PNGs (occlusion) + emissive.png (HSV threshold, runtime pulse). Engine:
+per-pixel rectBlocked sampling, cutout drawables, 2x actor scale in plate
+rooms, exit rect. Gotchas: Vertex 3.1-pro returns boxes but NO mask field;
+GrabCut fails on glowing objects; water detection is run-variant -> color
+threshold instead. Remaining for production: hotspot + removal masks
+(inpaint painted characters, spawn real entities), per-room scale metadata.
+
 ## PLATE-ROOM SPIKE SHIPPED 2026-07-27 (ninth run)
 Ivan's idea: use scene images as-is + segmentation masks. Built make_room.py:
 grid-overlay -> Gemini walkability votes (3x majority, cached in
