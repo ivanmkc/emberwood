@@ -26,15 +26,24 @@ from google.genai import types
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PLATE = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor.png')
 OUT = os.path.join(ROOT, 'docs', 'art-options')
+import argparse
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--room', default=None, help='room name under docs/art-options/rooms/<room>/')
+_args, _ = _ap.parse_known_args()
+if _args.room:
+    OUT = os.path.join(ROOT, 'docs', 'art-options', 'rooms', _args.room)
+    PLATE = os.path.join(OUT, 'plate.png')
+
 
 PROMPT = (
     'Repaint this EXACT image as a binary WALKABILITY map for a top-down game. Keep every '
     'silhouette and position PIXEL-IDENTICAL — do not move or redraw anything. Use exactly two '
     'flat colors, no shading, no outlines:\n'
     '- pure green #00FF00: ground a walking character can actually stand on — plaza plating, bare '
-    'ground, the metal grate, the bridge deck, staircases, doorway thresholds\n'
+    'ground, metal grates and deck floors, bridge decks, boardwalks, platforms, staircases, '
+    'doorway thresholds, interior floors\n'
     '- pure red #FF0000: everything else — building walls and roofs, background/upper wall '
-    'surfaces, all objects and props, glass tanks, the pylon, water, railings, people and robots, '
+    'surfaces, all objects and props, glass tanks, pylons and machines, water, railings, '
     'pipes and thick cables lying on the ground\n'
     'Every pixel must be exactly green or red.'
 )

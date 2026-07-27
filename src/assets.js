@@ -3,8 +3,11 @@
 // renderer falls back to the procedural pixel-string art, so the game never
 // hard-fails on art.
 
+import { PLATE_ROOM_NAMES } from './rooms/index.js';
+
 async function jobsRooms(art, base, loadImg) {
-  for (const name of ['anchorroom']) {
+  const names = [...new Set(['anchorroom', ...PLATE_ROOM_NAMES])];
+  for (const name of names) {
     loadImg(`rooms/${name}.jpg`).then((img) => { art.rooms[name] = img; });
     loadImg(`rooms/${name}.collision.png`).then((img) => { art.roomMasks[name] = img; });
     loadImg(`rooms/${name}.emissive.png`).then((img) => { art.roomEmissive[name] = img; });

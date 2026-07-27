@@ -21,6 +21,14 @@ from google.genai import types
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PLATE = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor.png')
 OUT = os.path.join(ROOT, 'docs', 'art-options')
+import argparse
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--room', default=None, help='room name under docs/art-options/rooms/<room>/')
+_args, _ = _ap.parse_known_args()
+if _args.room:
+    OUT = os.path.join(ROOT, 'docs', 'art-options', 'rooms', _args.room)
+    PLATE = os.path.join(OUT, 'plate.png')
+
 
 CLASSES = {
     'floor': (0, 255, 0),
@@ -40,10 +48,10 @@ PROMPT = (
     'shading, no gradients, no outlines, no texture:\n'
     '- walkable ground/floor (plaza plating, bare ground, bridge deck, stairs): pure green #00FF00\n'
     '- buildings and storefronts (walls, doors, signs, rooflines): pure red #FF0000\n'
-    '- canal water: pure blue #0000FF\n'
+    '- water (canals, channels, pools): pure blue #0000FF\n'
     '- people and robots: pure yellow #FFFF00\n'
-    '- glass hydroponic tanks with trees: pure cyan #00FFFF\n'
-    '- the central glowing pylon and its base: pure orange #FF8000\n'
+    '- glass tanks, domes and cases with plants or liquid inside: pure cyan #00FFFF\n'
+    '- tall glowing energy structures (pylons, reactor columns) and their bases: pure orange #FF8000\n'
     '- crates, barrels, machines, stalls, railings and other props: pure magenta #FF00FF\n'
     '- thick pipes and cables lying on the ground: pure violet #8000FF\n'
     'Every pixel must be exactly one of these eight colors.'

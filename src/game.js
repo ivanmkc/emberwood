@@ -225,13 +225,15 @@ export function createGame(canvas, input, art) {
       }
       if (data) {
         g.fgCuts = (data.fg || []).map((f) => f);
-        g.roomExit = data.exit || null;
+        g.roomExit = g.map.id === 'anchorroom' ? (data.exit || null) : null;
       }
+      g.roomExits = g.map.plateExits || [];
       return;
     }
     g.maskWalk = null;
     g.fgCuts = [];
     g.roomExit = null;
+    g.roomExits = [];
     const grid = g.grid;
     const H = grid.length, W = grid[0].length;
     // house blocks: connected components of h/H/D -> one facade prop each
@@ -797,6 +799,16 @@ export function createGame(canvas, input, art) {
       if (fx >= ex0 && fx <= ex1 && fy >= ey0 && fy <= ey1) {
         loadMap('overworld', 38, 26);
         music.setScene('overworld');
+        save();
+        return;
+      }
+    }
+    for (const ex of g.roomExits || []) {
+      const [ex0, ey0, ex1, ey1] = ex.rect;
+      const fx = p.x + 8, fy = p.y + 15;
+      if (fx >= ex0 && fx <= ex1 && fy >= ey0 && fy <= ey1) {
+        loadMap(ex.to, ex.tx, ex.ty);
+        music.setScene(ex.to); // unknown scenes fall back to overworld
         save();
         return;
       }

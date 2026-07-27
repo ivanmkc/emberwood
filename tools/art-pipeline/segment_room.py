@@ -23,6 +23,26 @@ from google.genai import types
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PLATE = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor.png')
 NAME = 'anchorroom'
+ART = os.path.join(ROOT, 'docs', 'art-options')
+AUTO_SPAWN = False
+EXIT_EDGES = []
+import argparse
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--room', default=None)
+_args, _ = _ap.parse_known_args()
+if _args.room:
+    NAME = _args.room
+    ART = os.path.join(ROOT, 'docs', 'art-options', 'rooms', NAME)
+    PLATE = os.path.join(ART, 'plate.png')
+    AUTO_SPAWN = True
+    LEGACY_S = False
+    _rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
+    EXIT_EDGES = sorted(_rooms['rooms'][NAME]['exits'])
+else:
+    LEGACY_S = True
+    # anchor room: legacy spawn + S exit, plus graph edges from rooms.json
+    _rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
+    EXIT_EDGES = sorted(_rooms['anchors'].get(NAME, {}).get('exits', {}))
 OUT_W, OUT_H = 1280, 896      # device px (logical 640x448 at DS=2)
 SPAWN_PX = (250, 300)          # logical px, open plaza floor
 EXIT_RECT = (150, 425, 205, 447)  # logical: bottom-left stair region
@@ -107,7 +127,7 @@ def paste_mask(canvas_arr, item, value):
 def main():
     clean = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor-clean.png')
     spawns_f = os.path.join(ROOT, 'tools', 'art-pipeline', '_char_spawns.json')
-    chars_removed = os.path.exists(clean) and os.path.exists(spawns_f)
+    chars_removed = NAME == 'anchorroom' and os.path.exists(clean) and os.path.exists(spawns_f)
     plate_full = Image.open(clean if chars_removed else PLATE).convert('RGB')
     if chars_removed:
         print('using CLEAN plate (painted characters removed)')
@@ -125,8 +145,8 @@ def main():
     iid = 0
 
     # PRIMARY: NBP-native class mask (nbp_mask.py), if present and gated.
-    nbp_path = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
-    met_path = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask-metrics.json')
+    nbp_path = os.path.join(ART, 'nbp-mask.png')
+    met_path = os.path.join(ART, 'nbp-mask-metrics.json')
     use_nbp = os.path.exists(nbp_path) and os.path.exists(met_path) \
         and json.load(open(met_path)).get('pass')
     if use_nbp:
@@ -249,15 +269,15 @@ def main():
     # physically occupies (base-only for freestanding, full for buildings).
     # Body above the footprint is overhang: occludes but never blocks.
     # Geometric band heuristic below survives only as ungated fallback.
-    fppath = os.path.join(ROOT, 'docs', 'art-options', 'nbp-footprint.png')
-    fpmet = os.path.join(ROOT, 'docs', 'art-options', 'nbp-footprint-metrics.json')
+    fppath = os.path.join(ART, 'nbp-footprint.png')
+    fpmet = os.path.join(ART, 'nbp-footprint-metrics.json')
     fpmask = None
     if os.path.exists(fppath) and os.path.exists(fpmet) and json.load(open(fpmet)).get('pass'):
         print('using NBP footprint mask (gated)')
         fpmask = np.asarray(Image.open(fppath).convert('L')
                             .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
     nwalk_probe = None
-    wpath_p = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
+    wpath_p = os.path.join(ART, 'nbp-walk.png')
     if os.path.exists(wpath_p):
         nwalk_probe = np.asarray(Image.open(wpath_p).convert('L')
                                  .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
@@ -329,14 +349,14 @@ def main():
             blocked |= m
             inst['footprint'] = False
     walk_src = ~blocked
-    wpath = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
-    wmet = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk-metrics.json')
+    wpath = os.path.join(ART, 'nbp-walk.png')
+    wmet = os.path.join(ART, 'nbp-walk-metrics.json')
     if os.path.exists(wpath) and os.path.exists(wmet) and json.load(open(wmet)).get('pass'):
         print('using NBP walkability mask (gated)')
         nwalk = np.asarray(Image.open(wpath).convert('L').resize((OUT_W, OUT_H), Image.NEAREST)) > 127
         # ground cables/pipes are step-over-able: they must not partition the
         # floor into islands — union the pipe class back into walkability
-        npb = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+        npb = os.path.join(ART, 'nbp-mask.png')
         if os.path.exists(npb):
             clsb = np.asarray(Image.open(npb).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
@@ -378,7 +398,7 @@ def main():
         sizes = [(lab2 == i).sum() for i in range(1, ncc2)]
         main_id = 1 + int(np.argmax(sizes))
         floor_ok = np.zeros_like(walk_src)
-        npb2 = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+        npb2 = os.path.join(ART, 'nbp-mask.png')
         if os.path.exists(npb2):
             clsb2 = np.asarray(Image.open(npb2).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             floor_ok = (np.linalg.norm(clsb2 - np.array([0, 255, 0], np.int16), axis=2) < 90) & ~blocked
@@ -436,6 +456,16 @@ def main():
     # pixel BFS gate on a 4px lattice (device px; logical = /2)
     step = max(8, round(8 * OUT_W / 1280))
     src_per_logical = OUT_W / 640
+    if AUTO_SPAWN:
+        # spawn = deepest point of the largest walkable region (max clearance)
+        import cv2 as _cvs
+        nsp, lsp = _cvs.connectedComponents(walk_arr.astype(np.uint8))
+        if nsp > 1:
+            big = 1 + int(np.argmax([(lsp == i).sum() for i in range(1, nsp)]))
+            dt = _cvs.distanceTransform((lsp == big).astype(np.uint8), _cvs.DIST_L2, 5)
+            syp, sxp = np.unravel_index(int(dt.argmax()), dt.shape)
+            globals()['SPAWN_PX'] = (int(sxp / src_per_logical), int(syp / src_per_logical))
+            print(f'auto-spawn at logical {SPAWN_PX} (clearance {dt.max():.0f}px)')
     sx, sy = int(SPAWN_PX[0] * src_per_logical) // step, int(SPAWN_PX[1] * src_per_logical) // step
     lat_w, lat_h = OUT_W // step, OUT_H // step
     lat = np.zeros((lat_h, lat_w), dtype=bool)
@@ -462,10 +492,66 @@ def main():
     keep = lz[min(OUT_H - 1, sy_px), min(OUT_W - 1, sx_px)]
     if keep > 0:
         walk_arr = (lz == keep)
-    # auto-exit: prefer a naturally reachable strip on the bottom border
+    # multi-edge exits (per rooms.json): a walkable strip near each exit edge,
+    # detected if present, carved to the edge center if not
+    EXITS_OUT = []
+    if EXIT_EDGES:
+        margin = int(40 * src_per_logical / 3.75)
+        for edge in EXIT_EDGES:
+            if edge in ('n', 's'):
+                band = walk_arr[8:8 + margin, :] if edge == 'n' else walk_arr[OUT_H - margin - 8:OUT_H - 8, :]
+                ok_idx = np.where(band.any(axis=0))[0]
+            else:
+                band = walk_arr[:, 8:8 + margin] if edge == 'w' else walk_arr[:, OUT_W - margin - 8:OUT_W - 8]
+                ok_idx = np.where(band.any(axis=1))[0]
+            if len(ok_idx) < int(24 * src_per_logical):
+                # carve a corridor from the nearest reachable cell to edge center
+                if edge == 'n':
+                    tgt = (OUT_W // 2 // step, 2)
+                elif edge == 's':
+                    tgt = (OUT_W // 2 // step, (OUT_H - 12) // step)
+                elif edge == 'w':
+                    tgt = (2, OUT_H // 2 // step)
+                else:
+                    tgt = ((OUT_W - 12) // step, OUT_H // 2 // step)
+                nx0, ny0 = min(seen, key=lambda t: abs(t[0] - tgt[0]) + abs(t[1] - tgt[1]))
+                xC, yC = nx0, ny0
+                ptsC = []
+                while xC != tgt[0]:
+                    xC += 1 if tgt[0] > xC else -1
+                    ptsC.append((xC, yC))
+                while yC != tgt[1]:
+                    yC += 1 if tgt[1] > yC else -1
+                    ptsC.append((xC, yC))
+                for cxe, cye in ptsC:
+                    walk_arr[max(0, cye * step - 16):cye * step + 24,
+                             max(0, cxe * step - 16):cxe * step + 24] = True
+                walk_arr[:8, :] = False
+                walk_arr[-8:, :] = False
+                walk_arr[:, :8] = False
+                walk_arr[:, -8:] = False
+                if edge in ('n', 's'):
+                    band = walk_arr[8:8 + margin, :] if edge == 'n' else walk_arr[OUT_H - margin - 8:OUT_H - 8, :]
+                    ok_idx = np.where(band.any(axis=0))[0]
+                else:
+                    band = walk_arr[:, 8:8 + margin] if edge == 'w' else walk_arr[:, OUT_W - margin - 8:OUT_W - 8]
+                    ok_idx = np.where(band.any(axis=1))[0]
+                print(f'exit edge {edge}: carved corridor to border')
+            lo, hi = int(ok_idx.min() / src_per_logical), int(ok_idx.max() / src_per_logical)
+            if edge == 'n':
+                rect = (lo, 0, hi, 18)
+            elif edge == 's':
+                rect = (lo, 430, hi, 447)
+            elif edge == 'w':
+                rect = (0, lo, 18, hi)
+            else:
+                rect = (622, lo, 640, hi)
+            EXITS_OUT.append({'edge': edge, 'rect': list(rect)})
+            print(f'exit edge {edge}: strip {lo}..{hi} (logical)')
+    # legacy single auto-exit (anchor room): reachable strip on bottom border
     band = walk_arr[OUT_H - 40:OUT_H - 8, :]
     cols_ok = np.where(band.any(axis=0))[0]
-    if len(cols_ok) > 20:
+    if LEGACY_S and len(cols_ok) > 20:
         exl = int(cols_ok.min() / src_per_logical)
         exr = int(cols_ok.max() / src_per_logical)
         globals()['EXIT_RECT'] = (exl, 430, exr, 447)
@@ -473,7 +559,7 @@ def main():
     frac = walk_arr.mean()
     print(f'walkable fraction: {frac:.2f}; lattice reachable: {len(seen)}; exit reachable: {exit_ok}')
     assert 0.15 < frac < 0.8, 'walkable fraction out of bounds'
-    if not exit_ok:
+    if LEGACY_S and not exit_ok:
         # carve: straight ramp from nearest reachable lattice cell to exit center
         tx, ty = (ex0 + ex1) // 2, (ey0 + ey1) // 2
         nx, ny = min(seen, key=lambda t: abs(t[0] - tx) + abs(t[1] - ty))
@@ -503,7 +589,7 @@ def main():
         if statsv[ii, _cvz.CC_STAT_AREA] < 1500:
             walk_arr[linv == ii] = True
     cls_floor = np.zeros_like(walk_arr)
-    npbc = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+    npbc = os.path.join(ART, 'nbp-mask.png')
     if os.path.exists(npbc):
         clsc = np.asarray(Image.open(npbc).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
         cls_floor = np.linalg.norm(clsc - np.array([0, 255, 0], np.int16), axis=2) < 90
@@ -520,7 +606,7 @@ def main():
         # only rescue regions NBP's walk pass actually called standable —
         # never carve corridors to liberated-overhang/roof artifacts
         nwalk_ref = np.zeros_like(walk_arr)
-        wref = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
+        wref = os.path.join(ART, 'nbp-walk.png')
         if os.path.exists(wref):
             nwalk_ref = np.asarray(Image.open(wref).convert('L')
                                    .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
@@ -607,7 +693,7 @@ def main():
         fg_meta.append({'img': f'rooms/{fn}', 'x': round(x0 * dsx), 'y': round(y0 * dsy),
                         'baseY': round(inst['baseY'] * dsy),
                         'label': inst['label'], 'kind': inst['kind']})
-    json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'fg': fg_meta,
+    json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'exits': EXITS_OUT, 'fg': fg_meta,
                'instances': [{k: v for k, v in i.items()} for i in instances]},
               open(os.path.join(rooms_dir, f'{NAME}.instances.json'), 'w'))
 

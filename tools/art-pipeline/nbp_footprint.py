@@ -27,22 +27,30 @@ from google.genai import types
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PLATE = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor.png')
 OUT = os.path.join(ROOT, 'docs', 'art-options')
+import argparse
+_ap = argparse.ArgumentParser()
+_ap.add_argument('--room', default=None, help='room name under docs/art-options/rooms/<room>/')
+_args, _ = _ap.parse_known_args()
+if _args.room:
+    OUT = os.path.join(ROOT, 'docs', 'art-options', 'rooms', _args.room)
+    PLATE = os.path.join(OUT, 'plate.png')
+
 
 PROMPT = (
     'Repaint this EXACT image as a flat OBJECT-FOOTPRINT map for a top-down game. Keep every '
     'silhouette and position PIXEL-IDENTICAL — do not move or redraw anything. Two flat colors only:\n'
     '- pure red #FF0000: the FOOTPRINT of every object — the region of the ground plane the object '
     'physically occupies and a walking character could collide with:\n'
-    '  * for FREESTANDING objects (the central pylon, glass hydroponic tanks, stalls, machines, '
-    'crates, barrels, lamp posts, bridge railings): paint ONLY the base where the object meets the '
-    'ground — NOT its upper body, glass, canopy or anything above the base. Specifically: the '
-    'central glowing pylon gets red ONLY on its pedestal footing where it meets the grate — its '
-    'tall column shaft and lamp above the pedestal must be green. Each glass hydroponic tank gets '
-    'red ONLY on its planter pedestal — the glass cylinder and the tree inside must be green\n'
+    '  * for FREESTANDING objects (pylons, glass tanks, stalls, machines, crates, barrels, lamp '
+    'posts, cranes, benches, railings): paint ONLY the base where the object meets the ground — '
+    'NOT its upper body, glass, canopy or anything above the base. Examples of the rule: a tall '
+    'glowing pylon gets red ONLY on its pedestal footing — its column shaft and lamp above must '
+    'be green; a glass tank gets red ONLY on its planter pedestal — the glass and contents above '
+    'must be green; a stall gets red on its counter base — its awning must be green\n'
     '  * for BUILDINGS and walls attached to the scene edge: paint their ENTIRE occupied area '
     '(a character can never stand behind them)\n'
-    '- pure green #00FF00: everything else — open floors, the CENTRAL METAL GRATE PLATFORM (it is '
-    'walkable floor, not an object), the bridge deck, water surface, and the UPPER BODIES of '
+    '- pure green #00FF00: everything else — open floors, metal grates and decks that are '
+    'walkable floor (not objects), bridge decks, water surface, and the UPPER BODIES of '
     'freestanding objects (above their bases)\n'
     'Never paint a walkable floor surface red. Every pixel must be exactly red or green.'
 )

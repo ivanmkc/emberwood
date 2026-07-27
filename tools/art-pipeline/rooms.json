@@ -1,0 +1,108 @@
+{
+  "rooms": {
+    "rooftops": {
+      "title": "Rooftop Gardens",
+      "brief": "rooftop garden walkways above a sci-fi market district: raised planter beds with vegetables and glowing flora, patched solar sails on poles, humming AC units and vent stacks, metal catwalks with railings between roof sections, cables, a distant skyline of stacked city blocks under a hazy sky",
+      "exits": {
+        "n": "observatory",
+        "w": "residential"
+      }
+    },
+    "observatory": {
+      "title": "Skyward Observatory",
+      "brief": "a clifftop observatory terrace: a dome building with its slit open and a brass-and-steel telescope aimed at the sky, star-chart boards on stands, low stone-and-metal terraces with steps, railings at the cliff edge, small service shed, cold night-leaning light with warm lamps",
+      "exits": {
+        "s": "rooftops"
+      }
+    },
+    "night-bazaar": {
+      "title": "Night Bazaar",
+      "brief": "a dense covered market alley: market stalls with patched fabric awnings, strings of hanging lanterns, a noodle counter with steam, stacked crates of produce and parts, neon signs in an invented script, puddles reflecting the lights, narrow walking lanes between the stalls",
+      "exits": {
+        "w": "gate-wall",
+        "s": "residential",
+        "e": "anchorroom"
+      }
+    },
+    "gate-wall": {
+      "title": "The City Gate",
+      "brief": "the great city wall seen from inside: a massive armored gate with warning stripes and rivets, guard kiosks with screens, sandbag positions, spotlights on masts, a wide cracked-concrete apron in front of the gate, faded road markings, hazard signage",
+      "exits": {
+        "w": "outskirts",
+        "e": "night-bazaar"
+      }
+    },
+    "outskirts": {
+      "title": "Outskirts Scrub",
+      "brief": "scrubland outside the city wall: broken slabs of an ancient highway half-buried in dust, rusted transmission pylons, a crashed cargo hauler overgrown with hardy teal plants, scattered boulders, a worn footpath, the city wall looming along one edge",
+      "exits": {
+        "e": "gate-wall"
+      }
+    },
+    "residential": {
+      "title": "Residential Stacks",
+      "brief": "a courtyard between stacked modular homes: prefab housing units stacked two and three high with external metal stairs, laundry lines with clothes between units, mailbox clusters, potted plants on landings, a small shared courtyard with benches and a water spigot",
+      "exits": {
+        "s": "canal-docks",
+        "n": "night-bazaar",
+        "e": "rooftops"
+      }
+    },
+    "canal-docks": {
+      "title": "Canal Docks",
+      "brief": "a waterfront dock on a teal canal: a moored rusty barge, a small cargo crane, bollards with coiled ropes, stacked shipping crates, a fish stall with hanging catch, wooden-and-metal boardwalk planks along the waterline, gulls-eye clutter of nets and floats",
+      "exits": {
+        "e": "hydroponics",
+        "n": "residential"
+      }
+    },
+    "hydroponics": {
+      "title": "Hydroponics Hall",
+      "brief": "the interior of a hydroponics grow-hall: long parallel rows of glass grow-tanks with young trees and crops glowing softly, overhead irrigation pipes with drip lines, control consoles with green screens, a central walking aisle and side aisles between tank rows, wet reflective floor",
+      "exits": {
+        "n": "repair-bay",
+        "w": "canal-docks"
+      }
+    },
+    "repair-bay": {
+      "title": "Repair Bay",
+      "brief": "the interior of a repair workshop: a vehicle hoist holding a half-dismantled rover with its guts exposed, tool walls with outlined tools, a welding corner with scorch marks, parts shelves, rolling toolboxes, oil stains on the concrete floor, task lamps",
+      "exits": {
+        "e": "transit",
+        "s": "hydroponics",
+        "w": "anchorroom"
+      }
+    },
+    "transit": {
+      "title": "Maglev Platform",
+      "brief": "a maglev transit platform: a recessed rail channel with glowing guide strips, waiting benches, ticket gates, route-map screens on pylons, a platform-edge warning line, vending machine, departure board, roof canopy with hanging signage",
+      "exits": {
+        "s": "underworks",
+        "w": "repair-bay"
+      }
+    },
+    "underworks": {
+      "title": "The Underworks",
+      "brief": "underground maintenance tunnels: thick pipes running along the walls with valve wheels, a grated metal floor over a glowing teal coolant channel, service lamps in wire cages, junction boxes, stenciled numbers on the walls, dripping condensation, a wide main tunnel with side alcoves",
+      "exits": {
+        "n": "transit",
+        "e": "power-plant"
+      }
+    },
+    "power-plant": {
+      "title": "Reactor Hall",
+      "brief": "a reactor hall: a giant glowing energy pylon (a big sibling of a small plaza pylon) inside a containment ring, heavy braided cables snaking to floor sockets, a raised control pulpit with levers and dials, warning chevrons painted on the floor, coolant tanks along the walls",
+      "exits": {
+        "w": "underworks"
+      }
+    }
+  },
+  "anchors": {
+    "anchorroom": {
+      "exits": {
+        "w": "night-bazaar",
+        "e": "repair-bay"
+      }
+    }
+  }
+}

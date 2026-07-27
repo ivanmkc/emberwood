@@ -175,6 +175,7 @@ const homeRows = [
 ];
 
 import { ROOM_ANCHORROOM } from './rooms/anchorroom.js';
+import { PLATE_ROOMS } from './rooms/index.js';
 
 export const MAPS = {
   anchorroom: {
@@ -369,4 +370,25 @@ export function buildGrid(map) {
   const grid = map.rows.map((r) => r.split(''));
   for (const [x, y, ch] of map.decor) grid[y][x] = ch;
   return grid;
+}
+
+// plate-room districts from the generated registry; the anchor keeps its
+// hand-authored entry (NPCs, legacy S exit) and only gains its edge exits.
+for (const [id, r] of Object.entries(PLATE_ROOMS)) {
+  if (MAPS[id]) {
+    MAPS[id].plateExits = r.exits;
+    continue;
+  }
+  MAPS[id] = {
+    id,
+    rows: r.rows,
+    decor: [],
+    dark: false,
+    plate: r.plate,
+    spawnX: Math.round(r.spawn[0] / 16),
+    spawnY: Math.round(r.spawn[1] / 16),
+    plateExits: r.exits,
+    portals: [],
+    entities: [],
+  };
 }
