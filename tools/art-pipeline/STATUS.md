@@ -1,5 +1,13 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## UI ROUND 2 SHIPPED 2026-07-27 (fourth run)
+Press Start 2P self-hosted (OFL in assets/fonts) for display text; redrawn
+HUD icons (outlined hearts, hex-nut scrap, keycard); synthesized 2-frame walk
+cycle; sludge squash / drone jitter; slash glow + hit-stop + screen shake;
+coolant ripple drift; win embers; ASCII-source gate test (confusable Unicode
+in pixel art was a recurring authoring bug — now deterministic). 23/23 tests,
+UI judge: title 8/9/8/7, HUD 8/7/8/7. Live verified.
+
 ## UI PASS SHIPPED 2026-07-27 (third run)
 Judge-audited (new 'ui' rubric in judge.py) before/after: HUD cohesion 5->8,
 polish 4->6; dialogue cohesion 6->8; mobile polish 4->7. Changes: HUD plates
