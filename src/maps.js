@@ -187,25 +187,27 @@ export const MAPS = {
       { x: 14, y: 3, to: 'biodome', tx: 10, ty: 12 }, // Eden Shelf hatch
     ],
     deco: [
+      // plaza lamps line the plating edges
       { type: 'lamp', x: 33, y: 22 }, { type: 'lamp', x: 40, y: 26 },
       { type: 'lamp', x: 31, y: 28 }, { type: 'lamp', x: 36, y: 21 },
-      { type: 'rack', x: 23, y: 30 }, { type: 'vat', x: 27, y: 31 },
-      { type: 'rock', x: 35, y: 8 }, { type: 'rack', x: 33, y: 8 },
-      { type: 'rock', x: 15, y: 20 }, { type: 'rock', x: 43, y: 31 },
+      // market row: stall + goods against the Harroways' west wall
       { type: 'stall', x: 40, y: 22 },
-      { type: 'crates', x: 35, y: 21 }, { type: 'crates', x: 43, y: 20 },
-      { type: 'bush', x: 10, y: 16 }, { type: 'bush', x: 21, y: 14 },
-      { type: 'bush', x: 27, y: 12 }, { type: 'bush', x: 39, y: 9 },
-      { type: 'bush', x: 44, y: 26 }, { type: 'bush', x: 18, y: 28 },
-      { type: 'bush', x: 7, y: 28 }, { type: 'bush', x: 34, y: 32 },
-      { type: 'bush', x: 12, y: 25 }, { type: 'bush', x: 29, y: 15 },
-      { type: 'pipe', x: 17, y: 14 }, { type: 'pipe', x: 41, y: 15 },
-      { type: 'pipe', x: 22, y: 29 }, { type: 'pipe', x: 36, y: 30 },
+      { type: 'crates', x: 43, y: 20 }, { type: 'rack', x: 44, y: 20 },
+      // storage against the ops block south wall
+      { type: 'crates', x: 33, y: 20 }, { type: 'crates', x: 35, y: 21 },
+      // FRT-9 wreck site cluster
+      { type: 'rack', x: 23, y: 30 }, { type: 'vat', x: 27, y: 31 },
+      { type: 'pipe', x: 26, y: 29 }, { type: 'pipe', x: 22, y: 29 },
+      // comms masts on the rock line + village east fence
       { type: 'mast', x: 33, y: 7 }, { type: 'mast', x: 44, y: 19 },
-      { type: 'pipe', x: 42, y: 20 }, { type: 'rack', x: 44, y: 20 },
-      { type: 'bush', x: 11, y: 16 }, { type: 'bush', x: 20, y: 14 },
-      { type: 'bush', x: 43, y: 26 }, { type: 'crates', x: 33, y: 20 },
-      { type: 'bush', x: 8, y: 27 }, { type: 'pipe', x: 26, y: 29 },
+      // bushes hug the forest edge and the shoreline
+      { type: 'bush', x: 5, y: 14 }, { type: 'bush', x: 12, y: 14 },
+      { type: 'bush', x: 17, y: 13 }, { type: 'bush', x: 14, y: 20 },
+      { type: 'bush', x: 43, y: 26 }, { type: 'bush', x: 34, y: 32 },
+      // trailside fittings
+      { type: 'pipe', x: 31, y: 14 }, { type: 'pipe', x: 37, y: 16 },
+      { type: 'rock', x: 15, y: 20 }, { type: 'rock', x: 44, y: 31 },
+      { type: 'rock', x: 29, y: 8 },
     ],
     entities: [
       { kind: 'chest', id: 'shard1', x: 9, y: 7, loot: { shard: 1 } },

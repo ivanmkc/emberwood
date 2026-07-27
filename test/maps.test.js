@@ -9,6 +9,7 @@ function walkableChar(ch) {
 }
 
 const SOLID_KINDS = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal', 'charter'];
+const SOLID_DECO = ['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp'];
 
 // BFS over a map's grid. Solid entities block, except the target entity.
 // opts.doorPasses: treat lockedDoor entities as passable.
@@ -23,6 +24,11 @@ function reachable(map, from, to, opts = {}) {
     if (e.kind === 'lockedDoor' && opts.doorPasses) continue;
     if (e.x === to.x && e.y === to.y) continue; // target itself
     blocked.add(`${e.x},${e.y}`);
+  }
+  for (const d of map.deco || []) {
+    if (SOLID_DECO.includes(d.type) && !(d.x === to.x && d.y === to.y)) {
+      blocked.add(`${d.x},${d.y}`);
+    }
   }
   const pass = (x, y) =>
     x >= 0 && y >= 0 && x < W && y < H
@@ -162,6 +168,23 @@ test('deco props sit on walkable tiles (no buried scenery)', () => {
     for (const d of map.deco || []) {
       assert.ok(walkableChar(grid[d.y][d.x]),
         `${map.id}: deco ${d.type} at ${d.x},${d.y} sits on solid tile '${grid[d.y][d.x]}'`);
+    }
+  }
+});
+
+test('solid deco never sits on portals, relay pads or entity tiles', () => {
+  const RESERVED = [[40, 28], [31, 7], [31, 8], [40, 27], [30, 5], [30, 6], [30, 7]];
+  for (const map of Object.values(MAPS)) {
+    for (const d of map.deco || []) {
+      if (!SOLID_DECO.includes(d.type)) continue;
+      assert.ok(!map.portals.some((p) => p.x === d.x && p.y === d.y),
+        `${map.id}: deco ${d.type} blocks portal at ${d.x},${d.y}`);
+      assert.ok(!map.entities.some((e) => e.x === d.x && e.y === d.y),
+        `${map.id}: deco ${d.type} overlaps entity at ${d.x},${d.y}`);
+      if (map.id === 'overworld') {
+        assert.ok(!RESERVED.some(([rx, ry]) => rx === d.x && ry === d.y),
+          `${map.id}: deco ${d.type} blocks reserved route tile ${d.x},${d.y}`);
+      }
     }
   }
 });

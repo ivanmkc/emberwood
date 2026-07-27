@@ -35,6 +35,9 @@ const TILE_ART = {
 
 const DISPLAY_FONT = '8px PixelDisplay, monospace';
 
+// deco props with physical presence: you cannot walk through the furniture
+const PROP_SOLID = new Set(['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp']);
+
 const NPC_ART = {
   elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler',
   keeper: 'keeper', mara: 'settler',
@@ -246,6 +249,7 @@ export function createGame(canvas, input, art) {
       g.props.push({ type: ty2, x: px2 * T + T / 2, baseY: (py2 + 1) * T });
     }
     g.lateProps = null;
+    g.solidProps = g.props.filter((pr) => PROP_SOLID.has(pr.type));
   }
 
   function loadMap(id, tx, ty) {
@@ -324,6 +328,9 @@ export function createGame(canvas, input, art) {
     for (const e of g.entities) {
       if (e === self || !entitySolid(e)) continue;
       if (aabb(x, y, w, h, e.x + 2, e.y + 2, 12, 12)) return true;
+    }
+    for (const pr of g.solidProps || []) {
+      if (aabb(x, y, w, h, pr.x - 6, pr.baseY - 9, 12, 9)) return true;
     }
     return false;
   }
