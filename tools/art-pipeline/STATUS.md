@@ -1,5 +1,12 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## UI ROUND 3 + GAMEPLAY AUDIT SHIPPED 2026-07-27 (fifth run)
+NPCs face player on talk; beacon core pulse (lit) + red distress blink (dead);
+looted-chest slot; pulsing pads; aligned title columns; journal status chips.
+Gameplay audit harness tools/audit_gameplay.mjs (economy/combat/BFS travel from
+real data) -> findings in docs/GAMEPLAY_AUDIT.md; fixes: Arc Capacitor sink
+(30 scrap, +1 dmg, amber slash), boss HP 10. 60.5fps measured. 23/23 tests.
+
 ## UI ROUND 2 SHIPPED 2026-07-27 (fourth run)
 Press Start 2P self-hosted (OFL in assets/fonts) for display text; redrawn
 HUD icons (outlined hearts, hex-nut scrap, keycard); synthesized 2-frame walk
