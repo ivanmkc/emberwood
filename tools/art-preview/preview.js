@@ -461,6 +461,433 @@ function drawTilt(ctx) {
   label(ctx, 'TILTED PERSPECTIVE "HD-2D" (angled camera) — mockup');
 }
 
+// Forager-style package: saturated checker terrain, thick sticker outlines,
+// chibi characters, drop shadows, chunky oblique props.
+function drawForager(ctx) {
+  const grid = buildGrid(MAPS.overworld);
+  const X0 = 24, Y0 = 16, W = 20, H = 15;
+  const T2 = 16;
+  const at = (lx, ly) => grid[Y0 + ly] && grid[Y0 + ly][X0 + lx];
+  const isWater = (ch) => ch === '~';
+  const isLand = (ch) => ch && !isWater(ch);
+
+  // terrain
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const ch = at(x, y);
+      const px = x * T2, py = y * T2;
+      let base = '#63c74d';
+      if (isWater(ch)) base = '#2d6cc0';
+      else if (ch === 's') base = '#f4dc8c';
+      else if (ch === 'p' || ch === 'o') base = '#e8c170';
+      else if (ch === '=') base = '#b7793f';
+      ctx.fillStyle = base;
+      ctx.fillRect(px, py, T2, T2);
+      if ((x + y) % 2 === 0) {
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        ctx.fillRect(px, py, T2, T2);
+      }
+      if (isWater(ch)) {
+        if ((x * 7 + y * 5) % 6 === 0) {
+          ctx.fillStyle = 'rgba(255,255,255,0.5)';
+          ctx.fillRect(px + 5, py + 8, 4, 2);
+        }
+        // foam rim against land
+        ctx.fillStyle = '#9ed1f0';
+        if (isLand(at(x - 1, y))) ctx.fillRect(px, py, 2, T2);
+        if (isLand(at(x + 1, y))) ctx.fillRect(px + T2 - 2, py, 2, T2);
+        if (isLand(at(x, y - 1))) ctx.fillRect(px, py, T2, 2);
+        if (isLand(at(x, y + 1))) ctx.fillRect(px, py + T2 - 2, T2, 2);
+      } else {
+        // dark grounded edge where land meets water (sticker island look)
+        ctx.fillStyle = '#2c5e34';
+        if (isWater(at(x - 1, y))) ctx.fillRect(px, py, 2, T2);
+        if (isWater(at(x + 1, y))) ctx.fillRect(px + T2 - 2, py, 2, T2);
+        if (isWater(at(x, y - 1))) ctx.fillRect(px, py, T2, 2);
+        if (isWater(at(x, y + 1))) ctx.fillRect(px, py + T2 - 2, T2, 2);
+      }
+      if (ch === '=') {
+        ctx.strokeStyle = '#7a4a21';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 4; i++) {
+          ctx.beginPath();
+          ctx.moveTo(px, py + 2 + i * 4); ctx.lineTo(px + T2, py + 2 + i * 4);
+          ctx.stroke();
+        }
+      }
+      if (ch === ',') {
+        ctx.fillStyle = '#ffd93d';
+        ctx.fillRect(px + 4, py + 4, 3, 3);
+        ctx.fillStyle = '#ff6b6b';
+        ctx.fillRect(px + 10, py + 9, 3, 3);
+      }
+    }
+  }
+
+  const shadow = (cx, cy, w) => {
+    ctx.fillStyle = 'rgba(20, 40, 30, 0.28)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, w, w * 0.34, 0, 0, 7);
+    ctx.fill();
+  };
+  const O = '#25341f'; // outline
+
+  // chunky outlined trees
+  const tree = (cx, base) => {
+    shadow(cx, base - 1, 8);
+    ctx.fillStyle = '#6d4c2f';
+    ctx.strokeStyle = O;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(cx - 2.5, base - 9, 5, 8, 2);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#3ea34c';
+    ctx.beginPath();
+    ctx.arc(cx, base - 16, 9.5, 0, 7);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#63c74d';
+    ctx.beginPath();
+    ctx.arc(cx - 3, base - 19, 4.5, 0, 7);
+    ctx.fill();
+  };
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (at(x, y) === '#') tree(x * T2 + 8, y * T2 + 15);
+      if (at(x, y) === 'M') { // chunky boulder
+        const px = x * T2, base = y * T2 + 15;
+        shadow(px + 8, base, 8);
+        ctx.fillStyle = '#a8a8b8';
+        ctx.strokeStyle = O;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(px + 2, base - 12, 13, 12, 4);
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#c8c8d8';
+        ctx.fillRect(px + 5, base - 9, 4, 3);
+      }
+    }
+  }
+
+  // chunky houses over their map footprints (cols are local X, row pair y17-18)
+  const house = (lx, w4) => {
+    const px = lx * T2, base = 3 * T2 - 2;
+    const fw = w4 * T2;
+    shadow(px + fw / 2, base + 2, fw / 2);
+    ctx.strokeStyle = '#3a2430';
+    ctx.lineWidth = 2;
+    ctx.fillStyle = '#f2e3c2';
+    ctx.beginPath();
+    ctx.roundRect(px + 2, base - 22, fw - 4, 22, 3);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#e8543f';
+    ctx.beginPath();
+    ctx.roundRect(px - 2, base - 36, fw + 4, 17, 5);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#c93b2b';
+    ctx.fillRect(px - 2, base - 24, fw + 4, 4);
+    ctx.fillStyle = '#8a5a2b';
+    ctx.beginPath();
+    ctx.roundRect(px + fw / 2 - 5, base - 13, 10, 13, 2);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#ffd93d';
+    ctx.fillRect(px + fw / 2 + 1, base - 8, 2, 2);
+    ctx.fillStyle = '#bfe3f2';
+    for (const wx of [px + 7, px + fw - 15]) {
+      ctx.beginPath();
+      ctx.roundRect(wx, base - 18, 8, 7, 2);
+      ctx.fill(); ctx.stroke();
+    }
+  };
+  house(9, 4);  // elder house x33..36
+  house(16, 4); // second house x40..43
+
+  // chibi characters
+  const chibi = (cx, base, hair, shirt) => {
+    shadow(cx, base, 6);
+    ctx.strokeStyle = O;
+    ctx.lineWidth = 2;
+    ctx.fillStyle = shirt;
+    ctx.beginPath();
+    ctx.roundRect(cx - 4, base - 8, 8, 7, 2);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#ffd9b3';
+    ctx.beginPath();
+    ctx.arc(cx, base - 12, 6, 0, 7);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = hair;
+    ctx.beginPath();
+    ctx.arc(cx, base - 13.5, 5.6, Math.PI * 1.05, Math.PI * 1.95);
+    ctx.fill();
+    ctx.fillStyle = '#26232a';
+    ctx.fillRect(cx - 3, base - 12, 1.6, 2);
+    ctx.fillRect(cx + 1.4, base - 12, 1.6, 2);
+  };
+  const L = (gx) => (gx - X0) * T2 + 8;
+  const B = (gy) => (gy - Y0) * T2 + 14;
+  chibi(L(32), B(24), '#7a4a21', '#2e9e6b');
+  chibi(L(39), B(23), '#33272e', '#9b59c9');
+  chibi(L(37), B(27), '#3b2a1a', '#e8543f');
+  chibi(L(24), B(26), '#c95a1e', '#3b7dd8');
+
+  // sign + glowing beacon
+  ctx.strokeStyle = O; ctx.lineWidth = 2;
+  ctx.fillStyle = '#b7793f';
+  ctx.beginPath(); ctx.roundRect(L(36) - 7, B(25) - 14, 14, 9, 2); ctx.fill(); ctx.stroke();
+  ctx.fillRect(L(36) - 1.5, B(25) - 5, 3, 5);
+  const bx = L(38), by = B(25);
+  const glow = ctx.createRadialGradient(bx, by - 12, 2, bx, by - 12, 22);
+  glow.addColorStop(0, 'rgba(255, 190, 80, 0.55)');
+  glow.addColorStop(1, 'rgba(255, 190, 80, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(bx - 24, by - 36, 48, 48);
+  shadow(bx, by, 7);
+  ctx.fillStyle = '#a8a8b8';
+  ctx.beginPath(); ctx.roundRect(bx - 5, by - 14, 10, 14, 3); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#ff9e2c';
+  ctx.beginPath();
+  ctx.moveTo(bx, by - 24); ctx.quadraticCurveTo(bx + 6, by - 16, bx, by - 13);
+  ctx.quadraticCurveTo(bx - 6, by - 16, bx, by - 24);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#ffd93d';
+  ctx.beginPath(); ctx.arc(bx, by - 16, 2.5, 0, 7); ctx.fill();
+
+  // ambient sparkles
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  for (const [sx2, sy2] of [[40, 200], [250, 60], [140, 120], [300, 180], [70, 90]]) {
+    ctx.fillRect(sx2 - 1, sy2 - 3, 2, 6);
+    ctx.fillRect(sx2 - 3, sy2 - 1, 6, 2);
+  }
+  label(ctx, 'FORAGER-STYLE (chibi + outlines + shadows) — mockup');
+}
+
+// Eastward-style package: oblique depth with tall detailed facades, muted
+// palette, teal-shadow / warm-highlight cinematic grade, glowing lights.
+function drawEastward(ctx) {
+  const grid = buildGrid(MAPS.overworld);
+  const X0 = 24, Y0 = 16, W = 20, H = 15;
+  const T2 = 16;
+  const at = (lx, ly) => grid[Y0 + ly] && grid[Y0 + ly][X0 + lx];
+
+  // --- muted terrain with dither texture
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const ch = at(x, y);
+      const px = x * T2, py = y * T2;
+      let base = '#43684a';
+      if (ch === '~') base = '#23505e';
+      else if (ch === 's') base = '#cbb083';
+      else if (ch === 'p' || ch === 'o') base = '#b98d5e';
+      else if (ch === '=') base = '#8a6238';
+      ctx.fillStyle = base;
+      ctx.fillRect(px, py, T2, T2);
+      // deterministic speckle
+      for (let i = 0; i < 3; i++) {
+        const n = (x * 73 + y * 151 + i * 37) % 97;
+        const sx = px + (n % 13), sy = py + ((n * 7) % 13);
+        ctx.fillStyle = (n % 2) ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.10)';
+        ctx.fillRect(sx, sy, 2, 2);
+      }
+      if (ch === '~') {
+        if ((x * 5 + y * 9) % 7 === 0) {
+          ctx.fillStyle = 'rgba(180, 230, 235, 0.35)';
+          ctx.fillRect(px + 3, py + 9, 7, 1);
+        }
+      }
+      if (ch === 'p' && (x + y) % 3 === 0) {
+        ctx.fillStyle = 'rgba(0,0,0,0.12)';
+        ctx.fillRect(px + 3, py + 5, 5, 3);
+        ctx.fillRect(px + 9, py + 10, 4, 3);
+      }
+      if (ch === '=') {
+        ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < 4; i++) {
+          ctx.beginPath(); ctx.moveTo(px, py + i * 4); ctx.lineTo(px + T2, py + i * 4); ctx.stroke();
+        }
+      }
+    }
+  }
+
+  // --- long soft shadows (sun upper-left)
+  const longShadow = (cx, base, w) => {
+    ctx.fillStyle = 'rgba(12, 32, 44, 0.35)';
+    ctx.beginPath();
+    ctx.moveTo(cx - w / 2, base);
+    ctx.lineTo(cx + w / 2, base);
+    ctx.lineTo(cx + w / 2 + 10, base + 6);
+    ctx.lineTo(cx - w / 2 + 10, base + 6);
+    ctx.closePath();
+    ctx.fill();
+  };
+
+  // --- trees: layered canopy, dark underside, rim light
+  const tree = (cx, base) => {
+    longShadow(cx, base - 2, 16);
+    ctx.fillStyle = '#5a4030';
+    ctx.fillRect(cx - 2, base - 10, 4, 9);
+    ctx.fillStyle = '#24401f';
+    ctx.beginPath(); ctx.arc(cx, base - 15, 11, 0, 7); ctx.fill();
+    ctx.fillStyle = '#35663c';
+    ctx.beginPath(); ctx.arc(cx - 1, base - 17, 9, 0, 7); ctx.fill();
+    ctx.fillStyle = '#4d8a52';
+    ctx.beginPath(); ctx.arc(cx - 4, base - 20, 5, 0, 7); ctx.fill();
+  };
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      if (at(x, y) === '#') tree(x * T2 + 8, y * T2 + 15);
+      if (at(x, y) === 'M') {
+        const px = x * T2, base = y * T2 + 15;
+        longShadow(px + 8, base, 14);
+        ctx.fillStyle = '#4e4e5c';
+        ctx.fillRect(px + 1, base - 11, 14, 11);
+        ctx.fillStyle = '#6a6a7a';
+        ctx.fillRect(px + 1, base - 11, 14, 4);
+        ctx.fillStyle = '#82828f';
+        ctx.fillRect(px + 3, base - 10, 5, 2);
+      }
+    }
+  }
+
+  // --- tall Eastward facades
+  const house = (lx, w4, lit) => {
+    const px = lx * T2, base = 3 * T2;
+    const fw = w4 * T2;
+    longShadow(px + fw / 2, base, fw);
+    // plaster wall, two-tone (lit left, shaded right)
+    ctx.fillStyle = '#d8c8a8';
+    ctx.fillRect(px, base - 30, fw, 30);
+    ctx.fillStyle = 'rgba(30, 60, 80, 0.22)';
+    ctx.fillRect(px + fw * 0.55, base - 30, fw * 0.45, 30);
+    // timber beams
+    ctx.fillStyle = '#6b4a33';
+    for (const bx of [0, fw * 0.32, fw * 0.66, fw - 3]) ctx.fillRect(px + bx, base - 30, 3, 30);
+    ctx.fillRect(px, base - 18, fw, 2);
+    // roof with eave shadow
+    ctx.fillStyle = 'rgba(12, 32, 44, 0.4)';
+    ctx.fillRect(px - 2, base - 32, fw + 4, 4);
+    ctx.fillStyle = '#91454a';
+    ctx.fillRect(px - 3, base - 44, fw + 6, 13);
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    for (let i = 1; i < 4; i++) ctx.fillRect(px - 3, base - 44 + i * 3, fw + 6, 1);
+    ctx.fillStyle = '#b06a6a';
+    ctx.fillRect(px - 3, base - 45, fw + 6, 2);
+    // chimney
+    ctx.fillStyle = '#5c4c3c';
+    ctx.fillRect(px + fw - 12, base - 52, 6, 9);
+    // lit windows with glow
+    for (const wx of [px + 7, px + fw - 16]) {
+      if (lit) {
+        const gl = ctx.createRadialGradient(wx + 4, base - 22, 1, wx + 4, base - 22, 12);
+        gl.addColorStop(0, 'rgba(255, 200, 110, 0.5)');
+        gl.addColorStop(1, 'rgba(255, 200, 110, 0)');
+        ctx.fillStyle = gl;
+        ctx.fillRect(wx - 8, base - 34, 24, 24);
+        ctx.fillStyle = '#ffcf7a';
+      } else ctx.fillStyle = '#3d4c5c';
+      ctx.fillRect(wx, base - 26, 8, 8);
+      ctx.strokeStyle = '#4a3527';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(wx - 0.5, base - 26.5, 9, 9);
+      ctx.beginPath(); ctx.moveTo(wx + 4, base - 26); ctx.lineTo(wx + 4, base - 18); ctx.stroke();
+    }
+    // door
+    ctx.fillStyle = '#3a2a1e';
+    ctx.fillRect(px + fw / 2 - 5, base - 14, 10, 14);
+    ctx.fillStyle = '#ffcf7a';
+    ctx.fillRect(px + fw / 2 + 2, base - 8, 1, 2);
+  };
+  house(9, 4, true);   // elder house, windows lit
+  house(16, 4, false); // neighbor, dark
+
+  // --- plaza props: lamp post + fence + barrel
+  const lamp = (cx, base) => {
+    longShadow(cx, base, 4);
+    ctx.fillStyle = '#2c2c34';
+    ctx.fillRect(cx - 1, base - 22, 3, 22);
+    ctx.fillRect(cx - 4, base - 24, 9, 5);
+    const gl = ctx.createRadialGradient(cx, base - 21, 1, cx, base - 21, 26);
+    gl.addColorStop(0, 'rgba(255, 200, 110, 0.6)');
+    gl.addColorStop(1, 'rgba(255, 200, 110, 0)');
+    ctx.fillStyle = gl;
+    ctx.fillRect(cx - 26, base - 47, 52, 52);
+    ctx.fillStyle = '#ffdf9a';
+    ctx.fillRect(cx - 2, base - 23, 5, 3);
+  };
+  lamp(10 * T2 + 8, 6 * T2 + 14);
+  lamp(17 * T2 + 8, 11 * T2 + 14);
+  ctx.fillStyle = '#6b4a33';
+  for (let i = 0; i < 5; i++) {
+    const fx = (8 + i) * T2 + 4, fy = 12 * T2 + 6;
+    ctx.fillRect(fx, fy - 6, 2, 8);
+    if (i < 4) ctx.fillRect(fx, fy - 4, T2, 2);
+  }
+  // barrel
+  ctx.fillStyle = '#7a5a3a';
+  ctx.beginPath(); ctx.roundRect(15 * T2 + 2, 3 * T2 - 10, 9, 10, 2); ctx.fill();
+  ctx.fillStyle = '#4a3527';
+  ctx.fillRect(15 * T2 + 2, 3 * T2 - 8, 9, 1);
+  ctx.fillRect(15 * T2 + 2, 3 * T2 - 4, 9, 1);
+
+  // --- taller characters, two-tone shading
+  const person = (cx, base, hair, shirt, pants) => {
+    longShadow(cx, base, 8);
+    ctx.fillStyle = pants;
+    ctx.fillRect(cx - 3, base - 6, 2.5, 6);
+    ctx.fillRect(cx + 0.5, base - 6, 2.5, 6);
+    ctx.fillStyle = shirt;
+    ctx.fillRect(cx - 4, base - 13, 8, 8);
+    ctx.fillStyle = 'rgba(30, 60, 80, 0.25)';
+    ctx.fillRect(cx, base - 13, 4, 8);
+    ctx.fillStyle = '#eec39a';
+    ctx.fillRect(cx - 3, base - 19, 6, 6);
+    ctx.fillStyle = hair;
+    ctx.fillRect(cx - 3.5, base - 21, 7, 4);
+  };
+  const L = (gx) => (gx - X0) * T2 + 8;
+  const B = (gy) => (gy - Y0) * T2 + 14;
+  person(L(32), B(24), '#5a3a1a', '#3a7a5e', '#2c3a4a');
+  person(L(39), B(23), '#2c2130', '#6a4a84', '#3a2c44');
+  person(L(37), B(27), '#33241a', '#9a4a42', '#41302a');
+  person(L(24), B(26), '#a8501e', '#3a5d7d', '#2a3c53');
+
+  // --- beacon: heavy bloom
+  const bx = L(38), by = B(25);
+  longShadow(bx, by, 10);
+  ctx.fillStyle = '#4e4e5c';
+  ctx.fillRect(bx - 5, by - 14, 10, 14);
+  ctx.fillStyle = '#6a6a7a';
+  ctx.fillRect(bx - 5, by - 14, 10, 3);
+  for (const [r, a] of [[34, 0.25], [18, 0.35], [8, 0.5]]) {
+    const gl = ctx.createRadialGradient(bx, by - 18, 1, bx, by - 18, r);
+    gl.addColorStop(0, `rgba(255, 170, 70, ${a})`);
+    gl.addColorStop(1, 'rgba(255, 170, 70, 0)');
+    ctx.fillStyle = gl;
+    ctx.fillRect(bx - r, by - 18 - r, r * 2, r * 2);
+  }
+  ctx.fillStyle = '#ffb347';
+  ctx.beginPath();
+  ctx.moveTo(bx, by - 27); ctx.quadraticCurveTo(bx + 5, by - 19, bx, by - 15);
+  ctx.quadraticCurveTo(bx - 5, by - 19, bx, by - 27);
+  ctx.fill();
+  ctx.fillStyle = '#ffe8a3';
+  ctx.beginPath(); ctx.arc(bx, by - 18, 2.5, 0, 7); ctx.fill();
+
+  // --- cinematic grade: teal shadow wash, warm diagonal light, vignette
+  ctx.fillStyle = 'rgba(25, 55, 75, 0.16)';
+  ctx.fillRect(0, 0, 320, 240);
+  const warm = ctx.createLinearGradient(0, 0, 320, 240);
+  warm.addColorStop(0, 'rgba(255, 190, 110, 0.12)');
+  warm.addColorStop(0.55, 'rgba(255, 190, 110, 0)');
+  ctx.fillStyle = warm;
+  ctx.fillRect(0, 0, 320, 240);
+  const vin = ctx.createRadialGradient(160, 120, 90, 160, 120, 210);
+  vin.addColorStop(0, 'rgba(8, 14, 24, 0)');
+  vin.addColorStop(1, 'rgba(8, 14, 24, 0.42)');
+  ctx.fillStyle = vin;
+  ctx.fillRect(0, 0, 320, 240);
+  label(ctx, 'EASTWARD-STYLE (oblique depth + cinematic grade) — mockup');
+}
+
 function label(ctx, text) {
   ctx.font = '8px monospace';
   ctx.textBaseline = 'top';
@@ -481,6 +908,8 @@ if (params.get('mode') === 'perspective') {
   else if (kind === 'side') drawSide(ctx);
   else if (kind === 'oblique') drawOblique(ctx);
   else if (kind === 'tilt') drawTilt(ctx);
+  else if (kind === 'forager') drawForager(ctx);
+  else if (kind === 'eastward') drawEastward(ctx);
   else drawIso(ctx);
 } else {
   bootStyledGame(params.get('style') || 'verdant');
