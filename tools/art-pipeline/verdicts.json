@@ -1,0 +1,641 @@
+{
+ "asset:beacon": {
+  "pass": true,
+  "det": {
+   "coverage": 0.835,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 9,
+   "issues": "Slightly less pronounced outlines than the style anchor, but colors and lighting are consistent."
+  }
+ },
+ "asset:chest": {
+  "pass": false,
+  "det": {
+   "coverage": 0.978,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 6,
+   "issues": "Resolution is much lower than the anchor scene (chunky pixels). Lighting is soft and blurry compared to the crisp pixel art of the anchor. Missing outline."
+  }
+ },
+ "asset:house": {
+  "pass": true,
+  "det": {
+   "coverage": 0.882,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 9,
+   "issues": "Slightly less detailed than anchor structures, but color palette and theme match well."
+  }
+ },
+ "asset:lamp": {
+  "pass": true,
+  "det": {
+   "coverage": 0.684,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 9,
+   "issues": "None"
+  }
+ },
+ "asset:rock": {
+  "pass": false,
+  "det": {
+   "coverage": 0.873,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Lighting on the asset is overly smooth and gradient-like compared to the crisper, more distinct pixel art shading of the anchor. A bit generic for a sci-fi prop."
+  }
+ },
+ "asset:tree": {
+  "pass": true,
+  "det": {
+   "coverage": 0.709,
+   "magenta_fringe": 0.0058
+  },
+  "judge": {
+   "style_match": 8,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true,
+   "theme_fit": 9,
+   "issues": "Slight style difference in the base structure compared to the anchor's glass cylinders, but pixel density and colors are consistent."
+  }
+ },
+ "tile:carpet": {
+  "pass": false,
+  "det": {
+   "seam_lr": 3.0,
+   "seam_tb": 1.4,
+   "std": 33.6
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 3,
+   "readability": 7,
+   "issues": "very obvious repeating grid pattern, seams visible"
+  }
+ },
+ "tile:coolant": {
+  "pass": true,
+  "det": {
+   "seam_lr": 0.2,
+   "seam_tb": 0.4,
+   "std": 21.5
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 6,
+   "issues": "Repetitive small wave highlights create a visible grid pattern. Needs more continuous fluid forms to read well as flowing liquid rather than just a dark solid with repeating marks."
+  }
+ },
+ "tile:dust": {
+  "pass": true,
+  "det": {
+   "seam_lr": 3.2,
+   "seam_tb": 1.4,
+   "std": 11.0
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 8,
+   "issues": "Visible diagonal repeating pattern creates a grid-like artifact."
+  }
+ },
+ "tile:floorpanel": {
+  "pass": true,
+  "det": {
+   "seam_lr": 1.8,
+   "seam_tb": 1.0,
+   "std": 11.5
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 8,
+   "issues": "Repetitive grid pattern visible due to distinct lines"
+  }
+ },
+ "tile:ground": {
+  "pass": false,
+  "det": {
+   "seam_lr": 5.1,
+   "seam_tb": 4.1,
+   "std": 67.3
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 3,
+   "readability": 8,
+   "issues": "very obvious tiling grid, visible seams"
+  }
+ },
+ "tile:minefloor": {
+  "pass": true,
+  "det": {
+   "seam_lr": 2.2,
+   "seam_tb": 1.3,
+   "std": 6.3
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 8,
+   "issues": "Noticeable repeating diagonal pattern"
+  }
+ },
+ "tile:minewall": {
+  "pass": true,
+  "det": {
+   "seam_lr": 12.1,
+   "seam_tb": 13.0,
+   "std": 16.9
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 8,
+   "issues": "Noticeable repeating grid pattern"
+  }
+ },
+ "tile:plate": {
+  "pass": false,
+  "det": {
+   "seam_lr": 0.5,
+   "seam_tb": 1.8,
+   "std": 13.3
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 3,
+   "readability": 8,
+   "issues": "very obvious tiling seams and grid-like repetition"
+  }
+ },
+ "tile:rubble": {
+  "pass": true,
+  "det": {
+   "seam_lr": 7.4,
+   "seam_tb": 9.0,
+   "std": 11.4
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 6,
+   "readability": 8,
+   "issues": "Noticeable repetition grid due to specific highlight clusters"
+  }
+ },
+ "tile:walkway": {
+  "pass": false,
+  "det": {
+   "seam_lr": 10.1,
+   "seam_tb": 21.6,
+   "std": 15.1
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 3,
+   "readability": 8,
+   "issues": "very obvious tiling grid pattern"
+  }
+ },
+ "tile:wallpanel": {
+  "pass": false,
+  "det": {
+   "seam_lr": 18.6,
+   "seam_tb": 0.7,
+   "std": 20.8
+  },
+  "judge": {
+   "style_match": 8,
+   "flat_plan_view": true,
+   "tileable": 3,
+   "readability": 8,
+   "issues": "very obvious tiling grid, visible seams where pattern breaks"
+  }
+ },
+ "char:angler-down": {
+  "pass": false,
+  "det": {
+   "coverage": 0.781,
+   "magenta_fringe": 0.0012
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Art style is very different, lacking the outline and specific shading of the anchor. Theme is a bit too realistic/gritty for the anchor's vibrant sci-fi look."
+  }
+ },
+ "char:angler-left": {
+  "pass": false,
+  "det": {
+   "coverage": 0.529,
+   "magenta_fringe": 0.0015
+  },
+  "judge": {
+   "style_match": 1,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": false,
+   "theme_fit": 1,
+   "issues": "Wrong perspective (side-scroller, not top-down), style heavily clashes (messy pixels, very different art style)."
+  }
+ },
+ "char:angler-right": {
+  "pass": false,
+  "det": {
+   "coverage": 0.547,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Too low resolution/lacks outline, shading style differs from anchor."
+  }
+ },
+ "char:angler-up": {
+  "pass": false,
+  "det": {
+   "coverage": 0.788,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Too blurry/pixelated, lacks the crisp lineart and specific sci-fi/cyberpunk aesthetic of the style anchor."
+  }
+ },
+ "char:angler": {
+  "pass": false,
+  "det": {
+   "coverage": 0.338,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 6,
+   "issues": "Style is significantly more realistic and detailed than the simpler, stylized anchor. The shading has much more depth, and the outlines are less pronounced."
+  }
+ },
+ "char:boss": {
+  "pass": false,
+  "det": {
+   "coverage": 0.744,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": false,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": false,
+   "theme_fit": 2,
+   "issues": "Blob/slime shape does not fit the humanoid/robot characters in the anchor style; lacks outlining style and shading consistency with the environment."
+  }
+ },
+ "char:chief-down": {
+  "pass": true,
+  "det": {
+   "coverage": 0.865,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 7,
+   "issues": "None"
+  }
+ },
+ "char:chief-left": {
+  "pass": false,
+  "det": {
+   "coverage": 0.678,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Art style is completely different, low resolution pixel art instead of high resolution clean lines. Character feels like a generic doctor/scientist, not necessarily fitting the specific cyberpunk/sci-fi theme of the anchor."
+  }
+ },
+ "char:chief-right": {
+  "pass": false,
+  "det": {
+   "coverage": 0.889,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 7,
+   "issues": "Perspective mismatch (profile/side-scroller view vs top-down JRPG), blurry upscaled pixels"
+  }
+ },
+ "char:chief-up": {
+  "pass": false,
+  "det": {
+   "coverage": 0.865,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Art style is blurry/low resolution compared to the crisp pixel art of the anchor. The theme (scientist/doctor) doesn't perfectly fit the gritty cyberpunk/sci-fi anchor scene without more specific context."
+  }
+ },
+ "char:chief": {
+  "pass": true,
+  "det": {
+   "coverage": 0.414,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 9,
+   "issues": "None"
+  }
+ },
+ "char:drone": {
+  "pass": false,
+  "det": {
+   "coverage": 0.755,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": false,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 6,
+   "issues": "Blocky, lacks outline, style does not match anchor"
+  }
+ },
+ "char:player-down": {
+  "pass": false,
+  "det": {
+   "coverage": 0.699,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Art style is generic pixel art, lacking the detailed linework and distinctive shading of the anchor. The theme is modern/casual rather than the gritty cyberpunk/sci-fi setting of the anchor."
+  }
+ },
+ "char:player-left": {
+  "pass": false,
+  "det": {
+   "coverage": 0.572,
+   "magenta_fringe": 0.001
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Art style is too simple and lacks the outline and shading style of the anchor. Theme is mundane modern, not sci-fi/cyberpunk. Scale is too small."
+  }
+ },
+ "char:player-right": {
+  "pass": false,
+  "det": {
+   "coverage": 0.571,
+   "magenta_fringe": 0.001
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Art style is very different, lacking the specific shading and outline style of the anchor. Theme is generic modern/adventure, less sci-fi/cyberpunk."
+  }
+ },
+ "char:player-up": {
+  "pass": false,
+  "det": {
+   "coverage": 0.696,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Resolution too low/blurry, lacks detail compared to anchor. Style leans more Stardew Valley than Eastward/cyberpunk."
+  }
+ },
+ "char:player": {
+  "pass": true,
+  "det": {
+   "coverage": 0.348,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 8,
+   "issues": "Good match overall, style aligns well with the target, slightly simpler shading but fits."
+  }
+ },
+ "char:settler-down": {
+  "pass": false,
+  "det": {
+   "coverage": 0.726,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 7,
+   "issues": "Art style is generic pixel art, lacking the detailed lighting, specific palette, and cyberpunk/sci-fi elements of the anchor image. Too plain."
+  }
+ },
+ "char:settler-left": {
+  "pass": false,
+  "det": {
+   "coverage": 0.697,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Too basic, colors are muddy, lacks the high-contrast lighting and sci-fi details of the anchor. Theme fit is low as it looks more like a generic fantasy/farm game NPC than a sci-fi settler."
+  }
+ },
+ "char:settler-right": {
+  "pass": false,
+  "det": {
+   "coverage": 0.696,
+   "magenta_fringe": 0.0008
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Resolution too low/blurry, lacks shading depth and outline style of anchor. Proportions are okay but sprite is visually messy."
+  }
+ },
+ "char:settler-up": {
+  "pass": false,
+  "det": {
+   "coverage": 0.729,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 3,
+   "issues": "Art style is generic RPG maker style, not the detailed pixel art style of the reference image. The clothing (red vest, jeans) doesn't fit the cyberpunk/sci-fi theme of the reference."
+  }
+ },
+ "char:settler": {
+  "pass": true,
+  "det": {
+   "coverage": 0.402,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 8,
+   "proportions_ok": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 8,
+   "issues": "Good character sprite, matches the requested proportions and style well."
+  }
+ },
+ "char:sludge": {
+  "pass": true,
+  "det": {
+   "coverage": 0.904,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 6,
+   "proportions_ok": false,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 7,
+   "issues": "Too large and simple compared to base style"
+  }
+ },
+ "char:trader": {
+  "pass": false,
+  "det": {
+   "coverage": 0.881,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "style_match": 4,
+   "proportions_ok": false,
+   "single_character": true,
+   "directions_consistent": true,
+   "silhouette_clean": true,
+   "theme_fit": 5,
+   "issues": "Too small/chibi compared to standard, weird form factor for a generic trader unless it's a specific robot type."
+  }
+ }
+}

@@ -1,4 +1,6 @@
 // Emberwood engine: loop, collision, combat, AI, dialogue, HUD, save.
+// Renders at 2x device scale (640x480) with logical 16px tiles; sci-fi PNG
+// art from assets/ with procedural pixel-string fallback.
 
 import { TILES, TILE_SIZE as T } from './tiles.js';
 import { SPRITES, drawDef } from './sprites.js';
@@ -10,15 +12,26 @@ import {
 
 const VIEW_W = 320;
 const VIEW_H = 240;
-const SAVE_KEY = 'emberwood-save-v1';
+const DS = 2; // device scale: canvas is VIEW*DS, art PNGs are authored at 2x
+const SAVE_KEY = 'emberwood-save-v2';
 
 const ENEMY_DEFS = {
-  slime: { hp: 2, speed: 22, chaseSpeed: 36, aggroR: 90, sprite: 'slime', size: 16 },
-  bat: { hp: 1, speed: 30, chaseSpeed: 56, aggroR: 110, sprite: 'bat', size: 16 },
-  boss: { hp: 8, speed: 20, chaseSpeed: 30, aggroR: 220, sprite: 'boss', size: 32 },
+  slime: { hp: 2, speed: 22, chaseSpeed: 36, aggroR: 90, sprite: 'slime', art: 'sludge', size: 16 },
+  bat: { hp: 1, speed: 30, chaseSpeed: 56, aggroR: 110, sprite: 'bat', art: 'drone', size: 16 },
+  boss: { hp: 8, speed: 20, chaseSpeed: 30, aggroR: 220, sprite: 'boss', art: 'boss', size: 32 },
 };
 
-// ---------- sprite/tile canvas cache ----------
+// map tile char -> art tile name (null = keep procedural)
+const TILE_ART = {
+  '.': 'ground', ',': 'ground', '#': 'ground', '~': 'coolant', '=': 'walkway',
+  's': 'dust', 'M': 'rubble', 'p': 'plate', 'w': 'wallpanel', 'f': 'floorpanel',
+  'h': 'ground', 'H': 'ground', 'D': 'ground', 'o': 'plate', 'C': 'rubble',
+  'c': 'carpet', 'd': 'minefloor', 'W': 'minewall', 'F': 'ground',
+};
+
+const NPC_ART = { elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler' };
+
+// ---------- sprite/tile canvas cache (procedural fallback art) ----------
 
 function makeCanvas(def, scale = 1) {
   const size = def.art.length;
@@ -85,21 +98,23 @@ function aabb(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
 
-export function createGame(canvas, input) {
+export function createGame(canvas, input, art) {
   const ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
   const cache = buildCaches();
   const sfx = createSfx();
+  art = art || { tiles: {}, props: {}, chars: {} };
 
-  const HIT = { ox: 4, oy: 7, w: 8, h: 8 }; // hitbox within a 16px body
+  const HIT = { ox: 4, oy: 7, w: 8, h: 8 }; // hitbox within a 16px logical body
 
   const g = {
-    mode: 'title', // title | play | dialogue | dead | win
+    mode: 'title',
     quest: newQuestState(),
     mapId: START.map,
     grid: null,
     map: null,
     entities: [],
+    props: [], // static scenery: trees, houses, rocks, lamps
     drops: [],
     particles: [],
     player: {
@@ -147,7 +162,50 @@ export function createGame(canvas, input) {
     try { localStorage.removeItem(SAVE_KEY); } catch { /* ok */ }
   }
 
-  // ---------- map / entities ----------
+  // ---------- map / entities / props ----------
+
+  function buildProps() {
+    g.props = [];
+    const grid = g.grid;
+    const H = grid.length, W = grid[0].length;
+    // house blocks: connected components of h/H/D -> one facade prop each
+    const isHouse = (ch) => ch === 'h' || ch === 'H' || ch === 'D';
+    const seen = Array.from({ length: H }, () => new Array(W).fill(false));
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        if (!isHouse(grid[y][x]) || seen[y][x]) continue;
+        let x0 = x, x1 = x, y0 = y, y1 = y;
+        const stack = [[x, y]];
+        seen[y][x] = true;
+        while (stack.length) {
+          const [cx, cy] = stack.pop();
+          x0 = Math.min(x0, cx); x1 = Math.max(x1, cx);
+          y0 = Math.min(y0, cy); y1 = Math.max(y1, cy);
+          for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+            const nx = cx + dx, ny = cy + dy;
+            if (nx >= 0 && ny >= 0 && nx < W && ny < H && isHouse(grid[ny][nx]) && !seen[ny][nx]) {
+              seen[ny][nx] = true;
+              stack.push([nx, ny]);
+            }
+          }
+        }
+        g.props.push({ type: 'house', x: x0 * T, baseY: (y1 + 1) * T, wTiles: x1 - x0 + 1 });
+      }
+    }
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const ch = grid[y][x];
+        if (ch === '#') {
+          g.props.push({ type: 'tree', x: x * T + T / 2, baseY: (y + 1) * T, jitter: (x * 31 + y * 17) % 3 });
+        } else if (ch === 'M' && (x * 31 + y * 17) % 5 === 0) {
+          g.props.push({ type: 'rock', x: x * T + T / 2, baseY: (y + 1) * T });
+        }
+      }
+    }
+    for (const d of g.map.deco || []) {
+      g.props.push({ type: d.type, x: d.x * T + T / 2, baseY: (d.y + 1) * T });
+    }
+  }
 
   function loadMap(id, tx, ty) {
     g.mapId = id;
@@ -170,6 +228,7 @@ export function createGame(canvas, input) {
       }
       g.entities.push(ent);
     }
+    buildProps();
     if (tx !== null && tx !== undefined) {
       g.player.x = tx * T;
       g.player.y = ty * T;
@@ -212,7 +271,6 @@ export function createGame(canvas, input) {
     }
   }
 
-  // Boss body is 32px; use a scaled hitbox for it.
   function moveBoss(b, dx, dy, self) {
     const bx = { x: b.x, y: b.y };
     if (dx !== 0 && !rectBlocked(b.x + dx + 6, b.y + 12, 20, 18, self)) bx.x += dx;
@@ -392,14 +450,13 @@ export function createGame(canvas, input) {
       return;
     }
     if (g.mode === 'win') {
-      if (input.consumeAction()) g.mode = 'play'; // keep exploring
+      if (input.consumeAction()) g.mode = 'play';
       updateParticles(dt);
       return;
     }
 
     const p = g.player;
 
-    // movement
     let dx = 0, dy = 0;
     if (input.held.up) dy -= 1;
     if (input.held.down) dy += 1;
@@ -416,7 +473,6 @@ export function createGame(canvas, input) {
       moveBody(p, (dx / len) * sp * dt, (dy / len) * sp * dt, null);
       p.anim += dt * 10;
     }
-    // knockback
     if (Math.abs(p.kx) > 1 || Math.abs(p.ky) > 1) {
       moveBody(p, p.kx * dt, p.ky * dt, null);
       p.kx *= Math.pow(0.001, dt);
@@ -425,14 +481,12 @@ export function createGame(canvas, input) {
     p.invuln = Math.max(0, p.invuln - dt);
     p.attack = Math.max(0, p.attack - dt);
 
-    // action: interact if something faces us, else swing
     if (input.consumeAction()) {
       const target = interactTarget();
       if (target) doInteract(target);
       else swing();
     }
 
-    // attack collisions
     if (p.attack > 0.06) {
       const hb = attackHitbox();
       for (const e of [...g.entities]) {
@@ -452,7 +506,6 @@ export function createGame(canvas, input) {
       }
     }
 
-    // enemies
     for (const e of g.entities) {
       if (e.kind !== 'enemy') continue;
       e.anim += dt * 6;
@@ -485,7 +538,6 @@ export function createGame(canvas, input) {
       if (e.type === 'boss') moveBoss(e, vx * dt, vy * dt, e);
       else moveBody(e, vx * dt, vy * dt, e);
 
-      // boss enrage: spawn minions at half health
       if (e.type === 'boss' && !e.minionsSpawned && e.hp <= 4) {
         e.minionsSpawned = true;
         for (const off of [[-20, 8], [36, 8]]) {
@@ -500,13 +552,11 @@ export function createGame(canvas, input) {
         burst(ecx, ecy, '#f2a65a', 14);
       }
 
-      // contact damage
       if (aabb(p.x + HIT.ox, p.y + HIT.oy, HIT.w, HIT.h, e.x + 2, e.y + 2, size - 4, size - 4)) {
         hurtPlayer({ x: ecx, y: ecy });
       }
     }
 
-    // drops
     for (const d of [...g.drops]) {
       if (aabb(p.x + 2, p.y + 4, 12, 12, d.x + 4, d.y + 4, 8, 8)) {
         if (d.type === 'coin') g.quest.coins += 1;
@@ -516,7 +566,6 @@ export function createGame(canvas, input) {
       }
     }
 
-    // sparkle pickup (walk over)
     for (const e of [...g.entities]) {
       if (e.kind !== 'sparkle') continue;
       if (aabb(p.x + 2, p.y + 4, 12, 12, e.x + 2, e.y + 2, 12, 12)) {
@@ -526,7 +575,6 @@ export function createGame(canvas, input) {
       }
     }
 
-    // portals
     const ptx = Math.floor((p.x + 8) / T);
     const pty = Math.floor((p.y + 11) / T);
     for (const portal of g.map.portals) {
@@ -537,7 +585,6 @@ export function createGame(canvas, input) {
       }
     }
 
-    // beacon particles once lit
     if (g.quest.flags.beaconLit && g.mapId === 'overworld' && Math.random() < 0.3) {
       const b = g.entities.find((e) => e.kind === 'beacon');
       if (b) {
@@ -550,7 +597,6 @@ export function createGame(canvas, input) {
       }
     }
     updateParticles(dt);
-
     updateCamera();
   }
 
@@ -576,7 +622,20 @@ export function createGame(canvas, input) {
 
   // ---------- render ----------
 
+  // draw a 2x-authored PNG at logical coords (1 art px = 1 device px)
+  function drawArt(img, lx, ly, lw, lh) {
+    ctx.drawImage(img, lx, ly, lw ?? img.width / DS, lh ?? img.height / DS);
+  }
+
+  function tileVariant(name, tx, ty) {
+    const v = art.tiles[name];
+    if (!v || !v.length) return null;
+    return v[(tx * 73 + ty * 151) % v.length];
+  }
+
   function render() {
+    ctx.setTransform(DS, 0, 0, DS, 0, 0);
+    ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = '#0c0c12';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
     if (!g.grid) return;
@@ -588,49 +647,45 @@ export function createGame(canvas, input) {
     const y1 = Math.min(g.grid.length - 1, Math.ceil((cy + VIEW_H) / T));
     for (let ty = y0; ty <= y1; ty++) {
       for (let tx = x0; tx <= x1; tx++) {
-        const c = cache.tiles[g.grid[ty][tx]];
-        if (c) ctx.drawImage(c, tx * T - cx, ty * T - cy);
+        const ch = g.grid[ty][tx];
+        const lx = tx * T - cx, ly = ty * T - cy;
+        const artName = TILE_ART[ch];
+        const img = artName ? tileVariant(artName, tx, ty) : null;
+        if (img) drawArt(img, lx, ly, T, T);
+        else {
+          const c = cache.tiles[ch];
+          if (c) ctx.drawImage(c, lx, ly);
+        }
+        // decals over art tiles
+        if (ch === ',') drawLichen(lx, ly, tx, ty);
+        else if (ch === 'o') drawPad(lx, ly);
+        else if (ch === 'C') drawCaveMouth(lx, ly);
       }
     }
 
-    // drops
     for (const d of g.drops) {
       ctx.drawImage(cache.sprites[d.type === 'coin' ? 'coin' : 'heart'], Math.round(d.x - cx), Math.round(d.y - cy));
     }
 
-    // entities + player, y-sorted
-    const drawables = [...g.entities, { kind: 'player' }];
-    drawables.sort((a, b) => {
-      const ay = a.kind === 'player' ? g.player.y : a.y;
-      const by = b.kind === 'player' ? g.player.y : b.y;
-      return ay - by;
-    });
+    // world drawables, y-sorted by feet/base
+    const drawables = [];
+    for (const e of g.entities) drawables.push({ sortY: e.y + 16, e });
+    for (const pr of g.props) {
+      if (pr.x - cx < -80 || pr.x - cx > VIEW_W + 80 || pr.baseY - cy < -20 || pr.baseY - cy > VIEW_H + 120) continue;
+      drawables.push({ sortY: pr.baseY, prop: pr });
+    }
+    drawables.push({ sortY: g.player.y + 16, player: true });
+    drawables.sort((a, b) => a.sortY - b.sortY);
 
-    for (const e of drawables) {
-      if (e.kind === 'player') { drawPlayer(); continue; }
-      let img = null;
-      let dy = 0;
-      if (e.kind === 'npc') img = cache.sprites[`${e.sprite}:down`];
-      else if (e.kind === 'sign') img = cache.sprites.sign;
-      else if (e.kind === 'beacon') img = cache.sprites[g.quest.flags.beaconLit ? 'beaconLit' : 'beacon'];
-      else if (e.kind === 'lockedDoor') img = cache.sprites.lockedDoor;
-      else if (e.kind === 'sparkle') {
-        if (Math.floor(g.time * 4) % 2 === 0) img = cache.sprites.sparkle;
-        else { img = cache.sprites.sparkle; dy = -1; }
-      } else if (e.kind === 'chest') {
-        img = cache.sprites[g.quest.opened[e.id] ? 'chestOpen' : 'chestClosed'];
-      } else if (e.kind === 'enemy') {
-        img = cache.sprites[e.def.sprite];
-        dy = Math.round(Math.sin(e.anim) * (e.type === 'bat' ? 3 : 1));
-        if (e.invuln > 0 && Math.floor(e.invuln * 20) % 2 === 0) continue; // hit flash
-      }
-      if (img) ctx.drawImage(img, Math.round(e.x - cx), Math.round(e.y - cy + dy));
+    for (const d of drawables) {
+      if (d.player) drawPlayer();
+      else if (d.prop) drawProp(d.prop);
+      else drawEntity(d.e);
     }
 
-    // attack arc
     if (g.player.attack > 0) {
       const p = facingPoint();
-      ctx.strokeStyle = 'rgba(255, 247, 214, 0.9)';
+      ctx.strokeStyle = 'rgba(160, 240, 255, 0.9)';
       ctx.lineWidth = 2;
       ctx.beginPath();
       const base = { up: -Math.PI / 2, down: Math.PI / 2, left: Math.PI, right: 0 }[g.player.dir];
@@ -639,13 +694,11 @@ export function createGame(canvas, input) {
       ctx.stroke();
     }
 
-    // particles
     for (const pt of g.particles) {
       ctx.fillStyle = pt.color;
       ctx.fillRect(Math.round(pt.x - cx), Math.round(pt.y - cy), 2, 2);
     }
 
-    // cave darkness
     if (g.map.dark) {
       const px = g.player.x + 8 - cx, py = g.player.y + 11 - cy;
       const grad = ctx.createRadialGradient(px, py, 30, px, py, 110);
@@ -653,6 +706,8 @@ export function createGame(canvas, input) {
       grad.addColorStop(1, 'rgba(6,6,12,0.93)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    } else {
+      duskPass(cx, cy, x0, y0, x1, y1);
     }
 
     drawHud();
@@ -662,10 +717,172 @@ export function createGame(canvas, input) {
     if (g.mode === 'win') drawWin();
   }
 
+  // dusk grade + light glows: ambient cool wash, warm pools at lights, vignette
+  function duskPass(cx, cy, x0, y0, x1, y1) {
+    ctx.fillStyle = g.mapId === 'house' ? 'rgba(40, 28, 18, 0.16)' : 'rgba(22, 32, 62, 0.30)';
+    ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+
+    ctx.globalCompositeOperation = 'lighter';
+    const glow = (lx, ly, r, color, a) => {
+      const gr = ctx.createRadialGradient(lx, ly, 2, lx, ly, r);
+      gr.addColorStop(0, color.replace('A', String(a)));
+      gr.addColorStop(1, color.replace('A', '0'));
+      ctx.fillStyle = gr;
+      ctx.fillRect(lx - r, ly - r, r * 2, r * 2);
+    };
+    for (const pr of g.props) {
+      const lx = pr.x - cx, ly = pr.baseY - cy;
+      if (lx < -80 || lx > VIEW_W + 80 || ly < -80 || ly > VIEW_H + 80) continue;
+      if (pr.type === 'lamp') glow(lx, ly - 26, 34, 'rgba(255, 190, 110, A)', 0.22);
+      if (pr.type === 'house') {
+        const w = pr.wTiles * T;
+        glow(pr.x - cx + w * 0.2, ly - 14, 18, 'rgba(255, 180, 90, A)', 0.16);
+        glow(pr.x - cx + w * 0.8, ly - 14, 18, 'rgba(255, 180, 90, A)', 0.16);
+      }
+    }
+    for (const e of g.entities) {
+      if (e.kind === 'beacon') {
+        const lx = e.x + 8 - cx, ly = e.y + 8 - cy;
+        if (g.quest.flags.beaconLit) glow(lx, ly, 60, 'rgba(255, 150, 60, A)', 0.30);
+        else glow(lx, ly, 18, 'rgba(90, 220, 220, A)', 0.10);
+      }
+    }
+    // faint coolant shimmer
+    for (let ty = y0; ty <= y1; ty++) {
+      for (let tx = x0; tx <= x1; tx++) {
+        if (g.grid[ty][tx] === '~' && (tx + ty) % 5 === 0) {
+          glow(tx * T + 8 - cx, ty * T + 8 - cy, 16, 'rgba(40, 200, 200, A)', 0.05);
+        }
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    const vin = ctx.createRadialGradient(VIEW_W / 2, VIEW_H / 2, 100, VIEW_W / 2, VIEW_H / 2, 230);
+    vin.addColorStop(0, 'rgba(8, 12, 24, 0)');
+    vin.addColorStop(1, 'rgba(8, 12, 24, 0.34)');
+    ctx.fillStyle = vin;
+    ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+  }
+
+  function drawLichen(lx, ly, tx, ty) {
+    const n = (tx * 7 + ty * 13) % 4;
+    ctx.fillStyle = 'rgba(80, 240, 220, 0.75)';
+    ctx.fillRect(lx + 4 + n, ly + 5, 2, 2);
+    ctx.fillRect(lx + 10 - n, ly + 11, 2, 2);
+    ctx.fillRect(lx + 7, ly + 8 + n, 1, 1);
+  }
+
+  function drawPad(lx, ly) {
+    ctx.strokeStyle = 'rgba(255, 190, 110, 0.7)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(lx + 2.5, ly + 2.5, 11, 11);
+    ctx.fillStyle = 'rgba(255, 190, 110, 0.35)';
+    ctx.fillRect(lx + 6, ly + 6, 4, 4);
+  }
+
+  function drawCaveMouth(lx, ly) {
+    ctx.fillStyle = '#0a0a10';
+    ctx.beginPath();
+    ctx.moveTo(lx + 1, ly + 16);
+    ctx.lineTo(lx + 1, ly + 6);
+    ctx.quadraticCurveTo(lx + 8, ly - 2, lx + 15, ly + 6);
+    ctx.lineTo(lx + 15, ly + 16);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(90, 220, 220, 0.5)';
+    ctx.fillRect(lx + 3, ly + 7, 2, 2);
+  }
+
+  function drawProp(pr) {
+    const cxx = g.cam.x, cyy = g.cam.y;
+    if (pr.type === 'tree') {
+      const img = art.props.tree;
+      if (img) {
+        const w = img.width / DS, h = img.height / DS;
+        drawArt(img, Math.round(pr.x - w / 2 - cxx + (pr.jitter - 1) * 2), Math.round(pr.baseY - h - cyy));
+      } else {
+        ctx.drawImage(cache.tiles['#'], Math.round(pr.x - 8 - cxx), Math.round(pr.baseY - 16 - cyy));
+      }
+    } else if (pr.type === 'house') {
+      const img = art.props.house;
+      const wL = pr.wTiles * T;
+      if (img) {
+        const hL = (img.height / img.width) * wL;
+        drawArt(img, Math.round(pr.x - cxx), Math.round(pr.baseY - hL - cyy), wL, hL);
+      }
+    } else if (pr.type === 'rock') {
+      const img = art.props.rock;
+      if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
+    } else if (pr.type === 'lamp') {
+      const img = art.props.lamp;
+      if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
+    }
+  }
+
+  function drawEntity(e) {
+    const cx = g.cam.x, cy = g.cam.y;
+    let img = null;
+    let dy = 0;
+    if (e.kind === 'npc') {
+      const a = art.chars[NPC_ART[e.id]];
+      const im = a && (a.down || a);
+      if (im && im.width) {
+        drawCharArt(im, e.x, e.y);
+        return;
+      }
+      img = cache.sprites[`${e.sprite}:down`];
+    } else if (e.kind === 'sign') img = cache.sprites.sign;
+    else if (e.kind === 'beacon') {
+      const im = art.props.beacon;
+      if (im) {
+        const w = im.width / DS, h = im.height / DS;
+        drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 16 - h - cy));
+        return;
+      }
+      img = cache.sprites[g.quest.flags.beaconLit ? 'beaconLit' : 'beacon'];
+    } else if (e.kind === 'lockedDoor') img = cache.sprites.lockedDoor;
+    else if (e.kind === 'sparkle') {
+      img = cache.sprites.sparkle;
+      dy = Math.floor(g.time * 4) % 2 === 0 ? 0 : -1;
+    } else if (e.kind === 'chest') {
+      const im = art.props.chest;
+      if (im) {
+        const opened = g.quest.opened[e.id];
+        if (opened) ctx.filter = 'brightness(0.55)';
+        const w = im.width / DS, h = im.height / DS;
+        drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 16 - h - cy));
+        ctx.filter = 'none';
+        return;
+      }
+      img = cache.sprites[g.quest.opened[e.id] ? 'chestOpen' : 'chestClosed'];
+    } else if (e.kind === 'enemy') {
+      if (e.invuln > 0 && Math.floor(e.invuln * 20) % 2 === 0) return;
+      const im = art.chars[e.def.art];
+      dy = Math.round(Math.sin(e.anim) * (e.type === 'bat' ? 3 : 1));
+      if (im && im.width) {
+        const w = im.width / DS, h = im.height / DS;
+        drawArt(im, Math.round(e.x + e.def.size / 2 - w / 2 - cx), Math.round(e.y + e.def.size - h - cy + dy));
+        return;
+      }
+      img = cache.sprites[e.def.sprite];
+    }
+    if (img) ctx.drawImage(img, Math.round(e.x - cx), Math.round(e.y - cy + dy));
+  }
+
+  function drawCharArt(im, ex, ey, bob = 0) {
+    const w = im.width / DS, h = im.height / DS;
+    drawArt(im, Math.round(ex + 8 - w / 2 - g.cam.x), Math.round(ey + 16 - h - g.cam.y + bob));
+  }
+
   function drawPlayer() {
     const p = g.player;
     if (p.invuln > 0 && Math.floor(p.invuln * 14) % 2 === 0) return;
     const bob = p.moving ? Math.round(Math.sin(p.anim) * 1) : 0;
+    const a = art.chars.player;
+    if (a && a[p.dir]) {
+      drawCharArt(a[p.dir], p.x, p.y, bob);
+      return;
+    }
     ctx.drawImage(cache.sprites[`player:${p.dir}`], Math.round(p.x - g.cam.x), Math.round(p.y - g.cam.y + bob));
   }
 
@@ -679,22 +896,18 @@ export function createGame(canvas, input) {
   }
 
   function drawHud() {
-    // hearts
     for (let i = 0; i < g.quest.maxHearts; i++) {
       ctx.globalAlpha = i < g.quest.hearts ? 1 : 0.25;
       ctx.drawImage(cache.sprites.heart, 4 + i * 11 - 2, -2);
     }
     ctx.globalAlpha = 1;
-    // coins
     ctx.drawImage(cache.sprites.coin, 2, 10);
     text(`${g.quest.coins}`, 16, 15);
-    // shards top-right
     for (let i = 0; i < 3; i++) {
       ctx.globalAlpha = i < g.quest.shards ? 1 : 0.22;
       ctx.drawImage(cache.sprites.shard, VIEW_W - 52 + i * 15, -1);
     }
     ctx.globalAlpha = 1;
-    // key items
     let kx = VIEW_W - 52;
     if (g.quest.flags.hasRing && !g.quest.flags.gaveRing) { ctx.drawImage(cache.sprites.ring, kx, 11); kx += 14; }
     if (g.quest.flags.hasCaveKey) ctx.drawImage(cache.sprites.key, kx, 11);
@@ -705,9 +918,9 @@ export function createGame(canvas, input) {
     const lines = d.pages[d.page];
     const h = 14 + lines.length * 10;
     const y = VIEW_H - h - 6;
-    ctx.fillStyle = 'rgba(12, 12, 20, 0.92)';
+    ctx.fillStyle = 'rgba(10, 14, 24, 0.94)';
     ctx.fillRect(6, y, VIEW_W - 12, h);
-    ctx.strokeStyle = '#c19a49';
+    ctx.strokeStyle = '#4ac0c0';
     ctx.lineWidth = 1;
     ctx.strokeRect(6.5, y + 0.5, VIEW_W - 13, h - 1);
     let budget = Math.floor(d.chars);
@@ -718,7 +931,7 @@ export function createGame(canvas, input) {
     });
     if (budget >= 0) {
       const more = d.page < d.pages.length - 1;
-      text(more ? '...' : ' ok', VIEW_W - 26, y + h - 9, '#c19a49');
+      text(more ? '...' : ' ok', VIEW_W - 26, y + h - 9, '#4ac0c0');
     }
   }
 
@@ -735,27 +948,26 @@ export function createGame(canvas, input) {
 
   function drawTitle() {
     overlay(0.55);
-    centerText('E M B E R W O O D', 70, '#f7c948', 'bold 16px monospace');
-    centerText('The beacon has gone dark.', 96, '#f4f4f4');
+    centerText('E M B E R W O O D', 70, '#ffb347', 'bold 16px monospace');
+    centerText('The signal has gone dark.', 96, '#f4f4f4');
     centerText('Arrows / WASD  move', 122, '#9a9aa2');
     centerText('Space  talk - open - attack', 134, '#9a9aa2');
-    centerText('Press Space to begin', 168, '#f7c948');
-    if (Math.floor(g.time * 2) % 2 === 0) centerText('v', 180, '#f7c948');
+    centerText('Press Space to begin', 168, '#ffb347');
   }
 
   function drawDead() {
     overlay(0.7);
-    centerText('You collapsed...', 100, '#e64539', 'bold 12px monospace');
-    centerText('The villagers drag you back to Emberwood.', 124);
+    centerText('Systems failing...', 100, '#e64539', 'bold 12px monospace');
+    centerText('The settlers drag you back to Emberwood.', 124);
   }
 
   function drawWin() {
     overlay(0.72);
-    centerText('THE BEACON BURNS AGAIN!', 62, '#f7c948', 'bold 12px monospace');
+    centerText('THE SIGNAL BURNS AGAIN!', 62, '#ffb347', 'bold 12px monospace');
     centerText('Emberwood is safe. You are its hero.', 86);
     const m = Math.floor(g.time / 60), s = Math.floor(g.time % 60);
-    centerText(`time ${m}m ${s}s   coins ${g.quest.coins}   foes ${g.quest.kills}`, 110, '#9a9aa2');
-    centerText('Space: keep exploring    N: new game', 150, '#c19a49');
+    centerText(`time ${m}m ${s}s   scrap ${g.quest.coins}   foes ${g.quest.kills}`, 110, '#9a9aa2');
+    centerText('Space: keep exploring    N: new game', 150, '#4ac0c0');
   }
 
   // ---------- loop ----------

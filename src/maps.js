@@ -100,15 +100,19 @@ export const MAPS = {
       { x: 30, y: 4, to: 'cave', tx: 12, ty: 15 },   // cave mouth
       { x: 34, y: 19, to: 'house', tx: 6, ty: 8 },   // elder's doormat
     ],
+    deco: [
+      { type: 'lamp', x: 33, y: 22 }, { type: 'lamp', x: 40, y: 26 },
+      { type: 'lamp', x: 31, y: 28 }, { type: 'lamp', x: 36, y: 21 },
+    ],
     entities: [
       { kind: 'chest', id: 'shard1', x: 9, y: 7, loot: { shard: 1 } },
       { kind: 'chest', id: 'forestCoins', x: 12, y: 6, loot: { coins: 8 } },
       { kind: 'chest', id: 'shard2', x: 20, y: 20, loot: { shard: 2 } },
       { kind: 'sparkle', id: 'ring', x: 17, y: 27 },
       { kind: 'beacon', id: 'beacon', x: 38, y: 25 },
-      { kind: 'sign', id: 'beaconSign', x: 36, y: 25, text: ['The Beacon of Emberwood.', 'Dark since the shards were scattered...'] },
-      { kind: 'sign', id: 'forestSign', x: 8, y: 13, text: ['Emberwood Forest.', 'They say something glints deep in the maze.'] },
-      { kind: 'npc', id: 'merchant', x: 39, y: 23, sprite: 'merchant', name: 'Maro the Merchant' },
+      { kind: 'sign', id: 'beaconSign', x: 36, y: 25, text: ['Signal Beacon of Emberwood.', 'Dark since its Ember Cells were scattered...'] },
+      { kind: 'sign', id: 'forestSign', x: 8, y: 13, text: ['Bio-dome overgrowth. KEEP OUT.', 'They say something glints deep in the maze.'] },
+      { kind: 'npc', id: 'merchant', x: 39, y: 23, sprite: 'merchant', name: 'MARO-7' },
       { kind: 'npc', id: 'fisherman', x: 24, y: 26, sprite: 'fisherman', name: 'Old Finn' },
       { kind: 'npc', id: 'villager', x: 37, y: 27, sprite: 'villager', name: 'Pip' },
       { kind: 'enemy', id: 'sl1', x: 10, y: 14, type: 'slime' },
@@ -130,7 +134,7 @@ export const MAPS = {
       { x: 7, y: 9, to: 'overworld', tx: 34, ty: 20 },
     ],
     entities: [
-      { kind: 'npc', id: 'elder', x: 6, y: 3, sprite: 'elder', name: 'Elder Rowan' },
+      { kind: 'npc', id: 'elder', x: 6, y: 3, sprite: 'elder', name: 'Overseer Rowan' },
       { kind: 'chest', id: 'houseCoins', x: 2, y: 1, loot: { coins: 5 } },
     ],
   },
