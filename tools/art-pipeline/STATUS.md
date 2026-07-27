@@ -1,5 +1,13 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## NBP-NATIVE SEGMENTATION ADOPTED 2026-07-27 (twelfth run)
+nbp_mask.py: NBP repaints scene as flat 8-class color map; gates: snap purity
+0.981, floor fraction 0.578, edge alignment 0.997 (Canny agreement) — PASS.
+segment_room.py now ingests it as primary (instances = per-class components,
+pipes walkable-over, characters auto-classed); GrabCut = fallback. Bug fixed:
+anisotropic device scale (2400x1792 -> 1280x896 needs dsx!=dsy or cutouts
+double-print). SAM3.1 not pursued (kidsgame benchmark + this result).
+
 ## SOURCE-RES SEGMENTATION + ON-SOURCE BOARD VIZ 2026-07-27 (eleventh run)
 Masks now computed at native source res (GrabCut on 2400x1792; outputs
 downsampled to device 1280x896; coords scaled). Debug-mask artifact removed.
