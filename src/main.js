@@ -17,4 +17,4 @@ document.getElementById('new-game').addEventListener('click', () => {
 });
 
 const roomParam = new URLSearchParams(location.search).get('room');
-game.start(roomParam === 'anchor' ? 'anchorroom' : null);
+game.start(roomParam === 'anchor' ? 'anchorroom' : roomParam);

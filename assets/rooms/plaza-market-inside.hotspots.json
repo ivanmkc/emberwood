@@ -1,0 +1,205 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "GENERAL STORE INTERIOR",
+  "text": [
+   "This small shop seems to sell a bit of",
+   "everything, from preserved foods to spare",
+   "parts. The glow from the cooler cuts through",
+   "the dim lighting, illuminating a surprisingly"
+  ]
+ },
+ {
+  "box": [
+   433,
+   70,
+   566,
+   228
+  ],
+  "name": "ILLUMINATED GLASS COOLER",
+  "text": [
+   "The bright orange light from within makes the",
+   "bottled drinks and packaged goods look almost",
+   "unearthly. It hums with a quiet, steady energy",
+   "that keeps everything chilled."
+  ]
+ },
+ {
+  "box": [
+   521,
+   40,
+   607,
+   180
+  ],
+  "name": "RUSTING EXPOSED PIPES",
+  "text": [
+   "These thick metal pipes run along the wall,",
+   "showing signs of heavy rust and wear. They",
+   "seem to be part of the building's aging",
+   "infrastructure."
+  ]
+ },
+ {
+  "box": [
+   542,
+   214,
+   593,
+   400
+  ],
+  "name": "WOODEN PRODUCE RACK",
+  "text": [
+   "This tiered wooden stand holds fresh, colorful",
+   "vegetables. The bright reds and greens are a",
+   "welcome sight in the otherwise drab shop."
+  ]
+ },
+ {
+  "box": [
+   261,
+   40,
+   517,
+   76
+  ],
+  "name": "CEILING MOUNTED WIRES",
+  "text": [
+   "A bundle of dark cables runs along the",
+   "ceiling, secured in places but sagging",
+   "slightly. They look like they carry power or",
+   "data to different parts of the store."
+  ]
+ },
+ {
+  "box": [
+   33,
+   40,
+   129,
+   118
+  ],
+  "name": "EXPOSED WALL PIPING",
+  "text": [
+   "These pipes route down from the ceiling and",
+   "along the wall. They are a common sight in",
+   "these older, repurposed structures."
+  ]
+ },
+ {
+  "box": [
+   39,
+   319,
+   91,
+   419
+  ],
+  "name": "LARGE METAL BARREL",
+  "text": [
+   "This green, heavy-duty barrel sits securely in",
+   "the corner. Its purpose is unclear, but it",
+   "looks sturdy enough to hold liquids or bulk",
+   "materials."
+  ]
+ },
+ {
+  "box": [
+   167,
+   244,
+   224,
+   325
+  ],
+  "name": "VINTAGE CASH REGISTER",
+  "text": [
+   "This older model register sits on the counter,",
+   "likely used for keeping track of the day's",
+   "sales. It looks well-maintained despite its",
+   "age."
+  ]
+ },
+ {
+  "box": [
+   60,
+   154,
+   108,
+   222
+  ],
+  "name": "PAPER GROCERY BAG",
+  "text": [
+   "A simple brown paper bag rests on the shelf,",
+   "holding something bulky. It's a modest,",
+   "practical container for dry goods."
+  ]
+ },
+ {
+  "box": [
+   96,
+   352,
+   142,
+   419
+  ],
+  "name": "STACKED CARDBOARD BOXES",
+  "text": [
+   "These plain brown boxes are stacked neatly by",
+   "the counter. They might contain extra stock or",
+   "deliveries waiting to be unpacked."
+  ]
+ },
+ {
+  "box": [
+   480,
+   368,
+   539,
+   419
+  ],
+  "name": "WOODEN PRODUCE CRATE",
+  "text": [
+   "This sturdy wooden crate is filled with what",
+   "looks like fresh, green produce. It's",
+   "practical storage for items that need to stay",
+   "cool and dry."
+  ]
+ },
+ {
+  "box": [
+   141,
+   186,
+   182,
+   254
+  ],
+  "name": "SMALL WOODEN STOOL",
+  "text": [
+   "A simple, well-worn stool sits behind the",
+   "counter. It provides a spot for the shopkeeper",
+   "to rest during a long day."
+  ]
+ },
+ {
+  "box": [
+   98,
+   186,
+   138,
+   250
+  ],
+  "name": "RIBBED METAL BARREL",
+  "text": [
+   "This grey metal barrel is tucked under the",
+   "shelving unit. It looks like it could hold a",
+   "significant amount of supplies or waste."
+  ]
+ },
+ {
+  "box": [
+   418,
+   376,
+   476,
+   419
+  ],
+  "name": "WOODEN STORAGE CRATE",
+  "text": [
+   "This wooden crate is full of pale, root-like",
+   "vegetables. It's a simple, effective way to",
+   "display and store bulk goods."
+  ]
+ }
+]

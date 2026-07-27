@@ -1,0 +1,202 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   231
+  ],
+  "name": "ELEVATED CONTROL PLATFORM",
+  "text": [
+   "Metal stairs lead up to a raised gangway",
+   "overlooking the main reactor. A complex",
+   "console bristles with archaic switches and",
+   "glowing monitors."
+  ]
+ },
+ {
+  "box": [
+   0,
+   302,
+   337,
+   448
+  ],
+  "name": "LOWER MAINTENANCE CORRIDOR",
+  "text": [
+   "A recessed corridor branches off, the floor",
+   "plating reflecting a warm, ambient light from",
+   "an unseen source. Thick pipes run along the",
+   "lower wall."
+  ]
+ },
+ {
+  "box": [
+   311,
+   125,
+   493,
+   324
+  ],
+  "name": "CORE CONTAINMENT RING",
+  "text": [
+   "A heavy metal collar encircles the glowing",
+   "energy pillar. Thick, insulated cables snake",
+   "outward from its base, routing power to the",
+   "surrounding facility."
+  ]
+ },
+ {
+  "box": [
+   534,
+   86,
+   640,
+   346
+  ],
+  "name": "COOLANT TANK ALCOVE",
+  "text": [
+   "A row of glass cylinders glows with a sickly",
+   "green luminescence. Dials monitor the pressure",
+   "of the fluid bubbling within."
+  ]
+ },
+ {
+  "box": [
+   133,
+   208,
+   263,
+   417
+  ],
+  "name": "FLOOR GRATING TRENCH",
+  "text": [
+   "A wide, grated vent covers a recessed trough",
+   "in the floor. It offers drainage or perhaps",
+   "cooling for the heavy cables snaking past it."
+  ]
+ },
+ {
+  "box": [
+   171,
+   319,
+   345,
+   436
+  ],
+  "name": "POWER CABLE BUNDLE",
+  "text": [
+   "Heavy, braided cables unspool from the central",
+   "ring, trailing across the warning stripes",
+   "painted on the floor. They look old but still",
+   "hum with current."
+  ]
+ },
+ {
+  "box": [
+   270,
+   102,
+   536,
+   163
+  ],
+  "name": "OBSERVATION GANTRY OVERHANG",
+  "text": [
+   "A sturdy metal gantry provides access to the",
+   "main control terminal. Its shadow falls over",
+   "the cables snaking towards the reactor below."
+  ]
+ },
+ {
+  "box": [
+   171,
+   87,
+   305,
+   193
+  ],
+  "name": "OPEN FLOOR VENT",
+  "text": [
+   "A dark, rectangular vent is set into the floor",
+   "tiles near the wall. A loose piece of grating",
+   "has been shoved aside."
+  ]
+ },
+ {
+  "box": [
+   158,
+   190,
+   328,
+   248
+  ],
+  "name": "WALL JUNCTION CABLES",
+  "text": [
+   "Thick power lines route from a wall-mounted",
+   "junction box down to the main reactor base.",
+   "The insulation looks brittle with age."
+  ]
+ },
+ {
+  "box": [
+   481,
+   303,
+   622,
+   355
+  ],
+  "name": "FLOOR ROUTED CABLES",
+  "text": [
+   "A tangle of heavy wires snakes across the",
+   "hazard striping, connecting the central ring",
+   "to a floor-mounted socket."
+  ]
+ },
+ {
+  "box": [
+   207,
+   418,
+   411,
+   444
+  ],
+  "name": "LOWER VENTILATION GRATE",
+  "text": [
+   "A wide ventilation grate is set flush into the",
+   "floor plating. Faint mechanical thrums vibrate",
+   "through the metal."
+  ]
+ },
+ {
+  "box": [
+   267,
+   180,
+   370,
+   232
+  ],
+  "name": "UPPER REACTOR HOUSING",
+  "text": [
+   "The top cap of the energy pillar is secured",
+   "with heavy bolts. Thick cables feed directly",
+   "into its central node."
+  ]
+ },
+ {
+  "box": [
+   444,
+   418,
+   588,
+   444
+  ],
+  "name": "FLOOR DRAINAGE GRATE",
+  "text": [
+   "A dark, slotted grating is built into the",
+   "floor near the right wall. It looks like it",
+   "handles heavy drainage for the nearby tanks."
+  ]
+ },
+ {
+  "box": [
+   295,
+   244,
+   332,
+   344
+  ],
+  "name": "CORE SUPPORT BUTTRESS",
+  "text": [
+   "A solid, angled support buttress reinforces",
+   "the base of the reactor ring. It's built to",
+   "withstand immense pressure from within."
+  ]
+ }
+]

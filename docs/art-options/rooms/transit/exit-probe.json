@@ -1,0 +1,12 @@
+{
+ "s": {
+  "lo": 351,
+  "hi": 456,
+  "what": "a gap between building structures"
+ },
+ "w": {
+  "lo": 318,
+  "hi": 392,
+  "what": "open ground connecting to the left edge"
+ }
+}

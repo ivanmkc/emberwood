@@ -1,0 +1,212 @@
+[
+ {
+  "box": [
+   222,
+   29,
+   398,
+   200
+  ],
+  "name": "PLAZA MARKET BUILDING",
+  "text": [
+   "This blue corrugated structure houses the",
+   "Plaza Market. The orange neon sign hums above",
+   "a wide open doorway, inviting scavengers to",
+   "trade their finds."
+  ]
+ },
+ {
+  "box": [
+   409,
+   29,
+   582,
+   200
+  ],
+  "name": "REPAIR HUB BUILDING",
+  "text": [
+   "An orange corrugated building marked as the",
+   "Repair Hub, its blue neon sign flickering",
+   "slightly. The roller door is partially open,",
+   "suggesting ongoing mechanical work inside."
+  ]
+ },
+ {
+  "box": [
+   64,
+   284,
+   159,
+   448
+  ],
+  "name": "GLOWING WATER CANAL",
+  "text": [
+   "A narrow canal filled with vividly luminescent",
+   "cyan water flows steadily beneath the metal",
+   "grating. It casts a soft, synthetic glow",
+   "against the surrounding concrete walls."
+  ]
+ },
+ {
+  "box": [
+   215,
+   292,
+   365,
+   390
+  ],
+  "name": "THICK POWER CABLES",
+  "text": [
+   "A bundle of heavy, dark cables snakes across",
+   "the floor grating, connecting the hydroponic",
+   "tanks to the central pylon. They look worn but",
+   "essential for distributing power."
+  ]
+ },
+ {
+  "box": [
+   173,
+   255,
+   242,
+   389
+  ],
+  "name": "HYDROPONIC PLANT TANK",
+  "text": [
+   "A cylindrical glass tank containing tiered",
+   "levels of vibrant green, leafy plants. The",
+   "structure glows from within, sustaining the",
+   "flora with a steady supply of cyan liquid."
+  ]
+ },
+ {
+  "box": [
+   169,
+   48,
+   219,
+   202
+  ],
+  "name": "HYDROPONIC PLANT TANK",
+  "text": [
+   "Another glowing tank preserving a vertical",
+   "garden of broad-leafed plants. It stands as a",
+   "small pocket of cultivated life against the",
+   "stark industrial background."
+  ]
+ },
+ {
+  "box": [
+   366,
+   200,
+   440,
+   303
+  ],
+  "name": "GLOWING CENTRAL PYLON",
+  "text": [
+   "A robust mechanical pylon anchors the center",
+   "of the plaza, emitting a warm orange light",
+   "from its core. It serves as a vital energy",
+   "node, channeling power to the surrounding"
+  ]
+ },
+ {
+  "box": [
+   0,
+   82,
+   56,
+   208
+  ],
+  "name": "STACKED CARDBOARD BOXES",
+  "text": [
+   "A messy stack of battered cardboard boxes",
+   "rests near the edge of the walkway. Someone",
+   "has left a loose piece of paper sitting on top",
+   "of the pile."
+  ]
+ },
+ {
+  "box": [
+   0,
+   286,
+   49,
+   389
+  ],
+  "name": "SCRAP METAL DRUMS",
+  "text": [
+   "Several rusted metal drums and scattered",
+   "mechanical parts sit forgotten on the concrete",
+   "platform. They look like leftover scrap",
+   "waiting to be repurposed."
+  ]
+ },
+ {
+  "box": [
+   81,
+   126,
+   143,
+   206
+  ],
+  "name": "GLOWING WATER CANAL",
+  "text": [
+   "The cyan liquid flows out from a dark culvert,",
+   "continuing its bright path along the channel.",
+   "The glowing fluid seems to be the lifeblood of",
+   "this sector."
+  ]
+ },
+ {
+  "box": [
+   584,
+   300,
+   636,
+   389
+  ],
+  "name": "HYDROPONIC PLANT TANK",
+  "text": [
+   "A smaller, single-tier hydroponic tank",
+   "sustains a solitary green plant near the edge",
+   "of the lower platform. It glows with the same",
+   "pervasive cyan light as the others."
+  ]
+ },
+ {
+  "box": [
+   537,
+   187,
+   640,
+   232
+  ],
+  "name": "TANGLED POWER CORDS",
+  "text": [
+   "A messy jumble of dark cords spills out from a",
+   "grey utility box attached to the wall. They",
+   "snake haphazardly across the floor toward a",
+   "nearby machine."
+  ]
+ },
+ {
+  "box": [
+   590,
+   99,
+   640,
+   184
+  ],
+  "name": "WALL-MOUNTED GENERATOR UNIT",
+  "text": [
+   "A boxy grey machine with a bright cyan display",
+   "panel is affixed to the wall near the repair",
+   "hub. It hums quietly, part of the station's",
+   "localized grid."
+  ]
+ },
+ {
+  "box": [
+   214,
+   394,
+   318,
+   434
+  ],
+  "name": "ROOF AC UNIT",
+  "text": [
+   "A standard grey air conditioning unit with a",
+   "large circular fan sits on the roof of the",
+   "lower structure. It vents exhaust from the",
+   "rooms below."
+  ]
+ }
+]

@@ -1,0 +1,12 @@
+{
+ "e": {
+  "lo": 262,
+  "hi": 383,
+  "what": "open area leading off-screen"
+ },
+ "w": {
+  "lo": 310,
+  "hi": 335,
+  "what": "road"
+ }
+}

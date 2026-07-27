@@ -1,0 +1,7 @@
+{
+ "score": 7,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "none",
+ "unreachable_area": "none",
+ "worst_defect": "The bench under the 'DEPARTURE' board is incorrectly marked as walkable."
+}

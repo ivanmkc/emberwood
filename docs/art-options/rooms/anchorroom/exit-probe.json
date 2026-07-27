@@ -1,0 +1,12 @@
+{
+ "e": {
+  "lo": 210,
+  "hi": 305,
+  "what": "open ground"
+ },
+ "w": {
+  "lo": 152,
+  "hi": 372,
+  "what": "a stone path or dock walkway"
+ }
+}

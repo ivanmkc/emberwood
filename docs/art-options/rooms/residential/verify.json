@@ -1,0 +1,7 @@
+{
+ "score": 3,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "major",
+ "worst_defect": "A vertical green stripe incorrectly marks walls and stairs as walkable in the upper middle area."
+}

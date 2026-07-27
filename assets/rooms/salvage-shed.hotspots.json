@@ -1,0 +1,201 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "CORRUGATED METAL WORKSHOP",
+  "text": [
+   "This shack is pieced together from rusty",
+   "corrugated metal. The orange glow of the tube",
+   "light makes the grime look almost warm."
+  ]
+ },
+ {
+  "box": [
+   70,
+   112,
+   202,
+   383
+  ],
+  "name": "CANVAS HAMMOCK SETUP",
+  "text": [
+   "A slung canvas hammock hangs low over the",
+   "floor plating. You wonder how anyone sleeps",
+   "with that generator humming right next to",
+   "them."
+  ]
+ },
+ {
+  "box": [
+   123,
+   208,
+   394,
+   292
+  ],
+  "name": "TANGLED POWER CORDS",
+  "text": [
+   "Heavy black cables snake across the floor",
+   "panels. They look thick enough to carry a",
+   "serious current from the generator."
+  ]
+ },
+ {
+  "box": [
+   176,
+   79,
+   293,
+   212
+  ],
+  "name": "STUFFED METAL SHELVING",
+  "text": [
+   "The metal shelves are bowing under the weight",
+   "of salvaged parts and unlabeled cans.",
+   "Everything is covered in a fine layer of dust."
+  ]
+ },
+ {
+  "box": [
+   442,
+   143,
+   576,
+   242
+  ],
+  "name": "WORKBENCH AND COMPUTER",
+  "text": [
+   "The wooden workbench holds a bulky old monitor",
+   "and scattered tools. It's set up right by the",
+   "window for maximum daylight."
+  ]
+ },
+ {
+  "box": [
+   128,
+   277,
+   231,
+   382
+  ],
+  "name": "LOWER STORAGE SHELVES",
+  "text": [
+   "These lower shelves are packed with more",
+   "rusted cans and scrap bins. It looks like a",
+   "haphazard filing system for scavenged goods."
+  ]
+ },
+ {
+  "box": [
+   379,
+   44,
+   550,
+   102
+  ],
+  "name": "OVERHEAD CONDUIT PIPE",
+  "text": [
+   "A thick, rusted pipe runs along the upper",
+   "wall, feeding down into an electrical box.",
+   "It's secured with heavy iron brackets."
+  ]
+ },
+ {
+  "box": [
+   392,
+   415,
+   640,
+   448
+  ],
+  "name": "CONCRETE FLOOR PANELS",
+  "text": [
+   "The entrance has solid concrete flooring,",
+   "distinct from the metal grates inside. They",
+   "are cracked and worn from heavy boots."
+  ]
+ },
+ {
+  "box": [
+   252,
+   208,
+   387,
+   250
+  ],
+  "name": "LOOPING POWER CABLE",
+  "text": [
+   "A loop of the thick black cable rests near the",
+   "generator's base. It's caked with dust from",
+   "being dragged across the floor."
+  ]
+ },
+ {
+  "box": [
+   330,
+   90,
+   424,
+   145
+  ],
+  "name": "HANGING TOOL RACK",
+  "text": [
+   "Wrenches and unknown implements dangle from a",
+   "makeshift rack on the wall. They are arranged",
+   "by size, the only organized thing in the room."
+  ]
+ },
+ {
+  "box": [
+   358,
+   150,
+   431,
+   216
+  ],
+  "name": "PORTABLE GENERATOR UNIT",
+  "text": [
+   "The red generator is the heart of this",
+   "workshop, humming loudly. Its control panel is",
+   "battered, but the power light is a steady",
+   "green."
+  ]
+ },
+ {
+  "box": [
+   295,
+   140,
+   356,
+   207
+  ],
+  "name": "STACKED STORAGE BINS",
+  "text": [
+   "Olive green military-style bins are stacked",
+   "precariously near the generator. They look",
+   "sturdy enough to hold heavy salvage."
+  ]
+ },
+ {
+  "box": [
+   446,
+   221,
+   507,
+   278
+  ],
+  "name": "RUSTED METAL PLATE",
+  "text": [
+   "A large, rusted metal plate leans against the",
+   "wall, partially covering the floor grate. It",
+   "looks like it was scavenged from a larger",
+   "vehicle."
+  ]
+ },
+ {
+  "box": [
+   406,
+   184,
+   444,
+   230
+  ],
+  "name": "GENERATOR PLUG CABLE",
+  "text": [
+   "This thick orange cord plugs directly into the",
+   "generator's main outlet. It looks newer than",
+   "the black cables snaking around the floor."
+  ]
+ }
+]

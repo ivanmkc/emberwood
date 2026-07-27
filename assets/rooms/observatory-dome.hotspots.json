@@ -1,0 +1,62 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "OBSERVATORY DOME INTERIOR",
+  "text": [
+   "You are inside a curved dome structure, its",
+   "walls lined with metal plating and shelving",
+   "units. The center is dominated by a large",
+   "piece of astronomical equipment, bathed in"
+  ]
+ },
+ {
+  "box": [
+   52,
+   64,
+   459,
+   394
+  ],
+  "name": "LEFT SHELVING AND EQUIPMENT",
+  "text": [
+   "Wooden shelves curve along the left wall,",
+   "filled with old books, rolled scrolls, and",
+   "what look like ancient star charts. A sturdy",
+   "metal ladder stands ready to help you reach"
+  ]
+ },
+ {
+  "box": [
+   394,
+   78,
+   589,
+   394
+  ],
+  "name": "RIGHT SHELVING UNITS",
+  "text": [
+   "Matching wooden bookcases line the right side",
+   "of the dome, crammed with more tomes and",
+   "scattered, rolled documents. The wood looks",
+   "worn but well-cared for, preserving whatever"
+  ]
+ },
+ {
+  "box": [
+   265,
+   0,
+   375,
+   75
+  ],
+  "name": "DOME OBSERVATION WINDOW",
+  "text": [
+   "An opening in the dome ceiling frames a deep",
+   "teal sky, scattered with bright, cross-shaped",
+   "stars. The faint glow from outside casts a",
+   "cool light down into the observatory."
+  ]
+ }
+]

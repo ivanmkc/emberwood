@@ -1,0 +1,17 @@
+{
+ "e": {
+  "lo": 0,
+  "hi": 420,
+  "what": "A continuous paved street or alleyway running along the entire right edge"
+ },
+ "n": {
+  "lo": 572,
+  "hi": 631,
+  "what": "a street or alleyway going off the top edge"
+ },
+ "s": {
+  "lo": 154,
+  "hi": 382,
+  "what": "open ground"
+ }
+}

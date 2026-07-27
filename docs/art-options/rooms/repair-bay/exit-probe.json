@@ -1,0 +1,17 @@
+{
+ "e": {
+  "lo": 115,
+  "hi": 192,
+  "what": "doorway"
+ },
+ "s": {
+  "lo": 267,
+  "hi": 374,
+  "what": "doorway"
+ },
+ "w": {
+  "lo": 124,
+  "hi": 195,
+  "what": "doorway or corridor exit"
+ }
+}

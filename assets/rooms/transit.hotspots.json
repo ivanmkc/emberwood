@@ -1,0 +1,206 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   246
+  ],
+  "name": "MAGLEV STATION PLATFORM",
+  "text": [
+   "The station stretches before you, a testament",
+   "to enduring transit systems. Signs for Maglev",
+   "and Express Line glow steadily above rows of",
+   "waiting benches."
+  ]
+ },
+ {
+  "box": [
+   77,
+   259,
+   640,
+   333
+  ],
+  "name": "TRACK TRENCH WALLS",
+  "text": [
+   "Sturdy metal paneling lines the trench where",
+   "the maglev once hovered. The structure remains",
+   "intact despite the passage of time."
+  ]
+ },
+ {
+  "box": [
+   78,
+   264,
+   640,
+   335
+  ],
+  "name": "TRENCH WALL PIPING",
+  "text": [
+   "A long, continuous pipe runs along the upper",
+   "edge of the track trench. Its metal surface is",
+   "dull but free of major damage."
+  ]
+ },
+ {
+  "box": [
+   81,
+   297,
+   596,
+   336
+  ],
+  "name": "TRENCH DRAINAGE GRATES",
+  "text": [
+   "Industrial grates cover the lower section of",
+   "the track trench wall. They likely once housed",
+   "sensors or drainage systems for the transit",
+   "line."
+  ]
+ },
+ {
+  "box": [
+   0,
+   390,
+   349,
+   448
+  ],
+  "name": "LOWER ROOFTOP AC",
+  "text": [
+   "A heavy air conditioning unit sits on the roof",
+   "below the platform level. Thick pipes connect",
+   "it to the main station structure."
+  ]
+ },
+ {
+  "box": [
+   128,
+   311,
+   640,
+   335
+  ],
+  "name": "LUMINESCENT COOLANT TRENCH",
+  "text": [
+   "A pool of vibrant, cyan liquid fills the",
+   "bottom of the transit trench. It casts a",
+   "bright, unnatural glow upward onto the",
+   "platform edge."
+  ]
+ },
+ {
+  "box": [
+   457,
+   390,
+   640,
+   448
+  ],
+  "name": "LOWER ROOFTOP AC",
+  "text": [
+   "Another industrial air conditioner rests on",
+   "the lower rooftop, mirroring the one across",
+   "the gap. Its fan blades are still, gathering",
+   "dust."
+  ]
+ },
+ {
+  "box": [
+   163,
+   394,
+   346,
+   448
+  ],
+  "name": "LOWER PLATFORM RAILING",
+  "text": [
+   "A simple metal railing runs along the edge of",
+   "the lower platform area. It provides a safety",
+   "barrier above the station's lower workings."
+  ]
+ },
+ {
+  "box": [
+   461,
+   394,
+   615,
+   448
+  ],
+  "name": "LOWER PLATFORM RAILING",
+  "text": [
+   "This section of metal railing borders the",
+   "lower rooftop on the right side. It's a",
+   "standard safety feature for maintenance",
+   "access."
+  ]
+ },
+ {
+  "box": [
+   259,
+   110,
+   344,
+   208
+  ],
+  "name": "TRANSIT MAP DISPLAY",
+  "text": [
+   "A digital screen displays a glowing, schematic",
+   "map of the transit lines. The cyan lines",
+   "branch and intersect, showing routes that",
+   "might still be active."
+  ]
+ },
+ {
+  "box": [
+   0,
+   402,
+   177,
+   448
+  ],
+  "name": "LOWER PLATFORM FLOORING",
+  "text": [
+   "The concrete surface of the lower platform is",
+   "stained and worn. It serves as an access level",
+   "below the main passenger area."
+  ]
+ },
+ {
+  "box": [
+   484,
+   114,
+   551,
+   210
+  ],
+  "name": "STATION VENDING MACHINE",
+  "text": [
+   "A brightly lit vending machine offers a",
+   "selection of colorful canned drinks. The",
+   "display remains active, a small convenience in",
+   "the cavernous station."
+  ]
+ },
+ {
+  "box": [
+   177,
+   398,
+   286,
+   448
+  ],
+  "name": "ROOFTOP PIPING",
+  "text": [
+   "A thick, angled pipe snakes across the lower",
+   "rooftop near the air conditioner. It's part of",
+   "the station's underlying infrastructure."
+  ]
+ },
+ {
+  "box": [
+   377,
+   96,
+   475,
+   150
+  ],
+  "name": "DEPARTURE SCHEDULE BOARD",
+  "text": [
+   "An old-style electronic board lists departure",
+   "times in bright green and amber text. The data",
+   "flickers slightly, cycling through outdated",
+   "schedules."
+  ]
+ }
+]

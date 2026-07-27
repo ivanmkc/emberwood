@@ -1,0 +1,7 @@
+{
+ "score": 6,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "minor",
+ "unreachable_area": "minor",
+ "worst_defect": "The entire large crane structure on the right is incorrectly marked as walkable (green)."
+}

@@ -1,0 +1,130 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "TRANSIT STATION INTERIOR",
+  "text": [
+   "A dimly lit, concrete-heavy waiting area. The",
+   "glow of old technology and a space heater",
+   "provide the only comfort against the chill."
+  ]
+ },
+ {
+  "box": [
+   375,
+   22,
+   574,
+   144
+  ],
+  "name": "ILLUMINATED TRANSIT MAP",
+  "text": [
+   "The bright blue and orange lines of the",
+   "transit network glow steadily. Some stations",
+   "are marked with blinking indicators,",
+   "suggesting intermittent service."
+  ]
+ },
+ {
+  "box": [
+   295,
+   246,
+   510,
+   355
+  ],
+  "name": "METAL FLOOR GRATING",
+  "text": [
+   "Heavy metal grates cover a large section of",
+   "the floor. You can hear a faint hum and feel a",
+   "slight draft coming up from below."
+  ]
+ },
+ {
+  "box": [
+   107,
+   10,
+   347,
+   68
+  ],
+  "name": "WOODEN WALL SHELF",
+  "text": [
+   "A simple wooden shelf holds an umbrella, a",
+   "thermos, a backpack, and a worn teddy bear.",
+   "Someone left their belongings here in a hurry."
+  ]
+ },
+ {
+  "box": [
+   57,
+   179,
+   96,
+   334
+  ],
+  "name": "WOODEN WAITING BENCH",
+  "text": [
+   "A basic wooden bench sits against the wall.",
+   "Its surface is worn smooth from years of use",
+   "by weary travelers."
+  ]
+ },
+ {
+  "box": [
+   469,
+   150,
+   505,
+   231
+  ],
+  "name": "TICKET MACHINE TERMINAL",
+  "text": [
+   "A bulky, retro-futuristic ticket machine. The",
+   "screen is dark, but a small yellow light",
+   "blinks on the control panel."
+  ]
+ },
+ {
+  "box": [
+   529,
+   150,
+   565,
+   231
+  ],
+  "name": "SECOND TICKET MACHINE",
+  "text": [
+   "Another identical ticket machine stands next",
+   "to the first. It looks like it hasn't",
+   "dispensed a pass in a long time."
+  ]
+ },
+ {
+  "box": [
+   349,
+   186,
+   391,
+   236
+  ],
+  "name": "GLOWING SPACE HEATER",
+  "text": [
+   "A small electric heater casts a warm orange",
+   "glow across the floor. It hums quietly,",
+   "fighting a losing battle against the damp",
+   "chill."
+  ]
+ },
+ {
+  "box": [
+   413,
+   149,
+   450,
+   176
+  ],
+  "name": "PAMPHLET DISPLAY RACK",
+  "text": [
+   "A metal rack holds a few faded brochures and",
+   "schedules. The paper is yellowing and crisp to",
+   "the touch."
+  ]
+ }
+]

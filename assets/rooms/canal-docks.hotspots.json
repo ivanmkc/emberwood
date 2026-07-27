@@ -1,0 +1,204 @@
+[
+ {
+  "box": [
+   0,
+   99,
+   461,
+   448
+  ],
+  "name": "GLOWING WATER",
+  "text": [
+   "The harbor water glows with an unnatural,",
+   "vibrant cyan light. Whatever causes the",
+   "luminescence seems evenly dispersed beneath",
+   "the surface."
+  ]
+ },
+ {
+  "box": [
+   9,
+   46,
+   368,
+   393
+  ],
+  "name": "RUSTED CARGO BARGE",
+  "text": [
+   "A heavy transport vessel moored tightly to the",
+   "dock. Its hull is streaked with rust, and the",
+   "deck is packed with wooden crates."
+  ]
+ },
+ {
+  "box": [
+   381,
+   190,
+   564,
+   351
+  ],
+  "name": "HEAVY HARBOR CRANE",
+  "text": [
+   "An aging, stationary crane equipped with a",
+   "heavy hook. The metal cab is weathered, but",
+   "the support structure looks sturdy enough for",
+   "heavy lifting."
+  ]
+ },
+ {
+  "box": [
+   397,
+   20,
+   536,
+   149
+  ],
+  "name": "FISH STALL",
+  "text": [
+   "A covered market stall displaying the day's",
+   "catch. Dried fish hang from the corrugated tin",
+   "roof, while fresh ones sit on ice in wooden",
+   "boxes below."
+  ]
+ },
+ {
+  "box": [
+   253,
+   155,
+   368,
+   220
+  ],
+  "name": "STACKED WOODEN CRATES",
+  "text": [
+   "A haphazard pile of wooden shipping crates and",
+   "barrels waits on the concrete pier. The wood",
+   "is worn, suggesting they've been reused many",
+   "times."
+  ]
+ },
+ {
+  "box": [
+   145,
+   119,
+   192,
+   260
+  ],
+  "name": "NARROW WATER GAP",
+  "text": [
+   "A sliver of the glowing harbor water is",
+   "visible between the barge's hull and the edge",
+   "of the wooden pier. The bright liquid gently",
+   "laps against the dark wood and rusty metal."
+  ]
+ },
+ {
+  "box": [
+   0,
+   0,
+   97,
+   51
+  ],
+  "name": "TANGLED FISHING NETS",
+  "text": [
+   "A heap of netting bundled up near the edge of",
+   "the concrete walkway. Several orange and blue",
+   "floats are tangled within the mesh."
+  ]
+ },
+ {
+  "box": [
+   590,
+   372,
+   640,
+   446
+  ],
+  "name": "BUNDLED FISHING GEAR",
+  "text": [
+   "More netting and buoys are piled near the edge",
+   "of the lower pier. The gear looks well-used",
+   "and ready for the next trip out."
+  ]
+ },
+ {
+  "box": [
+   531,
+   65,
+   564,
+   150
+  ],
+  "name": "HANGING NETTING",
+  "text": [
+   "A heavy net is draped over the side of the",
+   "fish stall. It's partially gathered and",
+   "secured against the wooden frame."
+  ]
+ },
+ {
+  "box": [
+   515,
+   358,
+   556,
+   424
+  ],
+  "name": "WOODEN BARRELS",
+  "text": [
+   "Two sturdy wooden barrels sit near a stack of",
+   "small crates. The iron hoops holding them",
+   "together are stained with rust."
+  ]
+ },
+ {
+  "box": [
+   149,
+   0,
+   231,
+   25
+  ],
+  "name": "MOORING ROPES",
+  "text": [
+   "Thick ropes trail from a wooden crate across",
+   "the concrete, ending in a coiled pile near a",
+   "mooring cleat."
+  ]
+ },
+ {
+  "box": [
+   152,
+   254,
+   197,
+   300
+  ],
+  "name": "GLOWING HARBOR WATER",
+  "text": [
+   "The bright cyan water laps against the wooden",
+   "supports of the pier. The glow creates a sharp",
+   "contrast against the dark wood of the pilings."
+  ]
+ },
+ {
+  "box": [
+   448,
+   413,
+   494,
+   448
+  ],
+  "name": "MOORING CLEAT AND ROPE",
+  "text": [
+   "A heavy metal cleat is bolted to the edge of",
+   "the lower dock. A thick rope is wrapped",
+   "securely around it, holding something taut",
+   "off-screen."
+  ]
+ },
+ {
+  "box": [
+   278,
+   227,
+   300,
+   298
+  ],
+  "name": "MOORING ROPE",
+  "text": [
+   "A thick, braided line stretches taut from a",
+   "bollard on the pier down toward the water. It",
+   "secures the heavy barge to the dock."
+  ]
+ }
+]

@@ -214,3 +214,28 @@ silhouette_clean · theme_fit>=7 (assets); flat_plan_view · tileable>=7 (tiles)
   masks on board (done, section 23); NEXT: transition matrix (all pairs both ways) +
   interactable objects in every scene + seamless stitched movement (no loading), then
   12h improve-to-perfect with generous Gemini verification of all masks/generations.
+
+## Run 18 — 2026-07-27/28 (world x25: 12 districts + 12 interiors, in flight)
+- ALL 24 new rooms BUILT (12 exteriors + 12 interiors) + anchor = 25 plate rooms.
+- Prompt evolution (GEPA-style, per Ivan): walk v2 (flat markings/stains/puddles standable;
+  rooftop decks are ground; floor-lying cables step-over), footprint = GROUND-OCCUPANCY
+  semantics (full plan-view base incl. hidden floor behind lower body — Ivan's spec),
+  anti-dither clause everywhere, play-space purity gate (sky bands don't fail gates),
+  class floor-fraction 0.12..0.80 + purity 0.85 (furniture-dense interiors), walk frac
+  0.12..0.75. nbp_grid_walk.py = Ivan's grid-cell fallback (transit-office: purity 0.978).
+- Compose v2: NO global erode; thin-blocker opening (11src px: posts/wires stop blocking);
+  per-component pipe step-over (neighborhood >=25% walkable); walk-authority inside
+  full-block instances; LEGAL-ONLY carving (corridors/exits never repaint solid paint);
+  spawn-reaches-exit invariant (salvage-shed). Anchor: walk v2 -> 28-row bridge lane,
+  natural S exit, 10/10 drive (thresholds re-baselined to occupancy footprint).
+- exit_probe.py (LLM passage location per edge), door_probe.py + edit_door.py (4 doorways
+  PAINTED into parents via masked inpaint + judge; gate-wall kiosk re-probe), edit_exit.py
+  (passage opener, unused yet). doors.json. gen_rooms_index: 25 rooms, 49 exits incl.
+  door exits (trigger = door bottom strip) + interior s-exit returns to parent door.
+  Engine: 'door' arrives like 'n'; hotspots (gen_hotspots.py -> assets/rooms/*.hotspots.json,
+  interactTarget smallest-box, [name] examine dialogue); seamless cross-axis arrival.
+- OPEN: world matrix drive shows PHANTOM EXITS (carved strips not hitbox-reachable:
+  rooftops n/w, observatory s, others TBD) -> add exit-validity invariant (free-space
+  reachability into trigger rect, drop+report), door-ize impossible edges
+  (rooftops->observatory stair-door), matrix drive door handling (approach ArrowUp).
+  Then: judge sweep all 25, ship, board gallery, NPCs, further expansion (8h window).

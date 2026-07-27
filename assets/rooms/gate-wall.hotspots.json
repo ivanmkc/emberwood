@@ -1,0 +1,200 @@
+[
+ {
+  "box": [
+   194,
+   34,
+   446,
+   175
+  ],
+  "name": "HEAVY BLAST DOORS",
+  "text": [
+   "These thick steel doors haven't opened in",
+   "years. The hazard striping is faded, and",
+   "whatever machinery once drove them has long",
+   "since seized up."
+  ]
+ },
+ {
+  "box": [
+   75,
+   120,
+   148,
+   230
+  ],
+  "name": "SECURITY CHECKPOINT BOOTH",
+  "text": [
+   "A small, cramped booth for whatever poor soul",
+   "drew guard duty. The terminal inside still",
+   "casts a faint blue glow on the dusty glass."
+  ]
+ },
+ {
+  "box": [
+   491,
+   130,
+   564,
+   230
+  ],
+  "name": "SECURITY CHECKPOINT BOOTH",
+  "text": [
+   "This rusted booth was once the first line of",
+   "defense for this facility. The display inside",
+   "is cracked but still stubbornly drawing power."
+  ]
+ },
+ {
+  "box": [
+   450,
+   46,
+   491,
+   212
+  ],
+  "name": "INDUSTRIAL LIGHT FIXTURE",
+  "text": [
+   "Twin halogen lamps on a sturdy mast, still",
+   "faithfully illuminating the staging area after",
+   "all these years."
+  ]
+ },
+ {
+  "box": [
+   149,
+   46,
+   189,
+   212
+  ],
+  "name": "INDUSTRIAL LIGHT FIXTURE",
+  "text": [
+   "These heavy-duty work lights are mounted high",
+   "to illuminate the blast doors. The orange glow",
+   "feels oddly comforting against the cold steel."
+  ]
+ },
+ {
+  "box": [
+   0,
+   207,
+   102,
+   271
+  ],
+  "name": "THICK RUBBER CABLING",
+  "text": [
+   "Heavy power lines snake out from under the",
+   "booth, their rubber casings cracked and stiff",
+   "with age."
+  ]
+ },
+ {
+  "box": [
+   537,
+   202,
+   640,
+   265
+  ],
+  "name": "THICK RUBBER CABLING",
+  "text": [
+   "These thick data and power cables connect the",
+   "security booth to the main grid, their",
+   "protective sheathing brittle from exposure."
+  ]
+ },
+ {
+  "box": [
+   113,
+   177,
+   197,
+   250
+  ],
+  "name": "SANDBAG BARRICADE",
+  "text": [
+   "A hasty defensive line of sandbags, now",
+   "petrified into solid lumps by decades of damp",
+   "and neglect."
+  ]
+ },
+ {
+  "box": [
+   442,
+   177,
+   526,
+   250
+  ],
+  "name": "SANDBAG BARRICADE",
+  "text": [
+   "These hardened sandbags were placed here to",
+   "protect the checkpoint. They're fused",
+   "together, crumbling slightly at the edges."
+  ]
+ },
+ {
+  "box": [
+   0,
+   88,
+   39,
+   226
+  ],
+  "name": "RUSTED UTILITY BOX",
+  "text": [
+   "A heavy metal housing for electrical",
+   "junctions, stained with streaks of orange",
+   "rust."
+  ]
+ },
+ {
+  "box": [
+   158,
+   370,
+   225,
+   439
+  ],
+  "name": "EXTERIOR HVAC UNIT",
+  "text": [
+   "A blocky air exchange unit, its fan silent and",
+   "its casing dented. It looks like it was",
+   "scavenged from somewhere else and roughly",
+   "installed here."
+  ]
+ },
+ {
+  "box": [
+   340,
+   403,
+   434,
+   448
+  ],
+  "name": "EXPOSED CONDUIT BUNDLE",
+  "text": [
+   "Thick power cables spill out from the cracked",
+   "flooring, snaking haphazardly toward the",
+   "nearby equipment."
+  ]
+ },
+ {
+  "box": [
+   408,
+   371,
+   459,
+   444
+  ],
+  "name": "PILE OF DEBRIS",
+  "text": [
+   "A messy collection of old rags, a crushed",
+   "safety cone, and other discarded junk that",
+   "blew into this corner."
+  ]
+ },
+ {
+  "box": [
+   292,
+   392,
+   366,
+   430
+  ],
+  "name": "PORTABLE BARRICADE",
+  "text": [
+   "A simple metal frame with hazard striping,",
+   "meant to block access to the lower maintenance",
+   "areas. It's rusted and slightly bent."
+  ]
+ }
+]

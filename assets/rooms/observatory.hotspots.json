@@ -1,0 +1,206 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "CLIFFSIDE OBSERVATORY PLATFO",
+  "text": [
+   "The entire structure clings to the edge of the",
+   "abyss, built from heavy stone blocks and",
+   "retrofitted with metal grates. The warm glow",
+   "of the lanterns fights back the pervasive"
+  ]
+ },
+ {
+  "box": [
+   64,
+   8,
+   302,
+   158
+  ],
+  "name": "UPPER OBSERVATION DECK",
+  "text": [
+   "A raised section of the platform secured by a",
+   "metal railing. A glowing star chart and a",
+   "scattering of crates suggest it was recently",
+   "used."
+  ]
+ },
+ {
+  "box": [
+   234,
+   303,
+   624,
+   388
+  ],
+  "name": "LOWER DECK DRAINAGE GRATES",
+  "text": [
+   "Heavy metal grates are set into the stone",
+   "floor to manage runoff. Rusty pipes and loose",
+   "gears are strewn about, waiting for repairs."
+  ]
+ },
+ {
+  "box": [
+   210,
+   231,
+   349,
+   448
+  ],
+  "name": "LOWER PLATFORM STAIRS",
+  "text": [
+   "Wide stone steps lead down from the main",
+   "observatory level. Weeds have taken root in",
+   "the cracks between the heavy blocks."
+  ]
+ },
+ {
+  "box": [
+   50,
+   183,
+   208,
+   252
+  ],
+  "name": "OBSERVATORY RETAINING WALL",
+  "text": [
+   "Thick stone blocks form a sturdy wall holding",
+   "back the dirt and protecting the lower",
+   "walkway. A rusty pipe emerges from the",
+   "masonry, stained by years of drips."
+  ]
+ },
+ {
+  "box": [
+   456,
+   389,
+   640,
+   448
+  ],
+  "name": "LOWER ACCESS STAIRWELL",
+  "text": [
+   "A set of metal stairs descends into the",
+   "darkness below the main deck. Caution stripes",
+   "mark the edges, though the paint is heavily",
+   "chipped."
+  ]
+ },
+ {
+  "box": [
+   445,
+   232,
+   543,
+   306
+  ],
+  "name": "LOWER STAR CHART",
+  "text": [
+   "A dark board displays a constellation map in",
+   "glowing blue lines. An open book rests on the",
+   "stones nearby, its pages illuminated by the",
+   "faint light."
+  ]
+ },
+ {
+  "box": [
+   293,
+   61,
+   371,
+   150
+  ],
+  "name": "BRASS TELESCOPE MOUNT",
+  "text": [
+   "The heavy brass instrument is geared and",
+   "counterweighted, pointing up through the open",
+   "dome slot. The metal is tarnished but the",
+   "lenses remain clear."
+  ]
+ },
+ {
+  "box": [
+   541,
+   10,
+   640,
+   75
+  ],
+  "name": "LARGE STAR CHART",
+  "text": [
+   "A wide digital display board showing complex",
+   "astronomical diagrams and orbital paths. The",
+   "blue glow cuts through the dim atmosphere."
+  ]
+ },
+ {
+  "box": [
+   469,
+   422,
+   640,
+   448
+  ],
+  "name": "SUB-LEVEL PIPE ACCESS",
+  "text": [
+   "Heavy pipes run along the wall near the lower",
+   "stairwell. The metal is dark with age and",
+   "condensation."
+  ]
+ },
+ {
+  "box": [
+   561,
+   337,
+   628,
+   389
+  ],
+  "name": "STACKED WOODEN CRATES",
+  "text": [
+   "Several sturdy wooden crates are piled near a",
+   "heavy metal cylinder. They look like they",
+   "contain spare parts for the observatory's",
+   "machinery."
+  ]
+ },
+ {
+  "box": [
+   210,
+   421,
+   337,
+   448
+  ],
+  "name": "LOWER DECK GRATING",
+  "text": [
+   "A section of metal grating covers what appears",
+   "to be a drainage channel or ventilation shaft.",
+   "A single rusty gear lies discarded nearby."
+  ]
+ },
+ {
+  "box": [
+   505,
+   104,
+   640,
+   125
+  ],
+  "name": "UPPER WALKWAY RAILING",
+  "text": [
+   "A simple metal railing borders the walkway",
+   "leading to the small wooden shack. The stone",
+   "floor beneath is cracked and uneven."
+  ]
+ },
+ {
+  "box": [
+   218,
+   321,
+   256,
+   389
+  ],
+  "name": "LANTERN POST AND GEARBOX",
+  "text": [
+   "A hooded lantern hangs from an angled metal",
+   "post, casting a warm orange pool on the stone.",
+   "It's connected to a rusted electrical box near",
+   "the edge."
+  ]
+ }
+]

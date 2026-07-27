@@ -1,0 +1,212 @@
+[
+ {
+  "box": [
+   346,
+   6,
+   640,
+   448
+  ],
+  "name": "INDUSTRIAL ROOFTOP BUILDING",
+  "text": [
+   "A sturdy prefabricated structure sits on the",
+   "roof, its orange corrugated walls weathered by",
+   "the city's hazy atmosphere. Thick cables and",
+   "pipes snake along its exterior, connecting to"
+  ]
+ },
+ {
+  "box": [
+   0,
+   5,
+   497,
+   208
+  ],
+  "name": "ROOFTOP GARDEN PLATFORM",
+  "text": [
+   "A reinforced metal deck serves as a high-",
+   "altitude farm, bordered by safety railings.",
+   "Makeshift planters burst with colorful crops",
+   "under the shadow of tattered solar awnings."
+  ]
+ },
+ {
+  "box": [
+   0,
+   280,
+   287,
+   448
+  ],
+  "name": "LOWER DECK SECTION",
+  "text": [
+   "A descending walkway leads to another tier of",
+   "the rooftop complex. Sturdy metal stairs",
+   "provide access between the multi-level",
+   "agricultural setup."
+  ]
+ },
+ {
+  "box": [
+   352,
+   35,
+   624,
+   192
+  ],
+  "name": "EXTERNAL WIRING BUNDLE",
+  "text": [
+   "Thick, insulated cables droop from the roof-",
+   "mounted machinery, clamped securely to the",
+   "side of the building. They route power and",
+   "data to the systems below, their casing"
+  ]
+ },
+ {
+  "box": [
+   158,
+   291,
+   281,
+   408
+  ],
+  "name": "LOWER PLANTER BOX",
+  "text": [
+   "A large, soil-filled container occupies the",
+   "lower platform, enclosed by a low wooden rim.",
+   "It's densely packed with a variety of root",
+   "vegetables and leafy greens."
+  ]
+ },
+ {
+  "box": [
+   172,
+   292,
+   266,
+   383
+  ],
+  "name": "ROOT VEGETABLE CROP",
+  "text": [
+   "Bright orange carrots and plump purple turnips",
+   "push up through the dark soil of the planter",
+   "box. The leafy tops are vibrant and healthy, a",
+   "testament to careful tending."
+  ]
+ },
+ {
+  "box": [
+   273,
+   116,
+   371,
+   200
+  ],
+  "name": "IRRIGATION FEED SYSTEM",
+  "text": [
+   "A small, boxy mechanical unit sits near the",
+   "planters, connected by a network of thin gray",
+   "pipes. It hums softly, regulating the flow of",
+   "water or nutrients to the upper garden beds."
+  ]
+ },
+ {
+  "box": [
+   172,
+   130,
+   254,
+   225
+  ],
+  "name": "MIXED PRODUCE BED",
+  "text": [
+   "A wooden planter is neatly organized into",
+   "rows, yielding a colorful harvest. Plump",
+   "radishes, orange carrots, and round cabbages",
+   "thrive despite the smoggy skyline behind them."
+  ]
+ },
+ {
+  "box": [
+   0,
+   285,
+   50,
+   390
+  ],
+  "name": "WATER STORAGE CYLINDERS",
+  "text": [
+   "A pair of dull metal tanks rest on the lower",
+   "platform, their surfaces streaked with grime.",
+   "They likely hold a reserve of purified water",
+   "essential for the crops' survival."
+  ]
+ },
+ {
+  "box": [
+   0,
+   131,
+   50,
+   212
+  ],
+  "name": "GLOWING PLANT BED",
+  "text": [
+   "A narrow planter box holds a row of unusual,",
+   "luminescent flora. The pale blue bulbs emit a",
+   "soft, steady glow that cuts through the",
+   "surrounding rust and shadow."
+  ]
+ },
+ {
+  "box": [
+   273,
+   163,
+   352,
+   212
+  ],
+  "name": "LUMINESCENT LEAFY GREENS",
+  "text": [
+   "These broad-leafed plants have been engineered",
+   "or adapted to produce their own light. The",
+   "cool, cyan glow traces the veins of each leaf,",
+   "providing a striking contrast to the ordinary"
+  ]
+ },
+ {
+  "box": [
+   0,
+   122,
+   47,
+   199
+  ],
+  "name": "LUMINESCENT BULB CROP",
+  "text": [
+   "Clustered in the corner planter, these plants",
+   "sport glowing blue orbs atop dark stalks. The",
+   "radiant spheres cast a localized light,",
+   "suggesting a biological adaptation to the"
+  ]
+ },
+ {
+  "box": [
+   449,
+   14,
+   505,
+   57
+  ],
+  "name": "ROOFTOP HVAC UNIT",
+  "text": [
+   "A large, boxy air conditioning or ventilation",
+   "condenser is mounted near the edge of the",
+   "roof. Its circular fan grill is visible on the",
+   "front, connected to the building by thick,"
+  ]
+ },
+ {
+  "box": [
+   482,
+   347,
+   530,
+   394
+  ],
+  "name": "BUILDING EXHAUST VENTS",
+  "text": [
+   "A pair of small, square ventilation grilles",
+   "are embedded in the lower building's wall,",
+   "next to a lit keypad. Thick black cables run",
+   "down the wall beside them, part of the"
+  ]
+ }
+]

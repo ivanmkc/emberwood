@@ -1,0 +1,12 @@
+{
+ "e": {
+  "lo": 194,
+  "hi": 336,
+  "what": "doorway or corridor"
+ },
+ "n": {
+  "lo": 186,
+  "hi": 349,
+  "what": "a vertical pipe or shaft"
+ }
+}

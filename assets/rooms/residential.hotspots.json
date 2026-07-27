@@ -1,0 +1,205 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   378
+  ],
+  "name": "HOUSING COMPLEX STRUCTURE",
+  "text": [
+   "A cluster of modular habs built into the old",
+   "city ruins. Corrugated siding and mismatched",
+   "paint jobs tell the story of a community",
+   "cobbled together over decades."
+  ]
+ },
+ {
+  "box": [
+   268,
+   112,
+   513,
+   243
+  ],
+  "name": "BLUE AND ORANGE HABITAT",
+  "text": [
+   "A standard housing module showing its age. The",
+   "lower half is painted a cheerful orange,",
+   "contrasting with the faded blue above."
+  ]
+ },
+ {
+  "box": [
+   425,
+   248,
+   561,
+   378
+  ],
+  "name": "GROUND LEVEL DWELLING",
+  "text": [
+   "This dwelling sits at ground level, its",
+   "entrance framed by utility panels. A warm",
+   "light spills from the open doorway, suggesting",
+   "someone is home."
+  ]
+ },
+ {
+  "box": [
+   0,
+   402,
+   233,
+   448
+  ],
+  "name": "ROOFTOP GARDEN AREA",
+  "text": [
+   "A small collection of potted plants on a",
+   "corrugated metal roof. Even here, people find",
+   "ways to bring a touch of green into their",
+   "lives."
+  ]
+ },
+ {
+  "box": [
+   366,
+   424,
+   604,
+   448
+  ],
+  "name": "LOWER ALLEY STRUCTURE",
+  "text": [
+   "The dark, blocky shape of another building",
+   "forms the lower edge of this alleyway. A",
+   "ventilation unit hums quietly near its base."
+  ]
+ },
+ {
+  "box": [
+   433,
+   192,
+   509,
+   260
+  ],
+  "name": "CLOTHESLINE WITH LAUNDRY",
+  "text": [
+   "A string of laundry dries in the ambient glow.",
+   "A striped shirt, pants, and socks sway gently,",
+   "a mundane sight in this metallic landscape."
+  ]
+ },
+ {
+  "box": [
+   609,
+   318,
+   640,
+   448
+  ],
+  "name": "ALLEYWAY PASSAGE",
+  "text": [
+   "A narrow gap between structures leading deeper",
+   "into the settlement. Paving stones line the",
+   "path, illuminated by scattered lights."
+  ]
+ },
+ {
+  "box": [
+   87,
+   76,
+   146,
+   129
+  ],
+  "name": "POTTED PLANTS CLUSTER",
+  "text": [
+   "Several terracotta pots sit on the balcony,",
+   "holding hardy-looking plants. They seem to",
+   "thrive despite the dim light and metallic",
+   "surroundings."
+  ]
+ },
+ {
+  "box": [
+   450,
+   134,
+   511,
+   179
+  ],
+  "name": "AIR CONDITIONING UNIT",
+  "text": [
+   "A bulky, grey climate control unit sits on a",
+   "wooden crate. Its fan blades are still,",
+   "perhaps waiting for warmer weather."
+  ]
+ },
+ {
+  "box": [
+   557,
+   268,
+   582,
+   380
+  ],
+  "name": "DUMPSTER AND TRASH",
+  "text": [
+   "A large green dumpster sits in the corner,",
+   "with a few stray bags of garbage nearby. It's",
+   "a necessary part of keeping the settlement",
+   "clean."
+  ]
+ },
+ {
+  "box": [
+   220,
+   41,
+   297,
+   74
+  ],
+  "name": "HANGING LAUNDRY SHIRTS",
+  "text": [
+   "A few shirts and pants are pegged to a line",
+   "stretched between buildings. They are simple",
+   "garments, worn and practical."
+  ]
+ },
+ {
+  "box": [
+   557,
+   226,
+   624,
+   256
+  ],
+  "name": "ALLEYWAY CLOTHESLINE",
+  "text": [
+   "Another line of laundry stretches across the",
+   "alleyway, catching the light from a nearby",
+   "window. It's a sign of everyday life",
+   "continuing in this tough environment."
+  ]
+ },
+ {
+  "box": [
+   295,
+   228,
+   353,
+   263
+  ],
+  "name": "WOODEN COURTYARD BENCH",
+  "text": [
+   "A simple wooden bench rests against the wall,",
+   "offering a place to sit. It looks well-used, a",
+   "spot for a quick rest or a chat with a",
+   "neighbor."
+  ]
+ },
+ {
+  "box": [
+   12,
+   141,
+   74,
+   172
+  ],
+  "name": "DRYING SHIRT AND PANTS",
+  "text": [
+   "A white shirt and a pair of dark pants are",
+   "strung up to dry. They flap slightly, perhaps",
+   "from a breeze or a passing ventilation fan."
+  ]
+ }
+]

@@ -1,0 +1,206 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "INTERIOR OF A BOAT CABIN",
+  "text": [
+   "The wooden walls of this small cabin are lined",
+   "with fishing gear and lit by flickering",
+   "lanterns. A small wood stove provides heat",
+   "against the damp air."
+  ]
+ },
+ {
+  "box": [
+   65,
+   78,
+   219,
+   334
+  ],
+  "name": "SINGLE BED WITH BLANKET",
+  "text": [
+   "A narrow cot is tucked against the wall,",
+   "covered with a thick, patterned wool blanket.",
+   "It looks like a cozy place to rest after a",
+   "long day on the water."
+  ]
+ },
+ {
+  "box": [
+   267,
+   298,
+   372,
+   419
+  ],
+  "name": "OPEN HATCHWAY TO WATER",
+  "text": [
+   "Wooden stairs lead down into a dark opening in",
+   "the floor, revealing the water lapping below.",
+   "The boards around the edge are slick with",
+   "moisture."
+  ]
+ },
+ {
+  "box": [
+   419,
+   145,
+   538,
+   249
+  ],
+  "name": "STACKED WOODEN FISH CRATES",
+  "text": [
+   "Several sturdy wooden boxes are piled up,",
+   "filled to the brim with a recent catch. The",
+   "fish inside are packed tightly, scales",
+   "shimmering slightly in the low light."
+  ]
+ },
+ {
+  "box": [
+   415,
+   208,
+   498,
+   327
+  ],
+  "name": "TALL FISH CRATE",
+  "text": [
+   "This wooden crate is stacked vertically,",
+   "packed full of small, silvery fish. A length",
+   "of rope trails from the bottom edge onto the",
+   "floor."
+  ]
+ },
+ {
+  "box": [
+   501,
+   183,
+   565,
+   284
+  ],
+  "name": "SQUARE FISH CRATE",
+  "text": [
+   "Another solid wooden box holds a jumble of",
+   "medium-sized fish. The catch looks fresh,",
+   "ready to be processed or traded."
+  ]
+ },
+ {
+  "box": [
+   501,
+   274,
+   567,
+   372
+  ],
+  "name": "FISH CRATE WITH NET",
+  "text": [
+   "This crate is partially covered by a folded",
+   "section of dark netting, protecting the pile",
+   "of mixed fish underneath. The wood is stained",
+   "dark from use."
+  ]
+ },
+ {
+  "box": [
+   404,
+   146,
+   484,
+   226
+  ],
+  "name": "LOW FISH CRATE",
+  "text": [
+   "A wider, shallower crate sits on the floor,",
+   "holding a scattered layer of fish. The wood is",
+   "rough and practical, built for heavy lifting."
+  ]
+ },
+ {
+  "box": [
+   282,
+   309,
+   358,
+   391
+  ],
+  "name": "DARK WATER IN HATCH",
+  "text": [
+   "The dark, murky water of the harbor sloshes",
+   "gently beneath the floorboards. It reflects",
+   "the dim light from the cabin above."
+  ]
+ },
+ {
+  "box": [
+   68,
+   320,
+   145,
+   399
+  ],
+  "name": "COIL OF THICK ROPE",
+  "text": [
+   "A heavy coil of weathered rope lies on the",
+   "floor near the bed. The fibers are frayed from",
+   "constant use in the damp environment."
+  ]
+ },
+ {
+  "box": [
+   471,
+   57,
+   540,
+   144
+  ],
+  "name": "HANGING FISHING NET",
+  "text": [
+   "A large section of dark netting is draped",
+   "against the wall, secured by wooden pegs. The",
+   "mesh looks strong enough to haul in a",
+   "substantial catch."
+  ]
+ },
+ {
+  "box": [
+   453,
+   240,
+   497,
+   341
+  ],
+  "name": "UPRIGHT CRATE OF FISH",
+  "text": [
+   "This crate stands on its end, packed tight",
+   "with fish layered vertically. The silvery",
+   "bodies are crammed together against the wooden",
+   "slats."
+  ]
+ },
+ {
+  "box": [
+   290,
+   82,
+   350,
+   147
+  ],
+  "name": "WOODEN SHIP'S WHEEL",
+  "text": [
+   "A classic wooden steering wheel is mounted",
+   "firmly near the window. The spokes are worn",
+   "smooth from the grip of many hands."
+  ]
+ },
+ {
+  "box": [
+   439,
+   60,
+   471,
+   153
+  ],
+  "name": "COILED HANGING ROPE",
+  "text": [
+   "A neat loop of sturdy rope hangs from a peg on",
+   "the wall. It's ready to be grabbed at a",
+   "moment's notice for securing gear."
+  ]
+ }
+]

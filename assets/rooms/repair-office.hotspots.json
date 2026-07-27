@@ -1,0 +1,206 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "MESSY WORKSHOP",
+  "text": [
+   "Every surface is cluttered with salvaged",
+   "parts, tools, and scribbled blueprints. The",
+   "air smells of ozone, old oil, and stale",
+   "coffee."
+  ]
+ },
+ {
+  "box": [
+   29,
+   11,
+   111,
+   371
+  ],
+  "name": "TALL PARTS CABINET",
+  "text": [
+   "A towering metal cabinet packed with numbered",
+   "bins holding various bits of scrap. A thick",
+   "red wire snakes out from one of the lower",
+   "shelves, pooling on the floor."
+  ]
+ },
+ {
+  "box": [
+   383,
+   6,
+   587,
+   133
+  ],
+  "name": "TOOL PEG BOARD",
+  "text": [
+   "A well-organized pegboard displaying wrenches",
+   "of all sizes, along with screwdrivers and",
+   "analog gauges. It's the only tidy spot in the",
+   "entire room."
+  ]
+ },
+ {
+  "box": [
+   341,
+   141,
+   496,
+   227
+  ],
+  "name": "PARTIALLY ASSEMBLED ROBOT HE",
+  "text": [
+   "A salvaged robotic casing rests on the desk,",
+   "one optical sensor glowing a faint, warm",
+   "orange. Wires spool out from the exposed neck",
+   "joint onto scattered schematics."
+  ]
+ },
+ {
+  "box": [
+   192,
+   149,
+   308,
+   241
+  ],
+  "name": "HAND-DRAWN BLUEPRINTS",
+  "text": [
+   "Large sheets of paper covered in detailed,",
+   "hand-drawn diagrams for what looks like a",
+   "mechanical joint. Several crumpled drafts are",
+   "tossed haphazardly around them."
+  ]
+ },
+ {
+  "box": [
+   70,
+   310,
+   230,
+   371
+  ],
+  "name": "PILE OF SCRAP",
+  "text": [
+   "A dark green, angular piece of casing sits",
+   "next to a rusty barrel and a box overflowing",
+   "with curved metal components. They look heavy",
+   "and coated in grime."
+  ]
+ },
+ {
+  "box": [
+   467,
+   297,
+   599,
+   368
+  ],
+  "name": "SERVICE LIFT SCHEDULE",
+  "text": [
+   "A digital display board protected by a cage,",
+   "showing a grid of names and numbers. The text",
+   "is blocky and pixelated, glowing in amber and",
+   "white."
+  ]
+ },
+ {
+  "box": [
+   475,
+   149,
+   553,
+   205
+  ],
+  "name": "LOOSE BLACK CABLE",
+  "text": [
+   "A thick, heavy-duty cable snakes out from",
+   "under the workbench, curling loosely on the",
+   "floor near a dark stain."
+  ]
+ },
+ {
+  "box": [
+   63,
+   107,
+   106,
+   191
+  ],
+  "name": "LOWER HARDWARE BINS",
+  "text": [
+   "These plastic bins are overflowing with",
+   "assorted fasteners and small, greasy fittings.",
+   "The labels are smudged beyond readability."
+  ]
+ },
+ {
+  "box": [
+   63,
+   64,
+   106,
+   148
+  ],
+  "name": "UPPER HARDWARE BINS",
+  "text": [
+   "Rows of small gray bins holding tiny,",
+   "indistinguishable metal parts. Some are pulled",
+   "out slightly, as if recently rummaged through."
+  ]
+ },
+ {
+  "box": [
+   155,
+   200,
+   185,
+   281
+  ],
+  "name": "STACKED PAPER INVOICES",
+  "text": [
+   "A messy stack of papers piled near the edge of",
+   "the desk, some spilling over the side. They",
+   "look like old requisitions or manifests."
+  ]
+ },
+ {
+  "box": [
+   63,
+   167,
+   98,
+   233
+  ],
+  "name": "LOWEST HARDWARE BINS",
+  "text": [
+   "The bins nearest the floor are mostly empty,",
+   "save for a few loose screws and a thick layer",
+   "of workshop dust."
+  ]
+ },
+ {
+  "box": [
+   213,
+   107,
+   283,
+   139
+  ],
+  "name": "SORTING BIN",
+  "text": [
+   "A clear plastic bin labeled 'MODEL' containing",
+   "what looks like small gears and casing",
+   "fragments. It's shoved in tight next to the",
+   "others on the crowded shelf."
+  ]
+ },
+ {
+  "box": [
+   213,
+   24,
+   283,
+   56
+  ],
+  "name": "WIRE STORAGE BIN",
+  "text": [
+   "This bin is stuffed with tangled spools of",
+   "wire and thin cabling. The label below it is",
+   "mostly peeled off."
+  ]
+ }
+]

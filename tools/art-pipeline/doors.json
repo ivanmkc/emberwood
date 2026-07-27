@@ -1,0 +1,146 @@
+{
+ "anchorroom": [
+  {
+   "to": "plaza-market-inside",
+   "rect": [
+    281,
+    134,
+    349,
+    203
+   ],
+   "what": "doorway into Plaza Market"
+  }
+ ],
+ "night-bazaar": [
+  {
+   "to": "noodle-bar",
+   "rect": [
+    267,
+    241,
+    358,
+    312
+   ],
+   "what": "painted doorway"
+  }
+ ],
+ "residential": [
+  {
+   "to": "home-interior-a",
+   "rect": [
+    125,
+    316,
+    168,
+    382
+   ],
+   "what": "doorway/entrance"
+  }
+ ],
+ "gate-wall": [
+  {
+   "to": "guard-post",
+   "rect": [
+    490,
+    129,
+    564,
+    233
+   ],
+   "what": "The door to the small guard kiosk."
+  }
+ ],
+ "observatory": [
+  {
+   "to": "observatory-dome",
+   "rect": [
+    367,
+    224,
+    424,
+    297
+   ],
+   "what": "The open entrance archway into the observatory."
+  }
+ ],
+ "canal-docks": [
+  {
+   "to": "barge-cabin",
+   "rect": [
+    56,
+    319,
+    116,
+    335
+   ],
+   "what": "door"
+  }
+ ],
+ "hydroponics": [
+  {
+   "to": "grow-lab-office",
+   "rect": [
+    284,
+    0,
+    360,
+    84
+   ],
+   "what": "doorway/entrance"
+  }
+ ],
+ "transit": [
+  {
+   "to": "transit-office",
+   "rect": [
+    180,
+    84,
+    226,
+    187
+   ],
+   "what": "painted doorway"
+  }
+ ],
+ "underworks": [
+  {
+   "to": "pump-station",
+   "rect": [
+    577,
+    195,
+    640,
+    323
+   ],
+   "what": "a short doorway/entrance"
+  }
+ ],
+ "power-plant": [
+  {
+   "to": "control-room",
+   "rect": [
+    0,
+    0,
+    125,
+    119
+   ],
+   "what": "doorway/entrance"
+  }
+ ],
+ "repair-bay": [
+  {
+   "to": "repair-office",
+   "rect": [
+    586,
+    241,
+    640,
+    393
+   ],
+   "what": "painted doorway"
+  }
+ ],
+ "outskirts": [
+  {
+   "to": "salvage-shed",
+   "rect": [
+    263,
+    34,
+    367,
+    132
+   ],
+   "what": "painted doorway"
+  }
+ ]
+}

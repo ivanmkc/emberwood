@@ -1,0 +1,7 @@
+{
+ "score": 4,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "none",
+ "worst_defect": "Large sections of the clearly walkable flat roof in the lower right foreground are incorrectly marked as blocked."
+}

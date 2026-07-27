@@ -1,0 +1,7 @@
+{
+ "score": 3,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "none",
+ "worst_defect": "Flat painted warning signs and superficial floor cracks are incorrectly marked as solid obstacles (red) in the center path."
+}

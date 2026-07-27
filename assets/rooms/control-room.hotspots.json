@@ -1,0 +1,209 @@
+[
+ {
+  "box": [
+   35,
+   10,
+   605,
+   448
+  ],
+  "name": "CONTROL ROOM",
+  "text": [
+   "The main operations center, glowing with the",
+   "steady hum of ancient, well-maintained",
+   "machinery. The worn floor panels suggest",
+   "decades of pacing and careful monitoring."
+  ]
+ },
+ {
+  "box": [
+   51,
+   254,
+   250,
+   354
+  ],
+  "name": "CONTROL CONSOLE",
+  "text": [
+   "A massive array of dials, switches, and",
+   "screens, all bathed in the warm light of the",
+   "central display. The edges are scuffed,",
+   "showing layers of paint from previous"
+  ]
+ },
+ {
+  "box": [
+   208,
+   200,
+   258,
+   266
+  ],
+  "name": "OPERATOR CHAIR",
+  "text": [
+   "A sturdy, ergonomic seat on casters,",
+   "positioned before the left side of the control",
+   "board. The upholstery is cracked but looks",
+   "comfortable enough for long shifts."
+  ]
+ },
+ {
+  "box": [
+   387,
+   200,
+   437,
+   266
+  ],
+  "name": "OPERATOR CHAIR",
+  "text": [
+   "The right-hand station's chair, identical to",
+   "the other but slightly more worn on the",
+   "armrests. It's angled as if someone just stood",
+   "up to check a reading."
+  ]
+ },
+ {
+  "box": [
+   301,
+   43,
+   339,
+   103
+  ],
+  "name": "SCHEMATIC HOLOGRAM",
+  "text": [
+   "A bright orange, wireframe projection of what",
+   "looks like a power core or engine. The lines",
+   "waver slightly, a testament to the old",
+   "projection hardware."
+  ]
+ },
+ {
+  "box": [
+   106,
+   26,
+   125,
+   142
+  ],
+  "name": "WALL PIPE",
+  "text": [
+   "A thick, dull grey conduit running vertically",
+   "down the wall. Condensation has stained the",
+   "metal just below a heavy joint."
+  ]
+ },
+ {
+  "box": [
+   86,
+   40,
+   104,
+   152
+  ],
+  "name": "WALL PIPE",
+  "text": [
+   "Another vertical pipe, this one slightly",
+   "thinner, tucked into the corner. It hums with",
+   "a faint, low vibration."
+  ]
+ },
+ {
+  "box": [
+   193,
+   18,
+   228,
+   70
+  ],
+  "name": "WALL CONDUIT",
+  "text": [
+   "A cluster of pipes curving down from the",
+   "ceiling before disappearing behind the main",
+   "display. The grey casing is scratched and",
+   "dented in several places."
+  ]
+ },
+ {
+  "box": [
+   79,
+   302,
+   122,
+   337
+  ],
+  "name": "STORAGE CANISTERS",
+  "text": [
+   "Two small, cylindrical containers sitting by",
+   "the base of the console. One looks like it",
+   "might hold hydraulic fluid, the other",
+   "something more caustic."
+  ]
+ },
+ {
+  "box": [
+   503,
+   309,
+   550,
+   340
+  ],
+  "name": "TOOLBOX",
+  "text": [
+   "A heavy, olive-drab metal case with a single",
+   "wrench resting on top. The latches are bright",
+   "where the paint has worn away from frequent",
+   "use."
+  ]
+ },
+ {
+  "box": [
+   348,
+   156,
+   394,
+   187
+  ],
+  "name": "OPEN LOGBOOK",
+  "text": [
+   "A thick, leather-bound book lying open next to",
+   "an old-fashioned stylus. The pages are filled",
+   "with cramped, messy handwriting and hastily",
+   "sketched diagrams."
+  ]
+ },
+ {
+  "box": [
+   522,
+   142,
+   561,
+   172
+  ],
+  "name": "CLOSED MANUAL",
+  "text": [
+   "A heavy, dog-eared technical manual resting",
+   "near the edge of the console. Its cover is",
+   "faded, and a wrench lies just behind it."
+  ]
+ },
+ {
+  "box": [
+   201,
+   18,
+   228,
+   61
+  ],
+  "name": "WALL CONDUIT",
+  "text": [
+   "The horizontal section of piping that frames",
+   "the upper left of the main status board. It",
+   "looks sturdier than the other pipes in the",
+   "room."
+  ]
+ },
+ {
+  "box": [
+   307,
+   152,
+   331,
+   182
+  ],
+  "name": "RED BINDER",
+  "text": [
+   "A thick, brightly colored binder sitting",
+   "upright between two panels. Its spine is",
+   "cracked, and several loose papers stick out",
+   "from the top."
+  ]
+ }
+]

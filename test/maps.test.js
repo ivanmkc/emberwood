@@ -67,6 +67,9 @@ test('every map grid is rectangular and uses only known tiles', () => {
 
 test('map borders are fully solid (no walking off the edge)', () => {
   for (const map of Object.values(MAPS)) {
+    // plate rooms use per-pixel collision; edge exits legitimately reach the
+    // border and the pixel mask enforces its own 8px border walls
+    if (map.plate) continue;
     const grid = buildGrid(map);
     const H = grid.length, W = grid[0].length;
     for (let x = 0; x < W; x++) {

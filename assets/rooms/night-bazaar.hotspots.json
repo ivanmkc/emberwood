@@ -1,0 +1,198 @@
+[
+ {
+  "box": [
+   213,
+   0,
+   429,
+   146
+  ],
+  "name": "UPPER WALKWAY WALL",
+  "text": [
+   "The metal plates are stained with years of",
+   "runoff from the level above. A rusted pipe",
+   "still clings to the surface, going nowhere."
+  ]
+ },
+ {
+  "box": [
+   544,
+   0,
+   640,
+   327
+  ],
+  "name": "RIGHT ALLEY WALL",
+  "text": [
+   "Stark grey paneling forms the boundary of this",
+   "sector. Pipes run down its length,",
+   "disappearing into the floor grates."
+  ]
+ },
+ {
+  "box": [
+   233,
+   174,
+   406,
+   327
+  ],
+  "name": "NOODLE STAND",
+  "text": [
+   "Warm light spills from the open doorway of",
+   "this patched-together stall. Bowls and cooking",
+   "implements are crammed onto every available",
+   "surface."
+  ]
+ },
+ {
+  "box": [
+   0,
+   0,
+   83,
+   303
+  ],
+  "name": "LEFT ALLEY WALL",
+  "text": [
+   "Industrial conduits run along the dull metal",
+   "surface. A small access panel glows faintly",
+   "near the base."
+  ]
+ },
+ {
+  "box": [
+   0,
+   389,
+   352,
+   448
+  ],
+  "name": "LOWER LEFT BALCONY",
+  "text": [
+   "A sturdy metal railing guards the edge of the",
+   "walkway. An exhaust unit hums quietly beneath",
+   "the floor plating."
+  ]
+ },
+ {
+  "box": [
+   57,
+   193,
+   134,
+   340
+  ],
+  "name": "PRODUCE STALL DISPLAY",
+  "text": [
+   "Wooden crates are stacked high beneath a",
+   "makeshift awning. They hold a meager selection",
+   "of bright, synthetic-looking vegetables."
+  ]
+ },
+ {
+  "box": [
+   453,
+   389,
+   640,
+   448
+  ],
+  "name": "LOWER RIGHT BALCONY",
+  "text": [
+   "The railing overlooks a deeper level of the",
+   "sector. A heavy ventilation fan sits in the",
+   "corner, caked in grime."
+  ]
+ },
+ {
+  "box": [
+   507,
+   224,
+   589,
+   350
+  ],
+  "name": "RIGHT PRODUCE DISPLAY",
+  "text": [
+   "Shelves built from scrap wood hold small piles",
+   "of scavenged greens. A patched blue tarp",
+   "provides a little shade."
+  ]
+ },
+ {
+  "box": [
+   313,
+   328,
+   456,
+   367
+  ],
+  "name": "LARGE PUDDLE",
+  "text": [
+   "Stagnant water reflects the neon glow from the",
+   "signs above. It smells faintly of ozone and",
+   "old cooking oil."
+  ]
+ },
+ {
+  "box": [
+   409,
+   0,
+   467,
+   82
+  ],
+  "name": "UPPER VENTILATION SHAFT",
+  "text": [
+   "A heavy metal duct disappears into the",
+   "ceiling. It looks like it hasn't been cleaned",
+   "since the settlement was founded."
+  ]
+ },
+ {
+  "box": [
+   357,
+   285,
+   436,
+   340
+  ],
+  "name": "THICK POWER CABLE",
+  "text": [
+   "A heavy, insulated cable snakes across the",
+   "ground, connecting the noodle stand to a jury-",
+   "rigged power source."
+  ]
+ },
+ {
+  "box": [
+   330,
+   0,
+   401,
+   49
+  ],
+  "name": "RUSTED WALL PIPE",
+  "text": [
+   "This thick pipe elbows into the concrete wall.",
+   "The joints are heavily corroded."
+  ]
+ },
+ {
+  "box": [
+   0,
+   0,
+   18,
+   181
+  ],
+  "name": "VERTICAL CONDUIT PIPE",
+  "text": [
+   "A long, scarred pipe runs vertically down the",
+   "side of the building. It's secured by heavy",
+   "metal brackets."
+  ]
+ },
+ {
+  "box": [
+   192,
+   310,
+   280,
+   347
+  ],
+  "name": "SMALL PUDDLE",
+  "text": [
+   "A shallow pool of murky water has collected in",
+   "a dip in the paving stones. The warm light",
+   "from the noodle stand barely reaches it."
+  ]
+ }
+]

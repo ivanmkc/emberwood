@@ -1,0 +1,77 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "INDUSTRIAL SEWER TUNNEL",
+  "text": [
+   "This sector is thick with the smell of ozone",
+   "and stagnant water. Heavy machinery hums a",
+   "low, resonant note that vibrates through the",
+   "damp floor plating."
+  ]
+ },
+ {
+  "box": [
+   27,
+   79,
+   576,
+   424
+  ],
+  "name": "RUSTING PIPE NETWORK",
+  "text": [
+   "A tangle of heavy, riveted pipes dominates the",
+   "wall, their surfaces slick with condensation",
+   "and grime. Handwheels and pressure valves are",
+   "spaced out along the primary lines, though"
+  ]
+ },
+ {
+  "box": [
+   63,
+   268,
+   550,
+   340
+  ],
+  "name": "LUMINESCENT SLUDGE TRENCH",
+  "text": [
+   "A grate-lined channel cuts through the center",
+   "of the room, carrying a steady flow of",
+   "vibrant, teal liquid. The strange fluid emits",
+   "a soft, pulsing glow, illuminating the"
+  ]
+ },
+ {
+  "box": [
+   389,
+   358,
+   542,
+   424
+  ],
+  "name": "HEAVY FILTRATION UNIT",
+  "text": [
+   "A bulky, industrial machine sits flush against",
+   "the lower wall, wired with thick cabling and",
+   "small, glowing status displays. It hums",
+   "steadily, attempting to process the glowing"
+  ]
+ },
+ {
+  "box": [
+   26,
+   79,
+   87,
+   157
+  ],
+  "name": "WALL-MOUNTED UTILITY LIGHT",
+  "text": [
+   "A caged, amber bulb is bolted to the upper",
+   "wall, casting a warm, localized glow over a",
+   "nearby electrical box. The casing is pitted",
+   "with rust, but the light remains surprisingly"
+  ]
+ }
+]

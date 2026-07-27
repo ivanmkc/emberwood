@@ -1,0 +1,7 @@
+{
+ "score": 3,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "none",
+ "worst_defect": "The large wrecked truck and the upper power towers are incorrectly marked as walkable green areas."
+}

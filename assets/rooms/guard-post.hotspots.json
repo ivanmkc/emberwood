@@ -1,0 +1,209 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "SECURITY GUARD ROOM",
+  "text": [
+   "This monitoring station feels lived-in, a",
+   "cramped pocket of surveillance tucked away",
+   "from the main corridors. The concrete walls",
+   "and functional furniture speak to its"
+  ]
+ },
+ {
+  "box": [
+   36,
+   36,
+   249,
+   236
+  ],
+  "name": "METAL LOCKER UNIT",
+  "text": [
+   "A standard-issue double locker, its grey paint",
+   "chipped and worn from regular use. One side",
+   "stands open, revealing a coat and hat."
+  ]
+ },
+ {
+  "box": [
+   222,
+   91,
+   417,
+   212
+  ],
+  "name": "CONTROL DESK WITH MONITORS",
+  "text": [
+   "A sturdy control console sits beneath a bank",
+   "of CRT monitors, its surface crowded with a",
+   "keyboard, switches, and a solitary coffee mug.",
+   "The screens display grainy feeds of empty"
+  ]
+ },
+ {
+  "box": [
+   87,
+   72,
+   183,
+   225
+  ],
+  "name": "OPEN LOCKER COMPARTMENT",
+  "text": [
+   "Inside the open locker hangs a heavy brown",
+   "coat, looking well-worn and warm. A dark green",
+   "helmet rests on the shelf above."
+  ]
+ },
+ {
+  "box": [
+   486,
+   174,
+   575,
+   288
+  ],
+  "name": "NARROW COT BED",
+  "text": [
+   "A simple metal-framed cot is tucked against",
+   "the wall, covered with a rumpled brown blanket",
+   "and a flat white pillow. It looks like it sees",
+   "more use for quick naps than full nights of"
+  ]
+ },
+ {
+  "box": [
+   39,
+   276,
+   272,
+   319
+  ],
+  "name": "FLOOR SEAM DETAILS",
+  "text": [
+   "Thick metal plating covers the floor, with",
+   "prominent seams forming a large cross pattern",
+   "in the center of the room. The surface is",
+   "scuffed and shows the grey color underneath"
+  ]
+ },
+ {
+  "box": [
+   254,
+   27,
+   386,
+   88
+  ],
+  "name": "ROW OF SECURITY MONITORS",
+  "text": [
+   "Four small CRT monitors are bracketed",
+   "together, forming the top row of the",
+   "surveillance setup. They show various static",
+   "views of concrete tunnels and utilitarian"
+  ]
+ },
+ {
+  "box": [
+   457,
+   72,
+   555,
+   144
+  ],
+  "name": "CORK BULLETIN BOARD",
+  "text": [
+   "A framed corkboard hangs on the wall,",
+   "cluttered with pinned papers, a map, and a few",
+   "faded photographs. It serves as a makeshift",
+   "command center and personal space for the"
+  ]
+ },
+ {
+  "box": [
+   483,
+   166,
+   553,
+   266
+  ],
+  "name": "RUMPLED BED BLANKET",
+  "text": [
+   "The brown blanket on the cot is carelessly",
+   "tossed, suggesting someone left in a hurry or",
+   "just woke up. It looks thick enough to ward",
+   "off the chill of the concrete room."
+  ]
+ },
+ {
+  "box": [
+   567,
+   79,
+   600,
+   234
+  ],
+  "name": "TALL CORKBOARD",
+  "text": [
+   "A second, taller corkboard is mounted on the",
+   "side wall, holding more maps and notices. It",
+   "helps organize the paperwork needed to manage",
+   "this sector."
+  ]
+ },
+ {
+  "box": [
+   462,
+   79,
+   549,
+   138
+  ],
+  "name": "PINNED NOTES AND MAP",
+  "text": [
+   "Close-up on the bulletin board reveals a hand-",
+   "drawn map of the local tunnel network,",
+   "alongside various typed memos and a couple of",
+   "ID photos."
+  ]
+ },
+ {
+  "box": [
+   131,
+   95,
+   169,
+   214
+  ],
+  "name": "OPEN LOCKER DOOR",
+  "text": [
+   "The metal door of the locker is swung open,",
+   "its inner surface detailed with small",
+   "ventilation slits. The grey paint is scratched",
+   "near the handle."
+  ]
+ },
+ {
+  "box": [
+   91,
+   95,
+   128,
+   210
+  ],
+  "name": "CLOSED LOCKER DOOR",
+  "text": [
+   "The left side of the locker unit remains",
+   "firmly shut, keeping its contents hidden. The",
+   "metal surface is plain, save for the",
+   "horizontal vents near the bottom."
+  ]
+ },
+ {
+  "box": [
+   190,
+   92,
+   249,
+   161
+  ],
+  "name": "LOWER SECURITY MONITORS",
+  "text": [
+   "The bottom row of the monitor bank shows more",
+   "feeds of dim, concrete corridors. The screens",
+   "cast a cool, pale glow over the control desk."
+  ]
+ }
+]

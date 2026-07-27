@@ -1,0 +1,206 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   279
+  ],
+  "name": "ABANDONED WORKSHOP AREA",
+  "text": [
+   "This upper section houses dilapidated",
+   "workstations and forgotten tech. The warm glow",
+   "of a desk lamp casts long shadows across",
+   "scattered paperwork and a microscope."
+  ]
+ },
+ {
+  "box": [
+   158,
+   284,
+   346,
+   448
+  ],
+  "name": "PLANT RESEARCH FLOOR",
+  "text": [
+   "The lower level houses the remaining",
+   "experimental plant tanks. A faint,",
+   "bioluminescent glow pulses from the murky",
+   "water channel cutting across the floor."
+  ]
+ },
+ {
+  "box": [
+   64,
+   284,
+   159,
+   448
+  ],
+  "name": "GLOWING WATER CHANNEL",
+  "text": [
+   "The water here glows a sickly, unnatural teal.",
+   "Whatever chemicals leak from the machinery",
+   "upstream have permanently altered the liquid."
+  ]
+ },
+ {
+  "box": [
+   241,
+   214,
+   354,
+   342
+  ],
+  "name": "CENTRAL SPECIMEN TANKS",
+  "text": [
+   "These two glass cylinders hold broad-leafed",
+   "plants suspended in a nutrient bath. They are",
+   "hooked up to a complex, rusty pipe system."
+  ]
+ },
+ {
+  "box": [
+   455,
+   214,
+   561,
+   342
+  ],
+  "name": "RIGHT SPECIMEN TANKS",
+  "text": [
+   "One tank holds a stunted, struggling fern,",
+   "while the other contains a dead, skeletal",
+   "branch. The glass is fogged with condensation",
+   "and grime."
+  ]
+ },
+ {
+  "box": [
+   347,
+   214,
+   469,
+   321
+  ],
+  "name": "TANGLED SUPPORT PIPING",
+  "text": [
+   "A messy network of pipes feeds into the",
+   "specimen tanks, pumping necessary fluids and",
+   "gases. They are caked in rust and patches of",
+   "dried, teal sludge."
+  ]
+ },
+ {
+  "box": [
+   461,
+   393,
+   640,
+   448
+  ],
+  "name": "LOWER MAINTENANCE VENT",
+  "text": [
+   "A heavy-duty ventilation unit is built into",
+   "the lower wall, likely to manage the fumes",
+   "from the glowing canal. It hums with a low,",
+   "vibrating rattle."
+  ]
+ },
+ {
+  "box": [
+   68,
+   111,
+   155,
+   207
+  ],
+  "name": "UPPER WATER CHANNEL",
+  "text": [
+   "The glowing liquid pours from a dark, circular",
+   "pipe opening in the wall, flowing steadily",
+   "under a metal walkway."
+  ]
+ },
+ {
+  "box": [
+   353,
+   352,
+   453,
+   434
+  ],
+  "name": "LOWER BULKHEAD DOOR",
+  "text": [
+   "This thick metal door is framed by a glowing",
+   "teal strip, indicating it still has power. It",
+   "likely leads deeper into the facility's lower",
+   "levels."
+  ]
+ },
+ {
+  "box": [
+   0,
+   50,
+   51,
+   208
+  ],
+  "name": "DISCARDED CRATES",
+  "text": [
+   "A stack of old metal crates and a torn bag sit",
+   "forgotten in the corner. They're covered in a",
+   "thick layer of dust, untouched for years."
+  ]
+ },
+ {
+  "box": [
+   0,
+   284,
+   65,
+   408
+  ],
+  "name": "WESTERN PLATFORM EDGE",
+  "text": [
+   "This concrete edge overlooks the glowing",
+   "canal, littered with small, rusted metal",
+   "components and a discarded barrel."
+  ]
+ },
+ {
+  "box": [
+   173,
+   255,
+   228,
+   390
+  ],
+  "name": "TALL SPECIMEN TANK",
+  "text": [
+   "This larger cylinder holds a surprisingly",
+   "healthy, multi-tiered leafy plant. The teal",
+   "liquid inside seems slightly clearer than the",
+   "rest."
+  ]
+ },
+ {
+  "box": [
+   183,
+   403,
+   332,
+   448
+  ],
+  "name": "LOWER VENTILATION UNIT",
+  "text": [
+   "A rusted, boxy air conditioner unit sits near",
+   "the bottom walkway. It's connected to the wall",
+   "by a thick, insulated pipe."
+  ]
+ },
+ {
+  "box": [
+   585,
+   260,
+   636,
+   390
+  ],
+  "name": "FAR RIGHT TANK",
+  "text": [
+   "A lone tank stands against the far wall,",
+   "holding another broad-leafed specimen. A loose",
+   "cable rests on the floor nearby, disconnected",
+   "from its terminal."
+  ]
+ }
+]

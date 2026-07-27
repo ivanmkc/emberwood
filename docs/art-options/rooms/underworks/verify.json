@@ -1,0 +1,7 @@
+{
+ "score": 4,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "none",
+ "worst_defect": "A large rectangular green area incorrectly covers the upper-right wall and machinery, and extends through the top boundary."
+}

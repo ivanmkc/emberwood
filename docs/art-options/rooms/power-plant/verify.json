@@ -1,0 +1,7 @@
+{
+ "score": 1,
+ "green_on_nonfloor": "major",
+ "red_on_floor": "major",
+ "unreachable_area": "major",
+ "worst_defect": "Most of the open floor is marked as blocked while solid objects like the central pillar are marked as walkable"
+}

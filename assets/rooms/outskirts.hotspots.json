@@ -1,0 +1,211 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   140
+  ],
+  "name": "CONCRETE RETAINING WALL",
+  "text": [
+   "A massive concrete wall stretches across the",
+   "upper level, scarred by rust stains and",
+   "cracks. It holds back the earth, separating",
+   "the lower ruins from whatever lies above."
+  ]
+ },
+ {
+  "box": [
+   0,
+   44,
+   456,
+   165
+  ],
+  "name": "POWER CABLES AND DOORWAY",
+  "text": [
+   "Sagging cables connect an old pylon to a dimly",
+   "lit doorway cut into the concrete wall. A",
+   "small sign above the entrance promises",
+   "salvage, illuminated by a solitary lantern."
+  ]
+ },
+ {
+  "box": [
+   372,
+   138,
+   548,
+   254
+  ],
+  "name": "RUSTED DUMP TRUCK",
+  "text": [
+   "The oxidized remains of a heavy hauler sit",
+   "half-buried in the dirt, its bed overflowing",
+   "with debris. Tough, leafy plants have begun to",
+   "claim the rusted cab and chassis."
+  ]
+ },
+ {
+  "box": [
+   149,
+   293,
+   549,
+   326
+  ],
+  "name": "BROKEN ASPHALT ROAD",
+  "text": [
+   "Chunks of a dilapidated paved road are",
+   "scattered across the dusty ground, separated",
+   "by wide stretches of dirt. The grey asphalt is",
+   "fractured and worn away at the edges."
+  ]
+ },
+ {
+  "box": [
+   472,
+   72,
+   640,
+   146
+  ],
+  "name": "EXPOSED PIPING NETWORK",
+  "text": [
+   "A network of rusted pipes runs along the upper",
+   "concrete wall, turning corners and dropping",
+   "down towards the ground. They are stained and",
+   "weathered from years of exposure."
+  ]
+ },
+ {
+  "box": [
+   480,
+   80,
+   640,
+   139
+  ],
+  "name": "UPPER WALL PIPING",
+  "text": [
+   "Sections of old industrial piping cling to the",
+   "concrete wall, casting long shadows. The metal",
+   "shows heavy signs of oxidation and wear."
+  ]
+ },
+ {
+  "box": [
+   103,
+   296,
+   166,
+   429
+  ],
+  "name": "LOWER TRANSMISSION PYLON",
+  "text": [
+   "A rusted metal transmission tower stands watch",
+   "near the broken road, its cables long gone.",
+   "The lattice structure is still intact despite",
+   "the pervasive decay."
+  ]
+ },
+ {
+  "box": [
+   552,
+   365,
+   640,
+   448
+  ],
+  "name": "MODULAR METAL STRUCTURE",
+  "text": [
+   "A blocky, pre-fabricated metal unit sits in",
+   "the lower corner, attached to small piping. It",
+   "looks like a piece of modular machinery left",
+   "behind from the old settlement."
+  ]
+ },
+ {
+  "box": [
+   438,
+   369,
+   538,
+   434
+  ],
+  "name": "DISCARDED VEHICLE HULL",
+  "text": [
+   "The crushed and rusted shell of a small",
+   "vehicle rests near the bottom edge of the",
+   "area. It's partially obscured by hardy shrubs",
+   "growing out of the dry soil."
+  ]
+ },
+ {
+  "box": [
+   0,
+   379,
+   93,
+   448
+  ],
+  "name": "PILE OF ROCKS",
+  "text": [
+   "A cluster of jagged, grey rocks is gathered in",
+   "the corner, offering a bit of rough cover.",
+   "They are mostly barren, save for a few small",
+   "green sprouts at their base."
+  ]
+ },
+ {
+  "box": [
+   579,
+   124,
+   640,
+   210
+  ],
+  "name": "BOULDER CLUSTER",
+  "text": [
+   "A group of large, smooth boulders rests",
+   "against the retaining wall on the upper right.",
+   "They are shaded by a small, broad-leafed tree",
+   "growing nearby."
+  ]
+ },
+ {
+  "box": [
+   472,
+   39,
+   640,
+   66
+  ],
+  "name": "HORIZONTAL PIPELINE SEGMENT",
+  "text": [
+   "A straight run of rusted pipe spans across the",
+   "top right section of the concrete wall. The",
+   "metal is heavily corroded, showing years of",
+   "neglect."
+  ]
+ },
+ {
+  "box": [
+   158,
+   400,
+   226,
+   448
+  ],
+  "name": "SCATTERED GREY ROCKS",
+  "text": [
+   "A few loose, grey rocks are strewn across the",
+   "dirt near the lower edge of the path. They",
+   "look like they tumbled down from a larger pile",
+   "over time."
+  ]
+ },
+ {
+  "box": [
+   170,
+   154,
+   231,
+   190
+  ],
+  "name": "ROCK AND DIRT PILE",
+  "text": [
+   "A small mound of rocks and dirt sits near the",
+   "edge of the broken asphalt, partially covered",
+   "in dust. It seems like a natural accumulation",
+   "of debris in this arid landscape."
+  ]
+ }
+]

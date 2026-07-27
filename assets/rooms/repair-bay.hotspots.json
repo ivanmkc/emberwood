@@ -1,0 +1,211 @@
+[
+ {
+  "box": [
+   171,
+   37,
+   457,
+   311
+  ],
+  "name": "VEHICLE ON HYDRAULIC LIFT",
+  "text": [
+   "This dune buggy has seen better days,",
+   "currently suspended on a heavy-duty hydraulic",
+   "lift. Its engine compartment is exposed,",
+   "revealing a complex network of pipes and"
+  ]
+ },
+ {
+  "box": [
+   0,
+   238,
+   270,
+   448
+  ],
+  "name": "SOUTHWESTERN CORNER OF GARAG",
+  "text": [
+   "A dimly lit alcove packed with shelving units",
+   "overflowing with spare parts and tools. The",
+   "floor is stained with oil and grease, evidence",
+   "of countless repairs."
+  ]
+ },
+ {
+  "box": [
+   370,
+   238,
+   640,
+   448
+  ],
+  "name": "SOUTHEASTERN CORNER OF GARAG",
+  "text": [
+   "A partially enclosed workspace containing a",
+   "welding setup, complete with gas canisters and",
+   "a protective shield. Scorch marks stain the",
+   "wall behind the equipment."
+  ]
+ },
+ {
+  "box": [
+   457,
+   50,
+   571,
+   196
+  ],
+  "name": "TALL METAL SHELVING UNIT",
+  "text": [
+   "A sturdy metal shelving unit packed with",
+   "various tools, parts, and supplies. It looks",
+   "like it's been organized and reorganized",
+   "countless times over the years."
+  ]
+ },
+ {
+  "box": [
+   575,
+   0,
+   640,
+   193
+  ],
+  "name": "DOORWAY TO CORRIDOR",
+  "text": [
+   "A heavy metal door leads out of the garage,",
+   "its surface scarred and dented. A glowing blue",
+   "light panel illuminates the area above the",
+   "frame."
+  ]
+ },
+ {
+  "box": [
+   0,
+   0,
+   65,
+   193
+  ],
+  "name": "DOORWAY TO CORRIDOR",
+  "text": [
+   "A reinforced metal door stands slightly ajar,",
+   "leading to a darker corridor. A glowing yellow",
+   "light panel sits above the frame, casting a",
+   "warm glow."
+  ]
+ },
+ {
+  "box": [
+   67,
+   266,
+   163,
+   396
+  ],
+  "name": "HEAVY DUTY SHELVING UNIT",
+  "text": [
+   "A sturdy shelving unit packed with various",
+   "mechanical components and supplies. You spot a",
+   "battery, a small motor, and several",
+   "unidentified metal casings."
+  ]
+ },
+ {
+  "box": [
+   68,
+   43,
+   176,
+   149
+  ],
+  "name": "METAL SHELVING UNIT",
+  "text": [
+   "A metal shelving unit crammed with tools,",
+   "parts, and miscellaneous supplies. The bottom",
+   "shelf is dominated by a tangle of heavy-duty",
+   "cables."
+  ]
+ },
+ {
+  "box": [
+   358,
+   42,
+   471,
+   136
+  ],
+  "name": "WORKBENCH WITH DIAGNOSTICS",
+  "text": [
+   "A solid metal workbench equipped with an old,",
+   "flickering diagnostic monitor. The surface is",
+   "cluttered with tools, a clipboard, and",
+   "scattered notes."
+  ]
+ },
+ {
+  "box": [
+   514,
+   294,
+   574,
+   355
+  ],
+  "name": "WELDING EQUIPMENT SETUP",
+  "text": [
+   "A compact welding unit sits next to a pair of",
+   "tall gas canisters, one green and one red. The",
+   "wall behind it is heavily scorched from",
+   "frequent use."
+  ]
+ },
+ {
+  "box": [
+   345,
+   245,
+   431,
+   286
+  ],
+  "name": "HEAVY DUTY CABLES",
+  "text": [
+   "Thick, black cables snake across the floor,",
+   "connecting the vehicle on the lift to a power",
+   "source or diagnostic equipment. They're worn",
+   "and patched in several places."
+  ]
+ },
+ {
+  "box": [
+   109,
+   164,
+   164,
+   224
+  ],
+  "name": "RED TOOL TROLLEY",
+  "text": [
+   "A standard red metal tool trolley, its drawers",
+   "likely filled with wrenches and sockets. It's",
+   "positioned conveniently near the vehicle lift."
+  ]
+ },
+ {
+  "box": [
+   106,
+   0,
+   209,
+   30
+  ],
+  "name": "OVERHEAD FLUORESCENT LIGHT",
+  "text": [
+   "A long fluorescent light fixture hangs from",
+   "the ceiling, casting a warm, yellowish glow",
+   "over the workbench below. It buzzes faintly",
+   "with electricity."
+  ]
+ },
+ {
+  "box": [
+   431,
+   0,
+   534,
+   30
+  ],
+  "name": "OVERHEAD FLUORESCENT LIGHT",
+  "text": [
+   "A long fluorescent light fixture is suspended",
+   "from the ceiling, illuminating the shelving",
+   "units and workbench beneath it. The casing is",
+   "slightly rusted at the edges."
+  ]
+ }
+]

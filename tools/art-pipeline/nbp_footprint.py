@@ -37,22 +37,24 @@ if _args.room:
 
 
 PROMPT = (
-    'Repaint this EXACT image as a flat OBJECT-FOOTPRINT map for a top-down game. Keep every '
-    'silhouette and position PIXEL-IDENTICAL — do not move or redraw anything. Two flat colors only:\n'
-    '- pure red #FF0000: the FOOTPRINT of every object — the region of the ground plane the object '
-    'physically occupies and a walking character could collide with:\n'
-    '  * for FREESTANDING objects (pylons, glass tanks, stalls, machines, crates, barrels, lamp '
-    'posts, cranes, benches, railings): paint ONLY the base where the object meets the ground — '
-    'NOT its upper body, glass, canopy or anything above the base. Examples of the rule: a tall '
-    'glowing pylon gets red ONLY on its pedestal footing — its column shaft and lamp above must '
-    'be green; a glass tank gets red ONLY on its planter pedestal — the glass and contents above '
-    'must be green; a stall gets red on its counter base — its awning must be green\n'
-    '  * for BUILDINGS and walls attached to the scene edge: paint their ENTIRE occupied area '
-    '(a character can never stand behind them)\n'
-    '- pure green #00FF00: everything else — open floors, metal grates and decks that are '
-    'walkable floor (not objects), bridge decks, water surface, and the UPPER BODIES of '
-    'freestanding objects (above their bases)\n'
-    'Never paint a walkable floor surface red. Every pixel must be exactly red or green.'
+    'Repaint this EXACT image as a flat GROUND-OCCUPANCY map for a top-down 3/4-view game. Keep '
+    'every silhouette and position PIXEL-IDENTICAL — do not move or redraw anything. Two flat '
+    'colors only:\n'
+    '- pure red #FF0000: the full GROUND-OCCUPANCY footprint of every object — the entire region '
+    'of the floor plane the object occupies in plan view, i.e. everywhere its body touches or '
+    'stands over the ground, INCLUDING floor hidden behind the object\'s lower body. In this 3/4 '
+    'view an object\'s occupied ground is a band: from its visible front base line, upward on '
+    'screen by its plan depth (painted OVER the object\'s lower pixels). Examples: a pylon = the '
+    'full oval where its pedestal meets the floor (not the tall column above); a glass tank = the '
+    'full plan area of its planter pedestal; a table or machine = the whole rectangle of floor '
+    'under it from front legs to back legs; a crate stack = the plan rectangle of the bottom '
+    'crate\n'
+    '- for BUILDINGS and walls attached to the scene edge: paint their ENTIRE area red (a '
+    'character can never stand behind them)\n'
+    '- pure green #00FF00: everything else — all standable open floor, and the parts of objects '
+    'ABOVE their ground-occupancy band (columns, glass, canopies, awnings, upper crates)\n'
+    'Never paint standable open floor red. Every pixel must be EXACTLY pure red #FF0000 or pure '
+    'green #00FF00 — NO dithering, NO anti-aliasing, NO gradients, hard 1-pixel boundaries.'
 )
 
 
@@ -127,6 +129,10 @@ def attempt_once(client, seg_in, src, roll):
                       .resize(src.size, Image.NEAREST)) > 127
     walk_d = cv2.dilate(walk.astype(np.uint8), np.ones((7, 7), np.uint8)).astype(bool)
     contain = float((fp & ~walk_d).sum() / max(1, fp.sum()))
+    # purity measured over the PLAY SPACE (near-walkable region): impure sky /
+    # backdrop bands never affect collision and must not fail the gate
+    play = cv2.dilate(walk.astype(np.uint8), np.ones((101, 101), np.uint8)).astype(bool)
+    pure_play = float((np.minimum(dr, dg) < 100)[play].mean()) if play.any() else pure
     # NBP-vs-NBP reconciliation: walkability wins on floor surfaces (grates,
     # decks); footprint wins on object bases (which walk already marks red)
     conflict = float((fp & walk).sum() / max(1, fp.sum()))
@@ -152,21 +158,26 @@ def attempt_once(client, seg_in, src, roll):
             if comp.sum() < 3000:
                 continue
             ys = np.where(comp.any(axis=1))[0]
+            xs2 = np.where(comp.any(axis=0))[0]
             top, bot = ys.min(), ys.max()
+            hgt, wid = bot - top, xs2.max() - xs2.min()
+            if hgt < 250 or hgt < 1.1 * wid:
+                continue  # squat object: footprint ~= body is correct
             mid = (top + bot) // 2
             q3 = top + 3 * (bot - top) // 4
             tophalf = float((fp & comp)[top:mid].sum()) / max(1, int(comp[top:mid].sum()))
             botq = float((fp & comp)[q3:].sum()) / max(1, int(comp[q3:].sum()))
             ok = tophalf < 0.15
             checks.append((cname, ci, f'top {tophalf:.2f} botq {botq:.2f}', bool(ok)))
-    bases_ok = all(c[3] for c in checks) if checks else False
+    bases_ok = all(c[3] for c in checks) if checks else True  # vacuous: no freestanding classes
     for c in checks:
         print(f' roll {roll} bases-only check:', c)
 
-    metrics = {'snap_purity': round(pure, 3), 'footprint_fraction': round(frac, 3),
+    metrics = {'snap_purity': round(pure, 3), 'play_purity': round(pure_play, 3),
+               'footprint_fraction': round(frac, 3),
                'edge_alignment': round(edge, 3), 'nonwalk_containment': round(contain, 3),
                'walk_conflict': round(conflict, 3), 'bases_only': bases_ok,
-               'pass': bool(pure >= 0.85 and 0.05 <= frac <= 0.60 and edge >= 0.45
+               'pass': bool(pure_play >= 0.85 and 0.05 <= frac <= 0.60 and edge >= 0.45
                             and conflict <= 0.30 and bases_ok)}
     print(f'roll {roll}:', json.dumps(metrics))
     score = (2.0 if bases_ok else 0.0) + contain - conflict

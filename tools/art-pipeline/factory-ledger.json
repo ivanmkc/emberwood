@@ -1,0 +1,72 @@
+{
+ "transit-office": {
+  "room": "transit-office",
+  "stages": {
+   "scene": {
+    "style_match": 10,
+    "density": 7,
+    "perspective_ok": true,
+    "character_free": true,
+    "walkable_ground": true,
+    "issues": "The central floor area is somewhat bare and lacks the scattered debris, wear, and wiring seen in the anchor.",
+    "pass": true,
+    "attempts": 2
+   },
+   "class": {
+    "snap_purity": 0.953,
+    "floor_fraction": 0.266,
+    "edge_alignment": 1.0,
+    "pass": true
+   },
+   "walk": {
+    "method": "grid",
+    "snap_purity": 0.978,
+    "walk_fraction": 0.321,
+    "edge_alignment": 1.0,
+    "containment": 1.0,
+    "pass": true
+   },
+   "footprint": {
+    "snap_purity": 0.79,
+    "play_purity": 0.962,
+    "footprint_fraction": 0.6,
+    "edge_alignment": 0.281,
+    "nonwalk_containment": 0.787,
+    "walk_conflict": 0.206,
+    "bases_only": true,
+    "pass": false,
+    "log": [
+     " \"walk_conflict\": 0.206,",
+     " \"bases_only\": true,",
+     " \"pass\": false",
+     "}"
+    ]
+   },
+   "segment": {
+    "pass": true,
+    "log": [
+     "auto-spawn at logical (469, 332) (clearance 352px)",
+     "exit edge s: strip 208..399 (logical)",
+     "walkable fraction: 0.30; lattice reachable: 5776; exit reachable: True",
+     "config-space: all regions box-reachable (round 0)"
+    ]
+   },
+   "install": {
+    "pass": true,
+    "island_px": 0,
+    "walk_frac": 0.304,
+    "exits": [
+     {
+      "edge": "s",
+      "rect": [
+       208,
+       430,
+       399,
+       447
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

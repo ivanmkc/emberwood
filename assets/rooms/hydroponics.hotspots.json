@@ -1,0 +1,212 @@
+[
+ {
+  "box": [
+   47,
+   0,
+   640,
+   369
+  ],
+  "name": "OVERHEAD PIPING SYSTEM",
+  "text": [
+   "Thick metal pipes run along the ceiling,",
+   "dropping down with small valves and fixtures.",
+   "The grey finish is scuffed in places,",
+   "suggesting years of maintenance in this humid"
+  ]
+ },
+ {
+  "box": [
+   0,
+   261,
+   349,
+   448
+  ],
+  "name": "LOWER WALL PIPING",
+  "text": [
+   "A network of smaller pipes hugs the lower edge",
+   "of the wall, leading towards the main console",
+   "area. They look like they handle coolant or",
+   "fluid return from the agricultural units."
+  ]
+ },
+ {
+  "box": [
+   0,
+   0,
+   280,
+   210
+  ],
+  "name": "WESTERN COMPUTER TERMINAL",
+  "text": [
+   "A bulky, grey console unit sits against the",
+   "wall, its green screen glowing faintly with",
+   "streams of data. It appears to monitor the",
+   "adjacent row of plant cultivation tanks."
+  ]
+ },
+ {
+  "box": [
+   0,
+   288,
+   339,
+   448
+  ],
+  "name": "LOWER CONTROL CONSOLE",
+  "text": [
+   "A secondary console is built into the wall",
+   "here, featuring a slanted keyboard and a",
+   "smaller vertical screen. It looks well-used,",
+   "perhaps an older model integrated into the"
+  ]
+ },
+ {
+  "box": [
+   298,
+   167,
+   491,
+   429
+  ],
+  "name": "FLOOR PUDDLE",
+  "text": [
+   "A large, dark puddle has collected in the",
+   "center of the room, reflecting the cyan glow",
+   "of the tanks. It hints at a slow leak or",
+   "condensation dripping from the overhead"
+  ]
+ },
+ {
+  "box": [
+   244,
+   0,
+   426,
+   102
+  ],
+  "name": "UPPER WALKWAY SECTION",
+  "text": [
+   "A section of metal grating forms a small",
+   "walkway above, separated by a bright cyan",
+   "glow. It seems designed for overhead access or",
+   "ventilation flow."
+  ]
+ },
+ {
+  "box": [
+   441,
+   39,
+   640,
+   117
+  ],
+  "name": "EASTERN COMPUTER TERMINAL",
+  "text": [
+   "This workstation features a large green",
+   "display and a keypad, set against a panel of",
+   "orange-lit grating. It likely controls the",
+   "environmental parameters for this side of the"
+  ]
+ },
+ {
+  "box": [
+   172,
+   127,
+   228,
+   389
+  ],
+  "name": "LEFTMOST CULTIVATION TANKS",
+  "text": [
+   "A stack of transparent cylindrical tanks",
+   "houses leafy green plants, bathed in a cool",
+   "cyan light. The glass is slightly fogged,",
+   "showing the high humidity inside each chamber."
+  ]
+ },
+ {
+  "box": [
+   236,
+   142,
+   292,
+   389
+  ],
+  "name": "SECOND ROW CULTIVATION TANKS",
+  "text": [
+   "This vertical arrangement of tanks holds a",
+   "variety of smaller, bushier plants. The bottom",
+   "tank seems to contain some sort of fungal or",
+   "root-based growth, distinct from the others."
+  ]
+ },
+ {
+  "box": [
+   55,
+   39,
+   222,
+   122
+  ],
+  "name": "UPPER LEFT WALL SECTION",
+  "text": [
+   "The wall here is painted a utilitarian grey,",
+   "broken by a rusty pipe and a small ventilation",
+   "fan. A single orange light bulb casts a warm",
+   "glow over a section of metal grating."
+  ]
+ },
+ {
+  "box": [
+   583,
+   142,
+   636,
+   389
+  ],
+  "name": "RIGHTMOST CULTIVATION TANKS",
+  "text": [
+   "The final row of tanks displays taller, stalky",
+   "plants, illuminated by the same pervasive cyan",
+   "glow. The base of the unit shows intricate",
+   "piping connecting it to the room's central"
+  ]
+ },
+ {
+  "box": [
+   439,
+   142,
+   500,
+   348
+  ],
+  "name": "FOURTH ROW CULTIVATION TANKS",
+  "text": [
+   "These tanks contain plants with broad, spiky",
+   "leaves, growing robustly in their artificial",
+   "environment. The structure shows slight signs",
+   "of wear around the metal casing joints."
+  ]
+ },
+ {
+  "box": [
+   457,
+   389,
+   640,
+   448
+  ],
+  "name": "LOWER RIGHT PIPING",
+  "text": [
+   "A cluster of pipes runs along the floor and",
+   "lower wall, leading towards an out-of-sight",
+   "utility area. A small ventilation unit sits",
+   "nearby, its grill caked with a bit of dust."
+  ]
+ },
+ {
+  "box": [
+   378,
+   142,
+   424,
+   348
+  ],
+  "name": "THIRD ROW CULTIVATION TANKS",
+  "text": [
+   "This stack of tanks shows a mix of leafy and",
+   "stem-heavy plants. The bottommost chamber",
+   "seems empty or houses something very small,",
+   "waiting for its next cycle."
+  ]
+ }
+]

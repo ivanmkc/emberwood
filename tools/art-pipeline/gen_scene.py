@@ -142,10 +142,13 @@ def main():
     cfg = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
     anchor_img = Image.open(ANCHOR).convert('RGB')
     anchor_img.thumbnail((1200, 1200))
-    only = sys.argv[1:] or list(cfg['rooms'])
+    allrooms = dict(cfg['rooms'])
+    for k, v in cfg.get('interiors', {}).items():
+        allrooms[k] = {**v, 'exits': {'s': v['parent']}}
+    only = sys.argv[1:] or list(allrooms)
     with ThreadPoolExecutor(max_workers=4) as ex:
         results = dict(zip(only, ex.map(
-            lambda n: gen_room(n, cfg['rooms'][n], anchor_img), only)))
+            lambda n: gen_room(n, allrooms[n], anchor_img), only)))
     fails = [n for n, ok in results.items() if not ok]
     print(f'\n{len(only) - len(fails)}/{len(only)} scenes generated; failed: {fails or "none"}')
     sys.exit(1 if fails else 0)

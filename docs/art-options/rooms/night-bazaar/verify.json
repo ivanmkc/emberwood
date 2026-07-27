@@ -1,0 +1,7 @@
+{
+ "score": 5,
+ "green_on_nonfloor": "none",
+ "red_on_floor": "major",
+ "unreachable_area": "major",
+ "worst_defect": "The puddles on the main paths are incorrectly marked as blocked (red)."
+}

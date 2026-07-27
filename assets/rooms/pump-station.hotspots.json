@@ -1,0 +1,197 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   280
+  ],
+  "name": "INDUSTRIAL BASEMENT WALL",
+  "text": [
+   "Stark concrete block walls enclose the",
+   "machinery, showing water stains and patching",
+   "from decades of industrial use."
+  ]
+ },
+ {
+  "box": [
+   159,
+   275,
+   349,
+   448
+  ],
+  "name": "LOWER WALKWAY FENCING",
+  "text": [
+   "Metal railing sections off the lower floor",
+   "grating, meant to keep workers from wandering",
+   "into the coolant trenches."
+  ]
+ },
+ {
+  "box": [
+   0,
+   284,
+   143,
+   448
+  ],
+  "name": "GLOWING COOLANT TRENCH",
+  "text": [
+   "A deep trench channels bright, viscous fluid",
+   "through the facility, emitting a harsh, cold",
+   "luminescence."
+  ]
+ },
+ {
+  "box": [
+   457,
+   390,
+   640,
+   448
+  ],
+  "name": "VENTILATION UNIT FENCING",
+  "text": [
+   "Sturdy railings surround the humming condenser",
+   "units, bolted firmly into the concrete floor."
+  ]
+ },
+ {
+  "box": [
+   310,
+   248,
+   451,
+   324
+  ],
+  "name": "RUSTED DRAINAGE PIPE",
+  "text": [
+   "This corroded lower pipe bends down toward the",
+   "grate, meant to discharge overflow or",
+   "byproducts from the main assembly."
+  ]
+ },
+ {
+  "box": [
+   94,
+   100,
+   213,
+   181
+  ],
+  "name": "TARNISHED COPPER PIPING",
+  "text": [
+   "These thin pipes run from the pressure dials",
+   "down toward the pump assembly, their copper",
+   "finish dull and oxidized."
+  ]
+ },
+ {
+  "box": [
+   421,
+   263,
+   539,
+   341
+  ],
+  "name": "GRATED FLUID PIT",
+  "text": [
+   "A heavy metal grate covers a shallow pit,",
+   "illuminated from below by the same harsh,",
+   "glowing coolant found in the trench."
+  ]
+ },
+ {
+  "box": [
+   0,
+   276,
+   65,
+   409
+  ],
+  "name": "STORAGE CORNER JUNK",
+  "text": [
+   "Scrap metal, disused containers, and assorted",
+   "debris have been piled haphazardly in this",
+   "dark, neglected corner."
+  ]
+ },
+ {
+  "box": [
+   120,
+   103,
+   235,
+   169
+  ],
+  "name": "FLUID TRANSFER LINES",
+  "text": [
+   "A pair of small, parallel pipes run",
+   "horizontally along the wall, showing distinct",
+   "signs of rust near the joints."
+  ]
+ },
+ {
+  "box": [
+   474,
+   46,
+   559,
+   127
+  ],
+  "name": "TOOL STORAGE RACK",
+  "text": [
+   "A pegboard holds a variety of heavy wrenches",
+   "and a hammer, organized for routine",
+   "maintenance of the pump equipment."
+  ]
+ },
+ {
+  "box": [
+   359,
+   372,
+   445,
+   448
+  ],
+  "name": "LOWER ACCESS DOORWAY",
+  "text": [
+   "A simple metal frame marks an open doorway",
+   "leading further into the damp, noisy",
+   "substructure."
+  ]
+ },
+ {
+  "box": [
+   0,
+   108,
+   51,
+   208
+  ],
+  "name": "CLUTTERED WORK STATION",
+  "text": [
+   "A small table is covered in loose wire, scraps",
+   "of paper, and an old crate, illuminated by a",
+   "warm work light."
+  ]
+ },
+ {
+  "box": [
+   163,
+   254,
+   282,
+   295
+  ],
+  "name": "LOWER CONNECTION PIPES",
+  "text": [
+   "Two narrow pipes emerge from the pump housing,",
+   "bending down to run parallel beneath the main",
+   "machinery."
+  ]
+ },
+ {
+  "box": [
+   591,
+   98,
+   640,
+   193
+  ],
+  "name": "DIAGNOSTIC TERMINAL STATION",
+  "text": [
+   "A bulky, gray console sits against the far",
+   "wall, its single screen glowing a pale, steady",
+   "cyan."
+  ]
+ }
+]

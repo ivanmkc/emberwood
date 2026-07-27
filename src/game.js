@@ -228,6 +228,7 @@ export function createGame(canvas, input, art) {
         g.roomExit = g.map.id === 'anchorroom' ? (data.exit || null) : null;
       }
       g.roomExits = g.map.plateExits || [];
+      g.hotspots = (art.roomHotspots && art.roomHotspots[g.mapId]) || [];
       return;
     }
     g.maskWalk = null;
@@ -466,6 +467,16 @@ export function createGame(canvas, input, art) {
       if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor', 'terminal', 'charter'].includes(e.kind)) continue;
       if (p.x >= e.x && p.x < e.x + 16 && p.y >= e.y && p.y < e.y + 16) return e;
     }
+    // plate-room hotspots: examine painted scenery; smallest box wins
+    let best = null;
+    for (const h of g.hotspots || []) {
+      const [x0, y0, x1, y1] = h.box;
+      if (p.x >= x0 - 5 && p.x <= x1 + 5 && p.y >= y0 - 5 && p.y <= y1 + 5) {
+        const area = (x1 - x0) * (y1 - y0);
+        if (!best || area < best.area) best = { area, h };
+      }
+    }
+    if (best) return { kind: 'hotspot', ...best.h };
     return null;
   }
 
@@ -475,6 +486,8 @@ export function createGame(canvas, input, art) {
       const ddx = g.player.x - e.x, ddy = g.player.y - e.y;
       e.face = Math.abs(ddx) > Math.abs(ddy) ? (ddx < 0 ? 'left' : 'right') : (ddy < 0 ? 'up' : 'down');
       openDialogue(npcDialogue(e.id, g.quest));
+    } else if (e.kind === 'hotspot') {
+      openDialogue({ lines: [`[ ${e.name} ]`, ...e.text] });
     } else if (e.kind === 'sign') {
       openDialogue({ lines: e.text });
     } else if (e.kind === 'beacon') {
@@ -807,7 +820,29 @@ export function createGame(canvas, input, art) {
       const [ex0, ey0, ex1, ey1] = ex.rect;
       const fx = p.x + 8, fy = p.y + 15;
       if (fx >= ex0 && fx <= ex1 && fy >= ey0 && fy <= ey1) {
+        // seamless stitch: keep the cross-axis position through the door,
+        // clamped into the paired strip of the target room
+        const keepX = p.x, keepY = p.y;
         loadMap(ex.to, ex.tx, ex.ty);
+        if (ex.toRect) {
+          const [tx0, ty0, tx1, ty1] = ex.toRect;
+          const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+          // leaving north arrives at the target's SOUTH strip, and so on
+          if (ex.edge === 'n' || ex.edge === 'door') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty0 - 26; }
+          if (ex.edge === 's') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty1 + 10; }
+          if (ex.edge === 'w') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx0 - 22; }
+          if (ex.edge === 'e') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx1 + 6; }
+          // arrival spot must be free: slide along the strip until it is
+          const horiz = ex.edge === 'n' || ex.edge === 's' || ex.edge === 'door';
+          for (let d = 0; d <= 200; d += 4) {
+            for (const s of d ? [-d, d] : [0]) {
+              const cx = horiz ? p.x + s : p.x, cy = horiz ? p.y : p.y + s;
+              if (!rectBlocked(cx + HIT.ox, cy + HIT.oy, HIT.w, HIT.h, p)) {
+                p.x = cx; p.y = cy; d = 999; break;
+              }
+            }
+          }
+        }
         music.setScene(ex.to); // unknown scenes fall back to overworld
         save();
         return;

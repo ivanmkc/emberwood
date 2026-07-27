@@ -1,0 +1,201 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   390
+  ],
+  "name": "BUNKER APARTMENT INTERIOR",
+  "text": [
+   "A compact living space carved out of old",
+   "concrete. It looks snug, packed with the",
+   "necessities for survival and a few comforts to",
+   "make it home."
+  ]
+ },
+ {
+  "box": [
+   409,
+   230,
+   550,
+   344
+  ],
+  "name": "WORKBENCH WITH DRONE",
+  "text": [
+   "A sturdy wooden workbench strewn with gears,",
+   "tools, and schematics. In the center sits a",
+   "partially dismantled quadcopter drone, its",
+   "internal circuits exposed for repair."
+  ]
+ },
+ {
+  "box": [
+   407,
+   125,
+   510,
+   256
+  ],
+  "name": "DOUBLE BED",
+  "text": [
+   "A wooden bedframe holding a mattress covered",
+   "in a colorful, patchwork quilt. The pillows",
+   "look slightly flattened from use."
+  ]
+ },
+ {
+  "box": [
+   90,
+   132,
+   193,
+   232
+  ],
+  "name": "KITCHEN COUNTER AND SINK",
+  "text": [
+   "A wooden countertop featuring a built-in metal",
+   "sink filled with clean dishes drying on a",
+   "rack. An electric kettle rests nearby, plugged",
+   "in and ready."
+  ]
+ },
+ {
+  "box": [
+   97,
+   272,
+   225,
+   347
+  ],
+  "name": "SINGLE BED",
+  "text": [
+   "A narrow wooden bed tucked into the corner,",
+   "dressed with a patchwork quilt similar to the",
+   "larger bed. It looks neatly made."
+  ]
+ },
+ {
+  "box": [
+   0,
+   417,
+   265,
+   448
+  ],
+  "name": "METAL WALKWAY RAILING",
+  "text": [
+   "A sturdy metal railing running along the edge",
+   "of the exterior walkway. The paint is worn",
+   "from years of gripping hands."
+  ]
+ },
+ {
+  "box": [
+   374,
+   417,
+   640,
+   448
+  ],
+  "name": "EXTERIOR WALKWAY RAILING",
+  "text": [
+   "A metal safety railing defining the edge of",
+   "the path outside the apartment. The concrete",
+   "below it looks weathered and stained."
+  ]
+ },
+ {
+  "box": [
+   0,
+   420,
+   262,
+   448
+  ],
+  "name": "LEFT BALCONY RAILING",
+  "text": [
+   "A section of metal railing guarding the",
+   "walkway just outside the door. The concrete",
+   "floor beneath it is shadowed and scuffed."
+  ]
+ },
+ {
+  "box": [
+   378,
+   420,
+   640,
+   448
+  ],
+  "name": "RIGHT BALCONY RAILING",
+  "text": [
+   "The metal safety barrier bordering the walkway",
+   "outside. The dull grey concrete is illuminated",
+   "by a faint light source nearby."
+  ]
+ },
+ {
+  "box": [
+   147,
+   56,
+   242,
+   95
+  ],
+  "name": "KITCHEN SHELF",
+  "text": [
+   "A simple wooden shelf mounted above the",
+   "counter. It holds a small potted plant and",
+   "three neatly arranged storage jars."
+  ]
+ },
+ {
+  "box": [
+   195,
+   122,
+   243,
+   196
+  ],
+  "name": "GAS STOVE AND OVEN",
+  "text": [
+   "A compact four-burner stove sitting next to",
+   "the counter. A metal kettle rests on one of",
+   "the grates, ready to be heated."
+  ]
+ },
+ {
+  "box": [
+   90,
+   236,
+   121,
+   350
+  ],
+  "name": "WOODEN BED HEADBOARD",
+  "text": [
+   "The solid wooden headboard of the single bed.",
+   "A tiny potted plant sits perched precariously",
+   "on its top edge."
+  ]
+ },
+ {
+  "box": [
+   407,
+   220,
+   500,
+   257
+  ],
+  "name": "WOODEN BED HEADBOARD",
+  "text": [
+   "The slatted wooden headboard of the double",
+   "bed, showing signs of wear and age. A single",
+   "white pillow is propped against it."
+  ]
+ },
+ {
+  "box": [
+   478,
+   350,
+   543,
+   399
+  ],
+  "name": "EXTERIOR VENTILATION UNIT",
+  "text": [
+   "A boxy metal air conditioning or ventilation",
+   "unit sitting on the walkway outside. Rusty",
+   "pipes connect it to the main structure."
+  ]
+ }
+]

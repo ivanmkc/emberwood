@@ -104,5 +104,67 @@
         "e": "repair-bay"
       }
     }
+  },
+  "interiors": {
+    "plaza-market-inside": {
+      "title": "Plaza Market \u2014 Inside",
+      "brief": "the interior of a small covered market shop: shelves of canned and dried goods with handwritten price tags, a counter with an old register terminal, hanging dried herbs and cables, a cooler cabinet with a soft glow, crates in the corners, a worn rug on the metal floor, a doorway opening at the bottom edge of the frame",
+      "parent": "anchorroom"
+    },
+    "noodle-bar": {
+      "title": "Noodle Bar",
+      "brief": "the tiny interior of a noodle bar: a counter with stools, steaming pots on a burner bank behind it, stacked bowls, a menu board with an invented script, a small shrine with a bobbing cat figure, string lights, condensation on a small window, a doorway opening at the bottom edge of the frame",
+      "parent": "night-bazaar"
+    },
+    "home-interior-a": {
+      "title": "Stack Home \u2014 Ground Unit",
+      "brief": "a cozy one-room prefab home interior: a bed with a patched quilt, a small kitchen nook with a kettle, a workbench with tools and a half-repaired drone, potted plants on a shelf, family photos on the wall, a floor heater with a soft glow, a doorway opening at the bottom edge of the frame",
+      "parent": "residential"
+    },
+    "guard-post": {
+      "title": "Gate Guard Post",
+      "brief": "the interior of a small guard kiosk: a wall of monitors showing gate camera feeds, a control desk with levers and a mug, a locker with a hanging coat, a cot in the corner, a bulletin board with notices, a doorway opening at the bottom edge of the frame",
+      "parent": "gate-wall"
+    },
+    "observatory-dome": {
+      "title": "Observatory Dome",
+      "brief": "the interior of an observatory dome: the great brass-and-steel telescope on its mount dominating the center, a curved control console with dials and a star map screen, bookshelves with charts, a rolling ladder, the dome slit open showing a strip of sky, a doorway opening at the bottom edge of the frame",
+      "parent": "observatory"
+    },
+    "barge-cabin": {
+      "title": "Barge Cabin",
+      "brief": "the cramped cabin interior of a canal barge: a wheel and throttle levers at a small helm window, rope coils and nets, a bunk with a wool blanket, a tiny stove with a kettle, lanterns swinging from the ceiling beams, crates of catch, a doorway opening at the bottom edge of the frame",
+      "parent": "canal-docks"
+    },
+    "grow-lab-office": {
+      "title": "Grow-Lab Office",
+      "brief": "a small control office overlooking a hydroponics hall: desks with terminals showing plant growth charts, seed sample drawers, wall-mounted gauges and valves, a microscope bench, clipboards, a coffee machine, a doorway opening at the bottom edge of the frame",
+      "parent": "hydroponics"
+    },
+    "transit-office": {
+      "title": "Transit Ticket Office",
+      "brief": "the interior of a transit ticket office: a service counter with a slotted window, a route map covering one wall with glowing lines, stamp machines, stacked schedule pamphlets, a sleeping fan heater, lost-and-found shelf with odd items, a doorway opening at the bottom edge of the frame",
+      "parent": "transit"
+    },
+    "pump-station": {
+      "title": "Pump Station",
+      "brief": "a small underground pump room: a big rotary pump with exposed gears and a pressure wheel, pipes running into the floor and ceiling, gauge clusters, a tool rack, a drain grate in the floor with a soft teal glow from below, warning signs, a doorway opening at the bottom edge of the frame",
+      "parent": "underworks"
+    },
+    "control-room": {
+      "title": "Reactor Control Room",
+      "brief": "the reactor control pulpit interior: a wraparound console with switch banks, sliders and blinking indicator walls, a big central status screen showing the reactor column, two operator chairs, coffee cups and manuals, a red emergency handle under glass, a doorway opening at the bottom edge of the frame",
+      "parent": "power-plant"
+    },
+    "repair-office": {
+      "title": "Repair Bay Office",
+      "brief": "a cluttered mechanic's office: a desk buried in part diagrams and invoices, shelf walls of labeled component bins, a pegboard with specialty tools, a half-disassembled robot head on the desk with one eye lit, a service lift schedule board, a doorway opening at the bottom edge of the frame",
+      "parent": "repair-bay"
+    },
+    "salvage-shed": {
+      "title": "Outskirts Salvage Shed",
+      "brief": "the interior of a scrap-built shed: walls of corrugated panels, shelves of salvaged parts sorted in cans, a generator with a pull cord, a hammock, a heat lamp, tools hanging from wire hooks, a small window showing dusty scrubland, a doorway opening at the bottom edge of the frame",
+      "parent": "outskirts"
+    }
   }
 }

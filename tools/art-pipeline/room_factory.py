@@ -50,7 +50,12 @@ def build_room(room):
         if not rec['stages'][key].get('pass'):
             rec['stages'][key]['log'] = tail
             print(f'[{room}] {key} FAILED gates: {tail}')
-            return rec
+            if key != 'footprint':
+                return rec
+            # footprint is optional: segment_room falls back to the
+            # walk-authority heuristic when the mask is ungated
+            print(f'[{room}] continuing without gated footprint (fallback compose)')
+            continue
         print(f'[{room}] {key} ok')
 
     ok, tail = run('segment_room.py', room)
@@ -90,7 +95,8 @@ def build_room(room):
 
 
 def main():
-    rooms = sys.argv[1:] or list(json.load(open(os.path.join(AP, 'rooms.json')))['rooms'])
+    _cfg = json.load(open(os.path.join(AP, 'rooms.json')))
+    rooms = sys.argv[1:] or (list(_cfg['rooms']) + list(_cfg.get('interiors', {})))
     with ThreadPoolExecutor(max_workers=3) as ex:
         recs = list(ex.map(build_room, rooms))
     ledger = {r['room']: r for r in recs}

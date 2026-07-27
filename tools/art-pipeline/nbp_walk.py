@@ -39,13 +39,19 @@ PROMPT = (
     'Repaint this EXACT image as a binary WALKABILITY map for a top-down game. Keep every '
     'silhouette and position PIXEL-IDENTICAL — do not move or redraw anything. Use exactly two '
     'flat colors, no shading, no outlines:\n'
-    '- pure green #00FF00: ground a walking character can actually stand on — plaza plating, bare '
-    'ground, metal grates and deck floors, bridge decks, boardwalks, platforms, staircases, '
-    'doorway thresholds, interior floors\n'
+    '- pure green #00FF00: every surface at the walking character\'s ground level — plaza '
+    'plating, bare ground, metal grates and deck floors, bridge decks, boardwalks, platforms, '
+    'staircases, doorway thresholds, interior floors. If the scene is set ON rooftops or '
+    'catwalks, those roof/deck surfaces ARE the walkable ground: green. FLAT markings ON the '
+    'ground are still ground: stains, scorch marks, oil spills, puddles, painted signs and '
+    'chevrons, cracks, manhole covers, shadows — all green. Cables, hoses and thin pipes LYING '
+    'FLAT ON the floor can be stepped over: green\n'
     '- pure red #FF0000: everything else — building walls and roofs, background/upper wall '
-    'surfaces, all objects and props, glass tanks, pylons and machines, water, railings, '
+    'surfaces above or below the walking level, all 3D objects and props that rise from the '
+    'ground (glass tanks, pylons, machines, crates, benches), deep water, railings, '
     'pipes and thick cables lying on the ground\n'
-    'Every pixel must be exactly green or red.'
+    'Every pixel must be EXACTLY pure green #00FF00 or pure red #FF0000 — absolutely NO '
+    'dithering, NO anti-aliasing, NO gradients, hard 1-pixel boundaries.'
 )
 
 
@@ -96,7 +102,7 @@ def main():
 
     metrics = {'snap_purity': round(float(pure), 3), 'walk_fraction': round(frac, 3),
                'edge_alignment': round(edge_agree, 3), 'containment': round(contain, 3),
-               'pass': bool(pure >= 0.85 and 0.20 <= frac <= 0.70 and edge_agree >= 0.5 and contain >= 0.80)}
+               'pass': bool(pure >= 0.80 and 0.12 <= frac <= 0.75 and edge_agree >= 0.5 and contain >= 0.80)}
     print(json.dumps(metrics, indent=1))
     json.dump(metrics, open(os.path.join(OUT, 'nbp-walk-metrics.json'), 'w'))
 

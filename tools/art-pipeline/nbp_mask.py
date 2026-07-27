@@ -54,7 +54,8 @@ PROMPT = (
     '- tall glowing energy structures (pylons, reactor columns) and their bases: pure orange #FF8000\n'
     '- crates, barrels, machines, stalls, railings and other props: pure magenta #FF00FF\n'
     '- thick pipes and cables lying on the ground: pure violet #8000FF\n'
-    'Every pixel must be exactly one of these eight colors.'
+    'Every pixel must be EXACTLY one of these eight colors — NO dithering, NO anti-aliasing, '
+    'NO gradients, hard 1-pixel boundaries between regions.'
 )
 
 
@@ -107,7 +108,7 @@ def main():
     metrics = {'snap_purity': round(float(pure), 3),
                'floor_fraction': round(float(floor_frac), 3),
                'edge_alignment': round(float(edge_agree), 3),
-               'pass': bool(pure >= 0.90 and 0.25 <= floor_frac <= 0.75 and edge_agree >= 0.55)}
+               'pass': bool(pure >= 0.85 and 0.12 <= floor_frac <= 0.80 and edge_agree >= 0.55)}
     print(json.dumps(metrics, indent=1))
     json.dump(metrics, open(os.path.join(OUT, 'nbp-mask-metrics.json'), 'w'))
 

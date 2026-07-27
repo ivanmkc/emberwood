@@ -1,0 +1,212 @@
+[
+ {
+  "box": [
+   0,
+   0,
+   640,
+   448
+  ],
+  "name": "NOODLE BAR INTERIOR",
+  "text": [
+   "The cramped quarters smell of star-anise and",
+   "hot metal. The warm glow of the burners and",
+   "string lights fights a losing battle against",
+   "the industrial grey of the walls."
+  ]
+ },
+ {
+  "box": [
+   116,
+   129,
+   455,
+   252
+  ],
+  "name": "STAINLESS PREP COUNTER",
+  "text": [
+   "Scuffed and stained from years of spilled",
+   "broth and hasty knife work. Three large pots",
+   "simmer steadily on the integrated gas burners,",
+   "sending plumes of fragrant steam toward the"
+  ]
+ },
+ {
+  "box": [
+   124,
+   254,
+   431,
+   295
+  ],
+  "name": "LONG CUSTOMER BAR",
+  "text": [
+   "A heavy, utilitarian counter facing the",
+   "kitchen area. The surface is marred by",
+   "countless hasty meals and spilled drinks, a",
+   "testament to the ebb and flow of hungry"
+  ]
+ },
+ {
+  "box": [
+   326,
+   61,
+   375,
+   215
+  ],
+  "name": "PANTRY SHELVING UNIT",
+  "text": [
+   "Sturdy metal shelves crammed with neatly",
+   "stacked ceramic bowls, battered cooking pots,",
+   "and an assortment of worn spice tins. A",
+   "testament to organized chaos in a confined"
+  ]
+ },
+ {
+  "box": [
+   477,
+   348,
+   591,
+   408
+  ],
+  "name": "FLOOR PIPING CONDUIT",
+  "text": [
+   "Thick, reinforced pipes run along the",
+   "baseboard, likely carrying coolant or heating",
+   "fluid for the station's temperamental life",
+   "support systems. The paint is flaking off in"
+  ]
+ },
+ {
+  "box": [
+   55,
+   149,
+   115,
+   217
+  ],
+  "name": "COMPACT KITCHEN SINK",
+  "text": [
+   "A deep basin set into a scarred metal counter,",
+   "piled high with dirty noodle bowls waiting for",
+   "attention. A stained cloth rests nearby on the",
+   "grating."
+  ]
+ },
+ {
+  "box": [
+   493,
+   102,
+   579,
+   149
+  ],
+  "name": "LUCKY CAT SHRINE",
+  "text": [
+   "A small wooden alcove houses a ceramic Maneki-",
+   "neko, its paw raised in perpetual invitation.",
+   "Flanked by flickering electronic candles and",
+   "small offerings, it brings a touch of old-"
+  ]
+ },
+ {
+  "box": [
+   564,
+   222,
+   597,
+   338
+  ],
+  "name": "FOLDING WOODEN TABLE",
+  "text": [
+   "A narrow, scuffed table pushed against the",
+   "wall, likely used for overflow seating or",
+   "hastily unpacking supplies. A single forgotten",
+   "slip of paper rests on its surface."
+  ]
+ },
+ {
+  "box": [
+   116,
+   180,
+   213,
+   217
+  ],
+  "name": "HANGING COOKWARE RACK",
+  "text": [
+   "A simple metal bar bolted to the wall holds an",
+   "assortment of dented pans and long-handled",
+   "ladles. They clink softly in the draft from",
+   "the nearby ventilation unit."
+  ]
+ },
+ {
+  "box": [
+   54,
+   352,
+   110,
+   403
+  ],
+  "name": "ATMOSPHERIC PROCESSOR UNIT",
+  "text": [
+   "A bulky, humming machine tucked into the",
+   "corner, its fan slowly circulating the heavy,",
+   "scent-laden air. Rust blooms around its edges,",
+   "hinting at years of constant use."
+  ]
+ },
+ {
+  "box": [
+   59,
+   292,
+   150,
+   322
+  ],
+  "name": "EXPOSED WALL WIRING",
+  "text": [
+   "Thick, rubberized cables snake haphazardly out",
+   "from beneath the counter, connecting the",
+   "kitchen equipment to the station's erratic",
+   "power grid."
+  ]
+ },
+ {
+  "box": [
+   71,
+   86,
+   113,
+   151
+  ],
+  "name": "TALL REFRIGERATOR UNIT",
+  "text": [
+   "A heavy, industrial fridge, its surface dinged",
+   "and adorned with a few fading, handwritten",
+   "notes. The hum of its compressor is a constant",
+   "undercurrent to the bubbling pots."
+  ]
+ },
+ {
+  "box": [
+   121,
+   160,
+   176,
+   209
+  ],
+  "name": "LARGE SOUP POT",
+  "text": [
+   "A battered aluminum stockpot sits on a roaring",
+   "gas burner, its contents hidden beneath a",
+   "slightly askew lid. The heat radiating from it",
+   "is palpable, even from a distance."
+  ]
+ },
+ {
+  "box": [
+   49,
+   254,
+   113,
+   296
+  ],
+  "name": "SINK CABINET DOORS",
+  "text": [
+   "Dented metal doors beneath the washing",
+   "station, their surfaces streaked with rust and",
+   "dried grime. They probably hide cleaning",
+   "supplies and plumbing mysteries best left"
+  ]
+ }
+]

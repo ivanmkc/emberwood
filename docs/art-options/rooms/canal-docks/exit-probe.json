@@ -1,0 +1,12 @@
+{
+ "e": {
+  "lo": 81,
+  "hi": 214,
+  "what": "open ground connecting to other paths"
+ },
+ "n": {
+  "lo": 532,
+  "hi": 599,
+  "what": "open dock area"
+ }
+}

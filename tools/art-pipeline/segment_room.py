@@ -37,7 +37,10 @@ if _args.room:
     AUTO_SPAWN = True
     LEGACY_S = False
     _rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
-    EXIT_EDGES = sorted(_rooms['rooms'][NAME]['exits'])
+    if NAME in _rooms['rooms']:
+        EXIT_EDGES = sorted(_rooms['rooms'][NAME]['exits'])
+    else:
+        EXIT_EDGES = ['s']  # interiors: single return exit to the parent room
 else:
     LEGACY_S = True
     # anchor room: legacy spawn + S exit, plus graph edges from rooms.json
@@ -306,11 +309,13 @@ def main():
             cover = float(fp.sum()) / max(1, int(m.sum()))
             if cover < 0.02:
                 # NBP painted no base for this object: block it whole rather
-                # than let the player walk through it
-                blocked |= m
+                # than let the player walk through it — but the walk pass
+                # keeps authority over standable pixels inside (stairs,
+                # balconies, flat floor stains)
+                blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
                 inst['footprint'] = 'nbp-missed'
             elif cover > 0.85:
-                blocked |= m
+                blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
                 inst['footprint'] = 'nbp-full'
             else:
                 blocked |= fp
@@ -346,7 +351,7 @@ def main():
             overhang_all |= (m & ~fp)
             inst['footprint'] = True
         else:
-            blocked |= m
+            blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
             inst['footprint'] = False
     walk_src = ~blocked
     wpath = os.path.join(ART, 'nbp-walk.png')
@@ -360,11 +365,16 @@ def main():
         if os.path.exists(npb):
             clsb = np.asarray(Image.open(npb).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
-            # step-over applies to GROUND cables only: a pipe is step-over-able
-            # iff it lies near walkable floor (roof/wall pipes stay blocked)
+            # step-over applies to GROUND cables only: a pipe component is
+            # step-over-able iff its neighborhood is substantially walkable
+            # floor (roof/wall pipes live in all-red context and stay blocked)
             import cv2 as _cvp
-            near_floor = _cvp.dilate(nwalk.astype(np.uint8), np.ones((25, 25), np.uint8)).astype(bool)
-            nwalk = nwalk | (pipes & near_floor)
+            npc_, plab = _cvp.connectedComponents(pipes.astype(np.uint8))
+            for pi in range(1, npc_):
+                pcomp = (plab == pi)
+                ring = _cvp.dilate(pcomp.astype(np.uint8), np.ones((31, 31), np.uint8)).astype(bool) & ~pcomp
+                if ring.any() and float((ring & nwalk).sum()) / float(ring.sum()) >= 0.25:
+                    nwalk = nwalk | pcomp
         if chars_removed:
             # ground under removed characters is walkable: take the yellow
             # class pixels near each recorded spawn and open them up
@@ -387,9 +397,12 @@ def main():
     # grates/slatted decks: thin dark lines fragment the mask — close them
     walk_src = _cv.morphologyEx(walk_src.astype(np.uint8), _cv.MORPH_CLOSE,
                                 np.ones((9, 9), np.uint8)).astype(bool) & ~blocked
-    # erode NOW, before the island connector, so connector corridors are not
-    # severed by a later erosion pass
-    walk_src = _cv.erode(walk_src.astype(np.uint8), np.ones((5, 5), np.uint8)).astype(bool)
+
+    red_solid = _cv.morphologyEx((~walk_src).astype(np.uint8), _cv.MORPH_OPEN,
+                                 np.ones((11, 11), np.uint8)).astype(bool)
+    thin_red = ~walk_src & ~red_solid
+    near_walk = _cv.dilate(walk_src.astype(np.uint8), np.ones((13, 13), np.uint8)).astype(bool)
+    walk_src = walk_src | (thin_red & near_walk)
     # island connector: large walkable islands (bridge deck!) get a corridor
     # to the main region, routed ONLY through class-mask floor pixels — can
     # cross a red-marked shore strip, can never tunnel through buildings/water
@@ -403,6 +416,7 @@ def main():
             clsb2 = np.asarray(Image.open(npb2).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             floor_ok = (np.linalg.norm(clsb2 - np.array([0, 255, 0], np.int16), axis=2) < 90) & ~blocked
         allowed = walk_src | floor_ok
+        globals()['CARVE_LEGAL'] = allowed.copy()
         stp = 8
         lath, latw = OUT_H // stp, OUT_W // stp
         lat_ok = np.zeros((lath, latw), dtype=bool)
@@ -497,6 +511,8 @@ def main():
     EXITS_OUT = []
     if EXIT_EDGES:
         margin = int(40 * src_per_logical / 3.75)
+        probe_f = os.path.join(ART, 'exit-probe.json')
+        probes = json.load(open(probe_f)) if os.path.exists(probe_f) else {}
         for edge in EXIT_EDGES:
             if edge in ('n', 's'):
                 band = walk_arr[8:8 + margin, :] if edge == 'n' else walk_arr[OUT_H - margin - 8:OUT_H - 8, :]
@@ -505,15 +521,21 @@ def main():
                 band = walk_arr[:, 8:8 + margin] if edge == 'w' else walk_arr[:, OUT_W - margin - 8:OUT_W - 8]
                 ok_idx = np.where(band.any(axis=1))[0]
             if len(ok_idx) < int(24 * src_per_logical):
-                # carve a corridor from the nearest reachable cell to edge center
-                if edge == 'n':
-                    tgt = (OUT_W // 2 // step, 2)
-                elif edge == 's':
-                    tgt = (OUT_W // 2 // step, (OUT_H - 12) // step)
-                elif edge == 'w':
-                    tgt = (2, OUT_H // 2 // step)
+                # carve toward the LLM-located passage on this edge (never
+                # the blind edge center — that painted stripes through walls)
+                pr = probes.get(edge)
+                if pr:
+                    pc = int((pr['lo'] + pr['hi']) / 2 * src_per_logical)
                 else:
-                    tgt = ((OUT_W - 12) // step, OUT_H // 2 // step)
+                    pc = OUT_W // 2 if edge in ('n', 's') else OUT_H // 2
+                if edge == 'n':
+                    tgt = (pc // step, 2)
+                elif edge == 's':
+                    tgt = (pc // step, (OUT_H - 12) // step)
+                elif edge == 'w':
+                    tgt = (2, pc // step)
+                else:
+                    tgt = ((OUT_W - 12) // step, pc // step)
                 nx0, ny0 = min(seen, key=lambda t: abs(t[0] - tgt[0]) + abs(t[1] - tgt[1]))
                 xC, yC = nx0, ny0
                 ptsC = []
@@ -523,9 +545,14 @@ def main():
                 while yC != tgt[1]:
                     yC += 1 if tgt[1] > yC else -1
                     ptsC.append((xC, yC))
+                legalC = globals().get('CARVE_LEGAL')
                 for cxe, cye in ptsC:
-                    walk_arr[max(0, cye * step - 16):cye * step + 24,
-                             max(0, cxe * step - 16):cxe * step + 24] = True
+                    sl = (slice(max(0, cye * step - 16), cye * step + 24),
+                          slice(max(0, cxe * step - 16), cxe * step + 24))
+                    if legalC is not None:
+                        walk_arr[sl] |= legalC[sl]
+                    else:
+                        walk_arr[sl] = True
                 walk_arr[:8, :] = False
                 walk_arr[-8:, :] = False
                 walk_arr[:, :8] = False
@@ -537,7 +564,18 @@ def main():
                     band = walk_arr[:, 8:8 + margin] if edge == 'w' else walk_arr[:, OUT_W - margin - 8:OUT_W - 8]
                     ok_idx = np.where(band.any(axis=1))[0]
                 print(f'exit edge {edge}: carved corridor to border')
+            if len(ok_idx) == 0:
+                print(f'exit edge {edge}: NO reachable strip even after legal carve — '
+                      'passage must be painted into the plate (edit_exit.py); skipping')
+                continue
             lo, hi = int(ok_idx.min() / src_per_logical), int(ok_idx.max() / src_per_logical)
+            # confine the warp strip to the located passage (a whole-edge
+            # detected strip would otherwise warp from anywhere on that edge)
+            prc = probes.get(edge)
+            if prc:
+                lo2, hi2 = max(lo, prc['lo'] - 24), min(hi, prc['hi'] + 24)
+                if hi2 > lo2:
+                    lo, hi = lo2, hi2
             if edge == 'n':
                 rect = (lo, 0, hi, 18)
             elif edge == 's':
@@ -548,6 +586,28 @@ def main():
                 rect = (622, lo, 640, hi)
             EXITS_OUT.append({'edge': edge, 'rect': list(rect)})
             print(f'exit edge {edge}: strip {lo}..{hi} (logical)')
+        # spawn must reach an exit: if not, move spawn into the exit's component
+        if AUTO_SPAWN and EXITS_OUT:
+            import cv2 as _cvx
+            nse, lse = _cvx.connectedComponents(walk_arr.astype(np.uint8))
+            spid = lse[min(OUT_H - 1, int(SPAWN_PX[1] * src_per_logical)),
+                       min(OUT_W - 1, int(SPAWN_PX[0] * src_per_logical))]
+            e0 = EXITS_OUT[0]['rect']
+            exp_ = lse[min(OUT_H - 1, int((e0[1] + e0[3]) / 2 * src_per_logical)),
+                       min(OUT_W - 1, int((e0[0] + e0[2]) / 2 * src_per_logical))]
+            if exp_ == 0:
+                ys0, xs0 = np.where(walk_arr)
+                if len(ys0):
+                    ex_cx = int((e0[0] + e0[2]) / 2 * src_per_logical)
+                    ex_cy = int((e0[1] + e0[3]) / 2 * src_per_logical)
+                    k0 = ((ys0 - ex_cy) ** 2 + (xs0 - ex_cx) ** 2).argmin()
+                    exp_ = lse[ys0[k0], xs0[k0]]
+            if spid != exp_ and exp_ > 0:
+                dtx = _cvx.distanceTransform((lse == exp_).astype(np.uint8), _cvx.DIST_L2, 5)
+                syq, sxq = np.unravel_index(int(dtx.argmax()), dtx.shape)
+                globals()['SPAWN_PX'] = (int(sxq / src_per_logical), int(syq / src_per_logical))
+                sy_px, sx_px = syq, sxq
+                print(f'spawn moved into exit component: logical {SPAWN_PX}')
     # legacy single auto-exit (anchor room): reachable strip on bottom border
     band = walk_arr[OUT_H - 40:OUT_H - 8, :]
     cols_ok = np.where(band.any(axis=0))[0]
@@ -572,8 +632,14 @@ def main():
         while y != ty:
             y += 1 if ty > y else -1
             pts.append((x, y))
+        legalL = globals().get('CARVE_LEGAL')
         for cx2, cy2 in pts:
-            walk_arr[cy2 * step - 12:cy2 * step + 20, cx2 * step - 12:cx2 * step + 20] = True
+            sl = (slice(max(0, cy2 * step - 12), cy2 * step + 20),
+                  slice(max(0, cx2 * step - 12), cx2 * step + 20))
+            if legalL is not None:
+                walk_arr[sl] |= legalL[sl]
+            else:
+                walk_arr[sl] = True
 
     # CONFIG-SPACE guarantee: the player hitbox is 8x8 logical px, so pixel
     # connectivity is not traversability (bridge posts leave gaps a box can't
@@ -588,6 +654,12 @@ def main():
     for ii in range(1, ninv):
         if statsv[ii, _cvz.CC_STAT_AREA] < 1500:
             walk_arr[linv == ii] = True
+    # walk-pass reference: rescue-eligibility + corridor routing surface
+    nwalk_ref = np.zeros_like(walk_arr)
+    wref = os.path.join(ART, 'nbp-walk.png')
+    if os.path.exists(wref):
+        nwalk_ref = np.asarray(Image.open(wref).convert('L')
+                               .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
     cls_floor = np.zeros_like(walk_arr)
     npbc = os.path.join(ART, 'nbp-mask.png')
     if os.path.exists(npbc):
@@ -603,20 +675,13 @@ def main():
                 break
             kf = ((ysf - sy_px) ** 2 + (xsf - sx_px) ** 2).argmin()
             sfid = lf[ysf[kf], xsf[kf]]
-        # only rescue regions NBP's walk pass actually called standable —
-        # never carve corridors to liberated-overhang/roof artifacts
-        nwalk_ref = np.zeros_like(walk_arr)
-        wref = os.path.join(ART, 'nbp-walk.png')
-        if os.path.exists(wref):
-            nwalk_ref = np.asarray(Image.open(wref).convert('L')
-                                   .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
         pending = [ci for ci in range(1, nf)
                    if ci != sfid and (lf == ci).sum() >= 4000
                    and ((lf == ci) & nwalk_ref).sum() >= 1500]
         if not pending:
             print(f'config-space: all regions box-reachable (round {cs_round})')
             break
-        allowedc = walk_arr | (cls_floor & ~water)
+        allowedc = walk_arr | ((cls_floor | nwalk_ref) & ~water)
         stpc = 8
         lathc, latwc = OUT_H // stpc, OUT_W // stpc
         lat_okc = np.zeros((lathc, latwc), dtype=bool)
@@ -654,7 +719,9 @@ def main():
                 while node in prevc:
                     gx, gy = node
                     cyp, cxp = gy * stpc + stpc // 2, gx * stpc + stpc // 2
-                    walk_arr[max(0, cyp - half):cyp + half, max(0, cxp - half):cxp + half] = True
+                    sl = (slice(max(0, cyp - half), cyp + half),
+                          slice(max(0, cxp - half), cxp + half))
+                    walk_arr[sl] |= allowedc[sl]
                     node = prevc[node]
                 carved_any = True
                 print(f'config-space: carved box-wide corridor to region {ci} '
