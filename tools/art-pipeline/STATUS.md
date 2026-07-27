@@ -1,5 +1,15 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## DENSITY / ANTI-MOCKUP PASS SHIPPED 2026-07-27 (seventh run)
+Ivan: "graphics and map are pretty sparse... need Eastward quality... looks
+mockup-like". Response: organic coastline/eroded plaza/wavy dunes via decor
+overrides (BFS-gated); dithered material transitions; cliff-face shading for
+height; trail network; FRT-9 Pelican wreck POI (+chest+lore+2 slimes); 7 new
+gated NBP scatter props (bush/mast/crates/pipe/stall/tree2; wallchunk retired
+after 2 gate fails); prop clusters; value-noise macro tint; tufts; ambient
+motes. Screenshot judge 3->4 (real-Eastward daylight frame = 3 on same rubric).
+25/25 tests. Live verified.
+
 ## BASE + PROGRESSION SHIPPED 2026-07-27 (sixth run)
 Settlement Charter (entity in plaza, menu mode 'base'): 4 projects = 100 scrap
 (lamps deco, greenhouse heart pickup, signal-relay same-map fast-travel pads
