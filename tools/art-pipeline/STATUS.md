@@ -1,5 +1,14 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## WALKABILITY PLAYTEST FIXES 2026-07-27 (fourteenth run)
+Ivan: wires walk-over (was already true — board showed RAW mask, misleading;
+now shows FINAL collision w/ reachability colors), grates must be walkable.
+Fixes in segment_room: MORPH_CLOSE 9px (grate slats fragmented walk into
+islands), island connector (BFS corridor to large walkable islands routed
+only through class-floor pixels -> bridge deck reconnected via shore; cannot
+tunnel buildings/water). Islands 267k->17k px. Ground-truth viz:
+final-collision-on-source.jpg (green reachable/yellow island/red blocked).
+
 ## WALKABILITY MASK LAYERED 2026-07-27 (thirteenth run)
 nbp_walk.py: second flat-repaint (binary green/red). GATE LESSON: symmetric
 IoU vs class-floor failed the mask; visual review showed the MASK was right
