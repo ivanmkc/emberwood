@@ -1,5 +1,17 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## FOOTPRINT MECHANIC 2026-07-27 (sixteenth run)
+General collision rule for plate rooms: FREESTANDING instances (det test:
+nwalk band above top edge >35% walkable) block only ground-contact band
+(max(14px, 28% height)); body above = walkable hidden floor (overhang_all
+unioned into walk) occluded by cutout. MIXED structures (inner nwalk >15%,
+e.g. bridge) block (mask & ~nwalk) — deck walkable, railings block.
+Wall-integrated (buildings) full block. Water full block. ORDER MATTERS:
+erode BEFORE island connector (else corridors severed -> deck zero-islanded).
+Removed-char ground reopened via spawn-radius yellow-class dilation.
+Result: pylon base-only, tanks pedestal-only, bridge crossable, ghosts gone,
+islands 1.3k px. 26/26 tests, live.
+
 ## LIVING PLATE ROOM 2026-07-27 (fifteenth run)
 remove_chars.py: painted characters inpainted out via per-character
 magenta-region fills, judge-gated + re-rolled (iterative cleanup per Ivan).
