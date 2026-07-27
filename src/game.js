@@ -208,8 +208,29 @@ export function createGame(canvas, input, art) {
     g.props = [];
     if (g.map.plate) { // plate rooms: scenery is painted, not synthesized
       g.solidProps = [];
+      g.maskWalk = null;
+      g.fgCuts = [];
+      const maskImg = art.roomMasks && art.roomMasks[g.mapId];
+      const data = art.roomData && art.roomData[g.mapId];
+      if (maskImg) {
+        const W2 = g.grid[0].length * T, H2 = g.grid.length * T;
+        const mc = document.createElement('canvas');
+        mc.width = W2;
+        mc.height = H2;
+        const mctx = mc.getContext('2d');
+        mctx.imageSmoothingEnabled = false;
+        mctx.drawImage(maskImg, 0, 0, W2, H2);
+        g.maskWalk = { w: W2, h: H2, data: mctx.getImageData(0, 0, W2, H2).data };
+      }
+      if (data) {
+        g.fgCuts = (data.fg || []).map((f) => f);
+        g.roomExit = data.exit || null;
+      }
       return;
     }
+    g.maskWalk = null;
+    g.fgCuts = [];
+    g.roomExit = null;
     const grid = g.grid;
     const H = grid.length, W = grid[0].length;
     // house blocks: connected components of h/H/D -> one facade prop each
@@ -324,6 +345,20 @@ export function createGame(canvas, input, art) {
   }
 
   function rectBlocked(x, y, w, h, self) {
+    if (g.maskWalk) {
+      const m = g.maskWalk;
+      const pts = [[x, y], [x + w - 1, y], [x, y + h - 1], [x + w - 1, y + h - 1], [x + w / 2, y + h - 1]];
+      for (const [px3, py3] of pts) {
+        const xi = Math.round(px3), yi = Math.round(py3);
+        if (xi < 0 || yi < 0 || xi >= m.w || yi >= m.h) return true;
+        if (m.data[(yi * m.w + xi) * 4] < 128) return true;
+      }
+      for (const e of g.entities) {
+        if (e === self || !entitySolid(e)) continue;
+        if (aabb(x, y, w, h, e.x + 2, e.y + 2, 12, 12)) return true;
+      }
+      return false;
+    }
     const x0 = Math.floor(x / T), x1 = Math.floor((x + w - 1) / T);
     const y0 = Math.floor(y / T), y1 = Math.floor((y + h - 1) / T);
     for (let ty = y0; ty <= y1; ty++) {
@@ -755,6 +790,16 @@ export function createGame(canvas, input, art) {
 
     const ptx = Math.floor((p.x + 8) / T);
     const pty = Math.floor((p.y + 11) / T);
+    if (g.roomExit) {
+      const [ex0, ey0, ex1, ey1] = g.roomExit;
+      const fx = p.x + 8, fy = p.y + 15;
+      if (fx >= ex0 && fx <= ex1 && fy >= ey0 && fy <= ey1) {
+        loadMap('overworld', 38, 26);
+        music.setScene('overworld');
+        save();
+        return;
+      }
+    }
     let warped = false;
     for (const portal of g.dynPortals || []) {
       if (portal.x === ptx && portal.y === pty) {
@@ -1014,20 +1059,24 @@ export function createGame(canvas, input, art) {
       else drawEntity(d.e);
     }
 
-    // plate rooms: redraw occluder cells whose base line is south of the
-    // player's feet — pixel-exact overdraw cut from the plate itself
-    if (plateImg && g.map.baseRows) {
-      const pRow = Math.floor((g.player.y + 15) / T);
-      const sw = plateImg.width / g.grid[0].length;
-      const sh = plateImg.height / g.grid.length;
-      for (let ty = y0; ty <= y1; ty++) {
-        for (let tx = x0; tx <= x1; tx++) {
-          const br = g.map.baseRows[ty][tx];
-          if (br >= 0 && br > pRow) {
-            ctx.drawImage(plateImg, tx * sw, ty * sh, sw, sh, tx * T - cx, ty * T - cy, T, T);
-          }
+    // plate rooms: pixel-level occlusion — each segmented instance cutout
+    // redraws over the player when its base line is south of the feet
+    if (plateImg && g.fgCuts && g.fgCuts.length) {
+      const feetY = g.player.y + 15;
+      for (const f of g.fgCuts) {
+        if (!f.image) continue;
+        if (f.baseY / DS > feetY) {
+          drawArt(f.image, Math.round(f.x / DS - cx), Math.round(f.y / DS - cy));
         }
       }
+    }
+    // emissive pulse: the plate's neon and core breathe
+    if (plateImg && art.roomEmissive && art.roomEmissive[g.mapId]) {
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.10 + 0.08 * Math.sin(g.time * 2.4);
+      ctx.drawImage(art.roomEmissive[g.mapId], -cx, -cy, g.grid[0].length * T, g.grid.length * T);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
     }
 
     if (g.player.attack > 0) {
@@ -1510,8 +1559,9 @@ export function createGame(canvas, input, art) {
   }
 
   function drawCharArt(im, ex, ey, bob = 0) {
-    const w = im.width / DS, h = im.height / DS;
-    drawArt(im, Math.round(ex + 8 - w / 2 - g.cam.x), Math.round(ey + 16 - h - g.cam.y + bob));
+    const sc = g.map.plate ? 2 : 1; // plate rooms are painted at 2x body scale
+    const w = (im.width / DS) * sc, h = (im.height / DS) * sc;
+    drawArt(im, Math.round(ex + 8 - w / 2 - g.cam.x), Math.round(ey + 16 - h - g.cam.y + bob), w, h);
   }
 
   function drawPlayer() {
@@ -1737,6 +1787,12 @@ export function createGame(canvas, input, art) {
       if (roomId && MAPS[roomId]) {
         g.quest = newQuestState();
         loadMap(roomId, MAPS[roomId].spawnX, MAPS[roomId].spawnY);
+        const rd = art.roomData && art.roomData[roomId];
+        if (rd && rd.spawn) {
+          g.player.x = rd.spawn[0] - 8;
+          g.player.y = rd.spawn[1] - 15;
+          updateCamera();
+        }
         g.mode = 'play';
       } else if (!load()) {
         loadMap(START.map, START.x, START.y);
