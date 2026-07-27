@@ -23,6 +23,7 @@ OUT_DIR = os.path.join(ROOT, 'docs', 'art-options', 'tiles-scifi')
 TILE_PX = 32
 CROP_PX = 256
 N_VARIANTS = 3
+ORGANIC = {'ground', 'dust', 'coolant', 'minefloor', 'minewall', 'rubble'}
 
 PROMPT = (
     'Using EXACTLY the pixel-art style and palette of the reference image: '
@@ -34,8 +35,26 @@ PROMPT = (
     'entire frame edge to edge.'
 )
 
+# Manufactured panel tiles are generated as ONE panel per tile with the panel
+# seams exactly on the image border — alignment across tiles by construction.
+PANEL_PROMPT = (
+    'Using EXACTLY the pixel-art style and palette of the reference image: '
+    'ONE SINGLE square game floor tile of {desc}, filling the ENTIRE image '
+    'edge to edge. The panel\'s seam/joint lines run EXACTLY along the four '
+    'image edges (a thin dark joint line at each edge), so that identical '
+    'copies placed side by side align into a perfect panel grid. Interior '
+    'mostly uniform with subtle wear. Flat plan view straight down, even '
+    'lighting, no perspective, no objects, no text, no vignette.'
+)
+
+PANEL = {
+    'plate': 'worn dark-teal metal plaza floor plating with small corner rivets and faint scuffs',
+    'walkway': 'an industrial metal walkway deck segment with horizontal tread-grip ridges',
+    'floorpanel': 'a clean light-grey composite habitat floor panel with subtle wear',
+}
+
 TILES = {
-    'ground': 'packed dry earth warmed by orange dusk light, sparse small patches of glowing teal moss, clean chunky pixel clusters like the reference, gentle contrast',
+    'ground': 'subtle packed dry earth, fine even grain, muted warm grey-brown, very low contrast, tiny sparse specks only — no pebble clusters, no moss patches, no large features',
     'plate': 'worn metal plaza floor plating with rivets, panel lines and faint scuff marks',
     'dust': 'fine grey-tan regolith dust with subtle drifts and scattered grit',
     'coolant': 'deep dark teal industrial coolant liquid, mostly dark with sparse faint lighter ripple lines, muted and calm, low contrast',
@@ -84,10 +103,12 @@ def main():
     names = sys.argv[1:] or list(TILES)
     for name in names:
         raw_path = os.path.join(RAW_DIR, f'{name}.png')
+        prompt = (PANEL_PROMPT.format(desc=PANEL[name]) if name in PANEL
+                  else PROMPT.format(desc=TILES[name]))
         if not os.path.exists(raw_path):
             resp = client.models.generate_content(
                 model='gemini-3-pro-image',
-                contents=[anchor, PROMPT.format(desc=TILES[name])],
+                contents=[anchor, prompt],
                 config=types.GenerateContentConfig(
                     image_config=types.ImageConfig(aspect_ratio='1:1', image_size='1K'),
                 ),
@@ -101,6 +122,17 @@ def main():
                 continue
             img.save(raw_path)
         img = Image.open(raw_path).convert('RGB')
+        if name in PANEL:
+            # border-aligned single panel: the full image IS the tile
+            tile = img.resize((TILE_PX, TILE_PX), Image.LANCZOS)
+            tile.save(os.path.join(OUT_DIR, f'{name}-0.png'))
+            tile.save(os.path.join(OUT_DIR, f'{name}.png'))
+            for i in range(1, 8):
+                p = os.path.join(OUT_DIR, f'{name}-{i}.png')
+                if os.path.exists(p):
+                    os.remove(p)
+            print(f'{name}: single border-aligned panel tile')
+            continue
         # Crop representative patches instead of squashing the whole texture:
         # full-image downscale changes feature scale and mushes detail.
         # Rank candidate windows by post-blend seam error + mean-color drift,
@@ -124,6 +156,13 @@ def main():
             scored.append((max(lr, tb) + drift * 0.5, fixed, lr, tb))
         scored.sort(key=lambda s: s[0])
         picks = scored[:N_VARIANTS]
+        # organic terrains also get mirrored copies — free extra variety that
+        # further breaks the repetition grid (not for directional panel tiles)
+        if name in ORGANIC:
+            extra = []
+            for (sc, fixed, lr, tb) in picks[:3]:
+                extra.append((sc, fixed.transpose(Image.FLIP_LEFT_RIGHT), lr, tb))
+            picks = picks + extra
         for i, (_, fixed, lr, tb) in enumerate(picks):
             # normalize each variant's per-channel mean to the texture's global
             # mean — otherwise the variant mix reads as a brightness patchwork

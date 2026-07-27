@@ -65,7 +65,7 @@ THEMES = {
         'anchor': 'nbp-scifi-anchor.png',
         'assets': {
             'tree': ('STRICTLY ONE OBJECT: a bio-engineered tree growing from a hydroponic ring collar, canopy with a faint teal glow, small maintenance lights on the collar', 96),
-            'rock': ('STRICTLY ONE OBJECT: a single free-standing boulder-shaped chunk of collapsed concrete with bent rebar sticking out and faded hazard-stripe paint. It must be one rounded lump with a clear outline silhouette against the magenta — NOT a tile, NOT a flat ground patch, NOT a texture square', 32),
+            'rock': ('STRICTLY ONE OBJECT: a single free-standing boulder-shaped chunk of collapsed concrete with bent rebar sticking out and faded hazard-stripe paint. Crisp chunky pixel clusters with hard-banded shading and a dark outline, NOT soft gradients. One rounded lump with a clear silhouette against the magenta — NOT a tile, NOT a flat ground patch', 32),
             'chest': ('STRICTLY ONE OBJECT: a closed armored supply crate with a glowing orange latch and worn hazard stripes, front face visible', 32),
             'beacon': ('STRICTLY ONE OBJECT: a signal-beacon pylon — a squat armored base cradling a bright orange energy core. No cables. The glow must stay INSIDE the object silhouette: no halo, no light spill, no gradient on the background — the magenta background stays perfectly flat and pure everywhere', 48),
             'lamp': ('STRICTLY ONE OBJECT: a single tall thin dark-metal street-light pole with one warm amber-white lantern head at its top, matching the warm lamp glow of the reference scene. Crisp chunky pixel clusters, sharp edges, no blur. Nothing else; every pixel that is not the pole must be flat magenta', 64),

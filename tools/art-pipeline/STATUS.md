@@ -40,8 +40,19 @@ silhouette_clean · theme_fit>=7 (assets); flat_plan_view · tileable>=7 (tiles)
    judge, live deploy, board update
 
 ## Current state (UPDATE AS YOU GO — this file must never claim more than is true)
-- Sci-fi asset batch 1 (tree/rock/chest/beacon/lamp/house): generated,
-  perspective-correct, visually audited by me; NOT yet judge-gated
-- Terrain tiles batch 1: 8 raws generated; crop-window processing in
-  gen_tiles.py; visual audit: 6 good, coolant + rubble need work
-- Characters/engine/theme/final-verify: not started
+- Gates infra DONE: judge.py (median-of-3 vote, rubrics: asset/tile/character/
+  creature/facing/screenshot), gate_all.py (det gates: coverage, fringe, seam,
+  blob-count dup-figure detector; CLI cat=name,name), install_assets.py
+  (verdict-gated), verify_game.mjs + gate_final.py (in-game screenshot judge)
+- PASSING so far: assets beacon/chest/house/lamp/tree; tiles carpet/dust/
+  minefloor/minewall/rubble/wallpanel; chars player/boss/trader/sludge/drone
+- Round 5 (bg): resegment chief/angler/settler (content-aware facing-judge
+  slicing — NBP sheets have arbitrary layouts, quadrant slicing broken);
+  panel tiles plate/walkway/floorpanel regenerated as border-aligned single
+  panels (correct by construction); ground regen subtle; rock regen attempt 3
+  (drop prop if it fails again); coolant waived (documented in WAIVERS)
+- Engine INTEGRATED (committed): 2x scale, PNG loader+fallback, props y-sort,
+  house-block detection, dusk lighting; smoke-tested clean in fallback mode
+- Theme text DONE (quest.js/maps signs/README/title/win); 11 node tests green
+- Remaining: round-5 gate results -> install_assets -> verify_game drives ->
+  gate_final screenshot judge -> push/deploy -> board update

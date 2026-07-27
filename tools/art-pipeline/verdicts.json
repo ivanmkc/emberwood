@@ -6,27 +6,79 @@
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 8,
-   "perspective_ok": true,
-   "single_object": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less gritty/detailed than the anchor's props, but palette and lighting style match reasonably well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less outlined than the anchor style, but overall a strong fit."
+    }
+   ],
    "silhouette_clean": true,
+   "perspective_ok": true,
+   "style_match": 8,
+   "single_object": true,
    "theme_fit": 9,
-   "issues": "Slightly less pronounced outlines than the style anchor, but colors and lighting are consistent."
+   "issues": "None"
   }
  },
  "asset:chest": {
-  "pass": false,
+  "pass": true,
   "det": {
    "coverage": 0.978,
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 4,
-   "perspective_ok": true,
-   "single_object": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly blurry, likely due to upscaling without nearest-neighbor interpolation, but style and theme fit well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "A bit low resolution compared to the anchor."
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 5,
+     "issues": "Resolution/pixel density is much lower than the anchor scene. Lighting and colors lack the crispness of the reference."
+    }
+   ],
    "silhouette_clean": true,
-   "theme_fit": 6,
-   "issues": "Resolution is much lower than the anchor scene (chunky pixels). Lighting is soft and blurry compared to the crisp pixel art of the anchor. Missing outline."
+   "perspective_ok": true,
+   "style_match": 8,
+   "single_object": true,
+   "theme_fit": 9,
+   "issues": "Slightly blurry, likely due to upscaling without nearest-neighbor interpolation, but style and theme fit well."
   }
  },
  "asset:house": {
@@ -36,12 +88,38 @@
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 8,
-   "perspective_ok": true,
-   "single_object": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "The asset fits the theme well and uses a similar palette. Perspective is front-facing, matching the buildings in the anchor."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less detailed shading than the anchor buildings, but overall fits well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less detailed than anchor, but fits well."
+    }
+   ],
    "silhouette_clean": true,
+   "perspective_ok": true,
+   "style_match": 8,
+   "single_object": true,
    "theme_fit": 9,
-   "issues": "Slightly less detailed than anchor structures, but color palette and theme match well."
+   "issues": "The asset fits the theme well and uses a similar palette. Perspective is front-facing, matching the buildings in the anchor."
   }
  },
  "asset:lamp": {
@@ -51,10 +129,36 @@
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 8,
-   "perspective_ok": true,
-   "single_object": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    }
+   ],
    "silhouette_clean": true,
+   "perspective_ok": true,
+   "style_match": 8,
+   "single_object": true,
    "theme_fit": 9,
    "issues": "None"
   }
@@ -62,16 +166,42 @@
  "asset:rock": {
   "pass": false,
   "det": {
-   "coverage": 0.873,
+   "coverage": 0.899,
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 4,
+   "_votes": [
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": false,
+     "theme_fit": 5,
+     "issues": "very low resolution/blurry compared to the crisp pixel art of the anchor scene; messy silhouette with dark background remnants; style feels incompatible due to lack of distinct outlines and pixel structure."
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": false,
+     "theme_fit": 5,
+     "issues": "very low resolution compared to anchor, strong lighting mismatch, fuzzy silhouette"
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 6,
+     "issues": "Resolution is too low, pixels are blocky. Lighting and palette differ slightly from anchor."
+    }
+   ],
+   "silhouette_clean": false,
    "perspective_ok": true,
-   "single_object": true,
-   "silhouette_clean": true,
+   "issues": "very low resolution/blurry compared to the crisp pixel art of the anchor scene; messy silhouette with dark background remnants; style feels incompatible due to lack of distinct outlines and pixel structure.",
    "theme_fit": 5,
-   "issues": "Lighting on the asset is overly smooth and gradient-like compared to the crisper, more distinct pixel art shading of the anchor. A bit generic for a sci-fi prop."
+   "style_match": 4,
+   "single_object": true
   }
  },
  "asset:tree": {
@@ -81,42 +211,114 @@
    "magenta_fringe": 0.0058
   },
   "judge": {
-   "style_match": 8,
-   "perspective_ok": true,
-   "single_object": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly more rounded and detailed base than the planar/boxy planters in the anchor, but generally fits well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slight style difference in leaf rendering compared to anchor trees, but fits theme well"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slight style difference in the base structure compared to the anchor's glass cylinders, but fits the theme well."
+    }
+   ],
    "silhouette_clean": true,
+   "perspective_ok": true,
+   "style_match": 8,
+   "single_object": true,
    "theme_fit": 9,
-   "issues": "Slight style difference in the base structure compared to the anchor's glass cylinders, but pixel density and colors are consistent."
+   "issues": "Slightly more rounded and detailed base than the planar/boxy planters in the anchor, but generally fits well."
   }
  },
  "tile:carpet": {
-  "pass": false,
+  "pass": true,
   "det": {
    "seam_lr": 3.0,
    "seam_tb": 1.4,
    "std": 33.6
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Good pattern, fits pixel style well"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Pattern is a bit repetitive."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "The pattern has a visible repeating grid structure with some uneven seams."
+    }
+   ],
+   "issues": "Good pattern, fits pixel style well",
    "style_match": 8,
+   "tileable": 10,
    "flat_plan_view": true,
-   "tileable": 3,
-   "readability": 7,
-   "issues": "very obvious repeating grid pattern, seams visible"
+   "readability": 8
   }
  },
  "tile:coolant": {
-  "pass": true,
+  "pass": false,
   "det": {
    "seam_lr": 0.2,
    "seam_tb": 0.4,
    "std": 21.5
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 5,
+     "issues": "Obvious repeating grid pattern from highlights; a bit too dark and flat compared to scene coolant."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 4,
+     "issues": "Too dark and flat, lacking the bright glowing neon green look of the coolant in the reference image. Has slight repeating patterns."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 4,
+     "issues": "Tile repetition grid is slightly visible. Texture is very plain and doesn't strongly read as the glowing coolant from the anchor scene without the glow effect."
+    }
+   ],
+   "issues": "Obvious repeating grid pattern from highlights; a bit too dark and flat compared to scene coolant.",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 6,
-   "readability": 6,
-   "issues": "Repetitive small wave highlights create a visible grid pattern. Needs more continuous fluid forms to read well as flowing liquid rather than just a dark solid with repeating marks."
+   "flat_plan_view": true,
+   "readability": 4
   }
  },
  "tile:dust": {
@@ -127,26 +329,72 @@
    "std": 11.0
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 6,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 7,
+     "issues": "Obvious repetition grid creates diagonal patterns, color is slightly too drab compared to the vibrant anchor scene."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 7,
+     "readability": 8,
+     "issues": "Some repetition in the wavy dust patterns."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Repetitive wave-like patterns create a noticeable diagonal grid when tiled."
+    }
+   ],
+   "issues": "Obvious repetition grid creates diagonal patterns, color is slightly too drab compared to the vibrant anchor scene.",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 6,
-   "readability": 8,
-   "issues": "Visible diagonal repeating pattern creates a grid-like artifact."
+   "flat_plan_view": true,
+   "readability": 8
   }
  },
  "tile:floorpanel": {
-  "pass": true,
+  "pass": false,
   "det": {
    "seam_lr": 1.8,
    "seam_tb": 1.0,
    "std": 11.5
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "Obvious grid seams and misaligned panel lines across tile edges."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 2,
+     "readability": 7,
+     "issues": "Massive seams and grid artifacts due to poor tiling. Panel lines do not match up at all between tile edges."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Visible seam artifacts where the darker gray lines don't align perfectly at tile boundaries, creating a grid of disconnected lines."
+    }
+   ],
+   "issues": "Obvious grid seams and misaligned panel lines across tile edges.",
    "style_match": 8,
+   "tileable": 3,
    "flat_plan_view": true,
-   "tileable": 6,
-   "readability": 8,
-   "issues": "Repetitive grid pattern visible due to distinct lines"
+   "readability": 8
   }
  },
  "tile:ground": {
@@ -154,14 +402,37 @@
   "det": {
    "seam_lr": 5.1,
    "seam_tb": 4.1,
-   "std": 67.3
+   "std": 51.9
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 6,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 6,
+     "issues": "very obvious checkerboard grid seams due to lighting/color mismatch at edges"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "very obvious checkerboard tiling pattern, repeating patches of detail"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 7,
+     "issues": "very obvious checkerboard repetition pattern, distinct light/dark boundaries between tiles"
+    }
+   ],
+   "issues": "very obvious checkerboard grid seams due to lighting/color mismatch at edges",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 3,
-   "readability": 8,
-   "issues": "very obvious tiling grid, visible seams"
+   "flat_plan_view": true,
+   "readability": 7
   }
  },
  "tile:minefloor": {
@@ -172,11 +443,34 @@
    "std": 6.3
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Noticeable diagonal repetition pattern makes it less seamlessly tileable."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Diagonal repeating pattern is very obvious."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Noticeable diagonal repetition pattern"
+    }
+   ],
+   "issues": "Noticeable diagonal repetition pattern makes it less seamlessly tileable.",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 6,
-   "readability": 8,
-   "issues": "Noticeable repeating diagonal pattern"
+   "flat_plan_view": true,
+   "readability": 8
   }
  },
  "tile:minewall": {
@@ -187,11 +481,34 @@
    "std": 16.9
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Visible vertical seams in tiling"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Visible vertical and horizontal seams where the texture repeats."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 9,
+     "issues": "Visible vertical and horizontal seams creating a grid pattern"
+    }
+   ],
+   "issues": "Visible vertical seams in tiling",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 6,
-   "readability": 8,
-   "issues": "Noticeable repeating grid pattern"
+   "flat_plan_view": true,
+   "readability": 8
   }
  },
  "tile:plate": {
@@ -202,11 +519,34 @@
    "std": 13.3
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "very obvious seam artifacts and misaligned panel lines across tile boundaries"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "Significant seam artifacts and discontinuities in the tiling grid."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "Visible seam artifacts where the texture tiles, creating horizontal and vertical discontinuities in the panel grid."
+    }
+   ],
+   "issues": "very obvious seam artifacts and misaligned panel lines across tile boundaries",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 3,
-   "readability": 8,
-   "issues": "very obvious tiling seams and grid-like repetition"
+   "flat_plan_view": true,
+   "readability": 8
   }
  },
  "tile:rubble": {
@@ -217,11 +557,34 @@
    "std": 11.4
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Noticeable repeating diagonal pattern"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 7,
+     "issues": "Repetition pattern is quite visible in a diagonal grid"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Obvious diagonal repetition pattern"
+    }
+   ],
+   "issues": "Noticeable repeating diagonal pattern",
    "style_match": 8,
-   "flat_plan_view": true,
    "tileable": 6,
-   "readability": 8,
-   "issues": "Noticeable repetition grid due to specific highlight clusters"
+   "flat_plan_view": true,
+   "readability": 8
   }
  },
  "tile:walkway": {
@@ -229,29 +592,75 @@
   "det": {
    "seam_lr": 10.1,
    "seam_tb": 21.6,
-   "std": 15.1
+   "std": 13.9
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 2,
+     "readability": 8,
+     "issues": "very obvious tiling seams creating a large grid pattern"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "Horrendous tiling seams, massive horizontal discontinuity."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 2,
+     "readability": 8,
+     "issues": "very obvious tiling seams creating a blocky checkerboard effect"
+    }
+   ],
+   "issues": "very obvious tiling seams creating a large grid pattern",
    "style_match": 8,
+   "tileable": 2,
    "flat_plan_view": true,
-   "tileable": 3,
-   "readability": 8,
-   "issues": "very obvious tiling grid pattern"
+   "readability": 8
   }
  },
  "tile:wallpanel": {
-  "pass": false,
+  "pass": true,
   "det": {
    "seam_lr": 18.6,
    "seam_tb": 0.7,
-   "std": 20.8
+   "std": 21.0
   },
   "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Harsh seams where panel edges misalign, noticeable grid repetition"
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 6,
+     "readability": 8,
+     "issues": "Visible horizontal seam lines and tiling grid artifacts."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 3,
+     "readability": 8,
+     "issues": "Visible horizontal seams where the pattern is disrupted, creating a noticeable grid effect despite being a panel pattern."
+    }
+   ],
+   "issues": "Harsh seams where panel edges misalign, noticeable grid repetition",
    "style_match": 8,
+   "tileable": 6,
    "flat_plan_view": true,
-   "tileable": 3,
-   "readability": 8,
-   "issues": "very obvious tiling grid, visible seams where pattern breaks"
+   "readability": 8
   }
  },
  "char:angler-down": {
@@ -321,33 +730,105 @@
  "char:angler": {
   "pass": false,
   "det": {
-   "coverage": 0.338,
-   "magenta_fringe": 0.0
+   "down": {
+    "coverage": 0.772,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "up": {
+    "coverage": 0.764,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "left": {
+    "coverage": 0.737,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   },
+   "right": {
+    "coverage": 0.735,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   }
   },
   "judge": {
-   "style_match": 4,
+   "_votes": [
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 7,
+     "issues": "Has 8 frames instead of 4, duplicate views"
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Has 8 frames instead of 4, but consistent style."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Includes more than 4 frames (has variations of up/down), style is slightly more detailed than anchor but fits the general aesthetic well."
+    }
+   ],
    "proportions_ok": true,
-   "single_character": true,
-   "directions_consistent": true,
    "silhouette_clean": true,
-   "theme_fit": 6,
-   "issues": "Style is significantly more realistic and detailed than the simpler, stylized anchor. The shading has much more depth, and the outlines are less pronounced."
+   "issues": "Has 8 frames instead of 4, duplicate views",
+   "theme_fit": 8,
+   "style_match": 8,
+   "directions_consistent": true,
+   "single_character": true
   }
  },
  "char:boss": {
-  "pass": false,
+  "pass": true,
   "det": {
-   "coverage": 0.744,
+   "coverage": 0.731,
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 4,
-   "proportions_ok": false,
-   "single_character": true,
-   "directions_consistent": true,
-   "silhouette_clean": false,
-   "theme_fit": 2,
-   "issues": "Blob/slime shape does not fit the humanoid/robot characters in the anchor style; lacks outlining style and shading consistency with the environment."
+   "_votes": [
+    {
+     "style_match": 4,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 7,
+     "reads_as_design": true,
+     "issues": "Too large in scale/resolution compared to the style anchor, shading style is a bit too smooth/soft for the crisp pixel art of the reference."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Outline is slightly noisy in places compared to the clean linework in the anchor, but shading style and palette fit nicely."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Style is a good match, slightly more textured than anchor sprites but fits as a boss"
+    }
+   ],
+   "silhouette_clean": true,
+   "single_creature": true,
+   "issues": "Too large in scale/resolution compared to the style anchor, shading style is a bit too smooth/soft for the crisp pixel art of the reference.",
+   "theme_fit": 9,
+   "style_match": 8,
+   "reads_as_design": true
   }
  },
  "char:chief-down": {
@@ -415,35 +896,107 @@
   }
  },
  "char:chief": {
-  "pass": true,
+  "pass": false,
   "det": {
-   "coverage": 0.414,
-   "magenta_fringe": 0.0
+   "down": {
+    "coverage": 0.865,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "up": {
+    "coverage": 0.865,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "left": {
+    "coverage": 0.678,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   },
+   "right": {
+    "coverage": 0.889,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   }
   },
   "judge": {
-   "style_match": 8,
+   "_votes": [
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "There are five frames instead of the standard four (down, up, left, right), including some angled views which might not fit a strict 4-dir grid. Resolution is slightly blocky but acceptable."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Resolution slightly higher than the anchor image style."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Has 5 directions instead of 4, style matches well"
+    }
+   ],
    "proportions_ok": true,
-   "single_character": true,
-   "directions_consistent": true,
    "silhouette_clean": true,
-   "theme_fit": 9,
-   "issues": "None"
+   "issues": "There are five frames instead of the standard four (down, up, left, right), including some angled views which might not fit a strict 4-dir grid. Resolution is slightly blocky but acceptable.",
+   "theme_fit": 8,
+   "style_match": 8,
+   "directions_consistent": true,
+   "single_character": true
   }
  },
  "char:drone": {
-  "pass": false,
+  "pass": true,
   "det": {
    "coverage": 0.755,
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 4,
-   "proportions_ok": false,
-   "single_character": true,
-   "directions_consistent": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "None. Good match."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Good style match, slightly noisy texture on top."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Slightly low resolution compared to anchor, but captures the intended design perfectly"
+    }
+   ],
    "silhouette_clean": true,
-   "theme_fit": 6,
-   "issues": "Blocky, lacks outline, style does not match anchor"
+   "single_creature": true,
+   "style_match": 8,
+   "theme_fit": 9,
+   "reads_as_design": true,
+   "issues": "None. Good match."
   }
  },
  "char:player-down": {
@@ -513,17 +1066,64 @@
  "char:player": {
   "pass": true,
   "det": {
-   "coverage": 0.348,
-   "magenta_fringe": 0.0
+   "down": {
+    "coverage": 0.802,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "up": {
+    "coverage": 0.809,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "left": {
+    "coverage": 0.809,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "right": {
+    "coverage": 0.818,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   }
   },
   "judge": {
-   "style_match": 8,
+   "_votes": [
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good thematic fit and consistent 4-direction sprite."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good fit, character matches the sci-fi/cyberpunk setting and the art style is very close to the anchor."
+    }
+   ],
    "proportions_ok": true,
-   "single_character": true,
-   "directions_consistent": true,
    "silhouette_clean": true,
-   "theme_fit": 8,
-   "issues": "Good match overall, style aligns well with the target, slightly simpler shading but fits."
+   "issues": "None",
+   "theme_fit": 9,
+   "style_match": 8,
+   "directions_consistent": true,
+   "single_character": true
   }
  },
  "char:settler-down": {
@@ -591,19 +1191,66 @@
   }
  },
  "char:settler": {
-  "pass": true,
+  "pass": false,
   "det": {
-   "coverage": 0.402,
-   "magenta_fringe": 0.0
+   "down": {
+    "coverage": 0.726,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   },
+   "up": {
+    "coverage": 0.729,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   },
+   "left": {
+    "coverage": 0.697,
+    "magenta_fringe": 0.0,
+    "blobs": 2
+   },
+   "right": {
+    "coverage": 0.696,
+    "magenta_fringe": 0.0008,
+    "blobs": 2
+   }
   },
   "judge": {
-   "style_match": 8,
+   "_votes": [
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Has 8 frames instead of 4, but represents the character well."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "There are redundant frames; the expected format was a 4-direction strip, but 8 frames are provided (some are duplicates of the 'up' direction). Otherwise, matches style and theme well."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "Has 8 frames instead of 4, but represents the character well."
+    }
+   ],
    "proportions_ok": true,
-   "single_character": true,
-   "directions_consistent": true,
    "silhouette_clean": true,
+   "issues": "Has 8 frames instead of 4, but represents the character well.",
    "theme_fit": 8,
-   "issues": "Good character sprite, matches the requested proportions and style well."
+   "style_match": 8,
+   "directions_consistent": true,
+   "single_character": true
   }
  },
  "char:sludge": {
@@ -613,29 +1260,79 @@
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 6,
-   "proportions_ok": false,
-   "single_character": true,
-   "directions_consistent": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "The slime creature matches the intended design perfectly. The pixel art style is consistent with the anchor image, and the glowing effect fits the sci-fi theme well."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Outline is slightly inconsistent, with a glowing core rather than a purely sludge appearance, but fits the toxic theme well."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "The glowing effect is nice, but it could use more 'sludge-like' texture or drips to fully sell the toxic aspect. Currently it looks a bit too perfectly spherical."
+    }
+   ],
    "silhouette_clean": true,
-   "theme_fit": 7,
-   "issues": "Too large and simple compared to base style"
+   "single_creature": true,
+   "style_match": 8,
+   "theme_fit": 9,
+   "reads_as_design": true,
+   "issues": "The slime creature matches the intended design perfectly. The pixel art style is consistent with the anchor image, and the glowing effect fits the sci-fi theme well."
   }
  },
  "char:trader": {
-  "pass": false,
+  "pass": true,
   "det": {
    "coverage": 0.881,
    "magenta_fringe": 0.0
   },
   "judge": {
-   "style_match": 4,
-   "proportions_ok": false,
-   "single_character": true,
-   "directions_consistent": true,
+   "_votes": [
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Slightly blurry upscaling compared to the crisp pixel art of the anchor, but captures the intended boxy tracked droid design perfectly."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Slightly muddy pixel resolution compared to anchor"
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Slightly muddy internal contrast; the tracks could be more distinct."
+    }
+   ],
    "silhouette_clean": true,
-   "theme_fit": 5,
-   "issues": "Too small/chibi compared to standard, weird form factor for a generic trader unless it's a specific robot type."
+   "single_creature": true,
+   "style_match": 8,
+   "theme_fit": 9,
+   "reads_as_design": true,
+   "issues": "Slightly blurry upscaling compared to the crisp pixel art of the anchor, but captures the intended boxy tracked droid design perfectly."
   }
  }
 }

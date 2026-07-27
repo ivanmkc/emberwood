@@ -46,7 +46,7 @@ SINGLE_PROMPT = (
 )
 
 HUMANOIDS = {
-    'player': 'a young wasteland engineer hero with short brown hair, a worn teal utility jacket with orange trim, dark work pants, small backpack',
+    'player': 'a young sci-fi wasteland engineer hero: short brown hair with goggles pushed up, worn teal utility jacket with glowing orange trim lines, armored shoulder pad, glowing wrist console, dark work pants, small tech backpack with an antenna',
     'chief': 'an elderly settlement overseer with white hair and a long pale lab coat over grey overalls, a small glowing badge',
     'angler': 'a grizzled old scavenger angler with an orange beanie, heavy blue weatherproof coat, waders',
     'settler': 'a friendly young settler with dark hair, a rust-red work vest over a tan shirt, tool belt',
@@ -56,7 +56,7 @@ CREATURES = {
     'trader': 'a boxy friendly merchant droid on small tracked wheels, teal-and-brass plating, one big glowing eye screen, a small awning antenna',
     'sludge': 'a rounded blob of glowing toxic orange-green sludge with two small dark eyes, menacing but cute',
     'drone': 'a small hostile surveillance drone with two stubby rotors, a single red camera eye, dark grey hull with hazard stripes',
-    'boss': 'a huge intimidating boss blob of molten orange sludge with a glowing core and several small dark eyes, dripping',
+    'boss': 'a huge intimidating boss blob of molten orange sludge with a glowing core and several small dark eyes, dripping. Crisp chunky pixel clusters with hard-banded shading and a dark outline, NOT smooth gradients',
 }
 
 TARGET_H = {'player': 44, 'chief': 44, 'angler': 44, 'settler': 44,

@@ -66,6 +66,13 @@ RUBRICS = {
         '"silhouette_clean": bool, "theme_fit": 1-10, "reads_as_design": bool (recognizable as the '
         'intended design), "issues": "short text"}'
     ),
+    'facing': (
+        'The image shows several separate character sprites of the SAME character in a row on a '
+        'checker background, numbered 0..N-1 left to right. For each sprite classify which way the '
+        'character faces: "down" (front, facing the viewer), "up" (back of head/backpack, facing '
+        'away), "left" (profile looking left), "right" (profile looking right). Return JSON only: '
+        '{"facings": ["down", "up", ...] (one per sprite, left to right), "notes": "short text"}'
+    ),
     'screenshot': (
         'You are judging an IN-GAME SCREENSHOT of a 2D top-down sci-fi RPG aiming for the Eastward look '
         '(first image = target style anchor, second = actual game screenshot). Return JSON only: '
