@@ -146,6 +146,7 @@ export function createGame(canvas, input, art) {
     baseNavT: 0,
     regenT: 0,
   };
+  window.__ew = g; // debug/drive handle: Playwright playtests read player state
   const walkFrames = {}; // dir -> [frameA, frameB] synthesized leg-step canvases
 
   function stepFrames(im, dir) {

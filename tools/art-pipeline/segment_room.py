@@ -244,11 +244,18 @@ def main():
     sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
     emissive = (mx > 0.82) & (sat > 0.35)
 
-    # collision: FOOTPRINT mechanic. Tall freestanding objects (pylon, tanks,
-    # lamps, bridge railings) block only at their ground-contact band; their
-    # upper body is overhang that occludes but never blocks. An instance is
-    # freestanding iff walkable ground exists just above its top edge
-    # (you could stand behind it). Buildings fail that test -> full block.
+    # collision: FOOTPRINT mechanic. NBP paints the authoritative footprint
+    # mask (nbp_footprint.py, gated): red = the ground area each object
+    # physically occupies (base-only for freestanding, full for buildings).
+    # Body above the footprint is overhang: occludes but never blocks.
+    # Geometric band heuristic below survives only as ungated fallback.
+    fppath = os.path.join(ROOT, 'docs', 'art-options', 'nbp-footprint.png')
+    fpmet = os.path.join(ROOT, 'docs', 'art-options', 'nbp-footprint-metrics.json')
+    fpmask = None
+    if os.path.exists(fppath) and os.path.exists(fpmet) and json.load(open(fpmet)).get('pass'):
+        print('using NBP footprint mask (gated)')
+        fpmask = np.asarray(Image.open(fppath).convert('L')
+                            .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
     nwalk_probe = None
     wpath_p = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
     if os.path.exists(wpath_p):
@@ -264,6 +271,38 @@ def main():
             blocked |= m
             continue
         x0b, y0b, x1b, y1b = inst['box']
+        # mixed structure FIRST (bridge, railings over deck): when the walk
+        # pass says much of the instance interior is standable, it is the
+        # authority — the footprint pass thins to nothing on such structures
+        # and the nbp-missed fallback would otherwise full-block the deck
+        if nwalk_probe is not None:
+            iw = float((m & nwalk_probe).sum()) / max(1, int(m.sum()))
+            if iw > 0.15:
+                blocked |= (m & ~nwalk_probe)
+                inst['footprint'] = 'mixed'
+                continue
+        if fpmask is not None:
+            fp = m & fpmask
+            cover = float(fp.sum()) / max(1, int(m.sum()))
+            if cover < 0.02:
+                # NBP painted no base for this object: block it whole rather
+                # than let the player walk through it
+                blocked |= m
+                inst['footprint'] = 'nbp-missed'
+            elif cover > 0.85:
+                blocked |= m
+                inst['footprint'] = 'nbp-full'
+            else:
+                blocked |= fp
+                # dilate the liberated body: the painted silhouette OUTLINE is
+                # classed as neither object nor floor, so the hidden floor
+                # behind glass/columns would be ring-sealed and island-culled
+                import cv2 as _cvf
+                body = _cvf.dilate((m & ~fp).astype(np.uint8),
+                                   np.ones((13, 13), np.uint8)).astype(bool)
+                overhang_all |= body
+                inst['footprint'] = 'nbp'
+            continue
         # mixed structure (bridge): the walk mask already distinguishes its
         # walkable deck from railings — trust it within the instance
         inner_walk = 0.0
@@ -301,7 +340,11 @@ def main():
         if os.path.exists(npb):
             clsb = np.asarray(Image.open(npb).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
             pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
-            nwalk = nwalk | pipes
+            # step-over applies to GROUND cables only: a pipe is step-over-able
+            # iff it lies near walkable floor (roof/wall pipes stay blocked)
+            import cv2 as _cvp
+            near_floor = _cvp.dilate(nwalk.astype(np.uint8), np.ones((25, 25), np.uint8)).astype(bool)
+            nwalk = nwalk | (pipes & near_floor)
         if chars_removed:
             # ground under removed characters is walkable: take the yellow
             # class pixels near each recorded spawn and open them up
@@ -445,6 +488,94 @@ def main():
             pts.append((x, y))
         for cx2, cy2 in pts:
             walk_arr[cy2 * step - 12:cy2 * step + 20, cx2 * step - 12:cx2 * step + 20] = True
+
+    # CONFIG-SPACE guarantee: the player hitbox is 8x8 logical px, so pixel
+    # connectivity is not traversability (bridge posts leave gaps a box can't
+    # thread). Erode by the hitbox; every sizable region must be box-reachable
+    # from spawn, else carve a box-wide corridor along a floor-routed path.
+    hb = int(np.ceil(8 * src_per_logical)) + 2
+    half = hb  # corridors a full hitbox wider than minimum — forgiving lanes
+    # pinprick blocked speckles (< ~10x10 logical) enclosed by walkable are
+    # mask noise, not object bases — the smallest real prop is ~5x larger
+    invw = (~walk_arr).astype(np.uint8)
+    ninv, linv, statsv, _ = _cvz.connectedComponentsWithStats(invw)
+    for ii in range(1, ninv):
+        if statsv[ii, _cvz.CC_STAT_AREA] < 1500:
+            walk_arr[linv == ii] = True
+    cls_floor = np.zeros_like(walk_arr)
+    npbc = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+    if os.path.exists(npbc):
+        clsc = np.asarray(Image.open(npbc).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
+        cls_floor = np.linalg.norm(clsc - np.array([0, 255, 0], np.int16), axis=2) < 90
+    for cs_round in range(4):
+        free = _cvz.erode(walk_arr.astype(np.uint8), np.ones((hb, hb), np.uint8)).astype(bool)
+        nf, lf = _cvz.connectedComponents(free.astype(np.uint8))
+        sfid = lf[min(OUT_H - 1, sy_px), min(OUT_W - 1, sx_px)]
+        if sfid == 0:
+            ysf, xsf = np.where(free)
+            if not len(ysf):
+                break
+            kf = ((ysf - sy_px) ** 2 + (xsf - sx_px) ** 2).argmin()
+            sfid = lf[ysf[kf], xsf[kf]]
+        # only rescue regions NBP's walk pass actually called standable —
+        # never carve corridors to liberated-overhang/roof artifacts
+        nwalk_ref = np.zeros_like(walk_arr)
+        wref = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
+        if os.path.exists(wref):
+            nwalk_ref = np.asarray(Image.open(wref).convert('L')
+                                   .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
+        pending = [ci for ci in range(1, nf)
+                   if ci != sfid and (lf == ci).sum() >= 4000
+                   and ((lf == ci) & nwalk_ref).sum() >= 1500]
+        if not pending:
+            print(f'config-space: all regions box-reachable (round {cs_round})')
+            break
+        allowedc = walk_arr | (cls_floor & ~water)
+        stpc = 8
+        lathc, latwc = OUT_H // stpc, OUT_W // stpc
+        lat_okc = np.zeros((lathc, latwc), dtype=bool)
+        lat_regc = np.zeros((lathc, latwc), dtype=np.int32)
+        for lyc in range(lathc):
+            for lxc in range(latwc):
+                lat_okc[lyc, lxc] = allowedc[lyc * stpc:(lyc + 1) * stpc,
+                                             lxc * stpc:(lxc + 1) * stpc].mean() > 0.5
+                lat_regc[lyc, lxc] = lf[min(OUT_H - 1, lyc * stpc + stpc // 2),
+                                        min(OUT_W - 1, lxc * stpc + stpc // 2)]
+        from collections import deque as _dq
+        carved_any = False
+        for ci in pending:
+            starts = [(x, y) for y in range(lathc) for x in range(latwc)
+                      if lat_regc[y, x] == sfid and lat_okc[y, x]]
+            if not starts:
+                break
+            prevc, visc = {}, set(starts[::31] or starts[:1])
+            qc = _dq(visc)
+            goalc = None
+            while qc and goalc is None:
+                cxq, cyq = qc.popleft()
+                for dxq, dyq in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nxq, nyq = cxq + dxq, cyq + dyq
+                    if 0 <= nxq < latwc and 0 <= nyq < lathc and lat_okc[nyq, nxq] \
+                            and (nxq, nyq) not in visc:
+                        visc.add((nxq, nyq))
+                        prevc[(nxq, nyq)] = (cxq, cyq)
+                        if lat_regc[nyq, nxq] == ci:
+                            goalc = (nxq, nyq)
+                            break
+                        qc.append((nxq, nyq))
+            if goalc:
+                node = goalc
+                while node in prevc:
+                    gx, gy = node
+                    cyp, cxp = gy * stpc + stpc // 2, gx * stpc + stpc // 2
+                    walk_arr[max(0, cyp - half):cyp + half, max(0, cxp - half):cxp + half] = True
+                    node = prevc[node]
+                carved_any = True
+                print(f'config-space: carved box-wide corridor to region {ci} '
+                      f'({int((lf == ci).sum())}px)')
+        if not carved_any:
+            print('config-space: no corridor could be routed; leaving as-is')
+            break
 
     # outputs — masks computed at source res, saved at device res (1280x896)
     DEV_W, DEV_H = 1280, 896
