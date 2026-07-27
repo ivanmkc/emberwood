@@ -24,7 +24,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 PLATE = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor.png')
 NAME = 'anchorroom'
 OUT_W, OUT_H = 1280, 896      # device px (logical 640x448 at DS=2)
-SPAWN_PX = (320, 330)          # logical px, plaza floor
+SPAWN_PX = (250, 300)          # logical px, open plaza floor
 EXIT_RECT = (150, 425, 205, 447)  # logical: bottom-left stair region
 
 SWEEPS = [
@@ -235,13 +235,29 @@ def main():
     sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-6), 0)
     emissive = (mx > 0.82) & (sat > 0.35)
 
-    # collision: blocked = any blocking instance; walkable eroded for safety
+    # collision: prefer the gated NBP walkability mask (gameplay judgment —
+    # bridge decks walkable, background floor not), intersected with the
+    # complement of blocking instances as belt-and-braces
     blocked = np.zeros((OUT_H, OUT_W), dtype=bool)
     for inst in instances:
         if inst['blocking']:
             blocked |= (inst_arr == inst['id'])
-    walk = Image.fromarray((~blocked * 255).astype(np.uint8))
-    walk = walk.filter(ImageFilter.MinFilter(7))  # erode walkable ~3px
+    walk_src = ~blocked
+    wpath = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk.png')
+    wmet = os.path.join(ROOT, 'docs', 'art-options', 'nbp-walk-metrics.json')
+    if os.path.exists(wpath) and os.path.exists(wmet) and json.load(open(wmet)).get('pass'):
+        print('using NBP walkability mask (gated)')
+        nwalk = np.asarray(Image.open(wpath).convert('L').resize((OUT_W, OUT_H), Image.NEAREST)) > 127
+        # ground cables/pipes are step-over-able: they must not partition the
+        # floor into islands — union the pipe class back into walkability
+        npb = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+        if os.path.exists(npb):
+            clsb = np.asarray(Image.open(npb).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
+            pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
+            nwalk = nwalk | pipes
+        walk_src = nwalk & ~blocked
+    walk = Image.fromarray((walk_src * 255).astype(np.uint8))
+    walk = walk.filter(ImageFilter.MinFilter(3))  # light erode (mask is already conservative)
     walk_arr = np.asarray(walk) > 127
     # border walls
     walk_arr[:8, :] = False
