@@ -295,6 +295,172 @@ function drawSide(ctx) {
   label(ctx, 'SIDE VIEW (Zelda II / platformer) — mockup');
 }
 
+// Oblique 3/4 "top-down with depth": flat ground plan, vertical objects
+// extrude upward showing their front faces (Earthbound/Link's Awakening depth).
+function drawOblique(ctx) {
+  ctx.fillStyle = '#0c0c12';
+  ctx.fillRect(0, 0, 320, 240);
+  const grid = buildGrid(MAPS.overworld);
+  const X0 = 24, Y0 = 17, W = 20, H = 17;
+  const TW = 16, TH = 12, TOP = 26;
+  const flat = { '.': 1, ',': 1, '~': 1, '=': 1, 's': 1, 'p': 1, 'o': 1 };
+  // ground pass (squashed plan view)
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const ch = grid[Y0 + y][X0 + x];
+      const c = BASE[ch] || '#3e8948';
+      ctx.fillStyle = (ch === 'h' || ch === 'H' || ch === 'D' || ch === '#' || ch === 'M') ? BASE['.'] : c;
+      ctx.fillRect(x * TW, TOP + y * TH, TW, TH);
+      if (ch === '~') {
+        ctx.fillStyle = '#5fb4e8';
+        if ((x * 7 + y * 13) % 4 === 0) ctx.fillRect(x * TW + 4, TOP + y * TH + 5, 6, 1);
+      }
+      if (flat[ch] && (x * 5 + y * 11) % 7 === 0 && ch !== '~') {
+        ctx.fillStyle = shade(c, 1.12);
+        ctx.fillRect(x * TW + 6, TOP + y * TH + 4, 2, 2);
+      }
+    }
+  }
+  // extrusion pass, back to front
+  for (let y = 0; y < H; y++) {
+    const base = TOP + (y + 1) * TH;
+    for (let x = 0; x < W; x++) {
+      const ch = grid[Y0 + y][X0 + x];
+      const sx = x * TW;
+      if (ch === '#') {
+        ctx.fillStyle = '#6d4c2f';
+        ctx.fillRect(sx + 6, base - 9, 4, 9);
+        ctx.fillStyle = '#1e5128';
+        ctx.beginPath(); ctx.arc(sx + 8, base - 15, 8, 0, 7); ctx.fill();
+        ctx.fillStyle = '#2e7d32';
+        ctx.beginPath(); ctx.arc(sx + 6, base - 18, 5, 0, 7); ctx.fill();
+      } else if (ch === 'M') {
+        ctx.fillStyle = '#5c5c66';
+        ctx.fillRect(sx, base - 8, TW, 8);
+        ctx.fillStyle = '#9a9aa2';
+        ctx.fillRect(sx, base - 14, TW, 6);
+        ctx.fillStyle = '#7d7d85';
+        ctx.fillRect(sx + 2, base - 12, TW - 4, 3);
+      } else if (ch === 'H' || ch === 'D') {
+        // facade rises from the wall row; roof plane above covers the roof row
+        ctx.fillStyle = '#e9dfc9';
+        ctx.fillRect(sx, base - 20, TW, 20);
+        ctx.fillStyle = '#c9bda3';
+        ctx.fillRect(sx + 3, base - 15, 4, 5); // window
+        if (ch === 'D') {
+          ctx.fillStyle = '#6d4c2f';
+          ctx.fillRect(sx + 4, base - 12, 8, 12);
+        }
+        ctx.fillStyle = '#b0413e';
+        ctx.fillRect(sx, base - 30, TW, 10);
+        ctx.fillStyle = '#8f3330';
+        ctx.fillRect(sx, base - 30, TW, 2);
+      }
+    }
+  }
+  // props + characters as standing billboards (the real sprites)
+  const stand = (gx, gy, def) => {
+    const sx = (gx - X0) * TW;
+    const base = TOP + (gy - Y0 + 1) * TH;
+    drawDef(ctx, def, sx, base - 16, 1);
+  };
+  stand(38, 25, SPRITES.beacon);
+  stand(36, 25, SPRITES.sign);
+  stand(34, 19, SPRITES.player.down); // by the elder's door
+  stand(32, 24, SPRITES.player.down);
+  stand(39, 23, SPRITES.merchant.down);
+  stand(37, 27, SPRITES.villager.down);
+  stand(24, 26, SPRITES.fisherman.down);
+  label(ctx, 'OBLIQUE 3/4 + DEPTH (extruded walls) — mockup');
+}
+
+// Tilted-perspective "HD-2D": ground plane foreshortens toward a horizon,
+// rows shrink and haze with distance, objects stand upright.
+function drawTilt(ctx) {
+  const grid = buildGrid(MAPS.overworld);
+  const X0 = 24, Y0 = 17, W = 20, H = 15;
+  // sky + far silhouettes
+  const sky = ctx.createLinearGradient(0, 0, 0, 60);
+  sky.addColorStop(0, '#8ecae6');
+  sky.addColorStop(1, '#d8ecf8');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, 320, 60);
+  ctx.fillStyle = 'rgba(70, 110, 90, 0.55)';
+  for (const [mx, mw, mh] of [[-20, 150, 34], [100, 190, 44], [230, 160, 30]]) {
+    ctx.beginPath();
+    ctx.moveTo(mx, 52); ctx.lineTo(mx + mw / 2, 52 - mh); ctx.lineTo(mx + mw, 52);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = '#0c0c12';
+  ctx.fillRect(0, 60, 320, 180);
+  let yPos = 52;
+  for (let y = 0; y < H; y++) {
+    const t = y / (H - 1);
+    const s = 0.5 + 0.68 * t;
+    const rowH = 13 * s;
+    const w = 17 * s;
+    for (let x = 0; x < W; x++) {
+      const ch = grid[Y0 + y][X0 + x];
+      const c = BASE[ch] || '#3e8948';
+      const sx = 160 + (x - W / 2) * w;
+      ctx.fillStyle = (ch === '#' || ch === 'M' || ch === 'H' || ch === 'D' || ch === 'h') ? BASE['.'] : c;
+      ctx.fillRect(sx, yPos, w + 0.6, rowH + 0.6);
+    }
+    // upright objects for this row
+    for (let x = 0; x < W; x++) {
+      const ch = grid[Y0 + y][X0 + x];
+      const sx = 160 + (x - W / 2) * w;
+      const base = yPos + rowH;
+      if (ch === '#') {
+        ctx.fillStyle = '#6d4c2f';
+        ctx.fillRect(sx + w / 2 - 1.5 * s, base - 8 * s, 3 * s, 8 * s);
+        ctx.fillStyle = '#1e5128';
+        ctx.beginPath(); ctx.arc(sx + w / 2, base - 13 * s, 8 * s, 0, 7); ctx.fill();
+        ctx.fillStyle = '#2e7d32';
+        ctx.beginPath(); ctx.arc(sx + w / 2 - 2 * s, base - 15 * s, 5 * s, 0, 7); ctx.fill();
+      } else if (ch === 'M') {
+        ctx.fillStyle = '#7d7d85';
+        ctx.beginPath();
+        ctx.moveTo(sx, base); ctx.lineTo(sx + w / 2, base - 14 * s); ctx.lineTo(sx + w, base);
+        ctx.closePath(); ctx.fill();
+      } else if (ch === 'H' || ch === 'D') {
+        ctx.fillStyle = '#e9dfc9';
+        ctx.fillRect(sx, base - 20 * s, w + 0.5, 20 * s);
+        if (ch === 'D') { ctx.fillStyle = '#6d4c2f'; ctx.fillRect(sx + w * 0.3, base - 12 * s, w * 0.4, 12 * s); }
+        ctx.fillStyle = '#b0413e';
+        ctx.fillRect(sx - w * 0.08, base - 29 * s, w * 1.16, 9 * s);
+      }
+      // characters
+      const gx = X0 + x, gy = Y0 + y;
+      const who = (gx === 32 && gy === 24) ? ['#7a4a21', '#2e7d5b']
+        : (gx === 39 && gy === 23) ? ['#33272e', '#7b4b94']
+          : (gx === 37 && gy === 27) ? ['#3b2a1a', '#b0413e']
+            : (gx === 24 && gy === 26) ? ['#c95a1e', '#2e5d8d'] : null;
+      if (who) {
+        const cx = sx + w / 2;
+        ctx.fillStyle = who[1];
+        ctx.fillRect(cx - 3 * s, base - 9 * s, 6 * s, 7 * s);
+        ctx.fillStyle = '#eec39a';
+        ctx.fillRect(cx - 3 * s, base - 14 * s, 6 * s, 5 * s);
+        ctx.fillStyle = who[0];
+        ctx.fillRect(cx - 3 * s, base - 16 * s, 6 * s, 2.5 * s);
+      }
+      if (gx === 38 && gy === 25) {
+        const cx = sx + w / 2;
+        ctx.fillStyle = '#7d7d85';
+        ctx.fillRect(cx - 3 * s, base - 12 * s, 6 * s, 12 * s);
+        ctx.fillStyle = '#ff9e2c';
+        ctx.fillRect(cx - 2 * s, base - 17 * s, 4 * s, 5 * s);
+      }
+    }
+    // distance haze
+    ctx.fillStyle = `rgba(150, 195, 230, ${(1 - t) * 0.30})`;
+    ctx.fillRect(0, yPos, 320, rowH + 0.6);
+    yPos += rowH;
+  }
+  label(ctx, 'TILTED PERSPECTIVE "HD-2D" (angled camera) — mockup');
+}
+
 function label(ctx, text) {
   ctx.font = '8px monospace';
   ctx.textBaseline = 'top';
@@ -313,6 +479,8 @@ if (params.get('mode') === 'perspective') {
   const kind = params.get('kind') || 'iso';
   if (kind === 'topdown') drawTopdown(ctx);
   else if (kind === 'side') drawSide(ctx);
+  else if (kind === 'oblique') drawOblique(ctx);
+  else if (kind === 'tilt') drawTilt(ctx);
   else drawIso(ctx);
 } else {
   bootStyledGame(params.get('style') || 'verdant');
