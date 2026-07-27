@@ -1,5 +1,13 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## BASE + PROGRESSION SHIPPED 2026-07-27 (sixth run)
+Settlement Charter (entity in plaza, menu mode 'base'): 4 projects = 100 scrap
+(lamps deco, greenhouse heart pickup, signal-relay same-map fast-travel pads
+plaza(40,28)<->pass(31,7), infirmary regen on settlement tiles). Salvage Rank:
+xp on kills/quests/builds, 5 ranks w/ perks (drop 0.62, reach 26px, knockback
+55, +1 heart + ember trail); rank-up pages appended to dialogue; HUD pip +
+journal rank row. 25/25 tests; charter purchase + relay warp verified headless.
+
 ## UI ROUND 3 + GAMEPLAY AUDIT SHIPPED 2026-07-27 (fifth run)
 NPCs face player on talk; beacon core pulse (lit) + red distress blink (dead);
 looted-chest slot; pulsing pads; aligned title columns; journal status chips.
