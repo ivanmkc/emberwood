@@ -1,5 +1,17 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## LIVING PLATE ROOM 2026-07-27 (fifteenth run)
+remove_chars.py: painted characters inpainted out via per-character
+magenta-region fills, judge-gated + re-rolled (iterative cleanup per Ivan).
+Failure chain fixed en route: yellow class contains curtain highlights ->
+verification pass; adjacent chars break single judging -> (group, then)
+per-char fills w/ focused judge; feathered paste ghosts chars back -> hard
+paste; giant union hole -> mush -> small per-char holes + aspect-matched
+output. Real NPCs (Sela/scavA=keeper art, MARO-7/merchant, Dorn/scavB=
+villager art entity->settler art) spawned at exact spots w/ dialogue.
+Auto-exit on reachable bottom strip; zero-island (spawn component only).
+KNOWN: one cloak remnant behind Dorn -> next fill round.
+
 ## WALKABILITY PLAYTEST FIXES 2026-07-27 (fourteenth run)
 Ivan: wires walk-over (was already true — board showed RAW mask, misleading;
 now shows FINAL collision w/ reachability colors), grates must be walkable.
