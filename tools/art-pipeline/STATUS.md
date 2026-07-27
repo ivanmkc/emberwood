@@ -1,5 +1,13 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## PROP PHYSICALITY + PLACEMENT SHIPPED 2026-07-27 (eighth run)
+Ivan: "seems random placement. also i can walk through objects." Fixed:
+PROP_SOLID footprints (12x9 at base) collide for player+enemies via
+rectBlocked/g.solidProps; deco list fully re-curated with spatial intent
+(walls/edges/trailsides/POI clusters, no mid-field singletons); maps.test
+reachable() now blocks solid deco + reserved-route assertions (portals,
+relay pads, pass corridor). 26/26 tests; stall collision verified in-browser.
+
 ## DENSITY / ANTI-MOCKUP PASS SHIPPED 2026-07-27 (seventh run)
 Ivan: "graphics and map are pretty sparse... need Eastward quality... looks
 mockup-like". Response: organic coastline/eroded plaza/wavy dunes via decor
