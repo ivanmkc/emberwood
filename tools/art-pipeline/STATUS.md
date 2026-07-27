@@ -256,3 +256,14 @@ silhouette_clean · theme_fit>=7 (assets); flat_plan_view · tileable>=7 (tiles)
   remaining no-paths need mouth verification); judge sweep all 25 (verify_rooms.py); board
   push (sections 24-25 prepared in job tmp artboard.json — verify URLs after Pages deploy);
   then NPCs/quests for new rooms + wave-3 expansion per Ivan's 8h directive.
+
+## Matrix2 final run of this session: 62/73
+PERSISTENT fails (mask/threshold work needed): doors night-bazaar->noodle-bar,
+canal-docks->barge-cabin, repair-bay->repair-office, power-plant->control-room,
+hydroponics->grow-lab-office; edge hydroponics-n. FLAKY (pass in some runs — walker/state):
+repair-bay-s, underworks-e/n, power-plant-w, repair-office-s. All 25 hotspot checks pass;
+zero console errors. Next session: (1) rerun fix_door_mouths verification per failing door
+(check BFS-no-path vs stuck in drive output), consider re-probing those door rects (the
+painted door boxes may not match carved mouths), (2) walker: longer taps + always-replan,
+(3) verify_rooms.py judge sweep all 25 + fix, (4) board refresh done (sections 24-25),
+(5) then NPCs/quests in new rooms + wave 3 (Ivan: keep expanding, ~5h left of the 8h).
