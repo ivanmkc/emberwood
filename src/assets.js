@@ -3,6 +3,12 @@
 // renderer falls back to the procedural pixel-string art, so the game never
 // hard-fails on art.
 
+function jobsRooms(art, base, loadImg) {
+  for (const name of ['anchorroom']) {
+    loadImg(`rooms/${name}.jpg`).then((img) => { art.rooms[name] = img; });
+  }
+}
+
 export async function loadArt(base = 'assets/') {
   let manifest;
   try {
@@ -20,7 +26,8 @@ export async function loadArt(base = 'assets/') {
     img.src = base + path;
   });
 
-  const art = { tiles: {}, props: {}, chars: {} };
+  const art = { tiles: {}, props: {}, chars: {}, rooms: {} };
+  jobsRooms(art, base, loadImg);
   const jobs = [];
   for (const [name, variants] of Object.entries(manifest.tiles || {})) {
     art.tiles[name] = [];

@@ -206,6 +206,10 @@ export function createGame(canvas, input, art) {
 
   function buildProps() {
     g.props = [];
+    if (g.map.plate) { // plate rooms: scenery is painted, not synthesized
+      g.solidProps = [];
+      return;
+    }
     const grid = g.grid;
     const H = grid.length, W = grid[0].length;
     // house blocks: connected components of h/H/D -> one facade prop each
@@ -886,6 +890,10 @@ export function createGame(canvas, input, art) {
     const y0 = Math.max(0, Math.floor(cy / T));
     const x1 = Math.min(g.grid[0].length - 1, Math.ceil((cx + VIEW_W) / T));
     const y1 = Math.min(g.grid.length - 1, Math.ceil((cy + VIEW_H) / T));
+    const plateImg = g.map.plate && art.rooms && art.rooms[g.mapId];
+    if (plateImg) {
+      ctx.drawImage(plateImg, -cx, -cy, g.grid[0].length * T, g.grid.length * T);
+    } else
     for (let ty = y0; ty <= y1; ty++) {
       for (let tx = x0; tx <= x1; tx++) {
         const ch = g.grid[ty][tx];
@@ -1006,6 +1014,22 @@ export function createGame(canvas, input, art) {
       else drawEntity(d.e);
     }
 
+    // plate rooms: redraw occluder cells whose base line is south of the
+    // player's feet — pixel-exact overdraw cut from the plate itself
+    if (plateImg && g.map.baseRows) {
+      const pRow = Math.floor((g.player.y + 15) / T);
+      const sw = plateImg.width / g.grid[0].length;
+      const sh = plateImg.height / g.grid.length;
+      for (let ty = y0; ty <= y1; ty++) {
+        for (let tx = x0; tx <= x1; tx++) {
+          const br = g.map.baseRows[ty][tx];
+          if (br >= 0 && br > pRow) {
+            ctx.drawImage(plateImg, tx * sw, ty * sh, sw, sh, tx * T - cx, ty * T - cy, T, T);
+          }
+        }
+      }
+    }
+
     if (g.player.attack > 0) {
       const base = { up: -Math.PI / 2, down: Math.PI / 2, left: Math.PI, right: 0 }[g.player.dir];
       const prog = 1 - g.player.attack / 0.22;
@@ -1037,7 +1061,14 @@ export function createGame(canvas, input, art) {
       ctx.fillRect(Math.round(pt.x - cx), Math.round(pt.y - cy), 2, 2);
     }
 
-    if (g.map.dark) {
+    if (g.map.plate) {
+      // plate is pre-graded; only a light vignette
+      const vin2 = ctx.createRadialGradient(VIEW_W / 2, VIEW_H / 2, 110, VIEW_W / 2, VIEW_H / 2, 235);
+      vin2.addColorStop(0, 'rgba(8, 12, 24, 0)');
+      vin2.addColorStop(1, 'rgba(8, 12, 24, 0.3)');
+      ctx.fillStyle = vin2;
+      ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    } else if (g.map.dark) {
       const px = g.player.x + 8 - cx, py = g.player.y + 11 - cy;
       const grad = ctx.createRadialGradient(px, py, 30, px, py, 110);
       grad.addColorStop(0, 'rgba(6,6,12,0)');
@@ -1702,8 +1733,12 @@ export function createGame(canvas, input, art) {
   }
 
   return {
-    start() {
-      if (!load()) {
+    start(roomId) {
+      if (roomId && MAPS[roomId]) {
+        g.quest = newQuestState();
+        loadMap(roomId, MAPS[roomId].spawnX, MAPS[roomId].spawnY);
+        g.mode = 'play';
+      } else if (!load()) {
         loadMap(START.map, START.x, START.y);
         g.pendingIntro = true;
       }

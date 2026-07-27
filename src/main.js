@@ -16,4 +16,5 @@ document.getElementById('new-game').addEventListener('click', () => {
   if (window.confirm('Start a new game? Your save will be erased.')) game.newGame();
 });
 
-game.start();
+const roomParam = new URLSearchParams(location.search).get('room');
+game.start(roomParam === 'anchor' ? 'anchorroom' : null);

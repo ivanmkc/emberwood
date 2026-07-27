@@ -174,7 +174,23 @@ const homeRows = [
   'wwwwwwoowwwwww', // y9
 ];
 
+import { ROOM_ANCHORROOM } from './rooms/anchorroom.js';
+
 export const MAPS = {
+  anchorroom: {
+    id: 'anchorroom',
+    rows: ROOM_ANCHORROOM.rows,
+    decor: [],
+    dark: false,
+    plate: ROOM_ANCHORROOM.plate,
+    baseRows: ROOM_ANCHORROOM.baseRows,
+    spawnX: ROOM_ANCHORROOM.spawn[0],
+    spawnY: ROOM_ANCHORROOM.spawn[1],
+    portals: [
+      { x: ROOM_ANCHORROOM.exit[0], y: ROOM_ANCHORROOM.exit[1], to: 'overworld', tx: 38, ty: 26 },
+    ],
+    entities: [],
+  },
   overworld: {
     id: 'overworld',
     rows: overworldRows,
