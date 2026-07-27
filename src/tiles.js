@@ -426,6 +426,50 @@ const fence = {
   ],
 };
 
+const overgrowthWall = {
+  pal: { a: '#1e3a30', b: '#2e5d4a', c: '#3ea38a', d: '#152a22', g: '#5fd0b0' },
+  art: [
+    'abbaabbbaabbaabb',
+    'bacbbabbcbabbcab',
+    'abbcabbbabbcabba',
+    'bbabbacbbabbabbc',
+    'abbbcbbabbbacbba',
+    'dbabbabbcabbbabd',
+    'bbcabbdabbabcbbb',
+    'abbbabbbgbbabbba',
+    'bbabcbbabbbcbbab',
+    'abbbabbcabbabbcb',
+    'cbbabbbabbgbabbb',
+    'bbabbcbbabbbcbab',
+    'abbbabbbcbbabbba',
+    'dbbcabbabbbabbcd',
+    'bbabbbgbbacbbabb',
+    'abbabbbabbbabbab',
+  ],
+};
+
+const domeFloor = {
+  pal: { a: '#c6c9c2', b: '#b4b8b0', c: '#d5d8d1', m: '#4a8a6a', k: '#8a8d86' },
+  art: [
+    'aaaaaaakaaaaaaak',
+    'aaaaaaakaaaaaaak',
+    'abaaaaakaaacaaak',
+    'aaaaaaakaamaaaak',
+    'aaacaaakaaaaaaak',
+    'aaaaaaakaaaaabak',
+    'aaaaabakaaaaaaak',
+    'kkkkkkkkkkkkkkkk',
+    'aaaaaaakaaaaaaak',
+    'aamaaaakacaaaaak',
+    'aaaaaaakaaaaaaak',
+    'aaaabaakaaaamaak',
+    'acaaaaakaaaaaaak',
+    'aaaaaaakabaaaaak',
+    'aaaaaaakaaaaacak',
+    'kkkkkkkkkkkkkkkk',
+  ],
+};
+
 export const TILES = {
   '.': { name: 'grass', solid: false, def: grass },
   ',': { name: 'flowers', solid: false, def: flowers },
@@ -447,6 +491,8 @@ export const TILES = {
   'c': { name: 'carpet', solid: false, def: carpet },
   ' ': { name: 'void', solid: true, def: voidTile },
   'F': { name: 'fence', solid: true, def: fence },
+  'V': { name: 'overgrowth', solid: true, def: overgrowthWall },
+  'G': { name: 'domefloor', solid: false, def: domeFloor },
 };
 
 export function isSolidChar(ch) {

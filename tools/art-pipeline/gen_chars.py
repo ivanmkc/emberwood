@@ -50,6 +50,7 @@ HUMANOIDS = {
     'chief': 'an elderly settlement overseer with white hair and a long pale lab coat over grey overalls, a small glowing badge',
     'angler': 'a grizzled old scavenger angler with an orange beanie, heavy blue weatherproof coat, waders',
     'settler': 'a friendly young settler with dark hair, a rust-red work vest over a tan shirt, tool belt',
+    'keeper': 'an elderly botanist hermit with a wide-brimmed woven hat, a moss-green patched robe with vine embroidery, a small glowing plant vial on a cord around the neck, walking stick',
 }
 
 CREATURES = {
@@ -57,10 +58,11 @@ CREATURES = {
     'sludge': 'a rounded blob of glowing toxic orange-green sludge with two small dark eyes, menacing but cute',
     'drone': 'a small hostile surveillance drone with two stubby rotors, a single red camera eye, dark grey hull with hazard stripes',
     'boss': 'a huge intimidating boss blob of molten orange sludge with a glowing core and several small dark eyes, dripping. Crisp chunky pixel clusters with hard-banded shading and a dark outline, NOT smooth gradients',
+    'petdrone': 'a small round friendly pet drone, teal shell with brass trim, one big cheerful cyan eye, two tiny stubby fins, hovering. Cute companion robot, crisp chunky pixels, dark outline',
 }
 
-TARGET_H = {'player': 44, 'chief': 44, 'angler': 44, 'settler': 44,
-            'trader': 36, 'sludge': 28, 'drone': 26, 'boss': 72}
+TARGET_H = {'player': 44, 'chief': 44, 'angler': 44, 'settler': 44, 'keeper': 44,
+            'trader': 36, 'sludge': 28, 'drone': 26, 'boss': 72, 'petdrone': 22}
 
 
 def border_median_key(img, thresh=95):

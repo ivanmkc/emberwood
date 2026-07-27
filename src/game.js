@@ -8,6 +8,7 @@ import { MAPS, START, buildGrid } from './maps.js';
 import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, chestLootLines,
+  terminalText, itemPickup, INTRO_LINES,
 } from './quest.js';
 
 const VIEW_W = 320;
@@ -27,9 +28,13 @@ const TILE_ART = {
   's': 'dust', 'M': 'rubble', 'p': 'plate', 'w': 'wallpanel', 'f': 'floorpanel',
   'h': 'ground', 'H': 'ground', 'D': 'ground', 'o': 'plate', 'C': 'rubble',
   'c': 'carpet', 'd': 'minefloor', 'W': 'minewall', 'F': 'ground',
+  'V': 'overgrowth', 'G': 'domefloor',
 };
 
-const NPC_ART = { elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler' };
+const NPC_ART = {
+  elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler',
+  keeper: 'keeper', mara: 'settler',
+};
 
 // ---------- sprite/tile canvas cache (procedural fallback art) ----------
 
@@ -158,6 +163,7 @@ export function createGame(canvas, input, art) {
     g.quest = newQuestState();
     g.time = 0;
     g.winShown = false;
+    g.pendingIntro = true;
     loadMap(START.map, START.x, START.y);
     try { localStorage.removeItem(SAVE_KEY); } catch { /* ok */ }
   }
@@ -218,6 +224,8 @@ export function createGame(canvas, input, art) {
       if (e.kind === 'sparkle' && (g.quest.flags.hasRing || g.quest.flags.gaveRing)) continue;
       if (e.kind === 'enemy' && e.type === 'boss' && g.quest.flags.bossDefeated) continue;
       if (e.kind === 'lockedDoor' && g.quest.flags.doorOpen) continue;
+      if (e.kind === 'item' && e.id === 'petdrone'
+          && (g.quest.flags.petFound || g.quest.flags.petReturned)) continue;
       const ent = { ...e, x: e.x * T, y: e.y * T, tx: e.x, ty: e.y };
       if (e.kind === 'enemy') {
         const def = ENEMY_DEFS[e.type];
@@ -227,6 +235,10 @@ export function createGame(canvas, input, art) {
         });
       }
       g.entities.push(ent);
+    }
+    // Bolt hovers beside Pip once returned
+    if (id === 'overworld' && g.quest.flags.petReturned) {
+      g.entities.push({ kind: 'pet', id: 'bolt', x: 36 * T, y: 27 * T, anim: 0 });
     }
     buildProps();
     if (tx !== null && tx !== undefined) {
@@ -244,7 +256,7 @@ export function createGame(canvas, input, art) {
 
   function entitySolid(e) {
     return e.kind === 'npc' || e.kind === 'chest' || e.kind === 'sign'
-      || e.kind === 'beacon' || e.kind === 'lockedDoor';
+      || e.kind === 'beacon' || e.kind === 'lockedDoor' || e.kind === 'terminal';
   }
 
   function rectBlocked(x, y, w, h, self) {
@@ -328,7 +340,7 @@ export function createGame(canvas, input, art) {
   function interactTarget() {
     const p = facingPoint();
     for (const e of g.entities) {
-      if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor'].includes(e.kind)) continue;
+      if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor', 'terminal'].includes(e.kind)) continue;
       if (p.x >= e.x && p.x < e.x + 16 && p.y >= e.y && p.y < e.y + 16) return e;
     }
     return null;
@@ -358,6 +370,8 @@ export function createGame(canvas, input, art) {
           save();
         }
       });
+    } else if (e.kind === 'terminal') {
+      openDialogue(terminalText(e.id, g.quest));
     } else if (e.kind === 'chest') {
       if (g.quest.opened[e.id]) {
         openDialogue({ lines: ['Empty. You already cleaned it out.'] });
@@ -366,6 +380,7 @@ export function createGame(canvas, input, art) {
       g.quest.opened[e.id] = true;
       if (e.loot.coins) g.quest.coins += e.loot.coins;
       if (e.loot.shard) g.quest.shards += 1;
+      if (e.loot.item === 'filter') g.quest.flags.filterPart = true;
       sfx.chest();
       save();
       openDialogue({ lines: chestLootLines(e.loot) });
@@ -432,6 +447,11 @@ export function createGame(canvas, input, art) {
 
     if (g.mode === 'title') {
       if (input.consumeAction()) g.mode = 'play';
+      return;
+    }
+    if (g.mode === 'play' && g.pendingIntro) {
+      g.pendingIntro = false;
+      openDialogue({ lines: INTRO_LINES });
       return;
     }
     if (g.mode === 'dead') {
@@ -567,12 +587,16 @@ export function createGame(canvas, input, art) {
     }
 
     for (const e of [...g.entities]) {
-      if (e.kind !== 'sparkle') continue;
+      if (e.kind !== 'sparkle' && e.kind !== 'item') continue;
       if (aabb(p.x + 2, p.y + 4, 12, 12, e.x + 2, e.y + 2, 12, 12)) {
         g.entities = g.entities.filter((x) => x !== e);
         sfx.pickup();
-        openDialogue(sparkleInteract(g.quest));
+        openDialogue(e.kind === 'sparkle' ? sparkleInteract(g.quest) : itemPickup(e.id));
       }
+    }
+    // Bolt idles with a happy bob
+    for (const e of g.entities) {
+      if (e.kind === 'pet') e.anim += dt * 5;
     }
 
     const ptx = Math.floor((p.x + 8) / T);
@@ -760,7 +784,8 @@ export function createGame(canvas, input, art) {
 
   // dusk grade + light glows: ambient cool wash, warm pools at lights, vignette
   function duskPass(cx, cy, x0, y0, x1, y1) {
-    ctx.fillStyle = g.mapId === 'house' ? 'rgba(30, 24, 20, 0.22)' : 'rgba(22, 32, 62, 0.30)';
+    ctx.fillStyle = g.mapId === 'house' || g.mapId === 'home' ? 'rgba(30, 24, 20, 0.22)'
+      : g.mapId === 'biodome' ? 'rgba(18, 48, 40, 0.30)' : 'rgba(22, 32, 62, 0.30)';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
 
     ctx.globalCompositeOperation = 'lighter';
@@ -792,11 +817,15 @@ export function createGame(canvas, input, art) {
         else glow(lx, ly, 22, 'rgba(255, 170, 80, A)', 0.14); // core embers
       }
     }
-    if (g.mapId === 'house') {
+    if (g.mapId === 'house' || g.mapId === 'home') {
       // warm interior: hearth glow at room center + doorway light
       const mw = g.grid[0].length * T, mh = g.grid.length * T;
       glow(mw / 2 - cx, mh / 2 - 14 - cy, 64, 'rgba(255, 190, 110, A)', 0.16);
       glow(mw / 2 - cx, mh - 10 - cy, 26, 'rgba(255, 200, 130, A)', 0.12);
+    }
+    for (const e of g.entities) {
+      if (e.kind === 'terminal') glow(e.x + 8 - cx, e.y + 4 - cy, 16, 'rgba(90, 220, 220, A)', 0.16);
+      if (e.kind === 'item' || e.kind === 'pet') glow(e.x + 8 - cx, e.y + 6 - cy, 12, 'rgba(90, 230, 240, A)', 0.14);
     }
     // faint coolant shimmer
     for (let ty = y0; ty <= y1; ty++) {
@@ -931,6 +960,9 @@ export function createGame(canvas, input, art) {
     } else if (pr.type === 'lamp') {
       const img = art.props.lamp;
       if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
+    } else if (pr.type === 'vat' || pr.type === 'rack') {
+      const img = art.props[pr.type];
+      if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
     }
   }
 
@@ -956,7 +988,26 @@ export function createGame(canvas, input, art) {
       }
       img = cache.sprites[g.quest.flags.beaconLit ? 'beaconLit' : 'beacon'];
     } else if (e.kind === 'lockedDoor') img = cache.sprites.lockedDoor;
-    else if (e.kind === 'sparkle') {
+    else if (e.kind === 'terminal') {
+      const im = art.props.terminal;
+      if (im) {
+        const w = im.width / DS, h = im.height / DS;
+        drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 16 - h - cy));
+        return;
+      }
+      img = cache.sprites.sign;
+    } else if (e.kind === 'item' || e.kind === 'pet') {
+      const im = art.chars.petdrone;
+      const bob = Math.round(Math.sin((e.anim ?? g.time * 4)) * 2);
+      if (e.id === 'petdrone' || e.kind === 'pet') {
+        if (im && im.width) {
+          const w = im.width / DS, h = im.height / DS;
+          drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 12 - h - cy + bob));
+          return;
+        }
+        img = cache.sprites.sparkle;
+      } else img = cache.sprites.sparkle;
+    } else if (e.kind === 'sparkle') {
       img = cache.sprites.sparkle;
       dy = Math.floor(g.time * 4) % 2 === 0 ? 0 : -1;
     } else if (e.kind === 'chest') {
@@ -1098,7 +1149,10 @@ export function createGame(canvas, input, art) {
 
   return {
     start() {
-      if (!load()) loadMap(START.map, START.x, START.y);
+      if (!load()) {
+        loadMap(START.map, START.x, START.y);
+        g.pendingIntro = true;
+      }
       requestAnimationFrame(frame);
     },
     newGame,

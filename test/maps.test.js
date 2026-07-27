@@ -8,6 +8,8 @@ function walkableChar(ch) {
   return t && !t.solid;
 }
 
+const SOLID_KINDS = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal'];
+
 // BFS over a map's grid. Solid entities block, except the target entity.
 // opts.doorPasses: treat lockedDoor entities as passable.
 function reachable(map, from, to, opts = {}) {
@@ -16,7 +18,7 @@ function reachable(map, from, to, opts = {}) {
   const W = grid[0].length;
   const blocked = new Set();
   for (const e of map.entities) {
-    const isSolidKind = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor'].includes(e.kind);
+    const isSolidKind = SOLID_KINDS.includes(e.kind);
     if (!isSolidKind) continue;
     if (e.kind === 'lockedDoor' && opts.doorPasses) continue;
     if (e.x === to.x && e.y === to.y) continue; // target itself
@@ -107,10 +109,60 @@ test('overworld: all quest points reachable from spawn', () => {
   const map = MAPS.overworld;
   const from = { x: START.x, y: START.y };
   const targets = map.entities
-    .filter((e) => ['chest', 'npc', 'sign', 'beacon', 'sparkle'].includes(e.kind))
+    .filter((e) => ['chest', 'npc', 'sign', 'beacon', 'sparkle', 'terminal', 'item'].includes(e.kind))
     .concat(map.portals.map((p) => ({ id: `portal->${p.to}`, ...p })));
   for (const t of targets) {
     assert.ok(reachable(map, from, { x: t.x, y: t.y }), `overworld: ${t.id ?? t.kind} at ${t.x},${t.y} unreachable from spawn`);
+  }
+});
+
+test('biodome: keeper, terminal, Bolt, chest and exit reachable from hatch', () => {
+  const arrival = MAPS.overworld.portals.find((p) => p.to === 'biodome');
+  const from = { x: arrival.tx, y: arrival.ty };
+  for (const e of MAPS.biodome.entities) {
+    assert.ok(reachable(MAPS.biodome, from, { x: e.x, y: e.y }), `biodome: ${e.id} at ${e.x},${e.y} unreachable`);
+  }
+  const exit = MAPS.biodome.portals[0];
+  assert.ok(reachable(MAPS.biodome, from, { x: exit.x, y: exit.y }), 'biodome exit unreachable');
+});
+
+test('mine2: filter chest, terminal and loot reachable from gallery entrance', () => {
+  const arrival = MAPS.cave.portals.find((p) => p.to === 'mine2');
+  const from = { x: arrival.tx, y: arrival.ty };
+  for (const e of MAPS.mine2.entities) {
+    assert.ok(reachable(MAPS.mine2, from, { x: e.x, y: e.y }), `mine2: ${e.id} at ${e.x},${e.y} unreachable`);
+  }
+  const exit = MAPS.mine2.portals[0];
+  assert.ok(reachable(MAPS.mine2, from, { x: exit.x, y: exit.y }), 'mine2 exit unreachable');
+});
+
+test('mine2 entrance is gated behind the locked blast door', () => {
+  const caveArrival = MAPS.overworld.portals.find((p) => p.to === 'cave');
+  const from = { x: caveArrival.tx, y: caveArrival.ty };
+  const toMine2 = MAPS.cave.portals.find((p) => p.to === 'mine2');
+  assert.ok(!reachable(MAPS.cave, from, { x: toMine2.x, y: toMine2.y }, { doorPasses: false }),
+    'mine2 portal reachable without opening the blast door — gate broken');
+  assert.ok(reachable(MAPS.cave, from, { x: toMine2.x, y: toMine2.y }, { doorPasses: true }),
+    'mine2 portal unreachable even with the door open');
+});
+
+test('home: Mara, archive terminal and chest reachable from doorway', () => {
+  const arrival = MAPS.overworld.portals.find((p) => p.to === 'home');
+  const from = { x: arrival.tx, y: arrival.ty };
+  for (const e of MAPS.home.entities) {
+    assert.ok(reachable(MAPS.home, from, { x: e.x, y: e.y }), `home: ${e.id} unreachable`);
+  }
+  const exit = MAPS.home.portals[0];
+  assert.ok(reachable(MAPS.home, from, { x: exit.x, y: exit.y }), 'home exit unreachable');
+});
+
+test('deco props sit on walkable tiles (no buried scenery)', () => {
+  for (const map of Object.values(MAPS)) {
+    const grid = buildGrid(map);
+    for (const d of map.deco || []) {
+      assert.ok(walkableChar(grid[d.y][d.x]),
+        `${map.id}: deco ${d.type} at ${d.x},${d.y} sits on solid tile '${grid[d.y][d.x]}'`);
+    }
   }
 });
 

@@ -50,6 +50,30 @@ await boot({
 await page.keyboard.down('ArrowUp'); await page.waitForTimeout(600); await page.keyboard.up('ArrowUp');
 await page.locator('#game').screenshot({ path: `${OUT}/final-mine.png` });
 
+// 4b. Eden Shelf biodome: keeper, vats, Bolt
+await boot({
+  quest: quest({ flags: { talkedElder: true, metKeeper: true } }),
+  mapId: 'biodome', x: 10 * 16, y: 10 * 16, time: 90,
+});
+await page.keyboard.down('ArrowUp'); await page.waitForTimeout(400); await page.keyboard.up('ArrowUp');
+await page.locator('#game').screenshot({ path: `${OUT}/final-biodome.png` });
+
+// 4c. Foundry lower gallery
+await boot({
+  quest: quest({ flags: { hasCaveKey: true, doorOpen: true } }),
+  mapId: 'mine2', x: 5 * 16, y: 5 * 16, time: 150,
+});
+await page.locator('#game').screenshot({ path: `${OUT}/final-mine2.png` });
+
+// 4d. The Harroways' home
+await boot({ quest: quest({}), mapId: 'home', x: 6 * 16, y: 6 * 16, time: 60 });
+await page.locator('#game').screenshot({ path: `${OUT}/final-home.png` });
+
+// 4e. intro transmission on fresh boot
+await boot(null); // fresh: leaves title, intro dialogue should open
+await page.waitForTimeout(900);
+await page.locator('#game').screenshot({ path: `${OUT}/final-intro.png` });
+
 // 5. full playthrough beat: 3 cells -> beacon -> win overlay
 await boot({
   quest: quest({ shards: 3, flags: { talkedElder: true } }),

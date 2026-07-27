@@ -9,18 +9,23 @@ Every gate: deterministic checks + Gemini rubric (median-of-3 vote).
 - ✅ `chest` — style_match=8, perspective_ok=True, theme_fit=9 — Slightly blurry, likely due to upscaling without nearest-neighbor interpolation, but style and theme fit well.
 - ✅ `house` — style_match=8, perspective_ok=True, theme_fit=9 — The asset fits the theme well and uses a similar palette. Perspective is front-facing, matching the buildings 
 - ✅ `lamp` — style_match=8, perspective_ok=True, theme_fit=9
+- ✅ `rack` — style_match=8, perspective_ok=True, theme_fit=9 — Slightly blurry, lacks sharp pixel definition compared to anchor.
 - ✅ `rock` — style_match=8, perspective_ok=True, theme_fit=9
+- ✅ `terminal` — style_match=8, perspective_ok=True, theme_fit=9 — Style matches well, maybe slightly larger pixel size than some small details in anchor, but overall good.
 - ✅ `tree` — style_match=8, perspective_ok=True, theme_fit=9 — Slightly more rounded and detailed base than the planar/boxy planters in the anchor, but generally fits well.
+- ✅ `vat` — style_match=8, perspective_ok=True, theme_fit=9 — Slightly more purple/magenta in the glass glow than seen in the anchor, but matches the pixel art style well.
 
 ## Terrain tiles
 
 - ✅ `carpet` — style_match=8, tileable=10 — Good pattern, fits pixel style well
 - ✅ `coolant` — style_match=8, tileable=6 — A bit too dark and plain, lacks the glowing bright teal quality of the coolant in the reference image. Has sli
+- ✅ `domefloor` — style_match=8, tileable=10 — Good grid pattern, fits the sci-fi setting.
 - ✅ `dust` — style_match=8, tileable=6 — Obvious repetition grid creates diagonal patterns, color is slightly too drab compared to the vibrant anchor s
 - ✅ `floorpanel` — style_match=8, tileable=10 — A bit plain, but matches the intended panel style well and tiles perfectly.
 - ✅ `ground` — style_match=8, tileable=9
 - ✅ `minefloor` — style_match=8, tileable=6 — Noticeable diagonal repetition pattern makes it less seamlessly tileable.
 - ✅ `minewall` — style_match=8, tileable=6 — Visible vertical seams in tiling
+- ✅ `overgrowth` — style_match=8, tileable=9 — A bit noisy and generic, could read as moss or just abstract noise rather than distinct overgrowth in the scen
 - ✅ `plate` — style_match=8, tileable=10 — A bit plain, but fits the context of floor panels perfectly.
 - ✅ `rubble` — style_match=8, tileable=6 — Noticeable repeating diagonal pattern
 - ✅ `walkway` — style_match=8, tileable=10 — Good panel texture, matches the sci-fi industrial setting.
@@ -40,6 +45,8 @@ Every gate: deterministic checks + Gemini rubric (median-of-3 vote).
 - ❌ `chief-right` — style_match=4, theme_fit=7 — Perspective mismatch (profile/side-scroller view vs top-down JRPG), blurry upscaled pixels
 - ❌ `chief-up` — style_match=4, theme_fit=3 — Art style is blurry/low resolution compared to the crisp pixel art of the anchor. The theme (scientist/doctor)
 - ✅ `drone` — style_match=8, theme_fit=9 — None. Good match.
+- ✅ `keeper` — style_match=8, theme_fit=6 — Style is somewhat more detailed/textured than the flatter, cleaner anchor style; theme is a bit too fantasy/ru
+- ✅ `petdrone` — style_match=8, theme_fit=9 — Good style match with appropriate shading and palette, captures the friendly round drone concept well.
 - ✅ `player` — style_match=8, theme_fit=9
 - ❌ `player-down` — style_match=4, theme_fit=3 — Art style is generic pixel art, lacking the detailed linework and distinctive shading of the anchor. The theme
 - ❌ `player-left` — style_match=4, theme_fit=3 — Art style is too simple and lacks the outline and shading style of the anchor. Theme is mundane modern, not sc
@@ -55,8 +62,12 @@ Every gate: deterministic checks + Gemini rubric (median-of-3 vote).
 
 ## In-game screenshots
 
-- ✅ `house` — style_score=3, perspective_ok=True — Lighting is very basic, lacking the ambient glows and shadows of the anchor. The UI elements (hearts, coin) lo
-- ✅ `lake` — style_score=3, perspective_ok=True — Water lacks any texture or shading, ground tiles are repetitive with minimal detail, UI elements are basic and
-- ✅ `mine` — style_score=3, perspective_ok=True — The scene is mostly pitch black due to an overly harsh vignette/fog effect, losing all environment detail.
-- ✅ `village` — style_score=4, perspective_ok=True — Lighting is flat compared to the anchor's vibrant, localized glows. Assets feel a bit scattered and disconnect
-- ✅ `win` — style_score=3, perspective_ok=True — HUD elements look basic/placeholder, lack of shadows and depth, simplistic lighting compared to target
+- ✅ `biodome` — style_score=3, perspective_ok=True — Tileset pattern is very repetitive and grid-like, lacks lighting/shadow nuance compared to anchor, UI text ove
+- ✅ `home` — style_score=3, perspective_ok=True — Lighting is very flat, lacking the directional dusk glows and colored highlights of the anchor. The room is to
+- ✅ `house` — style_score=3, perspective_ok=True — Lighting is completely flat (no ambient occlusion or localized glows), textures look like unmodified basic til
+- ✅ `intro` — style_score=4, perspective_ok=True — Lighting gradients look simplistic (soft circular halos around lamps). The large bush/wall on the right feels 
+- ✅ `lake` — style_score=3, perspective_ok=True — Visuals look very placeholder. UI elements (hearts, coins) lack the stylized sci-fi feel of the anchor. Overal
+- ✅ `mine` — style_score=3, perspective_ok=True — The terrain texture (dark grey noise) looks very repetitive and placeholder. The black void outside the light 
+- ✅ `mine2` — style_score=5, perspective_ok=True — Signpost sprite feels a bit flat compared to other assets. UI elements (hearts, coin) are very generic/placeho
+- ✅ `village` — style_score=4, perspective_ok=True — Signpost and interactive object scaling feels slightly off, missing the rich ambient occlusion and glowing acc
+- ✅ `win` — style_score=4, perspective_ok=True — Floor texture is very basic/placeholder. The large open area lacks detail. The UI elements in the top corners 

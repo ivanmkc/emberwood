@@ -66,6 +66,17 @@
    "tiles/carpet-0.png",
    "tiles/carpet-1.png",
    "tiles/carpet-2.png"
+  ],
+  "overgrowth": [
+   "tiles/overgrowth-0.png",
+   "tiles/overgrowth-1.png",
+   "tiles/overgrowth-2.png",
+   "tiles/overgrowth-3.png",
+   "tiles/overgrowth-4.png",
+   "tiles/overgrowth-5.png"
+  ],
+  "domefloor": [
+   "tiles/domefloor-0.png"
   ]
  },
  "props": {
@@ -74,7 +85,10 @@
   "chest": "props/chest.png",
   "beacon": "props/beacon.png",
   "lamp": "props/lamp.png",
-  "house": "props/house.png"
+  "house": "props/house.png",
+  "terminal": "props/terminal.png",
+  "rack": "props/rack.png",
+  "vat": "props/vat.png"
  },
  "chars": {
   "player": {
@@ -101,9 +115,16 @@
    "left": "chars/settler-left.png",
    "right": "chars/settler-right.png"
   },
+  "keeper": {
+   "down": "chars/keeper-down.png",
+   "up": "chars/keeper-up.png",
+   "left": "chars/keeper-left.png",
+   "right": "chars/keeper-right.png"
+  },
   "trader": "chars/trader.png",
   "sludge": "chars/sludge.png",
   "drone": "chars/drone.png",
-  "boss": "chars/boss.png"
+  "boss": "chars/boss.png",
+  "petdrone": "chars/petdrone.png"
  }
 }

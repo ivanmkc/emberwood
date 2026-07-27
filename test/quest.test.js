@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
-  lockedDoorInteract, sparkleInteract, HEART_PRICE,
+  lockedDoorInteract, sparkleInteract, terminalText, itemPickup,
+  INTRO_LINES, HEART_PRICE,
 } from '../src/quest.js';
 
 function talk(state, id) {
@@ -65,6 +66,64 @@ test('merchant sells exactly one heart container for 10 coins', () => {
   talk(s, 'merchant');
   assert.equal(s.maxHearts, 4, 'only one container in stock');
   assert.equal(s.coins, 50);
+});
+
+test('Bolt side quest: find in the dome, return to Pip', () => {
+  const s = newQuestState();
+  assert.match(talk(s, 'villager').lines[1], /Bolt/);
+  applyEffects(s, itemPickup('petdrone').effects);
+  assert.ok(s.flags.petFound);
+  const ret = talk(s, 'villager');
+  assert.match(ret.lines[0], /BOLT/i);
+  assert.ok(s.flags.petReturned);
+  assert.equal(s.coins, 8);
+  assert.match(talk(s, 'villager').lines[0], /Bolt/);
+});
+
+test('filter side quest: Finn asks after keycard, pays 20 scrap', () => {
+  const s = newQuestState();
+  s.flags.hasCaveKey = true;
+  s.flags.gaveRing = true;
+  assert.match(talk(s, 'fisherman').lines[1], /filter/i);
+  s.flags.filterPart = true;
+  talk(s, 'fisherman');
+  assert.ok(s.flags.filterGiven);
+  assert.equal(s.coins, 20);
+  assert.match(talk(s, 'fisherman').lines[0], /pump runs clean/i);
+});
+
+test('archive logs: three terminals unlock Rowan\'s synthesis + reward', () => {
+  const s = newQuestState();
+  s.flags.talkedElder = true;
+  for (const id of ['logA', 'logB', 'logC']) {
+    const t = terminalText(id, s);
+    assert.ok(t.lines.length >= 2, `${id} should have lore text`);
+    applyEffects(s, t.effects);
+  }
+  assert.ok(s.flags.log1 && s.flags.log2 && s.flags.log3);
+  const synth = talk(s, 'elder');
+  assert.match(synth.lines.join(' '), /quarantine/i);
+  assert.ok(s.flags.logsDone);
+  assert.equal(s.coins, 10);
+  // synthesis only fires once
+  const again = talk(s, 'elder');
+  assert.ok(!again.lines.join(' ').match(/archive pay/i));
+});
+
+test('keeper Ivy: intro once, then pet hint, then post-beacon line', () => {
+  const s = newQuestState();
+  assert.match(talk(s, 'keeper').lines[0], /visitor/i);
+  assert.ok(s.flags.metKeeper);
+  s.flags.petFound = true;
+  assert.match(talk(s, 'keeper').lines[0], /take it home/i);
+  s.flags.petReturned = true;
+  s.flags.beaconLit = true;
+  assert.match(talk(s, 'keeper').lines[0], /light reaches/i);
+});
+
+test('intro transmission exists and mentions the beacon', () => {
+  assert.ok(INTRO_LINES.length >= 2);
+  assert.match(INTRO_LINES.join(' '), /beacon/i);
 });
 
 test('applyEffects clamps and accumulates', () => {

@@ -16,10 +16,12 @@ VERDICTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'verdicts.js
 DEST = os.path.join(ROOT, 'assets')
 
 TILE_NAMES = ['ground', 'plate', 'dust', 'coolant', 'walkway', 'rubble',
-              'minefloor', 'minewall', 'floorpanel', 'wallpanel', 'carpet']
-PROP_NAMES = ['tree', 'rock', 'chest', 'beacon', 'lamp', 'house']
-CHAR_SHEET = ['player', 'chief', 'angler', 'settler']       # 4-directional
-CHAR_SINGLE = ['trader', 'sludge', 'drone', 'boss']
+              'minefloor', 'minewall', 'floorpanel', 'wallpanel', 'carpet',
+              'overgrowth', 'domefloor']
+PROP_NAMES = ['tree', 'rock', 'chest', 'beacon', 'lamp', 'house',
+              'terminal', 'rack', 'vat']
+CHAR_SHEET = ['player', 'chief', 'angler', 'settler', 'keeper']  # 4-directional
+CHAR_SINGLE = ['trader', 'sludge', 'drone', 'boss', 'petdrone']
 
 
 def main():

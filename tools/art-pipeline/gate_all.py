@@ -137,8 +137,8 @@ def gate_assets(verdicts, only=None):
     return fails
 
 
-WALL_TILES = {'wallpanel', 'minewall'}  # face-on / blocking tiles: plan view not required
-MANUFACTURED = {'plate', 'walkway', 'floorpanel', 'wallpanel', 'carpet'}
+WALL_TILES = {'wallpanel', 'minewall', 'overgrowth'}  # blocking tiles: plan view not required
+MANUFACTURED = {'plate', 'walkway', 'floorpanel', 'wallpanel', 'carpet', 'domefloor'}
 
 # Documented waivers: judge dimension is unstable/over-strict AND deterministic
 # metrics + human visual audit disagree with it. Every waiver needs a reason.
@@ -187,12 +187,13 @@ def gate_tiles(verdicts, only=None):
     return fails
 
 
-HUMANOIDS = ['player', 'chief', 'angler', 'settler']
+HUMANOIDS = ['player', 'chief', 'angler', 'settler', 'keeper']
 CREATURES = {
     'trader': 'a small boxy merchant droid on tracked wheels with one glowing eye screen — box shape is the intended design',
     'sludge': 'a small blob of glowing toxic sludge with tiny eyes — blob shape is the intended design',
     'drone': 'a small hostile surveillance drone with rotors and one red camera eye',
     'boss': 'a HUGE molten sludge boss blob with a glowing core and several small eyes — a big blob monster is the intended design',
+    'petdrone': 'a small round FRIENDLY pet companion drone with one big cheerful cyan eye — cute round shape is the intended design',
 }
 
 

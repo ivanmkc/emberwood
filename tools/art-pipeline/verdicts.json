@@ -1343,26 +1343,26 @@
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Walls feel flat, lack depth. The carpet pattern is very noisy and clashes with the clean tile floor. The room feels overly empty and square.",
-     "regressions": "Lighting is very basic, lacking the ambient glows and shadows of the anchor. The UI elements (hearts, coin) look a bit generic compared to the sci-fi setting."
+     "composition_issues": "Walls are just flat repeated textures lacking volume, very sparse room decoration, rug pattern is too busy and lacks perspective, UI is extremely basic",
+     "regressions": "Lighting is completely flat (no ambient occlusion or localized glows), textures look like unmodified basic tiles without shading"
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Walls are extremely thin and lack depth, interior feels empty and lacks the dense detailing of the anchor, carpet texture repeats poorly and lacks edge blending, lighting is completely flat compared to the anchor's vibrant glows.",
-     "regressions": "HUD elements are very basic, character sprite style clashes slightly with environment, room feels like a flat tilemap rather than a lived-in space."
+     "composition_issues": "Environment feels extremely sparse and boxy compared to the detailed, organic layout of the target style. Textures are repetitive.",
+     "regressions": "Black void outside the room looks unfinished. UI is very basic."
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Environment feels extremely sparse and grid-like, lacking the organic density and rich lighting of the anchor.",
-     "regressions": "Floor texture tiling is very repetitive and visually noisy in the center. Wall edges look flat and lack depth."
+     "composition_issues": "Environment feels extremely sparse and boxy compared to the detailed, organic layout of the target. Textures are repetitive (floor, rug, walls).",
+     "regressions": "Lighting is very flat, lacking the strong color grading and glowing accents of the anchor. The black void outside the room is jarring."
     }
    ],
    "style_score": 3,
-   "composition_issues": "Walls feel flat, lack depth. The carpet pattern is very noisy and clashes with the clean tile floor. The room feels overly empty and square.",
+   "composition_issues": "Walls are just flat repeated textures lacking volume, very sparse room decoration, rug pattern is too busy and lacks perspective, UI is extremely basic",
    "perspective_ok": true,
-   "regressions": "Lighting is very basic, lacking the ambient glows and shadows of the anchor. The UI elements (hearts, coin) look a bit generic compared to the sci-fi setting."
+   "regressions": "Lighting is completely flat (no ambient occlusion or localized glows), textures look like unmodified basic tiles without shading"
   },
   "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
  },
@@ -1373,26 +1373,26 @@
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Water tiles are solid flat colors, enemies overlap chest without proper depth sorting, environment is extremely barren.",
-     "regressions": "Water lacks any texture or shading, ground tiles are repetitive with minimal detail, UI elements are basic and lack sci-fi styling."
+     "composition_issues": "Environment looks empty and blocky. The water texture is very flat and covers a large sharp rectangular area. Plant bases in top-left appear copy-pasted and float on a plain background.",
+     "regressions": "Visuals look very placeholder. UI elements (hearts, coins) lack the stylized sci-fi feel of the anchor. Overall lighting and color grading are flat and missing the rich neon/dusk atmosphere."
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Water tiles are perfectly flat blue squares with no edges/transitions to land, chest is awkwardly placed next to enemies on a tiny island, top left potted plants have cut-off tops.",
-     "regressions": "Water is a solid flat color block with no texture, ground texture is extremely sparse, floating unattached HUD elements top right, enemies lack shadows, UI text is basic."
+     "composition_issues": "extreme lack of detail, large empty gray areas, rudimentary shapes, hard straight lines separating water and land, UI elements feel disconnected from game world",
+     "regressions": "slimes clipping into chest, very flat lighting compared to target, repeating generic patterns on ground"
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "extreme tiling artifacts in water and ground, objects (chest, enemies) floating without grounding shadows, potted plants clustered unnaturally in top left",
-     "regressions": "textures are mostly flat colors with minimal detail, lack of lighting/glow effects, very sparse environment compared to the anchor"
+     "composition_issues": "extreme lack of detail compared to anchor, flat textures, simple geometry (square lake), floating character on solid color ground",
+     "regressions": "HUD elements look placeholder, enemies overlap chest without proper depth sorting, repetitive and simple ground tile pattern"
     }
    ],
    "style_score": 3,
-   "composition_issues": "Water tiles are solid flat colors, enemies overlap chest without proper depth sorting, environment is extremely barren.",
+   "composition_issues": "Environment looks empty and blocky. The water texture is very flat and covers a large sharp rectangular area. Plant bases in top-left appear copy-pasted and float on a plain background.",
    "perspective_ok": true,
-   "regressions": "Water lacks any texture or shading, ground tiles are repetitive with minimal detail, UI elements are basic and lack sci-fi styling."
+   "regressions": "Visuals look very placeholder. UI elements (hearts, coins) lack the stylized sci-fi feel of the anchor. Overall lighting and color grading are flat and missing the rich neon/dusk atmosphere."
   },
   "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
  },
@@ -1403,26 +1403,26 @@
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Lighting circle is too sharp, the orange slime monster is a flat sprite without matching top-down shading, ground texture is extremely repetitive and noisy.",
-     "regressions": "The scene is mostly pitch black due to an overly harsh vignette/fog effect, losing all environment detail."
+     "composition_issues": "Lighting is very basic and lacks the warm, atmospheric glows of the anchor. The environment is extremely sparse, missing the detailed tilework, machinery, and props seen in the target style. The slime monster's scale feels a bit disconnected from the player character.",
+     "regressions": "The terrain texture (dark grey noise) looks very repetitive and placeholder. The black void outside the light circle is harsh and lacks atmospheric falloff."
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Monster sprite is enormous compared to the player and tunnel, looking more like an overlay than a grounded entity.",
-     "regressions": "Lighting is very basic (hard circle), ground texture is highly repetitive noise, HUD elements lack stylistic integration, black void covers most of the screen."
+     "composition_issues": "Massive empty space, monster is huge compared to the player, lighting circle is very harsh and flat compared to the soft glows of the anchor.",
+     "regressions": "Texture repetition on the walls is very obvious, ground texture is sparse and uninteresting, UI elements are basic placeholders."
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Massive empty space, extremely sparse details, lighting radius is very abrupt and flat compared to the anchor's soft glows.",
-     "regressions": "Slime monster lacks shading and depth, walls look very repetitive and tile-based without variation, floor is mostly solid gray with sparse noise pixels."
+     "composition_issues": "Monster is significantly out of scale with the player character and environment.",
+     "regressions": "Lighting is very basic (simple circular vignette), lacking the rich hues and ambient glows of the anchor. Textures are repetitive and lack detail compared to the target."
     }
    ],
    "style_score": 3,
-   "composition_issues": "Lighting circle is too sharp, the orange slime monster is a flat sprite without matching top-down shading, ground texture is extremely repetitive and noisy.",
+   "composition_issues": "Lighting is very basic and lacks the warm, atmospheric glows of the anchor. The environment is extremely sparse, missing the detailed tilework, machinery, and props seen in the target style. The slime monster's scale feels a bit disconnected from the player character.",
    "perspective_ok": true,
-   "regressions": "The scene is mostly pitch black due to an overly harsh vignette/fog effect, losing all environment detail."
+   "regressions": "The terrain texture (dark grey noise) looks very repetitive and placeholder. The black void outside the light circle is harsh and lacks atmospheric falloff."
   },
   "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
  },
@@ -1433,26 +1433,26 @@
     {
      "style_score": 4,
      "perspective_ok": true,
-     "composition_issues": "Environment feels extremely empty and lacking detail. The tiled ground area ends abruptly against plain dirt. Foliage walls look repetitive.",
-     "regressions": "Lighting is flat compared to the anchor's vibrant, localized glows. Assets feel a bit scattered and disconnected."
+     "composition_issues": "Lighting feels flat despite lampposts, empty space is too prominent, tiled floor texture is repetitive and lacks detail.",
+     "regressions": "Signpost and interactive object scaling feels slightly off, missing the rich ambient occlusion and glowing accents of the anchor."
     },
     {
      "style_score": 4,
      "perspective_ok": true,
-     "composition_issues": "Lighting is very flat compared to the target; the glow effects on the lamps and the central object are weak. The tile pattern on the floor is extremely simple and repetitive. The environment feels very empty.",
-     "regressions": "The foliage (bushes at the bottom and right) looks like a very basic, repeating tiled asset without variation. The UI elements (hearts and coin) feel a bit stock/placeholder compared to the target aesthetic."
+     "composition_issues": "The environment feels very sparse and empty compared to the anchor's dense, cluttered feel. Lighting lacks the dramatic, localized glow and contrast of the anchor.",
+     "regressions": "The tiled texture on the central platform is overly repetitive and simple. The foliage on the right appears somewhat flat."
     },
     {
      "style_score": 4,
      "perspective_ok": true,
-     "composition_issues": "Sparse environment, lacks the dense detailing of the anchor. Ground texture transitions are harsh. Characters and props feel a bit small relative to the tile size.",
-     "regressions": "Lighting feels flat compared to the anchor's strong glows. The UI in the top left is very basic."
+     "composition_issues": "Lighting is flat, lacking the dense atmosphere and varied glow colors of the anchor. Ground texture is very sparse.",
+     "regressions": "Signage appears blurry/unreadable. UI elements are basic compared to typical RPG standards."
     }
    ],
    "style_score": 4,
-   "composition_issues": "Environment feels extremely empty and lacking detail. The tiled ground area ends abruptly against plain dirt. Foliage walls look repetitive.",
+   "composition_issues": "Lighting feels flat despite lampposts, empty space is too prominent, tiled floor texture is repetitive and lacks detail.",
    "perspective_ok": true,
-   "regressions": "Lighting is flat compared to the anchor's vibrant, localized glows. Assets feel a bit scattered and disconnected."
+   "regressions": "Signpost and interactive object scaling feels slightly off, missing the rich ambient occlusion and glowing accents of the anchor."
   }
  },
  "screenshot:win": {
@@ -1460,29 +1460,449 @@
   "judge": {
    "_votes": [
     {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Floor tiles look like a placeholder grid. Lighting is basic and lacks the ambient color depth of the anchor.",
+     "regressions": "Floor texture is very basic/placeholder. The large open area lacks detail. The UI elements in the top corners look generic."
+    },
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels very sparse and unfinished compared to the target. Lighting is basic and lacks the rich atmospheric glow of the anchor.",
+     "regressions": "HUD elements (hearts, coin) are very generic and clash with the pixel art style. The glowing object in the center lacks detail and integration."
+    },
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Floor tiles look like a flat grid overlay rather than integrated terrain. Lamppost placement is very uniform and unnatural.",
+     "regressions": "HUD elements (hearts, coin text) are very basic and lack stylized integration. Fire effect on the central object looks placeholder. General lack of texture detail and depth across all surfaces."
+    }
+   ],
+   "style_score": 4,
+   "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Floor tiles look like a placeholder grid. Lighting is basic and lacks the ambient color depth of the anchor.",
+   "perspective_ok": true,
+   "regressions": "Floor texture is very basic/placeholder. The large open area lacks detail. The UI elements in the top corners look generic."
+  }
+ },
+ "asset:rack": {
+  "pass": true,
+  "det": {
+   "coverage": 0.882,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly blurry, lacks sharp pixel definition compared to anchor."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly muddy pixel clusters compared to the crispness of the anchor image."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly muddy pixel clusters compared to anchor's crisp lines, but lighting and palette match well."
+    }
+   ],
+   "issues": "Slightly blurry, lacks sharp pixel definition compared to anchor.",
+   "style_match": 8,
+   "silhouette_clean": true,
+   "perspective_ok": true,
+   "single_object": true,
+   "theme_fit": 9
+  }
+ },
+ "asset:terminal": {
+  "pass": true,
+  "det": {
+   "coverage": 0.859,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Style matches well, maybe slightly larger pixel size than some small details in anchor, but overall good."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Perspective is mostly fine, though the screen angle is slightly pronounced. Lighting and palette fit well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Perspective is mostly fine for props, slight angle but acceptable. Style aligns well."
+    }
+   ],
+   "issues": "Style matches well, maybe slightly larger pixel size than some small details in anchor, but overall good.",
+   "style_match": 8,
+   "silhouette_clean": true,
+   "perspective_ok": true,
+   "single_object": true,
+   "theme_fit": 9
+  }
+ },
+ "asset:vat": {
+  "pass": true,
+  "det": {
+   "coverage": 0.892,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly more purple/magenta in the glass glow than seen in the anchor, but matches the pixel art style well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less defined pixelart style compared to anchor, but fits well overall."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly more pixelated than anchor objects, purple lighting is a bit distinct but acceptable."
+    }
+   ],
+   "issues": "Slightly more purple/magenta in the glass glow than seen in the anchor, but matches the pixel art style well.",
+   "style_match": 8,
+   "silhouette_clean": true,
+   "perspective_ok": true,
+   "single_object": true,
+   "theme_fit": 9
+  }
+ },
+ "tile:domefloor": {
+  "pass": true,
+  "det": {
+   "seam_lr": 2.2,
+   "seam_tb": 2.2,
+   "std": 22.7
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Good grid pattern, fits the sci-fi setting."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Good panel texture, matches the color palette well."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 10,
+     "readability": 8,
+     "issues": "Tile edges match perfectly, grid is intentional paneling"
+    }
+   ],
+   "style_match": 8,
+   "flat_plan_view": true,
+   "readability": 8,
+   "issues": "Good grid pattern, fits the sci-fi setting.",
+   "tileable": 10
+  }
+ },
+ "tile:overgrowth": {
+  "pass": true,
+  "det": {
+   "seam_lr": 12.0,
+   "seam_tb": 15.8,
+   "std": 46.1
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 9,
+     "readability": 7,
+     "issues": "A bit noisy and generic, could read as moss or just abstract noise rather than distinct overgrowth in the scene's style."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 9,
+     "readability": 8,
+     "issues": "Good texture, but might be a bit too noisy/abstract for 'overgrowth' in this specific cyberpunk/sci-fi style. Reads more like generic static or a patterned carpet."
+    },
+    {
+     "style_match": 8,
+     "flat_plan_view": true,
+     "tileable": 9,
+     "readability": 8,
+     "issues": "Slightly noisy, but reads well as dense overgrowth."
+    }
+   ],
+   "flat_plan_view": true,
+   "tileable": 9,
+   "issues": "A bit noisy and generic, could read as moss or just abstract noise rather than distinct overgrowth in the scene's style.",
+   "readability": 8,
+   "style_match": 8
+  }
+ },
+ "char:keeper": {
+  "pass": true,
+  "det": {
+   "down": {
+    "coverage": 0.834,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "up": {
+    "coverage": 0.834,
+    "magenta_fringe": 0.001,
+    "blobs": 1
+   },
+   "left": {
+    "coverage": 0.823,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   },
+   "right": {
+    "coverage": 0.829,
+    "magenta_fringe": 0.0,
+    "blobs": 1
+   }
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 6,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 5,
+     "issues": "Style is somewhat more detailed/textured than the flatter, cleaner anchor style; theme is a bit too fantasy/rustic compared to the sci-fi setting."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 6,
+     "issues": "Theme fit is slightly low; while a bit scruffy, the character looks more like a fantasy wanderer/wizard than a sci-fi/cyberpunk character due to the straw hat, walking stick, and potion flask, contrasting with the high-tech, industrial setting."
+    },
+    {
+     "style_match": 8,
+     "proportions_ok": true,
+     "single_character": true,
+     "directions_consistent": true,
+     "silhouette_clean": true,
+     "theme_fit": 8,
+     "issues": "None"
+    }
+   ],
+   "style_match": 8,
+   "silhouette_clean": true,
+   "single_character": true,
+   "directions_consistent": true,
+   "theme_fit": 6,
+   "issues": "Style is somewhat more detailed/textured than the flatter, cleaner anchor style; theme is a bit too fantasy/rustic compared to the sci-fi setting.",
+   "proportions_ok": true
+  }
+ },
+ "char:petdrone": {
+  "pass": true,
+  "det": {
+   "coverage": 0.794,
+   "magenta_fringe": 0.0025
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Good style match with appropriate shading and palette, captures the friendly round drone concept well."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "Resolution is slightly lower/chunkier than the anchor image characters, but overall design and colors fit well."
+    },
+    {
+     "style_match": 8,
+     "single_creature": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "reads_as_design": true,
+     "issues": "None. Very cute and matches the style."
+    }
+   ],
+   "reads_as_design": true,
+   "issues": "Good style match with appropriate shading and palette, captures the friendly round drone concept well.",
+   "single_creature": true,
+   "style_match": 8,
+   "silhouette_clean": true,
+   "theme_fit": 9
+  }
+ },
+ "screenshot:biodome": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Scale of street lamps vs characters, vast empty space, repetitive simple floor tiles",
-     "regressions": "HUD elements look basic/placeholder, lack of shadows and depth, simplistic lighting compared to target"
+     "composition_issues": "Scale feels inconsistent (enemies vs player vs props), sparse layout lacks the density of the target style.",
+     "regressions": "Tileset pattern is very repetitive and grid-like, lacks lighting/shadow nuance compared to anchor, UI text overlaps slightly with coin icon."
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Lighting is very basic (circles) compared to anchor's dynamic glows. Tileset density is extremely low, leading to large empty spaces. The bush wall looks repetitive and flat.",
-     "regressions": "Sign post and robot placement feel arbitrary. The fire effect on the central object is primitive."
+     "composition_issues": "extreme grid alignment, massive empty spaces, incongruous mix of assets (street lamp indoors, high-res UI elements on low-res pixel art)",
+     "regressions": "flat lighting, missing shadows, repetitive unblended textures, no depth or atmosphere"
     },
     {
      "style_score": 3,
      "perspective_ok": true,
-     "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Grid pattern on central tiles is visually jarring. Lighting is basic point lights without the rich color grading or atmospheric density of the anchor.",
-     "regressions": "Texture detail is very low, feeling placeholder. Lack of shadows and ambient occlusion makes objects float."
+     "composition_issues": "Sparse environment, repetitive flat floor tiles, lack of shadows and depth, mixed resolutions (e.g., sharp UI elements vs. pixelated sprites).",
+     "regressions": "Lighting is very basic compared to the anchor; the glowing street lamp effect looks detached from the environment. Overall flat and lacking the atmospheric density of the target style."
     }
    ],
    "style_score": 3,
-   "composition_issues": "Scale of street lamps vs characters, vast empty space, repetitive simple floor tiles",
+   "composition_issues": "Scale feels inconsistent (enemies vs player vs props), sparse layout lacks the density of the target style.",
    "perspective_ok": true,
-   "regressions": "HUD elements look basic/placeholder, lack of shadows and depth, simplistic lighting compared to target"
+   "regressions": "Tileset pattern is very repetitive and grid-like, lacks lighting/shadow nuance compared to anchor, UI text overlaps slightly with coin icon."
   },
   "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
+ },
+ "screenshot:home": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Walls have a strange repeating pattern that doesn't read as a solid structure. The central rug is extremely repetitive and flat.",
+     "regressions": "Lighting is very flat, lacking the directional dusk glows and colored highlights of the anchor. The room is too empty and lacks detail/props compared to the target style."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels empty and boxy, lacking the organic clutter and layered depth of the anchor. The rug texture clashes with the flat floor tiles.",
+     "regressions": "Lighting is very flat, lacking the directional neon glows and atmospheric shadows. Wall tiles repeat obviously and lack detail."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "room feels empty and sparse, objects pushed to the walls, carpet texture is very repetitive and visually noisy, floor tiles lack depth",
+     "regressions": "lighting is very flat compared to the target, missing ambient glows and atmospheric density, UI feels a bit detached and placeholder-like"
+    }
+   ],
+   "style_score": 3,
+   "composition_issues": "Walls have a strange repeating pattern that doesn't read as a solid structure. The central rug is extremely repetitive and flat.",
+   "perspective_ok": true,
+   "regressions": "Lighting is very flat, lacking the directional dusk glows and colored highlights of the anchor. The room is too empty and lacks detail/props compared to the target style."
+  },
+  "calibration_note": "style 3 = parity with an actual Eastward daylight frame judged against the same anchor (which also scores 3)"
+ },
+ "screenshot:intro": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Tile grid lines are too stark.",
+     "regressions": "Lighting gradients look simplistic (soft circular halos around lamps). The large bush/wall on the right feels repetitive and blocky."
+    },
+    {
+     "style_score": 3,
+     "perspective_ok": true,
+     "composition_issues": "Environment looks extremely barren. Tiling on the central square is very simple. The plant barrier on the right is repetitive. Scale of the street lamps seems small compared to the characters.",
+     "regressions": "Lighting is flat, lacking the rich gradients, atmospheric glow, and detailed shadows of the anchor. Textures are mostly flat colors with minimal detail or noise. UI elements (hearts, coin) are very generic and clash with the intended style. Text box is basic."
+    },
+    {
+     "style_score": 4,
+     "perspective_ok": true,
+     "composition_issues": "Tile textures are extremely flat and repetitive. Scaling of characters vs environment feels slightly off. Empty space dominates.",
+     "regressions": "Lighting is very basic circle gradients. Foliage (bushes on right) looks repetitive and lacks depth. No ambient occlusion or shadows to ground objects."
+    }
+   ],
+   "style_score": 4,
+   "composition_issues": "Environment feels extremely sparse and flat compared to anchor. Tile grid lines are too stark.",
+   "perspective_ok": true,
+   "regressions": "Lighting gradients look simplistic (soft circular halos around lamps). The large bush/wall on the right feels repetitive and blocky."
+  }
+ },
+ "screenshot:mine2": {
+  "pass": true,
+  "judge": {
+   "_votes": [
+    {
+     "style_score": 5,
+     "perspective_ok": true,
+     "composition_issues": "Lighting is very basic circle gradient; lacks the rich ambient lighting and colored glows of the anchor. Ground texture is repetitive and noisy. Enemies lack shadows to ground them.",
+     "regressions": "Signpost sprite feels a bit flat compared to other assets. UI elements (hearts, coin) are very generic/placeholder."
+    },
+    {
+     "style_score": 5,
+     "perspective_ok": true,
+     "composition_issues": "Lighting is very localized leaving large areas completely black, lacking the ambient warmth of the anchor. The environment feels extremely sparse compared to the target.",
+     "regressions": "Signpost and shelf look very flat and lack shading. Enemy sprites lack distinct sci-fi aesthetic compared to the anchor's detailed props."
+    },
+    {
+     "style_score": 5,
+     "perspective_ok": true,
+     "composition_issues": "Lighting is very basic and lacks the atmospheric glow of the anchor. Level design is blocky and lacks organic detail.",
+     "regressions": "Enemies and props look somewhat isolated against the dark, repeating ground texture."
+    }
+   ],
+   "style_score": 5,
+   "composition_issues": "Lighting is very basic circle gradient; lacks the rich ambient lighting and colored glows of the anchor. Ground texture is repetitive and noisy. Enemies lack shadows to ground them.",
+   "perspective_ok": true,
+   "regressions": "Signpost sprite feels a bit flat compared to other assets. UI elements (hearts, coin) are very generic/placeholder."
+  }
  }
 }

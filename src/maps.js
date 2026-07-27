@@ -28,8 +28,8 @@ const overworldRows = [
   '##' + D44 + '##',                                           // y15
   '##' + '.'.repeat(14) + '~'.repeat(14) + '.'.repeat(16) + '##',           // y16
   '##' + '.'.repeat(14) + '~'.repeat(14) + '...hhhh...hhhh..' + '##',       // y17
-  '##' + '.'.repeat(14) + '~'.repeat(14) + '...HDHH...HHHH..' + '##',       // y18
-  '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '....o...........' + '##', // y19
+  '##' + '.'.repeat(14) + '~'.repeat(14) + '...HDHH...HDHH..' + '##',       // y18
+  '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '....o......o....' + '##', // y19
   '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '.'.repeat(16) + '##',     // y20
   '##' + '.'.repeat(14) + '~~~' + '.....' + '======' + '.'.repeat(16) + '##',     // y21
   '##' + '.'.repeat(14) + '~~~' + '.....' + '~~~~~~' + '..pppppppp......' + '##', // y22
@@ -50,6 +50,7 @@ const overworldRows = [
 
 // Flower / decor overrides applied after parsing: [x, y, char]
 const overworldDecor = [
+  [14, 3, 'o'], // Eden Shelf hatch pad, deep in the overgrowth maze
   [7, 14, ','], [11, 15, ','], [20, 13, ','], [33, 14, ','],
   [5, 29, ','], [14, 31, ','], [25, 30, ','], [36, 31, ','], [42, 30, ','],
   [40, 14, ','], [44, 21, ','], [19, 29, ','], [31, 12, ','],
@@ -90,6 +91,56 @@ const caveRows = [
   'W'.repeat(26),                          // y17
 ];
 
+// The Eden Shelf: sealed agri-research dome, now Keeper Ivy's garden-shrine.
+const biodomeRows = [
+  'VVVVVVVVVVVVVVVVVVVV', // y0
+  'VGGGGGGGGGGGGGGGGGGV', // y1
+  'VGGVVGGGGGGGGVVGGGGV', // y2
+  'VGGVVGGGVVGGGVVGGGGV', // y3
+  'VGGGGGGGVVGGGGGGGGGV', // y4
+  'VGVVGGGGGGGGVVGGGGGV', // y5
+  'VGVVGGVVGGGGVVGGVVGV', // y6
+  'VGGGGGVVGGGGGGGGVVGV', // y7
+  'VGGGGGGGGGVVGGGGGGGV', // y8
+  'VGVVGGGGGGVVGGGVVGGV', // y9
+  'VGGGGGGGGGGGGGGGGGGV', // y10
+  'VGGVVGGGVVGGGGVVGGGV', // y11
+  'VGGGGGGGGGGGGGGGGGGV', // y12
+  'VVVVVVVVVVGVVVVVVVVV', // y13 (hatch at x10)
+];
+
+// Foundry Gallery B-2: the casting line, below the boss chamber.
+const mine2Rows = [
+  'W'.repeat(24),             // y0
+  'W'.repeat(24),             // y1
+  'W' + 'ddddd' + 'W'.repeat(18),          // y2 (entrance corridor, portal at x1)
+  'WWWWW' + 'd' + 'W'.repeat(18),          // y3
+  'WW' + 'd'.repeat(18) + 'WWWW',          // y4
+  'WW' + 'd'.repeat(20) + 'WW',            // y5
+  'WWddWWWWWWddWWWWWWWWddWW',              // y6
+  'WW' + 'd'.repeat(20) + 'WW',            // y7
+  'WWddWWWWddddWWWWWWWWddWW',              // y8
+  'WW' + 'd'.repeat(20) + 'WW',            // y9
+  'WWWWWWddddddWWWWWWddddWW',              // y10
+  'WW' + 'd'.repeat(20) + 'WW',            // y11
+  'WW' + 'd'.repeat(18) + 'WWWW',          // y12
+  'W'.repeat(24),             // y13
+];
+
+// The Harroways': Pip and Mara's habitat.
+const homeRows = [
+  'wwwwwwwwwwwwww', // y0
+  'wffffffffffffw', // y1
+  'wffffffffffffw', // y2
+  'wfffccccccfffw', // y3
+  'wfffccccccfffw', // y4
+  'wfffccccccfffw', // y5
+  'wffffffffffffw', // y6
+  'wffffffffffffw', // y7
+  'wffffffffffffw', // y8
+  'wwwwwwoowwwwww', // y9
+];
+
 export const MAPS = {
   overworld: {
     id: 'overworld',
@@ -99,6 +150,8 @@ export const MAPS = {
     portals: [
       { x: 30, y: 4, to: 'cave', tx: 12, ty: 15 },   // cave mouth
       { x: 34, y: 19, to: 'house', tx: 6, ty: 8 },   // elder's doormat
+      { x: 41, y: 19, to: 'home', tx: 6, ty: 8 },    // Harroways' doormat
+      { x: 14, y: 3, to: 'biodome', tx: 10, ty: 12 }, // Eden Shelf hatch
     ],
     deco: [
       { type: 'lamp', x: 33, y: 22 }, { type: 'lamp', x: 40, y: 26 },
@@ -114,7 +167,7 @@ export const MAPS = {
       { kind: 'sign', id: 'forestSign', x: 8, y: 13, text: ['Bio-dome overgrowth. KEEP OUT.', 'They say something glints deep in the maze.'] },
       { kind: 'npc', id: 'merchant', x: 39, y: 23, sprite: 'merchant', name: 'MARO-7' },
       { kind: 'npc', id: 'fisherman', x: 24, y: 26, sprite: 'fisherman', name: 'Old Finn' },
-      { kind: 'npc', id: 'villager', x: 37, y: 27, sprite: 'villager', name: 'Pip' },
+      { kind: 'npc', id: 'villager', x: 37, y: 27, sprite: 'villager', name: 'Pip Harroway' },
       { kind: 'enemy', id: 'sl1', x: 10, y: 14, type: 'slime' },
       { kind: 'enemy', id: 'sl2', x: 26, y: 13, type: 'slime' },
       { kind: 'enemy', id: 'sl3', x: 21, y: 21, type: 'slime' },
@@ -138,6 +191,72 @@ export const MAPS = {
       { kind: 'chest', id: 'houseCoins', x: 2, y: 1, loot: { coins: 5 } },
     ],
   },
+  biodome: {
+    id: 'biodome',
+    rows: biodomeRows,
+    decor: [],
+    dark: false,
+    portals: [
+      { x: 10, y: 13, to: 'overworld', tx: 14, ty: 4 },
+    ],
+    deco: [
+      { type: 'vat', x: 5, y: 2 }, { type: 'vat', x: 7, y: 3 },
+      { type: 'vat', x: 14, y: 9 }, { type: 'rack', x: 2, y: 1 },
+      { type: 'lamp', x: 11, y: 6 },
+    ],
+    entities: [
+      { kind: 'npc', id: 'keeper', x: 16, y: 1, sprite: 'keeper', name: 'Keeper Ivy' },
+      { kind: 'terminal', id: 'logA', x: 3, y: 1 },
+      { kind: 'item', id: 'petdrone', x: 18, y: 11 },
+      { kind: 'chest', id: 'domeCoins', x: 18, y: 2, loot: { coins: 7 } },
+      { kind: 'sign', id: 'domeSign', x: 9, y: 12, text: ['EDEN SHELF — AGRONOMY SECTION.', 'Authorized staff only. The garden does not know that anymore.'] },
+      { kind: 'enemy', id: 'dsl1', x: 5, y: 8, type: 'slime' },
+      { kind: 'enemy', id: 'dsl2', x: 13, y: 10, type: 'slime' },
+      { kind: 'enemy', id: 'ddr1', x: 7, y: 5, type: 'bat' },
+    ],
+  },
+  mine2: {
+    id: 'mine2',
+    rows: mine2Rows,
+    decor: [],
+    dark: true,
+    portals: [
+      { x: 1, y: 2, to: 'cave', tx: 22, ty: 2 },
+    ],
+    deco: [
+      { type: 'rack', x: 4, y: 4 }, { type: 'rack', x: 18, y: 4 },
+      { type: 'vat', x: 12, y: 7 },
+    ],
+    entities: [
+      { kind: 'terminal', id: 'logB', x: 19, y: 5 },
+      { kind: 'chest', id: 'filterChest', x: 3, y: 11, loot: { item: 'filter' } },
+      { kind: 'chest', id: 'foundryCoins', x: 20, y: 11, loot: { coins: 12 } },
+      { kind: 'sign', id: 'foundrySign', x: 6, y: 4, text: ['FOUNDRY GALLERY B-2 — CASTING LINE.', 'Cells shipped: 44,801. Last shift never clocked out.'] },
+      { kind: 'enemy', id: 'mdr1', x: 8, y: 7, type: 'bat' },
+      { kind: 'enemy', id: 'mdr2', x: 15, y: 9, type: 'bat' },
+      { kind: 'enemy', id: 'mdr3', x: 18, y: 11, type: 'bat' },
+      { kind: 'enemy', id: 'msl1', x: 6, y: 9, type: 'slime' },
+      { kind: 'enemy', id: 'msl2', x: 12, y: 11, type: 'slime' },
+    ],
+  },
+  home: {
+    id: 'home',
+    rows: homeRows,
+    decor: [],
+    dark: false,
+    portals: [
+      { x: 6, y: 9, to: 'overworld', tx: 41, ty: 20 },
+      { x: 7, y: 9, to: 'overworld', tx: 41, ty: 20 },
+    ],
+    deco: [
+      { type: 'rack', x: 11, y: 1 },
+    ],
+    entities: [
+      { kind: 'npc', id: 'mara', x: 4, y: 3, sprite: 'settler', name: 'Mara Harroway' },
+      { kind: 'terminal', id: 'logC', x: 10, y: 1 },
+      { kind: 'chest', id: 'homeCoins', x: 2, y: 1, loot: { coins: 6 } },
+    ],
+  },
   cave: {
     id: 'cave',
     rows: caveRows,
@@ -145,6 +264,7 @@ export const MAPS = {
     dark: true,
     portals: [
       { x: 12, y: 16, to: 'overworld', tx: 30, ty: 5 },
+      { x: 23, y: 2, to: 'mine2', tx: 2, ty: 2 },
     ],
     entities: [
       { kind: 'lockedDoor', id: 'caveDoor', x: 12, y: 9 },

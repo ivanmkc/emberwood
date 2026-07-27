@@ -51,7 +51,9 @@ PANEL = {
     'plate': 'worn dark-teal metal plaza floor plating with small corner rivets and faint scuffs',
     'walkway': 'an industrial metal walkway deck segment with horizontal tread-grip ridges',
     'floorpanel': 'a clean light-grey composite habitat floor panel with subtle wear',
+    'domefloor': 'an aged white research-dome floor panel with hairline cracks, faint moss in the joint lines and a subtle teal stain',
 }
+ORGANIC.add('overgrowth')
 
 TILES = {
     'ground': 'subtle packed dry earth, fine even grain, muted warm grey-brown, very low contrast, tiny sparse specks only — no pebble clusters, no moss patches, no large features',
@@ -63,6 +65,8 @@ TILES = {
     'minefloor': 'dark rocky mine floor with grit, small stones and faint tool marks',
     'minewall': 'solid mass of dark rough rock lumps, uniform dense stone field, no plants, no structures, no branches, nearly black crevices between grey-brown stone lumps',
     'floorpanel': 'clean habitat interior floor made of light grey composite panels with thin seam lines and subtle wear',
+    'overgrowth': 'dense alien foliage carpet viewed from directly above: many small teal-green leaves and thin vine strands, evenly distributed, uniform texture with no large features, dark shadow gaps between leaves',
+    'domefloor': None,  # PANEL entry below
     'wallpanel': 'habitat interior wall panelling with vertical corrugated metal ribs and occasional small vents, muted warm grey',
     'carpet': 'CHUNKY PIXEL ART (big visible square pixels, like a 32x32 game tile scaled up): dark red utility floor matting with a subtle repeating geometric weave pattern and thin gold accent lines',
 }
