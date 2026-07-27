@@ -267,3 +267,13 @@ zero console errors. Next session: (1) rerun fix_door_mouths verification per fa
 painted door boxes may not match carved mouths), (2) walker: longer taps + always-replan,
 (3) verify_rooms.py judge sweep all 25 + fix, (4) board refresh done (sections 24-25),
 (5) then NPCs/quests in new rooms + wave 3 (Ivan: keep expanding, ~5h left of the 8h).
+
+## Audit fixes landed (engine audit report, 2026-07-28)
+- Occlusion: fg cutouts now IN the y-sorted drawables (sortY=baseY/DS) — NPCs/enemies in
+  front of structures no longer get overdrawn (was player-feet-only post-pass).
+- Stale legacy exit: g.roomExit = null unconditionally in the plate branch.
+- assets.js: instances.json/hotspots fetches now parallel (were 25 serial round-trips).
+- DEFERRED (next session, from audit): lazy per-room asset loading + LRU (~150-200MB decoded
+  at boot with 25 rooms; race already mitigated by buildProps retry), enemies render 1x in
+  plate rooms (no plate-room enemies yet), moveBoss 5-point sampling tunnelable through
+  <=18px pillars (no plate bosses yet), exit-rect-overlaps-walkable gate in gen_rooms_index.

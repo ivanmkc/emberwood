@@ -7,6 +7,7 @@ import { PLATE_ROOM_NAMES } from './rooms/index.js';
 
 async function jobsRooms(art, base, loadImg) {
   const names = [...new Set(['anchorroom', ...PLATE_ROOM_NAMES])];
+  const dataJobs = [];
   for (const name of names) {
     loadImg(`rooms/${name}.jpg`).then((img) => { art.rooms[name] = img; });
     loadImg(`rooms/${name}.collision.png`).then((img) => { art.roomMasks[name] = img; });
@@ -14,6 +15,7 @@ async function jobsRooms(art, base, loadImg) {
     fetch(`${base}rooms/${name}.hotspots.json`).then(async (r) => {
       if (r.ok) art.roomHotspots[name] = await r.json();
     }).catch(() => {});
+    dataJobs.push((async () => {
     try {
       const res = await fetch(`${base}rooms/${name}.instances.json`);
       if (res.ok) {
@@ -24,6 +26,7 @@ async function jobsRooms(art, base, loadImg) {
         }
       }
     } catch { /* room data optional */ }
+    })());
   }
 }
 

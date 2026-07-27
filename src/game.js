@@ -210,6 +210,7 @@ export function createGame(canvas, input, art) {
     if (g.map.plate) { // plate rooms: scenery is painted, not synthesized
       g.solidProps = [];
       g.maskWalk = null;
+      g.roomExit = null;
       g.fgCuts = [];
       const maskImg = art.roomMasks && art.roomMasks[g.mapId];
       const data = art.roomData && art.roomData[g.mapId];
@@ -1094,6 +1095,11 @@ export function createGame(canvas, input, art) {
       drawables.push({ sortY: pr.baseY, prop: pr });
     }
     drawables.push({ sortY: g.player.y + 16, player: true });
+    if (plateImg && g.fgCuts) {
+      for (const f of g.fgCuts) {
+        if (f.image) drawables.push({ sortY: f.baseY / DS + 1, cut: f });
+      }
+    }
     drawables.sort((a, b) => a.sortY - b.sortY);
 
     // ground shadows first so no sprite draws under another's shadow
@@ -1102,7 +1108,7 @@ export function createGame(canvas, input, art) {
       else if (d.prop) {
         if (d.prop.type === 'tree') shadowEllipse(d.prop.x - cx, d.prop.baseY - 1.5 - cy, 10);
         else if (['rock', 'lamp', 'bush', 'crates', 'pipe', 'mast', 'wallchunk', 'stall', 'vat', 'rack'].includes(d.prop.type)) shadowEllipse(d.prop.x - cx, d.prop.baseY - 1 - cy, 7);
-      } else if (d.e.kind === 'enemy' || d.e.kind === 'npc' || d.e.kind === 'chest' || d.e.kind === 'beacon') {
+      } else if (d.e && (d.e.kind === 'enemy' || d.e.kind === 'npc' || d.e.kind === 'chest' || d.e.kind === 'beacon')) {
         const sz = d.e.kind === 'enemy' ? d.e.def.size : 16;
         shadowEllipse(d.e.x + sz / 2 - cx, d.e.y + sz - 0.5 - cy, sz * 0.42);
       }
@@ -1110,19 +1116,8 @@ export function createGame(canvas, input, art) {
     for (const d of drawables) {
       if (d.player) drawPlayer();
       else if (d.prop) drawProp(d.prop);
+      else if (d.cut) drawArt(d.cut.image, Math.round(d.cut.x / DS - cx), Math.round(d.cut.y / DS - cy));
       else drawEntity(d.e);
-    }
-
-    // plate rooms: pixel-level occlusion — each segmented instance cutout
-    // redraws over the player when its base line is south of the feet
-    if (plateImg && g.fgCuts && g.fgCuts.length) {
-      const feetY = g.player.y + 15;
-      for (const f of g.fgCuts) {
-        if (!f.image) continue;
-        if (f.baseY / DS > feetY) {
-          drawArt(f.image, Math.round(f.x / DS - cx), Math.round(f.y / DS - cy));
-        }
-      }
     }
     // emissive pulse: the plate's neon and core breathe
     if (plateImg && art.roomEmissive && art.roomEmissive[g.mapId]) {
