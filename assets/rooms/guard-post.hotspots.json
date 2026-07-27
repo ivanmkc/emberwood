@@ -12,7 +12,15 @@
    "cramped pocket of surveillance tucked away",
    "from the main corridors. The concrete walls",
    "and functional furniture speak to its"
-  ]
+  ],
+  "grant": {
+   "flag": "hasGatePass",
+   "msg": [
+    "Among the notices: a STAMPED TRAVEL",
+    "PERMIT with your name pencilled in.",
+    "(Gate Pass acquired)"
+   ]
+  }
  },
  {
   "box": [

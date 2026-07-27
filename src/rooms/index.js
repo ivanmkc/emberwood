@@ -55,7 +55,15 @@ export const PLATE_ROOMS = {
      430,
      468,
      447
-    ]
+    ],
+    "lock": {
+     "flag": "hasScopeInvite",
+     "msg": [
+      "The stair to the observatory is",
+      "chained. A sign: 'viewings by",
+      "invitation of the astronomer.'"
+     ]
+    }
    },
    {
     "edge": "w",
@@ -314,7 +322,16 @@ export const PLATE_ROOMS = {
      58,
      640,
      407
-    ]
+    ],
+    "lock": {
+     "flag": "hasGatePass",
+     "msg": [
+      "The gate sentry light blinks red.",
+      "'Travel permit required for the",
+      "outlands.' The guard post might",
+      "help."
+     ]
+    }
    },
    {
     "edge": "door",
@@ -954,7 +971,15 @@ export const PLATE_ROOMS = {
      234,
      18,
      321
-    ]
+    ],
+    "lock": {
+     "flag": "hasPlantAccess",
+     "msg": [
+      "A blast shutter bars the way east.",
+      "Stencilled: 'REACTOR HALL \u2014 transit",
+      "authority clearance only.'"
+     ]
+    }
    },
    {
     "edge": "n",
@@ -990,7 +1015,15 @@ export const PLATE_ROOMS = {
      430,
      613,
      447
-    ]
+    ],
+    "lock": {
+     "flag": "hasMaintKey",
+     "msg": [
+      "The pump station hatch is sealed.",
+      "A maintenance tag reads: 'key held",
+      "at the repair bay office.'"
+     ]
+    }
    }
   ]
  },

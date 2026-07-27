@@ -12,7 +12,15 @@
    "parts, tools, and scribbled blueprints. The",
    "air smells of ozone, old oil, and stale",
    "coffee."
-  ]
+  ],
+  "grant": {
+   "flag": "hasMaintKey",
+   "msg": [
+    "Hanging behind the bins: a heavy",
+    "brass MAINTENANCE KEY.",
+    "(Maintenance Key acquired)"
+   ]
+  }
  },
  {
   "box": [

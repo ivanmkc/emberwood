@@ -11,7 +11,15 @@
    "A dimly lit, concrete-heavy waiting area. The",
    "glow of old technology and a space heater",
    "provide the only comfort against the chill."
-  ]
+  ],
+  "grant": {
+   "flag": "hasPlantAccess",
+   "msg": [
+    "In the lost-and-found: a laminated",
+    "TRANSIT AUTHORITY BADGE, still valid.",
+    "(Plant Access acquired)"
+   ]
+  }
  },
  {
   "box": [

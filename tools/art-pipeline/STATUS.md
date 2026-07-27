@@ -300,3 +300,16 @@ DESIGN (decided): gated exploration via lockable exits + flag-granting interacti
 - Drives: matrix2 must learn locks (expect blocked-then-message without flag; set flag via
   __ew.quest.flags and re-cross). Add exploration journal check.
 STATE: engine lock+grant+visited implementation IN PROGRESS this run; content wiring next.
+
+## Run 19 SHIPPED: exploration locks live
+- Engine: lockable exits (lock {flag,msg}, blocked->dialogue->nudge-back, 2s re-warn
+  cooldown), grant hotspots (one-shot flag + message + save), visited-rooms tracking,
+  lazy hotspot read (art registry at interact time — fixes async-load race).
+- Content: 4 locks (gate pass / maintenance key / transit badge / astronomer invite)
+  gate 7 rooms (outskirts+salvage-shed, pump-station, power-plant+control-room,
+  observatory+dome); 18 open-world. gen_rooms_index bakes locks + asserts every grant
+  room reachable WITHOUT its flag (no-orphan invariant).
+- Live drive (job tmp drive_locks.mjs): blocked+message PASS, unlocked crossing PASS,
+  hotspot grant PASS, 0 pageerrors. 26/26 unit tests.
+- NEXT: visited-% journal UI polish, matrix2 lock-awareness, remaining door-mouth fixes
+  (persistent list above), NPCs/quests referencing the permits, wave-3 expansion.

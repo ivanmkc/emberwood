@@ -12,7 +12,16 @@
    "hot metal. The warm glow of the burners and",
    "string lights fights a losing battle against",
    "the industrial grey of the walls."
-  ]
+  ],
+  "grant": {
+   "flag": "hasScopeInvite",
+   "msg": [
+    "Tucked under a bowl: a handwritten",
+    "INVITATION \u2014 'come see the sky.",
+    "\u2014 the astronomer.'",
+    "(Scope Invite acquired)"
+   ]
+  }
  },
  {
   "box": [

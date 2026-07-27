@@ -289,6 +289,8 @@ export function createGame(canvas, input, art) {
   }
 
   function loadMap(id, tx, ty) {
+    g.quest.visited = g.quest.visited || {};
+    g.quest.visited[arguments[0]] = true;
     g.mapId = id;
     g.map = MAPS[id];
     g.grid = buildGrid(g.map);
@@ -475,8 +477,10 @@ export function createGame(canvas, input, art) {
       if (p.x >= e.x && p.x < e.x + 16 && p.y >= e.y && p.y < e.y + 16) return e;
     }
     // plate-room hotspots: examine painted scenery; smallest box wins
+    // (read from art registry lazily — the JSON may land after room entry)
+    const hspots = (g.map && g.map.plate && art.roomHotspots && art.roomHotspots[g.mapId]) || g.hotspots || [];
     let best = null;
-    for (const h of g.hotspots || []) {
+    for (const h of hspots) {
       const [x0, y0, x1, y1] = h.box;
       if (p.x >= x0 - 5 && p.x <= x1 + 5 && p.y >= y0 - 5 && p.y <= y1 + 5) {
         const area = (x1 - x0) * (y1 - y0);
@@ -494,7 +498,14 @@ export function createGame(canvas, input, art) {
       e.face = Math.abs(ddx) > Math.abs(ddy) ? (ddx < 0 ? 'left' : 'right') : (ddy < 0 ? 'up' : 'down');
       openDialogue(npcDialogue(e.id, g.quest));
     } else if (e.kind === 'hotspot') {
-      openDialogue({ lines: [`[ ${e.name} ]`, ...e.text] });
+      if (e.grant && !g.quest.flags[e.grant.flag]) {
+        g.quest.flags[e.grant.flag] = true;
+        openDialogue({ lines: [`[ ${e.name} ]`, ...e.text, '', ...e.grant.msg] });
+        sfx.open();
+        save();
+      } else {
+        openDialogue({ lines: [`[ ${e.name} ]`, ...e.text] });
+      }
     } else if (e.kind === 'sign') {
       openDialogue({ lines: e.text });
     } else if (e.kind === 'beacon') {
@@ -827,6 +838,18 @@ export function createGame(canvas, input, art) {
       const [ex0, ey0, ex1, ey1] = ex.rect;
       const fx = p.x + 8, fy = p.y + 15;
       if (fx >= ex0 && fx <= ex1 && fy >= ey0 && fy <= ey1) {
+        if (ex.lock && !g.quest.flags[ex.lock.flag]) {
+          if (!ex._warned) {
+            ex._warned = true;
+            openDialogue({ lines: ex.lock.msg }, () => { setTimeout(() => { ex._warned = false; }, 2000); });
+            // nudge the player back out of the trigger so it doesn't re-fire
+            if (ex.edge === 'n' || ex.edge === 'door') p.y += 10;
+            if (ex.edge === 's') p.y -= 10;
+            if (ex.edge === 'w') p.x += 10;
+            if (ex.edge === 'e') p.x -= 10;
+          }
+          continue;
+        }
         // seamless stitch: keep the cross-axis position through the door,
         // clamped into the paired strip of the target room
         const keepX = p.x, keepY = p.y;

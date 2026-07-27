@@ -164,5 +164,77 @@
       "brief": "the interior of a scrap-built shed: walls of corrugated panels, shelves of salvaged parts sorted in cans, a generator with a pull cord, a hammock, a heat lamp, tools hanging from wire hooks, a small window showing dusty scrubland, a doorway opening at the bottom edge of the frame",
       "parent": "outskirts"
     }
-  }
+  },
+  "locks": [
+    {
+      "room": "gate-wall",
+      "edge": "w",
+      "flag": "hasGatePass",
+      "msg": [
+        "The gate sentry light blinks red.",
+        "'Travel permit required for the",
+        "outlands.' The guard post might",
+        "help."
+      ],
+      "grant_room": "guard-post",
+      "grant_hotspot": 0,
+      "grant_msg": [
+        "Among the notices: a STAMPED TRAVEL",
+        "PERMIT with your name pencilled in.",
+        "(Gate Pass acquired)"
+      ]
+    },
+    {
+      "room": "underworks",
+      "edge": "door",
+      "flag": "hasMaintKey",
+      "msg": [
+        "The pump station hatch is sealed.",
+        "A maintenance tag reads: 'key held",
+        "at the repair bay office.'"
+      ],
+      "grant_room": "repair-office",
+      "grant_hotspot": 0,
+      "grant_msg": [
+        "Hanging behind the bins: a heavy",
+        "brass MAINTENANCE KEY.",
+        "(Maintenance Key acquired)"
+      ]
+    },
+    {
+      "room": "underworks",
+      "edge": "e",
+      "flag": "hasPlantAccess",
+      "msg": [
+        "A blast shutter bars the way east.",
+        "Stencilled: 'REACTOR HALL \u2014 transit",
+        "authority clearance only.'"
+      ],
+      "grant_room": "transit-office",
+      "grant_hotspot": 0,
+      "grant_msg": [
+        "In the lost-and-found: a laminated",
+        "TRANSIT AUTHORITY BADGE, still valid.",
+        "(Plant Access acquired)"
+      ]
+    },
+    {
+      "room": "rooftops",
+      "edge": "n",
+      "flag": "hasScopeInvite",
+      "msg": [
+        "The stair to the observatory is",
+        "chained. A sign: 'viewings by",
+        "invitation of the astronomer.'"
+      ],
+      "grant_room": "noodle-bar",
+      "grant_hotspot": 0,
+      "grant_msg": [
+        "Tucked under a bowl: a handwritten",
+        "INVITATION \u2014 'come see the sky.",
+        "\u2014 the astronomer.'",
+        "(Scope Invite acquired)"
+      ]
+    }
+  ]
 }
