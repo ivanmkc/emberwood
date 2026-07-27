@@ -1,5 +1,13 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## SOURCE-RES SEGMENTATION + ON-SOURCE BOARD VIZ 2026-07-27 (eleventh run)
+Masks now computed at native source res (GrabCut on 2400x1792; outputs
+downsampled to device 1280x896; coords scaled). Debug-mask artifact removed.
+Board section 18 replaced with on-source renders (instances/collision/depth/
+emissive tinted over the actual image). Source-space masks cached in
+_srcmasks_*.npz for viz. Known: teal water mask over-matches glow pools
+(safe over-block; refine = largest-components only).
+
 ## PIXEL-LEVEL SEGMENTATION SHIPPED 2026-07-27 (tenth run)
 Mask stack (segment_room.py): instance map (Gemini boxes -> GrabCut pixel
 masks; box-fill fallback when glow defeats GrabCut; 2-call union de-flake) +
