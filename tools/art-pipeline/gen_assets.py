@@ -28,23 +28,50 @@ RAW_DIR = os.path.join(ROOT, 'docs', 'art-options', 'assets', 'raw')
 OUT_DIR = os.path.join(ROOT, 'docs', 'art-options', 'assets')
 
 KEY_BG = 'flat solid pure magenta (#FF00FF) background'
+
+# Verified against official Eastward screenshots (eastwardgame.com/media):
+# the perspective is straight-on 3/4 top-down, NEVER rotated or isometric.
+PERSPECTIVE = (
+    'CRITICAL PERSPECTIVE RULES (classic JRPG 3/4 top-down, exactly like the '
+    'reference): the object is drawn FRONT-ON with its facade parallel to the '
+    'bottom edge of the frame. NO rotation, NO isometric angle, NO vanishing '
+    'points, NO visible side walls. Vertical surfaces face the camera '
+    'directly; horizontal top surfaces tilt slightly toward the viewer. '
+)
+
 BASE_PROMPT = (
     'Using EXACTLY the pixel-art style, palette, lighting and level of detail '
     'of the reference image (dense modern pixel art, dusk teal shadows, warm '
-    'highlights): generate ONE single isolated game asset — {desc} — centered '
-    'on a {bg}, filling most of the frame. Top-down oblique 3/4 RPG '
-    'perspective as in the reference. No ground, no shadow cast on the '
-    'background, no other objects, no text, no border.'
+    'neon highlights): generate ONE single isolated game asset — {desc} — '
+    'centered on a {bg}, filling most of the frame. ' + PERSPECTIVE +
+    'No ground, no shadow cast on the background, no other objects, no text, '
+    'no border.'
 )
 
-# name -> (description, target_height_px)
-ASSETS = {
-    'tree': ('a leafy deciduous tree with a visible trunk, canopy lit from the upper left', 96),
-    'rock': ('a single mossy grey boulder', 32),
-    'chest': ('a closed wooden treasure chest with gold trim, front face visible', 32),
-    'beacon': ('a round stone beacon brazier with a bright orange flame burning in its bowl', 48),
-    'lamp': ('STRICTLY ONE OBJECT: a single tall thin wrought-iron street lamp post with one glowing lantern at its top. Nothing else in the image — no ground, no scene, no village, no fire pit; every pixel that is not the lamp post itself must be flat magenta', 64),
-    'house': ('a two-story timber-frame cottage with a steep shingled roof, warm glowing windows and a wooden door, front facade and roof visible', 160),
+# theme -> anchor image + assets: name -> (description, target_height_px)
+THEMES = {
+    'fantasy': {
+        'anchor': 'nbp-eastward-village.png',
+        'assets': {
+            'tree': ('a leafy deciduous tree with a visible trunk, canopy lit from the upper left', 96),
+            'rock': ('a single mossy grey boulder', 32),
+            'chest': ('a closed wooden treasure chest with gold trim, front face visible', 32),
+            'beacon': ('a round stone beacon brazier with a bright orange flame burning in its bowl', 48),
+            'lamp': ('STRICTLY ONE OBJECT: a single tall thin wrought-iron street lamp post with one glowing lantern at its top. Nothing else in the image; every pixel that is not the lamp post itself must be flat magenta', 64),
+            'house': ('a two-story timber-frame cottage with a steep shingled roof, warm glowing windows and a wooden door, front facade and roof visible', 160),
+        },
+    },
+    'scifi': {
+        'anchor': 'nbp-scifi-anchor.png',
+        'assets': {
+            'tree': ('STRICTLY ONE OBJECT: a bio-engineered tree growing from a hydroponic ring collar, canopy with a faint teal glow, small maintenance lights on the collar', 96),
+            'rock': ('STRICTLY ONE OBJECT: a single free-standing boulder-shaped chunk of collapsed concrete with bent rebar sticking out and faded hazard-stripe paint. It must be one rounded lump with a clear outline silhouette against the magenta — NOT a tile, NOT a flat ground patch, NOT a texture square', 32),
+            'chest': ('STRICTLY ONE OBJECT: a closed armored supply crate with a glowing orange latch and worn hazard stripes, front face visible', 32),
+            'beacon': ('STRICTLY ONE OBJECT: a signal-beacon pylon — a squat armored base cradling a bright orange energy core. No cables. The glow must stay INSIDE the object silhouette: no halo, no light spill, no gradient on the background — the magenta background stays perfectly flat and pure everywhere', 48),
+            'lamp': ('STRICTLY ONE OBJECT: a single tall thin metal street-light pole with one glowing cyan-white neon tube at its top. Nothing else; every pixel that is not the pole must be flat magenta', 64),
+            'house': ('STRICTLY ONE OBJECT: a compact two-story modular habitat block drawn as a FLAT FRONT ELEVATION, like a stage-set flat facing the audience straight on — the bottom edge of the wall perfectly horizontal, ONLY the front face visible plus a narrow strip of solar-panel roof tilted toward the viewer above the facade. ABSOLUTELY NO corner view, NO second visible face, NO diagonal wall edges, NO isometric rotation. Corrugated metal walls, warm glowing windows, a sliding metal door with a small neon sign above it, antennas on the roof strip', 160),
+        },
+    },
 }
 
 
@@ -107,13 +134,23 @@ def process(name, desc, target_h, client, anchor):
 
 
 def main():
+    args = sys.argv[1:]
+    theme = 'fantasy'
+    if args and args[0] == '--theme':
+        theme = args[1]
+        args = args[2:]
+    cfg = THEMES[theme]
+    global RAW_DIR, OUT_DIR
+    if theme != 'fantasy':
+        RAW_DIR = os.path.join(ROOT, 'docs', 'art-options', f'assets-{theme}', 'raw')
+        OUT_DIR = os.path.join(ROOT, 'docs', 'art-options', f'assets-{theme}')
     os.makedirs(RAW_DIR, exist_ok=True)
     client = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
-    anchor = Image.open(ANCHOR)
+    anchor = Image.open(os.path.join(ROOT, 'docs', 'art-options', cfg['anchor']))
     anchor.thumbnail((1024, 1024))
-    names = sys.argv[1:] or list(ASSETS)
+    names = args or list(cfg['assets'])
     for name in names:
-        desc, target_h = ASSETS[name]
+        desc, target_h = cfg['assets'][name]
         process(name, desc, target_h, client, anchor)
 
 
