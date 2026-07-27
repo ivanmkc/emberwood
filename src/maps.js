@@ -164,6 +164,7 @@ export const MAPS = {
       { kind: 'sparkle', id: 'ring', x: 17, y: 27 },
       { kind: 'beacon', id: 'beacon', x: 38, y: 25 },
       { kind: 'sign', id: 'beaconSign', x: 36, y: 25, text: ['Signal Beacon of Emberwood.', 'Dark since its Ember Cells were scattered...'] },
+      { kind: 'charter', id: 'charter', x: 36, y: 23 },
       { kind: 'sign', id: 'forestSign', x: 8, y: 13, text: ['Bio-dome overgrowth. KEEP OUT.', 'They say something glints deep in the maze.'] },
       { kind: 'npc', id: 'merchant', x: 39, y: 23, sprite: 'merchant', name: 'MARO-7' },
       { kind: 'npc', id: 'fisherman', x: 24, y: 26, sprite: 'fisherman', name: 'Old Finn' },

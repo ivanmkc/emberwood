@@ -6,7 +6,7 @@ import { TILES } from '../src/tiles.js';
 import { HEART_PRICE } from '../src/quest.js';
 
 const walk = (ch) => TILES[ch] && !TILES[ch].solid;
-const SOLID = new Set(['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal']);
+const SOLID = new Set(['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal', 'charter']);
 
 function bfsDist(map, from, to, doorPasses = true) {
   const grid = buildGrid(map);

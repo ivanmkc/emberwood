@@ -4,6 +4,7 @@ import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, terminalText, itemPickup,
   INTRO_LINES, HEART_PRICE, questJournal,
+  BASE_PROJECTS, projectStatus, buyProject, rankFor, grantXp,
 } from '../src/quest.js';
 
 function talk(state, id) {
@@ -137,7 +138,8 @@ test('intro transmission exists and mentions the beacon', () => {
 test('quest journal tracks every quest through its states', () => {
   const s = newQuestState();
   let j = Object.fromEntries(questJournal(s));
-  assert.equal(Object.keys(j).length, 5, 'journal lists main + 4 side quests');
+  assert.equal(Object.keys(j).length, 6, 'journal lists rank + main + 4 side quests');
+  assert.match(j['SALVAGE RANK — DRIFTER'], /xp 0 \/ 20/);
   assert.match(j['MAIN — REIGNITE THE BEACON'], /0 of 3/);
   assert.match(j['THE CANAL FILTER'], /locked/);
 
@@ -164,7 +166,46 @@ test('quest journal tracks every quest through its states', () => {
   s.flags.log3 = true;
   s.flags.logsDone = true;
   j = Object.fromEntries(questJournal(s));
-  for (const v of Object.values(j)) assert.match(v, /done\./);
+  for (const [k, v] of Object.entries(j)) {
+    if (k.startsWith('SALVAGE RANK')) continue;
+    assert.match(v, /done\./);
+  }
+});
+
+test('salvage ranks: thresholds, rank-up detection, Beacon-Keeper heart', () => {
+  const s = newQuestState();
+  assert.equal(rankFor(0), 0);
+  assert.equal(rankFor(19), 0);
+  assert.equal(rankFor(20), 1);
+  assert.equal(rankFor(119), 3);
+  assert.equal(rankFor(500), 4);
+  assert.equal(grantXp(s, 10), null, 'no rank-up at 10xp');
+  const up = grantXp(s, 12);
+  assert.equal(up.name, 'Scrapper');
+  s.xp = 118;
+  const bk = grantXp(s, 10);
+  assert.equal(bk.name, 'Beacon-Keeper');
+  assert.equal(s.maxHearts, 4, 'max rank grants +1 heart');
+  assert.equal(s.hearts, 4);
+});
+
+test('base projects: statuses, purchase, no double-build', () => {
+  const s = newQuestState();
+  const lamps = BASE_PROJECTS[0];
+  assert.equal(projectStatus(s, lamps), 'NEED SCRAP');
+  s.coins = 100;
+  assert.equal(projectStatus(s, lamps), 'AVAILABLE');
+  const built = buyProject(s, 'baseLamps');
+  assert.equal(built.id, 'baseLamps');
+  assert.equal(s.coins, 85);
+  assert.ok(s.flags.baseLamps);
+  assert.equal(s.xp, 8, 'building grants xp');
+  assert.equal(projectStatus(s, lamps), 'BUILT');
+  assert.equal(buyProject(s, 'baseLamps'), null, 'cannot build twice');
+  for (const id of ['baseGreenhouse', 'baseRelay', 'baseInfirmary']) buyProject(s, id);
+  assert.equal(s.coins, 0, 'all four projects cost exactly 100 scrap');
+  const total = BASE_PROJECTS.reduce((a, p) => a + p.cost, 0);
+  assert.equal(total, 100);
 });
 
 test('applyEffects clamps and accumulates', () => {

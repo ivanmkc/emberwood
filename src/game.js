@@ -9,6 +9,7 @@ import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, chestLootLines,
   terminalText, itemPickup, INTRO_LINES, questJournal,
+  BASE_PROJECTS, projectStatus, buyProject, rankFor, RANKS, grantXp,
 } from './quest.js';
 import { createMusic } from './music.js';
 
@@ -138,6 +139,9 @@ export function createGame(canvas, input, art) {
     winShown: false,
     hitStop: 0,
     shake: 0,
+    baseSel: 0,
+    baseNavT: 0,
+    regenT: 0,
   };
   const walkFrames = {}; // dir -> [frameA, frameB] synthesized leg-step canvases
 
@@ -238,6 +242,10 @@ export function createGame(canvas, input, art) {
     for (const d of g.map.deco || []) {
       g.props.push({ type: d.type, x: d.x * T + T / 2, baseY: (d.y + 1) * T });
     }
+    for (const [px2, py2, ty2] of g.lateProps || []) {
+      g.props.push({ type: ty2, x: px2 * T + T / 2, baseY: (py2 + 1) * T });
+    }
+    g.lateProps = null;
   }
 
   function loadMap(id, tx, ty) {
@@ -267,6 +275,26 @@ export function createGame(canvas, input, art) {
     if (id === 'overworld' && g.quest.flags.petReturned) {
       g.entities.push({ kind: 'pet', id: 'bolt', x: 36 * T, y: 27 * T, anim: 0 });
     }
+    // settlement restoration: built projects reshape the world
+    g.dynPortals = [];
+    if (id === 'overworld') {
+      const f = g.quest.flags;
+      if (f.baseLamps) {
+        g.lateProps = [[16, 26, 'lamp'], [7, 13, 'lamp'], [43, 28, 'lamp']];
+      }
+      if (f.baseGreenhouse) {
+        (g.lateProps = g.lateProps || []).push([42, 28, 'vat']);
+        if (g.quest.hearts < g.quest.maxHearts) {
+          g.drops.push({ type: 'heart', x: 42 * T, y: 29 * T });
+        }
+      }
+      if (f.baseRelay) {
+        g.dynPortals = [
+          { x: 40, y: 28, tx: 31, ty: 8 },
+          { x: 31, y: 7, tx: 40, ty: 27 },
+        ];
+      }
+    }
     buildProps();
     if (tx !== null && tx !== undefined) {
       g.player.x = tx * T;
@@ -283,7 +311,8 @@ export function createGame(canvas, input, art) {
 
   function entitySolid(e) {
     return e.kind === 'npc' || e.kind === 'chest' || e.kind === 'sign'
-      || e.kind === 'beacon' || e.kind === 'lockedDoor' || e.kind === 'terminal';
+      || e.kind === 'beacon' || e.kind === 'lockedDoor' || e.kind === 'terminal'
+      || e.kind === 'charter';
   }
 
   function rectBlocked(x, y, w, h, self) {
@@ -341,13 +370,23 @@ export function createGame(canvas, input, art) {
       lines = lines.map((l) => (l.startsWith(speaker + ': ') ? l.slice(speaker.length + 2) : l));
     }
     const pages = lines.map((l) => wrap(l));
+    if (result.effects) {
+      const r0 = rankFor(g.quest.xp || 0);
+      applyEffects(g.quest, result.effects);
+      const r1 = rankFor(g.quest.xp || 0);
+      if (r1 > r0) {
+        if (r1 === 4 && !g.quest.flags.bkHeart) {
+          g.quest.flags.bkHeart = true;
+          g.quest.maxHearts += 1;
+          g.quest.hearts = g.quest.maxHearts;
+        }
+        pages.push(wrap(`RANK UP — ${RANKS[r1].name.toUpperCase()}! ${RANKS[r1].perk}`));
+      }
+      save();
+    }
     g.dialogue = { pages, page: 0, chars: 0, speaker };
     g.mode = 'dialogue';
     g.afterDialogue = after || null;
-    if (result.effects) {
-      applyEffects(g.quest, result.effects);
-      save();
-    }
     sfx.talk();
   }
 
@@ -375,7 +414,7 @@ export function createGame(canvas, input, art) {
   function interactTarget() {
     const p = facingPoint();
     for (const e of g.entities) {
-      if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor', 'terminal'].includes(e.kind)) continue;
+      if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor', 'terminal', 'charter'].includes(e.kind)) continue;
       if (p.x >= e.x && p.x < e.x + 16 && p.y >= e.y && p.y < e.y + 16) return e;
     }
     return null;
@@ -408,6 +447,9 @@ export function createGame(canvas, input, art) {
           save();
         }
       });
+    } else if (e.kind === 'charter') {
+      g.mode = 'base';
+      g.baseSel = 0;
     } else if (e.kind === 'terminal') {
       openDialogue(terminalText(e.id, g.quest));
     } else if (e.kind === 'chest') {
@@ -433,7 +475,8 @@ export function createGame(canvas, input, art) {
 
   function attackHitbox() {
     const p = facingPoint();
-    return { x: p.x - 10, y: p.y - 10, w: 20, h: 20 };
+    const half = rankFor(g.quest.xp) >= 2 ? 13 : 10; // Engineer: long reach
+    return { x: p.x - half, y: p.y - half, w: half * 2, h: half * 2 };
   }
 
   function hurtPlayer(from) {
@@ -443,8 +486,9 @@ export function createGame(canvas, input, art) {
     g.hurtFlash = 0.6;
     g.shake = 0.3;
     const ang = Math.atan2(g.player.y - from.y, g.player.x - from.x);
-    g.player.kx = Math.cos(ang) * 130;
-    g.player.ky = Math.sin(ang) * 130;
+    const kb = rankFor(g.quest.xp) >= 3 ? 55 : 130; // Warden: bulwark
+    g.player.kx = Math.cos(ang) * kb;
+    g.player.ky = Math.sin(ang) * kb;
     sfx.hurt();
     burst(g.player.x + 8, g.player.y + 8, '#e64539', 6);
     if (g.quest.hearts <= 0) {
@@ -456,9 +500,12 @@ export function createGame(canvas, input, art) {
 
   function killEnemy(e) {
     g.quest.kills += 1;
+    const up = grantXp(g.quest, e.type === 'boss' ? 15 : 2);
+    if (up) openDialogue({ lines: [`RANK UP — ${up.name.toUpperCase()}! ${up.perk}`] });
     burst(e.x + e.def.size / 2, e.y + e.def.size / 2, '#f4f4f4', 10);
     const roll = Math.random();
-    if (roll < 0.5) g.drops.push({ type: 'coin', x: e.x + e.def.size / 2 - 8, y: e.y + e.def.size / 2 - 8 });
+    const dropChance = rankFor(g.quest.xp) >= 1 ? 0.62 : 0.5;
+    if (roll < dropChance) g.drops.push({ type: 'coin', x: e.x + e.def.size / 2 - 8, y: e.y + e.def.size / 2 - 8 });
     else if (roll < 0.75) g.drops.push({ type: 'heart', x: e.x + e.def.size / 2 - 8, y: e.y + e.def.size / 2 - 8 });
     if (e.type === 'boss') {
       g.quest.flags.bossDefeated = true;
@@ -496,6 +543,33 @@ export function createGame(canvas, input, art) {
     }
     if (g.mode === 'journal') {
       if (input.consumeJournal() || input.consumeAction()) g.mode = 'play';
+      return;
+    }
+    if (g.mode === 'base') {
+      g.baseNavT -= dt;
+      if (g.baseNavT <= 0) {
+        if (input.held.up) { g.baseSel = (g.baseSel + BASE_PROJECTS.length - 1) % BASE_PROJECTS.length; g.baseNavT = 0.18; sfx.talk(); }
+        else if (input.held.down) { g.baseSel = (g.baseSel + 1) % BASE_PROJECTS.length; g.baseNavT = 0.18; sfx.talk(); }
+      }
+      if (input.consumeJournal()) { g.mode = 'play'; return; }
+      if (input.consumeAction()) {
+        const proj = BASE_PROJECTS[g.baseSel];
+        const r0 = rankFor(g.quest.xp || 0);
+        const built = buyProject(g.quest, proj.id);
+        if (built) {
+          sfx.chest();
+          save();
+          if (built.id === 'baseLamps' || built.id === 'baseGreenhouse' || built.id === 'baseRelay') {
+            loadMap(g.mapId, null, null); // rebuild world with the new project
+          }
+          g.mode = 'play';
+          const pages = [built.built];
+          if (rankFor(g.quest.xp) > r0) pages.push(`RANK UP — ${RANKS[rankFor(g.quest.xp)].name.toUpperCase()}!`);
+          openDialogue({ lines: pages });
+        } else {
+          sfx.hurt();
+        }
+      }
       return;
     }
     if (g.mode === 'play' && input.consumeJournal()) {
@@ -543,6 +617,10 @@ export function createGame(canvas, input, art) {
     if (input.held.left) dx -= 1;
     if (input.held.right) dx += 1;
     p.moving = dx !== 0 || dy !== 0;
+    if (p.moving && rankFor(g.quest.xp) >= 4 && Math.random() < 0.15) {
+      g.particles.push({ x: p.x + 8, y: p.y + 15, vx: (Math.random() - 0.5) * 8, vy: -6,
+        life: 0.35, color: Math.random() < 0.5 ? '#ffb347' : '#e05a3a' });
+    }
     if (p.moving) {
       if (dy < 0) p.dir = 'up';
       if (dy > 0) p.dir = 'down';
@@ -666,13 +744,44 @@ export function createGame(canvas, input, art) {
 
     const ptx = Math.floor((p.x + 8) / T);
     const pty = Math.floor((p.y + 11) / T);
-    for (const portal of g.map.portals) {
+    let warped = false;
+    for (const portal of g.dynPortals || []) {
       if (portal.x === ptx && portal.y === pty) {
-        loadMap(portal.to, portal.tx, portal.ty);
-        music.setScene(portal.to);
+        burst(p.x + 8, p.y + 8, '#7de8e8', 12);
+        p.x = portal.tx * T;
+        p.y = portal.ty * T;
+        burst(p.x + 8, p.y + 8, '#7de8e8', 12);
+        sfx.open();
         save();
+        warped = true;
         break;
       }
+    }
+    if (!warped) {
+      for (const portal of g.map.portals) {
+        if (portal.x === ptx && portal.y === pty) {
+          loadMap(portal.to, portal.tx, portal.ty);
+          music.setScene(portal.to);
+          save();
+          break;
+        }
+      }
+    }
+
+    // Infirmary Wing: slow regen inside the settlement
+    if (g.quest.flags.baseInfirmary && g.quest.hearts < g.quest.maxHearts) {
+      const tileCh = g.grid[pty] && g.grid[pty][ptx];
+      const inSettlement = g.mapId === 'house' || g.mapId === 'home'
+        || (g.mapId === 'overworld' && (tileCh === 'p' || tileCh === 'o'));
+      if (inSettlement) {
+        g.regenT += dt;
+        if (g.regenT >= 5) {
+          g.regenT = 0;
+          g.quest.hearts += 1;
+          sfx.pickup();
+          burst(p.x + 8, p.y + 4, '#7dd6a8', 5);
+        }
+      } else g.regenT = 0;
     }
 
     if (g.quest.flags.beaconLit && g.mapId === 'overworld' && Math.random() < 0.3) {
@@ -765,6 +874,18 @@ export function createGame(canvas, input, art) {
           if (c) ctx.drawImage(c, lx, ly);
         }
         // decals over art tiles
+        if (g.dynPortals) {
+          for (const dp of g.dynPortals) {
+            if (dp.x === tx && dp.y === ty) {
+              const pu = 0.5 + 0.3 * Math.sin(g.time * 3);
+              ctx.strokeStyle = `rgba(125, 232, 232, ${pu})`;
+              ctx.lineWidth = 1;
+              ctx.strokeRect(lx + 2.5, ly + 2.5, 11, 11);
+              ctx.fillStyle = `rgba(125, 232, 232, ${pu * 0.5})`;
+              ctx.fillRect(lx + 6, ly + 6, 4, 4);
+            }
+          }
+        }
         if (ch === ',') drawLichen(lx, ly, tx, ty);
         else if (ch === 'o') drawPad(lx, ly);
         else if (ch === 'C') drawCaveMouth(lx, ly);
@@ -876,6 +997,36 @@ export function createGame(canvas, input, art) {
     if (g.mode === 'dead') drawDead();
     if (g.mode === 'win') drawWin();
     if (g.mode === 'journal') drawJournal();
+    if (g.mode === 'base') drawBase();
+  }
+
+  function drawBase() {
+    overlay(0.8);
+    plate(10, 10, VIEW_W - 20, VIEW_H - 26);
+    centerText('SETTLEMENT CHARTER', 17, '#ffb347', '10px PixelDisplay, monospace');
+    centerText(`scrap available: ${g.quest.coins}`, 30, '#f4e4b8', '6px PixelDisplay, monospace');
+    let y = 44;
+    BASE_PROJECTS.forEach((proj, i) => {
+      const st = projectStatus(g.quest, proj);
+      const sel = i === g.baseSel;
+      if (sel) {
+        ctx.fillStyle = 'rgba(74, 192, 192, 0.10)';
+        ctx.fillRect(16, y - 4, VIEW_W - 32, 40);
+        text('>', 20, y, '#ffb347', '8px PixelDisplay, monospace');
+      }
+      const cc = st === 'BUILT' ? '#7dd6a8' : st === 'AVAILABLE' ? '#ffb347' : '#6b7286';
+      text(proj.name, 32, y, sel ? '#ffffff' : '#4ac0c0', '7px PixelDisplay, monospace');
+      ctx.font = '6px PixelDisplay, monospace';
+      const label = st === 'BUILT' ? 'BUILT' : `${proj.cost} SCRAP`;
+      const lw2 = ctx.measureText(label).width;
+      text(label, VIEW_W - 30 - lw2, y, cc, '6px PixelDisplay, monospace');
+      const desc = st === 'BUILT' ? proj.built : proj.desc;
+      (desc.match(/.{1,54}( |$)/g) || [desc]).slice(0, 2).forEach((line, li) => {
+        text(line.trim(), 32, y + 11 + li * 9, st === 'BUILT' ? '#9a9aa2' : '#c5c9d4');
+      });
+      y += 44;
+    });
+    centerText('Up/Down: select    Space: fund    J: close', VIEW_H - 12, '#9a9aa2');
   }
 
   function drawJournal() {
@@ -1283,6 +1434,8 @@ export function createGame(canvas, input, art) {
     ctx.globalAlpha = 1;
     ctx.drawImage(cache.sprites.coin, 6, 15);
     text(`${g.quest.coins}`, 21, 20, '#f4e4b8', '8px PixelDisplay, monospace');
+    const rk = rankFor(g.quest.xp || 0);
+    text(`R${rk + 1}`, Math.max(46, 14 + g.quest.maxHearts * 11 - 16), 20, '#8fd0d0', '6px PixelDisplay, monospace');
 
     // right plate: cell sockets + key items
     const rw = 62;

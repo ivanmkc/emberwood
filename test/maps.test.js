@@ -8,7 +8,7 @@ function walkableChar(ch) {
   return t && !t.solid;
 }
 
-const SOLID_KINDS = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal'];
+const SOLID_KINDS = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal', 'charter'];
 
 // BFS over a map's grid. Solid entities block, except the target entity.
 // opts.doorPasses: treat lockedDoor entities as passable.
@@ -109,7 +109,7 @@ test('overworld: all quest points reachable from spawn', () => {
   const map = MAPS.overworld;
   const from = { x: START.x, y: START.y };
   const targets = map.entities
-    .filter((e) => ['chest', 'npc', 'sign', 'beacon', 'sparkle', 'terminal', 'item'].includes(e.kind))
+    .filter((e) => ['chest', 'npc', 'sign', 'beacon', 'sparkle', 'terminal', 'item', 'charter'].includes(e.kind))
     .concat(map.portals.map((p) => ({ id: `portal->${p.to}`, ...p })));
   for (const t of targets) {
     assert.ok(reachable(map, from, { x: t.x, y: t.y }), `overworld: ${t.id ?? t.kind} at ${t.x},${t.y} unreachable from spawn`);

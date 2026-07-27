@@ -14,7 +14,8 @@ export function newQuestState() {
     hearts: 3,
     maxHearts: 3,
     shards: 0,    // ember cells
-    flags: {}, // talkedElder, hasRing, hasCaveKey, boughtHeart, doorOpen, beaconLit, bossDefeated
+    xp: 0,        // salvage rank progression
+    flags: {}, // talkedElder, hasRing, hasCaveKey, boughtHeart, doorOpen, beaconLit, bossDefeated, base*
     opened: {}, // chest id -> true
     kills: 0,
   };
@@ -24,6 +25,7 @@ export function applyEffects(state, effects) {
   if (!effects) return;
   if (effects.set) Object.assign(state.flags, effects.set);
   if (effects.coins) state.coins = Math.max(0, state.coins + effects.coins);
+  if (effects.xp) state.xp = (state.xp || 0) + effects.xp;
   if (effects.shard) state.shards += 1;
   if (effects.heartContainer) {
     state.maxHearts += 1;
@@ -56,7 +58,7 @@ export function npcDialogue(id, state) {
             'The strain was ordered hungry. The cells came back drained. And the Quiet... the Quiet was a quarantine. They switched the network off on purpose — to starve whatever was feeding on it.',
             'Emberwood kept its beacon lit anyway. Not out of ignorance — out of stubbornness. "Someone has to leave a light on for the ones still out there." That is what this place is. Take this — archive pay, two centuries late.',
           ],
-          effects: { coins: 10, set: { logsDone: true } },
+          effects: { coins: 10, xp: 12, set: { logsDone: true } },
         };
       }
       if (f.beaconLit) {
@@ -91,7 +93,7 @@ export function npcDialogue(id, state) {
             'Old Finn: My ring! You wonderful wanderer!',
             'Here — the keycard to the derelict mine, as promised. Mind the drones. And the big one.',
           ],
-          effects: { set: { hasCaveKey: true, gaveRing: true } },
+          effects: { xp: 10, set: { hasCaveKey: true, gaveRing: true } },
         };
       }
       if (f.filterPart && !f.filterGiven) {
@@ -100,7 +102,7 @@ export function npcDialogue(id, state) {
             'Old Finn: That\'s a casting-line filter, right off the old foundry rig! The canal pump\'s been coughing for a decade.',
             'Twenty scrap, and I won\'t hear a word against it. Bea would\'ve liked you.',
           ],
-          effects: { coins: 20, set: { filterGiven: true } },
+          effects: { coins: 20, xp: 10, set: { filterGiven: true } },
         };
       }
       if (f.filterGiven) {
@@ -147,7 +149,7 @@ export function npcDialogue(id, state) {
             'Pip: BOLT! You found Bolt! Come here, you dumb little light bulb!',
             'Pip presses eight scrap into your hands. "It\'s all I have. It\'s worth it."',
           ],
-          effects: { coins: 8, set: { petReturned: true } },
+          effects: { coins: 8, xp: 10, set: { petReturned: true } },
         };
       }
       if (f.petReturned) {
@@ -254,10 +256,86 @@ export function itemPickup(id) {
   return { lines: ['You pick it up.'] };
 }
 
+// ---------- Settlement Restoration (base upgrades) ----------
+// Bought at the Settlement Charter board in the plaza. Each project sets a
+// flag the engine reads to mutate the world (deco, portals, regen).
+
+export const BASE_PROJECTS = [
+  {
+    id: 'baseLamps', name: 'PLAZA LAMPS', cost: 15,
+    desc: 'String new lamps to the shore and the forest gate. The dark backs off a little.',
+    built: 'Lamplight now reaches the shore and the forest gate.',
+  },
+  {
+    id: 'baseGreenhouse', name: 'GREENHOUSE PLOT', cost: 20,
+    desc: 'Restore a growing bed by the plaza. A spare vitality pickup waits there when you come home hurt.',
+    built: 'The greenhouse hums. A heart waits when you return wounded.',
+  },
+  {
+    id: 'baseRelay', name: 'SIGNAL RELAY', cost: 30,
+    desc: 'Twin relay pads: step between the plaza and the mountain pass in a blink.',
+    built: 'Relay pads online — plaza to mountain pass, instantly.',
+  },
+  {
+    id: 'baseInfirmary', name: 'INFIRMARY WING', cost: 35,
+    desc: 'Settlers patch you up: hearts slowly regenerate anywhere in the settlement.',
+    built: 'The infirmary is staffed. The settlement heals its own.',
+  },
+];
+
+export function projectStatus(state, p) {
+  if (state.flags[p.id]) return 'BUILT';
+  if (state.coins >= p.cost) return 'AVAILABLE';
+  return 'NEED SCRAP';
+}
+
+export function buyProject(state, id) {
+  const p = BASE_PROJECTS.find((x) => x.id === id);
+  if (!p || state.flags[p.id] || state.coins < p.cost) return null;
+  state.coins -= p.cost;
+  state.flags[p.id] = true;
+  state.xp = (state.xp || 0) + 8;
+  return p;
+}
+
+// ---------- Salvage Rank progression ----------
+
+export const RANKS = [
+  { name: 'Drifter', xp: 0, perk: 'Just passing through. (No perk)' },
+  { name: 'Scrapper', xp: 20, perk: 'Scavenger eye: enemies drop scrap more often.' },
+  { name: 'Engineer', xp: 45, perk: 'Long reach: wider arc-cutter swing.' },
+  { name: 'Warden', xp: 80, perk: 'Bulwark: hits knock you back far less.' },
+  { name: 'Beacon-Keeper', xp: 120, perk: 'Ember stride: +1 max heart, and you leave sparks.' },
+];
+
+export function rankFor(xp) {
+  let r = 0;
+  for (let i = 0; i < RANKS.length; i++) if (xp >= RANKS[i].xp) r = i;
+  return r;
+}
+
+export function grantXp(state, amount) {
+  const before = rankFor(state.xp || 0);
+  state.xp = (state.xp || 0) + amount;
+  const after = rankFor(state.xp);
+  if (after > before) {
+    if (after === 4) { // Beacon-Keeper: +1 max heart
+      state.maxHearts += 1;
+      state.hearts = state.maxHearts;
+    }
+    return RANKS[after];
+  }
+  return null;
+}
+
 // Quest journal — pure render of quest state, drawn by the J-key overlay.
 export function questJournal(state) {
   const f = state.flags;
   const lines = [];
+  const r = rankFor(state.xp || 0);
+  const next = RANKS[r + 1];
+  lines.push([`SALVAGE RANK — ${RANKS[r].name.toUpperCase()}`,
+    (next ? `xp ${state.xp || 0} / ${next.xp} to ${next.name}. ` : `xp ${state.xp || 0} (max rank). `) + RANKS[r].perk]);
   lines.push(['MAIN — REIGNITE THE BEACON',
     f.beaconLit ? 'done. The signal burns again.'
       : `${state.shards} of 3 Ember Cells found. ` + (state.shards >= 3 ? 'Take them to the beacon!' : 'Overgrowth maze - canal isle - foundry.')]);
@@ -300,7 +378,7 @@ export function beaconInteract(state) {
         'You slot the three Ember Cells into the cold cradle...',
         'FWOOM! The beacon core ignites in glorious flame!',
       ],
-      effects: { set: { beaconLit: true } },
+      effects: { xp: 20, set: { beaconLit: true } },
     };
   }
   return { lines: [`The beacon is cold. Sockets for three cells — you carry ${state.shards}.`] };
@@ -314,7 +392,7 @@ export function lockedDoorInteract(state) {
 }
 
 export function sparkleInteract(state) {
-  return { lines: ['You dig in the dust... a golden ring! Old Finn will want to see this.'], effects: { set: { hasRing: true } } };
+  return { lines: ['You dig in the dust... a golden ring! Old Finn will want to see this.'], effects: { xp: 4, set: { hasRing: true } } };
 }
 
 export function chestLootLines(loot) {
