@@ -256,6 +256,63 @@ def main():
             pipes = np.linalg.norm(clsb - np.array([128, 0, 255], np.int16), axis=2) < 90
             nwalk = nwalk | pipes
         walk_src = nwalk & ~blocked
+    import cv2 as _cv
+    # grates/slatted decks: thin dark lines fragment the mask — close them
+    walk_src = _cv.morphologyEx(walk_src.astype(np.uint8), _cv.MORPH_CLOSE,
+                                np.ones((9, 9), np.uint8)).astype(bool) & ~blocked
+    # island connector: large walkable islands (bridge deck!) get a corridor
+    # to the main region, routed ONLY through class-mask floor pixels — can
+    # cross a red-marked shore strip, can never tunnel through buildings/water
+    ncc2, lab2 = _cv.connectedComponents(walk_src.astype(np.uint8))
+    if ncc2 > 2:
+        sizes = [(lab2 == i).sum() for i in range(1, ncc2)]
+        main_id = 1 + int(np.argmax(sizes))
+        floor_ok = np.zeros_like(walk_src)
+        npb2 = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+        if os.path.exists(npb2):
+            clsb2 = np.asarray(Image.open(npb2).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
+            floor_ok = (np.linalg.norm(clsb2 - np.array([0, 255, 0], np.int16), axis=2) < 90) & ~blocked
+        allowed = walk_src | floor_ok
+        stp = 8
+        lath, latw = OUT_H // stp, OUT_W // stp
+        lat_ok = np.zeros((lath, latw), dtype=bool)
+        lat_lab = np.zeros((lath, latw), dtype=np.int32)
+        for ly2 in range(lath):
+            for lx2 in range(latw):
+                blk = allowed[ly2 * stp:(ly2 + 1) * stp, lx2 * stp:(lx2 + 1) * stp]
+                lat_ok[ly2, lx2] = blk.mean() > 0.5
+                lat_lab[ly2, lx2] = lab2[min(OUT_H - 1, ly2 * stp + stp // 2), min(OUT_W - 1, lx2 * stp + stp // 2)]
+        from collections import deque
+        for isl in range(1, ncc2):
+            if isl == main_id or sizes[isl - 1] < 5000:
+                continue
+            starts = [(x, y) for y in range(lath) for x in range(latw) if lat_lab[y, x] == main_id and lat_ok[y, x]]
+            if not starts:
+                break
+            prev = {}
+            qq = deque(starts[::37] or starts[:1])
+            vis = set(qq)
+            goal = None
+            while qq and goal is None:
+                cx3, cy3 = qq.popleft()
+                for dx3, dy3 in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nx3, ny3 = cx3 + dx3, cy3 + dy3
+                    if 0 <= nx3 < latw and 0 <= ny3 < lath and lat_ok[ny3, nx3] and (nx3, ny3) not in vis:
+                        vis.add((nx3, ny3))
+                        prev[(nx3, ny3)] = (cx3, cy3)
+                        if lat_lab[ny3, nx3] == isl:
+                            goal = (nx3, ny3)
+                            break
+                        qq.append((nx3, ny3))
+            if goal:
+                node = goal
+                while node in prev:
+                    gx, gy = node
+                    y0c, x0c = max(0, gy * stp - 8), max(0, gx * stp - 8)
+                    patch = allowed[y0c:gy * stp + stp + 8, x0c:gx * stp + stp + 8]
+                    walk_src[y0c:gy * stp + stp + 8, x0c:gx * stp + stp + 8] |= patch
+                    node = prev[node]
+                print(f'connected island {isl} ({sizes[isl - 1]}px) to main region')
     walk = Image.fromarray((walk_src * 255).astype(np.uint8))
     walk = walk.filter(ImageFilter.MinFilter(3))  # light erode (mask is already conservative)
     walk_arr = np.asarray(walk) > 127
