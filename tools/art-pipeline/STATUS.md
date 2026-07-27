@@ -1,5 +1,12 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## EXPANSION SHIPPED 2026-07-27 (second autonomous run)
+Story bible docs/LORE.md; 3 new maps (biodome/mine2/home) with BFS gates;
+4 side quests + lore terminals + intro transmission + post-win dialogue;
+Field Journal (J) + ambient per-area music (M); 7 new gated NBP assets
+(overgrowth, domefloor, terminal, rack, vat, keeper, petdrone);
+22/22 tests; 9/9 screenshot gates; live + verified.
+
 Directive (Ivan, 2026-07-27): build out the sci-fi re-theme end to end with
 robust verification at every step — deterministic gates AND Gemini/NBP judge
 rubrics. 12 hours. No questions. No OpenAI APIs.
