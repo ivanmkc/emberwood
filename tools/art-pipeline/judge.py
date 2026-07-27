@@ -66,6 +66,14 @@ RUBRICS = {
         '"silhouette_clean": bool, "theme_fit": 1-10, "reads_as_design": bool (recognizable as the '
         'intended design), "issues": "short text"}'
     ),
+    'ui': (
+        'You are auditing the UI/HUD of a 2D pixel-art RPG screenshot (single image). Judge ONLY '
+        'interface elements: HUD (hearts/currency/quest icons), dialogue box, overlays, title text, '
+        'readability and visual cohesion with a dusk sci-fi pixel-art game. Return JSON only: '
+        '{"readability": 1-10, "hierarchy": 1-10 (does the eye find the important thing first), '
+        '"cohesion": 1-10 (UI feels part of the game\'s art style, not placeholder), '
+        '"polish": 1-10, "top_issues": ["max 4 short concrete issues ordered by impact"]}'
+    ),
     'facing': (
         'The image shows several separate character sprites of the SAME character in a row on a '
         'checker background, numbered 0..N-1 left to right. For each sprite classify which way the '

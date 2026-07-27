@@ -3,13 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Emberwood — a tiny exploration RPG</title>
+<title>Emberwood — the signal has gone dark</title>
+<meta name="description" content="A tiny sci-fi exploration RPG. Recover the three Ember Cells and reignite the last beacon of the Ember Network.">
+<meta name="theme-color" content="#0c0c12">
+<meta property="og:title" content="Emberwood">
+<meta property="og:description" content="The signal has gone dark. A tiny sci-fi exploration RPG in the browser.">
+<meta property="og:image" content="https://ivanmkc.github.io/emberwood/docs/art-options/final-village-web.jpg">
+<link rel="icon" href="assets/favicon.png" type="image/png">
 <style>
   :root { color-scheme: dark; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
     height: 100%;
-    background: #0c0c12;
+    background: radial-gradient(ellipse at 50% 30%, #131624 0%, #0a0b12 65%, #06070c 100%);
     color: #9a9aa2;
     font-family: monospace;
     overflow: hidden;
@@ -19,13 +25,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     touch-action: none;
   }
   #stage {
     position: relative;
-    width: min(100vw, calc((100vh - 40px) * 4 / 3));
+    width: min(100vw - 12px, calc((100vh - 44px) * 4 / 3));
     aspect-ratio: 4 / 3;
+    border: 1px solid #262c42;
+    border-radius: 4px;
+    box-shadow: 0 0 34px rgba(80, 160, 170, 0.10), 0 8px 40px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
   }
   canvas {
     width: 100%;
@@ -37,20 +47,32 @@
   }
   #bar {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
-    font-size: 12px;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    color: #6b7286;
+    background: rgba(14, 17, 28, 0.85);
+    border: 1px solid #232940;
+    border-radius: 4px;
+    padding: 4px 12px;
   }
+  #bar .accent { color: #4ac0c0; }
   #bar button {
-    background: #1c1c28;
-    color: #c19a49;
-    border: 1px solid #c19a49;
+    background: transparent;
+    color: #ffb347;
+    border: 1px solid rgba(255, 179, 71, 0.55);
+    border-radius: 3px;
     font-family: monospace;
-    font-size: 12px;
-    padding: 3px 10px;
+    font-size: 11.5px;
+    padding: 3px 11px;
     cursor: pointer;
+    transition: background 0.15s;
   }
-  #bar button:hover { background: #2a2a3a; }
+  #bar button:hover { background: rgba(255, 179, 71, 0.12); }
+  @media (max-width: 600px) {
+    #bar .hint { display: none; }
+  }
   /* touch controls */
   #touch { display: none; }
   @media (pointer: coarse) {
@@ -111,7 +133,7 @@
     </div>
   </div>
   <div id="bar">
-    <span>Arrows/WASD move &middot; Space talk/attack &middot; J journal &middot; M music</span>
+    <span class="hint"><span class="accent">WASD</span> move &nbsp;<span class="accent">Space</span> interact &nbsp;<span class="accent">J</span> journal &nbsp;<span class="accent">M</span> music</span>
     <button id="new-game">New Game</button>
   </div>
   <script type="module" src="src/main.js"></script>

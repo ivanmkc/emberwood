@@ -307,8 +307,16 @@ export function createGame(canvas, input, art) {
   }
 
   function openDialogue(result, after) {
-    const pages = result.lines.map((l) => wrap(l));
-    g.dialogue = { pages, page: 0, chars: 0 };
+    // speaker tag: strip a short "Name: " prefix into a name plate
+    let speaker = null;
+    let lines = result.lines;
+    const m = /^([^:]{2,24}): (.+)/.exec(lines[0] || '');
+    if (m) {
+      speaker = m[1];
+      lines = lines.map((l) => (l.startsWith(speaker + ': ') ? l.slice(speaker.length + 2) : l));
+    }
+    const pages = lines.map((l) => wrap(l));
+    g.dialogue = { pages, page: 0, chars: 0, speaker };
     g.mode = 'dialogue';
     g.afterDialogue = after || null;
     if (result.effects) {
@@ -404,6 +412,7 @@ export function createGame(canvas, input, art) {
     if (g.player.invuln > 0 || g.mode !== 'play') return;
     g.quest.hearts -= 1;
     g.player.invuln = 1.0;
+    g.hurtFlash = 0.6;
     const ang = Math.atan2(g.player.y - from.y, g.player.x - from.x);
     g.player.kx = Math.cos(ang) * 130;
     g.player.ky = Math.sin(ang) * 130;
@@ -714,6 +723,7 @@ export function createGame(canvas, input, art) {
         else if (ch === 'o') drawPad(lx, ly);
         else if (ch === 'C') drawCaveMouth(lx, ly);
         else drawClutter(ch, lx, ly, tx, ty);
+        if (ch === '~') drawShoreline(lx, ly, tx, ty);
       }
     }
 
@@ -801,6 +811,7 @@ export function createGame(canvas, input, art) {
 
   function drawJournal() {
     overlay(0.78);
+    plate(10, 14, VIEW_W - 20, VIEW_H - 34);
     centerText('FIELD JOURNAL', 24, '#ffb347', 'bold 12px monospace');
     let y = 46;
     for (const [title, status] of questJournal(g.quest)) {
@@ -932,6 +943,41 @@ export function createGame(canvas, input, art) {
       ctx.fillRect(lx + 3, ly + 5, 4, 4);
       ctx.fillStyle = cols[(h >> 3) % 4];
       ctx.fillRect(lx + 9, ly + 4, 4, 5);
+    }
+  }
+
+  // waterline + foam where coolant meets land — kills the hard rectangle edge
+  function drawShoreline(lx, ly, tx, ty) {
+    const land = (ax, ay) => {
+      if (ay < 0 || ay >= g.grid.length || ax < 0 || ax >= g.grid[0].length) return false;
+      const ch2 = g.grid[ay][ax];
+      return ch2 !== '~' && TILES[ch2] && !TILES[ch2].solid || ch2 === '=';
+    };
+    ctx.fillStyle = 'rgba(8, 22, 28, 0.55)';
+    const foam = 'rgba(150, 230, 230, 0.4)';
+    const h = (tx * 7 + ty * 13) % 5;
+    if (land(tx - 1, ty)) {
+      ctx.fillRect(lx, ly, 2, 16);
+      ctx.fillStyle = foam;
+      ctx.fillRect(lx + 2, ly + 3 + h, 1.5, 3);
+      ctx.fillStyle = 'rgba(8, 22, 28, 0.55)';
+    }
+    if (land(tx + 1, ty)) {
+      ctx.fillRect(lx + 14, ly, 2, 16);
+      ctx.fillStyle = foam;
+      ctx.fillRect(lx + 12.5, ly + 6 + h, 1.5, 3);
+      ctx.fillStyle = 'rgba(8, 22, 28, 0.55)';
+    }
+    if (land(tx, ty - 1)) {
+      ctx.fillRect(lx, ly, 16, 2);
+      ctx.fillStyle = foam;
+      ctx.fillRect(lx + 4 + h, ly + 2, 3, 1.5);
+      ctx.fillStyle = 'rgba(8, 22, 28, 0.55)';
+    }
+    if (land(tx, ty + 1)) {
+      ctx.fillRect(lx, ly + 14, 16, 2);
+      ctx.fillStyle = foam;
+      ctx.fillRect(lx + 8 - h, ly + 12.5, 3, 1.5);
     }
   }
 
@@ -1095,43 +1141,96 @@ export function createGame(canvas, input, art) {
     ctx.fillText(str, x, y);
   }
 
+  function plate(x, y, w, h) {
+    ctx.fillStyle = 'rgba(10, 14, 22, 0.72)';
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = 'rgba(74, 192, 192, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+    ctx.fillStyle = 'rgba(74, 192, 192, 0.5)';
+    ctx.fillRect(x, y, 3, 1);
+    ctx.fillRect(x, y, 1, 3);
+    ctx.fillRect(x + w - 3, y + h - 1, 3, 1);
+    ctx.fillRect(x + w - 1, y + h - 3, 1, 3);
+  }
+
   function drawHud() {
+    // left plate: vitality + scrap
+    const lw = 14 + g.quest.maxHearts * 11;
+    plate(4, 4, Math.max(lw, 58), 30);
     for (let i = 0; i < g.quest.maxHearts; i++) {
-      ctx.globalAlpha = i < g.quest.hearts ? 1 : 0.25;
-      ctx.drawImage(cache.sprites.heart, 4 + i * 11 - 2, -2);
+      ctx.globalAlpha = i < g.quest.hearts ? 1 : 0.22;
+      ctx.drawImage(cache.sprites.heart, 6 + i * 11, 2);
     }
     ctx.globalAlpha = 1;
-    ctx.drawImage(cache.sprites.coin, 2, 10);
-    text(`${g.quest.coins}`, 16, 15);
+    ctx.drawImage(cache.sprites.coin, 6, 15);
+    text(`${g.quest.coins}`, 21, 20, '#f4e4b8', 'bold 8px monospace');
+
+    // right plate: cell sockets + key items
+    const rw = 62;
+    plate(VIEW_W - rw - 4, 4, rw, 30);
     for (let i = 0; i < 3; i++) {
-      ctx.globalAlpha = i < g.quest.shards ? 1 : 0.22;
-      ctx.drawImage(cache.sprites.shard, VIEW_W - 52 + i * 15, -1);
+      const sx = VIEW_W - rw + i * 17;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.fillRect(sx, 7, 13, 13);
+      ctx.strokeStyle = i < g.quest.shards ? 'rgba(255, 170, 80, 0.7)' : 'rgba(120, 130, 150, 0.18)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(sx + 0.5, 7.5, 12, 12);
+      if (i < g.quest.shards) ctx.drawImage(cache.sprites.shard, sx - 2, 5);
     }
-    ctx.globalAlpha = 1;
-    let kx = VIEW_W - 52;
-    if (g.quest.flags.hasRing && !g.quest.flags.gaveRing) { ctx.drawImage(cache.sprites.ring, kx, 11); kx += 14; }
-    if (g.quest.flags.hasCaveKey) ctx.drawImage(cache.sprites.key, kx, 11);
+    let kx = VIEW_W - rw + 1;
+    if (g.quest.flags.hasRing && !g.quest.flags.gaveRing) { ctx.drawImage(cache.sprites.ring, kx, 17); kx += 13; }
+    if (g.quest.flags.hasCaveKey) ctx.drawImage(cache.sprites.key, kx, 17);
+
+    // hurt feedback: red edge pulse
+    if (g.hurtFlash > 0) {
+      g.hurtFlash = Math.max(0, g.hurtFlash - 0.02);
+      const hv = ctx.createRadialGradient(VIEW_W / 2, VIEW_H / 2, 90, VIEW_W / 2, VIEW_H / 2, 210);
+      hv.addColorStop(0, 'rgba(200, 40, 40, 0)');
+      hv.addColorStop(1, `rgba(200, 40, 40, ${g.hurtFlash * 0.6})`);
+      ctx.fillStyle = hv;
+      ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    }
   }
 
   function drawDialogue() {
     const d = g.dialogue;
     const lines = d.pages[d.page];
-    const h = 14 + lines.length * 10;
-    const y = VIEW_H - h - 6;
-    ctx.fillStyle = 'rgba(10, 14, 24, 0.94)';
+    const h = 16 + lines.length * 10;
+    const y = VIEW_H - h - 8;
+    // double border: outer dark, inner teal — pixel-panel look
+    ctx.fillStyle = 'rgba(8, 11, 19, 0.95)';
     ctx.fillRect(6, y, VIEW_W - 12, h);
-    ctx.strokeStyle = '#4ac0c0';
+    ctx.strokeStyle = 'rgba(20, 30, 45, 1)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(7, y + 1, VIEW_W - 14, h - 2);
+    ctx.strokeStyle = 'rgba(74, 192, 192, 0.8)';
     ctx.lineWidth = 1;
-    ctx.strokeRect(6.5, y + 0.5, VIEW_W - 13, h - 1);
+    ctx.strokeRect(8.5, y + 2.5, VIEW_W - 17, h - 5);
+    if (d.speaker) {
+      const nw = d.speaker.length * 5 + 12;
+      ctx.fillStyle = 'rgba(8, 11, 19, 1)';
+      ctx.fillRect(14, y - 8, nw, 12);
+      ctx.strokeStyle = 'rgba(255, 179, 71, 0.8)';
+      ctx.strokeRect(14.5, y - 7.5, nw - 1, 11);
+      text(d.speaker, 20, y - 6, '#ffb347', 'bold 8px monospace');
+    }
     let budget = Math.floor(d.chars);
     lines.forEach((line, i) => {
       const shown = line.slice(0, Math.max(0, budget));
       budget -= line.length;
-      text(shown, 12, y + 6 + i * 10);
+      text(shown, 14, y + 8 + i * 10);
     });
-    if (budget >= 0) {
-      const more = d.page < d.pages.length - 1;
-      text(more ? '...' : ' ok', VIEW_W - 26, y + h - 9, '#4ac0c0');
+    if (budget >= 0 && Math.floor(g.time * 2.5) % 2 === 0) {
+      // blinking advance chevron
+      const ax = VIEW_W - 20, ay = y + h - 8;
+      ctx.fillStyle = '#4ac0c0';
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(ax + 6, ay);
+      ctx.lineTo(ax + 3, ay + 4);
+      ctx.closePath();
+      ctx.fill();
     }
   }
 
@@ -1147,27 +1246,63 @@ export function createGame(canvas, input, art) {
   }
 
   function drawTitle() {
-    overlay(0.55);
-    centerText('E M B E R W O O D', 70, '#ffb347', 'bold 16px monospace');
-    centerText('The signal has gone dark.', 96, '#f4f4f4');
-    centerText('Arrows / WASD  move', 118, '#9a9aa2');
-    centerText('Space  talk - open - attack', 130, '#9a9aa2');
-    centerText('J  journal      M  music', 142, '#9a9aa2');
-    centerText('Press Space to begin', 168, '#ffb347');
+    overlay(0.66);
+    // rising ember motes behind the logotype
+    for (let i = 0; i < 14; i++) {
+      const seed = i * 137.5;
+      const py = ((seed * 7 - g.time * (8 + (i % 5) * 3)) % 260 + 260) % 260 - 10;
+      const px = (seed % VIEW_W) + Math.sin(g.time * 0.8 + i) * 6;
+      ctx.fillStyle = i % 3 === 0 ? 'rgba(255, 170, 80, 0.5)' : 'rgba(230, 90, 60, 0.35)';
+      ctx.fillRect(px, VIEW_H - py, i % 4 === 0 ? 2 : 1.5, i % 4 === 0 ? 2 : 1.5);
+    }
+    // logotype: ember gradient with glow + hard shadow
+    ctx.save();
+    ctx.font = 'bold 24px monospace';
+    ctx.textBaseline = 'top';
+    const title = 'EMBERWOOD';
+    const tw = ctx.measureText(title).width;
+    const tx = Math.round((VIEW_W - tw) / 2);
+    ctx.shadowColor = 'rgba(255, 140, 40, 0.55)';
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = '#0c0c12';
+    ctx.fillText(title, tx + 2, 54 + 2);
+    const grad = ctx.createLinearGradient(0, 52, 0, 80);
+    grad.addColorStop(0, '#ffe8a3');
+    grad.addColorStop(0.5, '#ffb347');
+    grad.addColorStop(1, '#e05a3a');
+    ctx.fillStyle = grad;
+    ctx.fillText(title, tx, 54);
+    ctx.restore();
+    centerText('the signal has gone dark', 84, '#8fd0d0', '8px monospace');
+
+    plate(VIEW_W / 2 - 78, 112, 156, 44);
+    centerText('Arrows / WASD   move', 118, '#c5c9d4');
+    centerText('Space   talk - open - attack', 130, '#c5c9d4');
+    centerText('J  journal        M  music', 142, '#c5c9d4');
+
+    const pulse = 0.55 + 0.45 * Math.sin(g.time * 3);
+    ctx.globalAlpha = pulse;
+    centerText('- PRESS SPACE TO BEGIN -', 174, '#ffb347', 'bold 9px monospace');
+    ctx.globalAlpha = 1;
   }
 
   function drawDead() {
     overlay(0.7);
-    centerText('Systems failing...', 100, '#e64539', 'bold 12px monospace');
+    plate(VIEW_W / 2 - 100, 86, 200, 56);
+    centerText('SYSTEMS FAILING...', 100, '#e64539', 'bold 12px monospace');
     centerText('The settlers drag you back to Emberwood.', 124);
   }
 
   function drawWin() {
     overlay(0.72);
+    plate(VIEW_W / 2 - 110, 48, 220, 118);
     centerText('THE SIGNAL BURNS AGAIN!', 62, '#ffb347', 'bold 12px monospace');
     centerText('Emberwood is safe. You are its hero.', 86);
     const m = Math.floor(g.time / 60), s = Math.floor(g.time % 60);
-    centerText(`time ${m}m ${s}s   scrap ${g.quest.coins}   foes ${g.quest.kills}`, 110, '#9a9aa2');
+    centerText(`time ${m}m ${s}s   scrap ${g.quest.coins}   foes ${g.quest.kills}`, 110, '#c5c9d4');
+    const logs = ['log1', 'log2', 'log3'].filter((k) => g.quest.flags[k]).length;
+    centerText(g.quest.flags.logsDone ? 'You know why the beacon matters. Rowan does too.'
+      : `archive logs found: ${logs} of 3 — the why is still out there`, 128, '#8fd0d0');
     centerText('Space: keep exploring    N: new game', 150, '#4ac0c0');
   }
 
