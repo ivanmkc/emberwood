@@ -1,5 +1,17 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## PLATE-ROOM SPIKE SHIPPED 2026-07-27 (ninth run)
+Ivan's idea: use scene images as-is + segmentation masks. Built make_room.py:
+grid-overlay -> Gemini walkability votes (3x majority, cached in
+_room_*_votes.json) -> border force + BFS carve-to-exit -> PRE-BORDER
+component base rows (border ring must not weld components) -> emit
+src/rooms/*.js + assets/rooms/*.jpg + mask debug overlay. Engine: plate
+render path, buildProps skip (else '#' cells sprout tree props!), per-cell
+plate overdraw for occlusion, ?room=anchor boot. Live:
+ivanmkc.github.io/emberwood/?room=anchor. Caveats for production: painted
+characters are walk-through (inpaint them out + spawn real entities),
+object hotspots TBD, room-by-room conversion plan on the board (section 16).
+
 ## PROP PHYSICALITY + PLACEMENT SHIPPED 2026-07-27 (eighth run)
 Ivan: "seems random placement. also i can walk through objects." Fixed:
 PROP_SOLID footprints (12x9 at base) collide for player+enemies via
