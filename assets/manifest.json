@@ -94,7 +94,10 @@
   "crates": "props/crates.png",
   "pipe": "props/pipe.png",
   "stall": "props/stall.png",
-  "tree2": "props/tree2.png"
+  "tree2": "props/tree2.png",
+  "tanktree": "props/tanktree.png",
+  "garage": "props/garage.png",
+  "junction": "props/junction.png"
  },
  "chars": {
   "player": {

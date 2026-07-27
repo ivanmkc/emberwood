@@ -2191,5 +2191,128 @@
    "silhouette_clean": false,
    "issues": "Too low resolution/blurry compared to the crisp pixel art of the anchor. Contains background fragments/uneven edges."
   }
+ },
+ "asset:garage": {
+  "pass": true,
+  "det": {
+   "coverage": 0.888,
+   "magenta_fringe": 0.0002
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 9,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 10,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good stylistic fit, perspective matches the anchor's flat-front building style."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly less vibrant colors than the anchor, but generally fits well. Perspective is correct (front-facing facade)."
+    }
+   ],
+   "issues": "None",
+   "style_match": 8,
+   "theme_fit": 9,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true
+  }
+ },
+ "asset:junction": {
+  "pass": true,
+  "det": {
+   "coverage": 0.9,
+   "magenta_fringe": 0.0028
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "minor scaling/resolution mismatch"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly blurry/upscaled look, but style and palette match well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly blurry/low resolution compared to anchor crispness, but color and shading match well."
+    }
+   ],
+   "issues": "minor scaling/resolution mismatch",
+   "style_match": 8,
+   "theme_fit": 9,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true
+  }
+ },
+ "asset:tanktree": {
+  "pass": true,
+  "det": {
+   "coverage": 0.853,
+   "magenta_fringe": 0.0002
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 10,
+     "issues": "None. The object matches the style, perspective, and theme of the anchor well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "The liquid inside the tank has a purple tint which differs slightly from the cyan/teal ambient light in the main scene, but overall it fits well as a sci-fi prop."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Background glow/purple tint slightly conflicts with the lighting in the anchor scene, but otherwise fits well."
+    }
+   ],
+   "issues": "None. The object matches the style, perspective, and theme of the anchor well.",
+   "style_match": 8,
+   "theme_fit": 9,
+   "perspective_ok": true,
+   "single_object": true,
+   "silhouette_clean": true
+  }
  }
 }

@@ -203,7 +203,9 @@ export const MAPS = {
       // bushes hug the forest edge and the shoreline
       { type: 'bush', x: 5, y: 14 }, { type: 'bush', x: 12, y: 14 },
       { type: 'bush', x: 17, y: 13 }, { type: 'bush', x: 14, y: 20 },
-      { type: 'bush', x: 43, y: 26 }, { type: 'bush', x: 34, y: 32 },
+      { type: 'tanktree', x: 43, y: 26 }, { type: 'bush', x: 34, y: 32 },
+      { type: 'tanktree', x: 32, y: 21 }, { type: 'tanktree', x: 42, y: 24 },
+      { type: 'junction', x: 33, y: 19 }, { type: 'junction', x: 39, y: 19 },
       // trailside fittings
       { type: 'pipe', x: 31, y: 14 }, { type: 'pipe', x: 37, y: 16 },
       { type: 'rock', x: 15, y: 20 }, { type: 'rock', x: 44, y: 31 },

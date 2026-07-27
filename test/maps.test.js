@@ -9,7 +9,7 @@ function walkableChar(ch) {
 }
 
 const SOLID_KINDS = ['npc', 'chest', 'sign', 'beacon', 'lockedDoor', 'terminal', 'charter'];
-const SOLID_DECO = ['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp'];
+const SOLID_DECO = ['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp', 'tanktree', 'junction'];
 
 // BFS over a map's grid. Solid entities block, except the target entity.
 // opts.doorPasses: treat lockedDoor entities as passable.

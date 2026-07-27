@@ -20,7 +20,7 @@ TILE_NAMES = ['ground', 'plate', 'dust', 'coolant', 'walkway', 'rubble',
               'overgrowth', 'domefloor']
 PROP_NAMES = ['tree', 'rock', 'chest', 'beacon', 'lamp', 'house',
               'terminal', 'rack', 'vat', 'bush', 'mast', 'crates', 'pipe',
-              'stall', 'tree2']
+              'stall', 'tree2', 'tanktree', 'garage', 'junction']
 CHAR_SHEET = ['player', 'chief', 'angler', 'settler', 'keeper']  # 4-directional
 CHAR_SINGLE = ['trader', 'sludge', 'drone', 'boss', 'petdrone']
 

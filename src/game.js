@@ -36,7 +36,7 @@ const TILE_ART = {
 const DISPLAY_FONT = '8px PixelDisplay, monospace';
 
 // deco props with physical presence: you cannot walk through the furniture
-const PROP_SOLID = new Set(['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp']);
+const PROP_SOLID = new Set(['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'bush', 'pipe', 'lamp', 'tanktree', 'junction']);
 
 const NPC_ART = {
   elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler',
@@ -229,7 +229,7 @@ export function createGame(canvas, input, art) {
             }
           }
         }
-        g.props.push({ type: 'house', x: x0 * T, baseY: (y1 + 1) * T, wTiles: x1 - x0 + 1 });
+        g.props.push({ type: 'house', x: x0 * T, baseY: (y1 + 1) * T, wTiles: x1 - x0 + 1, depot: g.mapId === 'overworld' && x0 >= 40 });
       }
     }
     for (let y = 0; y < H; y++) {
@@ -1137,8 +1137,17 @@ export function createGame(canvas, input, art) {
   // dusk grade + light glows: ambient cool wash, warm pools at lights, vignette
   function duskPass(cx, cy, x0, y0, x1, y1) {
     ctx.fillStyle = g.mapId === 'house' || g.mapId === 'home' ? 'rgba(30, 24, 20, 0.22)'
-      : g.mapId === 'biodome' ? 'rgba(18, 48, 40, 0.30)' : 'rgba(22, 32, 62, 0.30)';
+      : g.mapId === 'biodome' ? 'rgba(18, 48, 40, 0.30)' : 'rgba(18, 34, 54, 0.28)';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    if (g.mapId === 'overworld') {
+      // anchor grade: warm dusk light washing in from the upper-left
+      const wg = ctx.createLinearGradient(0, 0, VIEW_W, VIEW_H * 0.9);
+      wg.addColorStop(0, 'rgba(255, 140, 60, 0.14)');
+      wg.addColorStop(0.5, 'rgba(255, 140, 60, 0.04)');
+      wg.addColorStop(1, 'rgba(30, 60, 90, 0.10)');
+      ctx.fillStyle = wg;
+      ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    }
 
     ctx.globalCompositeOperation = 'lighter';
     // two stacked gradients: wide faint halo + tighter core = soft falloff
@@ -1351,7 +1360,7 @@ export function createGame(canvas, input, art) {
         ctx.drawImage(cache.tiles['#'], Math.round(pr.x - 8 - cxx), Math.round(pr.baseY - 16 - cyy));
       }
     } else if (pr.type === 'house') {
-      const img = art.props.house;
+      const img = (pr.depot && art.props.garage) || art.props.house;
       const wL = pr.wTiles * T;
       if (img) {
         const hL = (img.height / img.width) * wL;
