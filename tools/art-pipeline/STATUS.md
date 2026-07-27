@@ -1,5 +1,14 @@
 # Sci-fi Eastward build-out — autonomous run status
 
+## WALKABILITY MASK LAYERED 2026-07-27 (thirteenth run)
+nbp_walk.py: second flat-repaint (binary green/red). GATE LESSON: symmetric
+IoU vs class-floor failed the mask; visual review showed the MASK was right
+(bridge deck walkable, background floor excluded) -> gate rewritten as
+subset-CONTAINMENT (walk ⊆ floor∪structure, 0.981). Integration: cables
+class unioned back into walk (step-over; else floor partitions into
+islands - reachable cells 510 -> 3739), erosion 7->3, spawn moved to open
+plaza. Collision = walk ∧ ¬blocking, BFS+carve. Live, 26/26.
+
 ## NBP-NATIVE SEGMENTATION ADOPTED 2026-07-27 (twelfth run)
 nbp_mask.py: NBP repaints scene as flat 8-class color map; gates: snap purity
 0.981, floor fraction 0.578, edge alignment 0.997 (Canny agreement) — PASS.
