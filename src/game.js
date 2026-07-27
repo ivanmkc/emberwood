@@ -40,7 +40,7 @@ const PROP_SOLID = new Set(['stall', 'crates', 'vat', 'rack', 'mast', 'rock', 'b
 
 const NPC_ART = {
   elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler',
-  keeper: 'keeper', mara: 'settler',
+  keeper: 'keeper', mara: 'settler', scavA: 'keeper', scavB: 'settler',
 };
 
 // ---------- sprite/tile canvas cache (procedural fallback art) ----------

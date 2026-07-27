@@ -105,7 +105,12 @@ def paste_mask(canvas_arr, item, value):
 
 
 def main():
-    plate_full = Image.open(PLATE).convert('RGB')
+    clean = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor-clean.png')
+    spawns_f = os.path.join(ROOT, 'tools', 'art-pipeline', '_char_spawns.json')
+    chars_removed = os.path.exists(clean) and os.path.exists(spawns_f)
+    plate_full = Image.open(clean if chars_removed else PLATE).convert('RGB')
+    if chars_removed:
+        print('using CLEAN plate (painted characters removed)')
     SW, SH = plate_full.size  # native source res: all masks computed here
     global OUT_W, OUT_H
     scale = OUT_W / SW
@@ -143,6 +148,10 @@ def main():
                 iid += 1
                 inst_arr[comp & (inst_arr == 0)] = iid
                 ys, xs = np.where(comp)
+                if chars_removed and cname == 'character':
+                    inst_arr[inst_arr == iid] = 0
+                    iid -= 1
+                    continue  # removed from the plate: ground is walkable now
                 instances.append({'id': iid, 'label': cname, 'kind':
                                   'character' if cname == 'character' else
                                   ('water' if cname == 'water' else 'structure'),
@@ -344,6 +353,21 @@ def main():
                 q.append((nx, ny))
     ex0, ey0, ex1, ey1 = [int(v * src_per_logical) // step for v in EXIT_RECT]
     exit_ok = any((x, y) in seen for y in range(ey0, ey1 + 1) for x in range(ex0, ex1 + 1))
+    # zero-island guarantee: keep only the spawn's connected component
+    import cv2 as _cvz
+    nz, lz = _cvz.connectedComponents(walk_arr.astype(np.uint8))
+    sx_px, sy_px = int(SPAWN_PX[0] * src_per_logical), int(SPAWN_PX[1] * src_per_logical)
+    keep = lz[min(OUT_H - 1, sy_px), min(OUT_W - 1, sx_px)]
+    if keep > 0:
+        walk_arr = (lz == keep)
+    # auto-exit: prefer a naturally reachable strip on the bottom border
+    band = walk_arr[OUT_H - 40:OUT_H - 8, :]
+    cols_ok = np.where(band.any(axis=0))[0]
+    if len(cols_ok) > 20:
+        exl = int(cols_ok.min() / src_per_logical)
+        exr = int(cols_ok.max() / src_per_logical)
+        globals()['EXIT_RECT'] = (exl, 430, exr, 447)
+        print(f'auto-exit selected on bottom border: x {exl}..{exr}')
     frac = walk_arr.mean()
     print(f'walkable fraction: {frac:.2f}; lattice reachable: {len(seen)}; exit reachable: {exit_ok}')
     assert 0.15 < frac < 0.8, 'walkable fraction out of bounds'

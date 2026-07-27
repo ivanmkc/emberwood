@@ -206,6 +206,22 @@ export function npcDialogue(id, state) {
         ],
       };
 
+    case 'scavA':
+      return {
+        lines: [
+          'Sela: New face. You picked a strange plaza to wander into — the relay pylon here has hummed on its own since before I was born.',
+          'They say every beacon that still burns is wired to a promise. Ask the Overseer back at Emberwood if you want the whole story.',
+        ],
+      };
+
+    case 'scavB':
+      return {
+        lines: [
+          'Dorn: Mind the canal. The rail on that footbridge is older than the Quiet, and it complains.',
+          'MARO-7 rolled in here a week ago chirping about "network reacquisition". Droids dream too, I suppose.',
+        ],
+      };
+
     default:
       return { lines: ['...'] };
   }
