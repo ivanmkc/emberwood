@@ -106,11 +106,15 @@ def paste_mask(canvas_arr, item, value):
 
 def main():
     plate_full = Image.open(PLATE).convert('RGB')
+    SW, SH = plate_full.size  # native source res: all masks computed here
+    global OUT_W, OUT_H
+    scale = OUT_W / SW
     plate = plate_full.resize((OUT_W, OUT_H), Image.LANCZOS)
     seg_input = plate_full.copy()
     seg_input.thumbnail((1024, 1024))
 
-    plate_np_seg = np.asarray(plate)
+    plate_np_seg = np.asarray(plate_full)
+    OUT_W, OUT_H = SW, SH  # mask space = source space from here on
     inst_arr = np.zeros((OUT_H, OUT_W), dtype=np.uint16)  # 0 = background
     instances = []
     iid = 0
@@ -205,8 +209,9 @@ def main():
     walk_arr[:, -8:] = False
 
     # pixel BFS gate on a 4px lattice (device px; logical = /2)
-    step = 8
-    sx, sy = SPAWN_PX[0] * 2 // step, SPAWN_PX[1] * 2 // step
+    step = max(8, round(8 * OUT_W / 1280))
+    src_per_logical = OUT_W / 640
+    sx, sy = int(SPAWN_PX[0] * src_per_logical) // step, int(SPAWN_PX[1] * src_per_logical) // step
     lat_w, lat_h = OUT_W // step, OUT_H // step
     lat = np.zeros((lat_h, lat_w), dtype=bool)
     for ly in range(lat_h):
@@ -223,7 +228,7 @@ def main():
             if 0 <= nx < lat_w and 0 <= ny < lat_h and lat[ny, nx] and (nx, ny) not in seen:
                 seen.add((nx, ny))
                 q.append((nx, ny))
-    ex0, ey0, ex1, ey1 = [v * 2 // step for v in EXIT_RECT]
+    ex0, ey0, ex1, ey1 = [int(v * src_per_logical) // step for v in EXIT_RECT]
     exit_ok = any((x, y) in seen for y in range(ey0, ey1 + 1) for x in range(ex0, ex1 + 1))
     frac = walk_arr.mean()
     print(f'walkable fraction: {frac:.2f}; lattice reachable: {len(seen)}; exit reachable: {exit_ok}')
@@ -244,11 +249,19 @@ def main():
         for cx2, cy2 in pts:
             walk_arr[cy2 * step - 12:cy2 * step + 20, cx2 * step - 12:cx2 * step + 20] = True
 
-    # outputs
+    # outputs — masks computed at source res, saved at device res (1280x896)
+    DEV_W, DEV_H = 1280, 896
     rooms_dir = os.path.join(ROOT, 'assets', 'rooms')
     os.makedirs(rooms_dir, exist_ok=True)
-    Image.fromarray((walk_arr * 255).astype(np.uint8)).save(os.path.join(rooms_dir, f'{NAME}.collision.png'))
-    Image.fromarray((emissive * 255).astype(np.uint8)).save(os.path.join(rooms_dir, f'{NAME}.emissive.png'))
+    Image.fromarray((walk_arr * 255).astype(np.uint8)).resize((DEV_W, DEV_H), Image.LANCZOS)\
+        .point(lambda v: 255 if v > 127 else 0).save(os.path.join(rooms_dir, f'{NAME}.collision.png'))
+    Image.fromarray((emissive * 255).astype(np.uint8)).resize((DEV_W, DEV_H), Image.LANCZOS)\
+        .save(os.path.join(rooms_dir, f'{NAME}.emissive.png'))
+    # save source-space masks for board visualization
+    np.savez_compressed(os.path.join(ROOT, 'tools', 'art-pipeline', f'_srcmasks_{NAME}.npz'),
+                        inst=inst_arr, walk=walk_arr, emissive=emissive, water=water)
+    json.dump(instances, open(os.path.join(ROOT, 'tools', 'art-pipeline', f'_srcinst_{NAME}.json'), 'w'))
+    dscale = DEV_W / OUT_W
     plate_np = np.asarray(plate)
     fg_meta = []
     for inst in instances:
@@ -257,17 +270,20 @@ def main():
         x0, y0, x1, y1 = inst['box']
         m = (inst_arr[y0:y1 + 1, x0:x1 + 1] == inst['id'])
         cut = np.zeros((y1 - y0 + 1, x1 - x0 + 1, 4), dtype=np.uint8)
-        cut[..., :3] = plate_np[y0:y1 + 1, x0:x1 + 1]
+        cut[..., :3] = plate_np_seg[y0:y1 + 1, x0:x1 + 1]
         cut[..., 3] = m * 255
+        ci = Image.fromarray(cut)
+        ci = ci.resize((max(1, round(ci.width * dscale)), max(1, round(ci.height * dscale))), Image.LANCZOS)
         fn = f'{NAME}.fg{inst["id"]}.png'
-        Image.fromarray(cut).save(os.path.join(rooms_dir, fn))
-        fg_meta.append({'img': f'rooms/{fn}', 'x': x0, 'y': y0, 'baseY': inst['baseY'],
+        ci.save(os.path.join(rooms_dir, fn))
+        fg_meta.append({'img': f'rooms/{fn}', 'x': round(x0 * dscale), 'y': round(y0 * dscale),
+                        'baseY': round(inst['baseY'] * dscale),
                         'label': inst['label'], 'kind': inst['kind']})
     json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'fg': fg_meta,
                'instances': [{k: v for k, v in i.items()} for i in instances]},
               open(os.path.join(rooms_dir, f'{NAME}.instances.json'), 'w'))
 
-    # debug overlay
+    return  # debug overlay removed per direction
     dbg = plate.copy()
     dd = ImageDraw.Draw(dbg, 'RGBA')
     red = np.zeros((OUT_H, OUT_W, 4), dtype=np.uint8)
