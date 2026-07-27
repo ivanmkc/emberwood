@@ -118,7 +118,38 @@ def main():
     inst_arr = np.zeros((OUT_H, OUT_W), dtype=np.uint16)  # 0 = background
     instances = []
     iid = 0
-    for sweep, what, blocking in SWEEPS:
+
+    # PRIMARY: NBP-native class mask (nbp_mask.py), if present and gated.
+    nbp_path = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask.png')
+    met_path = os.path.join(ROOT, 'docs', 'art-options', 'nbp-mask-metrics.json')
+    use_nbp = os.path.exists(nbp_path) and os.path.exists(met_path) \
+        and json.load(open(met_path)).get('pass')
+    if use_nbp:
+        import cv2
+        print('using NBP-native class mask (gated: '
+              + json.dumps(json.load(open(met_path))) + ')')
+        CLS = {'building': (255, 0, 0), 'water': (0, 0, 255), 'character': (255, 255, 0),
+               'tank': (0, 255, 255), 'pylon': (255, 128, 0), 'prop': (255, 0, 255),
+               'pipe': (128, 0, 255)}
+        nb = np.asarray(Image.open(nbp_path).convert('RGB').resize((OUT_W, OUT_H), Image.NEAREST)).astype(np.int16)
+        for cname, col in CLS.items():
+            dist = np.linalg.norm(nb - np.array(col, np.int16), axis=2)
+            cmask = (dist < 90).astype(np.uint8)
+            ncc, lab = cv2.connectedComponents(cmask)
+            for ci in range(1, ncc):
+                comp = (lab == ci)
+                if comp.sum() < 800:
+                    continue
+                iid += 1
+                inst_arr[comp & (inst_arr == 0)] = iid
+                ys, xs = np.where(comp)
+                instances.append({'id': iid, 'label': cname, 'kind':
+                                  'character' if cname == 'character' else
+                                  ('water' if cname == 'water' else 'structure'),
+                                  'blocking': cname != 'pipe',  # ground cables walkable-over
+                                  'box': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())],
+                                  'baseY': int(ys.max())})
+    for sweep, what, blocking in ([] if use_nbp else SWEEPS):
         if sweep == 'emissive':
             continue  # emissive derived by HSV threshold below
         print(f'sweep: {sweep}...')
@@ -163,27 +194,37 @@ def main():
                 'box': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())],
                 'baseY': int(ys.max()),
             })
-    # water: deterministic teal-color mask (detection is run-variant; color is not)
+    # water: deterministic teal-color mask (skipped when NBP mask provides water)
+    if use_nbp:
+        water = np.zeros((OUT_H, OUT_W), dtype=bool)
+        for inst in instances:
+            if inst['kind'] == 'water':
+                water |= (inst_arr == inst['id'])
+    # (legacy fallback below only runs without the NBP mask)
     rgbw = plate_np_seg.astype(np.float32) / 255.0
+    if use_nbp:
+        rgbw = rgbw  # keep names defined; water already set above
     mxw = rgbw.max(axis=2)
     mnw = rgbw.min(axis=2)
     satw = np.where(mxw > 0, (mxw - mnw) / np.maximum(mxw, 1e-6), 0)
-    b_dom = (rgbw[..., 2] > rgbw[..., 0] * 1.15) & (rgbw[..., 1] > rgbw[..., 0] * 1.05)
-    water = b_dom & (satw > 0.28) & (mxw > 0.35) & (mxw < 0.95)
-    import cv2 as _cv2
-    wmask = _cv2.morphologyEx(water.astype(np.uint8), _cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
-    n_w, lab_w = _cv2.connectedComponents(wmask)
-    water = np.zeros_like(water)
-    for wi in range(1, n_w):
-        if (lab_w == wi).sum() > 2500:  # keep large water bodies only
-            water |= (lab_w == wi)
-    if water.any():
-        iid += 1
-        inst_arr[water & (inst_arr == 0)] = iid
-        ys, xs = np.where(water)
-        instances.append({'id': iid, 'label': 'canal water', 'kind': 'water', 'blocking': True,
-                          'box': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())],
-                          'baseY': int(ys.max())})
+    if not use_nbp:
+        b_dom = (rgbw[..., 2] > rgbw[..., 0] * 1.15) & (rgbw[..., 1] > rgbw[..., 0] * 1.05)
+        water = b_dom & (satw > 0.28) & (mxw > 0.35) & (mxw < 0.95)
+    if not use_nbp:
+        import cv2 as _cv2
+        wmask = _cv2.morphologyEx(water.astype(np.uint8), _cv2.MORPH_OPEN, np.ones((5, 5), np.uint8))
+        n_w, lab_w = _cv2.connectedComponents(wmask)
+        water = np.zeros_like(water)
+        for wi in range(1, n_w):
+            if (lab_w == wi).sum() > 2500:  # keep large water bodies only
+                water |= (lab_w == wi)
+        if water.any():
+            iid += 1
+            inst_arr[water & (inst_arr == 0)] = iid
+            ys, xs = np.where(water)
+            instances.append({'id': iid, 'label': 'canal water', 'kind': 'water', 'blocking': True,
+                              'box': [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())],
+                              'baseY': int(ys.max())})
     print(f'water pixels: {int(water.sum())}')
 
     # emissive: bright saturated pixels (neon, core, tank glow) by HSV threshold
@@ -261,7 +302,7 @@ def main():
     np.savez_compressed(os.path.join(ROOT, 'tools', 'art-pipeline', f'_srcmasks_{NAME}.npz'),
                         inst=inst_arr, walk=walk_arr, emissive=emissive, water=water)
     json.dump(instances, open(os.path.join(ROOT, 'tools', 'art-pipeline', f'_srcinst_{NAME}.json'), 'w'))
-    dscale = DEV_W / OUT_W
+    dsx, dsy = DEV_W / OUT_W, DEV_H / OUT_H
     plate_np = np.asarray(plate)
     fg_meta = []
     for inst in instances:
@@ -273,11 +314,11 @@ def main():
         cut[..., :3] = plate_np_seg[y0:y1 + 1, x0:x1 + 1]
         cut[..., 3] = m * 255
         ci = Image.fromarray(cut)
-        ci = ci.resize((max(1, round(ci.width * dscale)), max(1, round(ci.height * dscale))), Image.LANCZOS)
+        ci = ci.resize((max(1, round(ci.width * dsx)), max(1, round(ci.height * dsy))), Image.LANCZOS)
         fn = f'{NAME}.fg{inst["id"]}.png'
         ci.save(os.path.join(rooms_dir, fn))
-        fg_meta.append({'img': f'rooms/{fn}', 'x': round(x0 * dscale), 'y': round(y0 * dscale),
-                        'baseY': round(inst['baseY'] * dscale),
+        fg_meta.append({'img': f'rooms/{fn}', 'x': round(x0 * dsx), 'y': round(y0 * dsy),
+                        'baseY': round(inst['baseY'] * dsy),
                         'label': inst['label'], 'kind': inst['kind']})
     json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'fg': fg_meta,
                'instances': [{k: v for k, v in i.items()} for i in instances]},
