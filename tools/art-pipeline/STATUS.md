@@ -239,3 +239,20 @@ silhouette_clean · theme_fit>=7 (assets); flat_plan_view · tileable>=7 (tiles)
   reachability into trigger rect, drop+report), door-ize impossible edges
   (rooftops->observatory stair-door), matrix drive door handling (approach ArrowUp).
   Then: judge sweep all 25, ship, board gallery, NPCs, further expansion (8h window).
+
+## Run 18 (cont) — world x25 shipped state
+- 25 rooms live, 47 wired exits, 26/26 unit tests. Matrix2 drive (BFS-pathing walker,
+  drive_world_matrix2.mjs in job tmp) last full run 56-63/73; remaining fails are a mix of
+  door-mouth corridors (now widened to 11 logical px — rerun matrix to confirm), walker
+  robustness on tight aisles (hydroponics/transit), and 2 flaky maskWalk loads.
+- Adaptive trigger belts (gen_rooms_index): belt depth = where the walkable approach ends,
+  per exit (fixed 48px belts swallowed the anchor west bank and warped bridge-crossers).
+- Anchor drive 7/10 (bridge straight-line rows brittle; crossability proven by matrix2's
+  anchorroom-w->night-bazaar BFS pass; deck-rail check depends on crossing).
+- fix_door_mouths.py: door thresholds carved as CONNECTED corridors to the main component.
+- Engine: maskWalk async-load retry in buildProps; hotspot dialogue on boot handled in all
+  drives (dismiss loop). NPCs moved off the market door lane (Sela 14,16; MARO-7 24,15).
+- NEXT (autonomous continuation): rerun matrix2 full; fix stragglers (walker replan works;
+  remaining no-paths need mouth verification); judge sweep all 25 (verify_rooms.py); board
+  push (sections 24-25 prepared in job tmp artboard.json — verify URLs after Pages deploy);
+  then NPCs/quests for new rooms + wave-3 expansion per Ivan's 8h directive.

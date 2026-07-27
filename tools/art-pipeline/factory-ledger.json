@@ -1,68 +1,70 @@
 {
- "transit-office": {
-  "room": "transit-office",
+ "underworks": {
+  "room": "underworks",
   "stages": {
    "scene": {
     "style_match": 10,
-    "density": 7,
+    "density": 8,
     "perspective_ok": true,
     "character_free": true,
     "walkable_ground": true,
-    "issues": "The central floor area is somewhat bare and lacks the scattered debris, wear, and wiring seen in the anchor.",
+    "issues": "The liquid rendering in the candidate is slightly simpler and less textured than the glowing green liquid in the anchor, but overall style is a very strong match.",
     "pass": true,
-    "attempts": 2
+    "attempts": 1
    },
    "class": {
-    "snap_purity": 0.953,
-    "floor_fraction": 0.266,
-    "edge_alignment": 1.0,
+    "snap_purity": 0.986,
+    "floor_fraction": 0.388,
+    "edge_alignment": 0.996,
     "pass": true
    },
    "walk": {
-    "method": "grid",
-    "snap_purity": 0.978,
-    "walk_fraction": 0.321,
-    "edge_alignment": 1.0,
-    "containment": 1.0,
+    "snap_purity": 0.96,
+    "walk_fraction": 0.224,
+    "edge_alignment": 0.978,
+    "containment": 0.976,
     "pass": true
    },
    "footprint": {
-    "snap_purity": 0.79,
-    "play_purity": 0.962,
-    "footprint_fraction": 0.6,
-    "edge_alignment": 0.281,
-    "nonwalk_containment": 0.787,
-    "walk_conflict": 0.206,
+    "snap_purity": 0.954,
+    "play_purity": 0.935,
+    "footprint_fraction": 0.456,
+    "edge_alignment": 0.99,
+    "nonwalk_containment": 0.796,
+    "walk_conflict": 0.09,
     "bases_only": true,
-    "pass": false,
-    "log": [
-     " \"walk_conflict\": 0.206,",
-     " \"bases_only\": true,",
-     " \"pass\": false",
-     "}"
-    ]
+    "pass": true
    },
    "segment": {
     "pass": true,
     "log": [
-     "auto-spawn at logical (469, 332) (clearance 352px)",
-     "exit edge s: strip 208..399 (logical)",
-     "walkable fraction: 0.30; lattice reachable: 5776; exit reachable: True",
+     "exit edge n: carved corridor to border",
+     "exit edge n: strip 242..293 (logical)",
+     "walkable fraction: 0.40; lattice reachable: 7372; exit reachable: True",
      "config-space: all regions box-reachable (round 0)"
     ]
    },
    "install": {
     "pass": true,
     "island_px": 0,
-    "walk_frac": 0.304,
+    "walk_frac": 0.4,
     "exits": [
      {
-      "edge": "s",
+      "edge": "e",
       "rect": [
-       208,
-       430,
-       399,
-       447
+       622,
+       284,
+       640,
+       334
+      ]
+     },
+     {
+      "edge": "n",
+      "rect": [
+       242,
+       0,
+       293,
+       18
       ]
      }
     ]

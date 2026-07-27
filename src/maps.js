@@ -191,8 +191,8 @@ export const MAPS = {
       { x: ROOM_ANCHORROOM.exit[0], y: ROOM_ANCHORROOM.exit[1], to: 'overworld', tx: 38, ty: 26 },
     ],
     entities: [
-      { kind: 'npc', id: 'scavA', x: 20, y: 14, sprite: 'keeper', name: 'Sela the Scavenger' },
-      { kind: 'npc', id: 'merchant', x: 22, y: 15, sprite: 'merchant', name: 'MARO-7' },
+      { kind: 'npc', id: 'scavA', x: 14, y: 16, sprite: 'keeper', name: 'Sela the Scavenger' },
+      { kind: 'npc', id: 'merchant', x: 24, y: 15, sprite: 'merchant', name: 'MARO-7' },
       { kind: 'npc', id: 'scavB', x: 17, y: 15, sprite: 'villager', name: 'Dorn' },
     ],
   },

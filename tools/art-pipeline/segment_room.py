@@ -645,7 +645,7 @@ def main():
     # connectivity is not traversability (bridge posts leave gaps a box can't
     # thread). Erode by the hitbox; every sizable region must be box-reachable
     # from spawn, else carve a box-wide corridor along a floor-routed path.
-    hb = int(np.ceil(8 * src_per_logical)) + 2
+    hb = int(np.ceil(10 * src_per_logical)) + 2  # comfort clearance beyond the 8px hitbox
     half = hb  # corridors a full hitbox wider than minimum — forgiving lanes
     # pinprick blocked speckles (< ~10x10 logical) enclosed by walkable are
     # mask noise, not object bases — the smallest real prop is ~5x larger
@@ -729,6 +729,107 @@ def main():
         if not carved_any:
             print('config-space: no corridor could be routed; leaving as-is')
             break
+
+    # EXIT MOUTH STUBS: walk masks rarely touch the frame border, so the
+    # trigger strip can sit isolated behind a few blocked rows. Carve a short
+    # forced ramp (the exit threshold at the LLM-located passage) from the
+    # nearest reachable pixel to the border, inside the strip range.
+    if EXITS_OUT:
+        nst, lst = _cvz.connectedComponents(walk_arr.astype(np.uint8))
+        sst = lst[min(OUT_H - 1, sy_px), min(OUT_W - 1, sx_px)]
+        if sst == 0:
+            yss, xss = np.where(walk_arr)
+            if len(yss):
+                ks = ((yss - sy_px) ** 2 + (xss - sx_px) ** 2).argmin()
+                sst = lst[yss[ks], xss[ks]]
+        stub_w = hb + int(8 * src_per_logical)
+        depth_lim = int(60 * src_per_logical)
+        for e in EXITS_OUT:
+            x0e, y0e, x1e, y1e = [int(v * src_per_logical) for v in e['rect']]
+            if e['edge'] in ('n', 's'):
+                xr = slice(max(0, x0e), min(OUT_W, x1e + 1))
+                band = slice(0, depth_lim) if e['edge'] == 'n' else slice(OUT_H - depth_lim, OUT_H)
+                sub = (lst[band, xr] == sst) & (sst > 0)
+                if not sub.any():
+                    continue
+                ys3, xs3 = np.where(sub)
+                pick = ys3.argmin() if e['edge'] == 'n' else ys3.argmax()
+                px3 = xs3[pick] + xr.start
+                py3 = ys3[pick] + band.start
+                yb = 0 if e['edge'] == 'n' else OUT_H
+                y_lo, y_hi = (0, py3 + stub_w) if e['edge'] == 'n' else (py3 - stub_w, OUT_H)
+                walk_arr[max(0, y_lo):min(OUT_H, y_hi),
+                         max(0, px3 - stub_w // 2):min(OUT_W, px3 + stub_w // 2)] = True
+            else:
+                yr = slice(max(0, y0e), min(OUT_H, y1e + 1))
+                band = slice(0, depth_lim) if e['edge'] == 'w' else slice(OUT_W - depth_lim, OUT_W)
+                sub = (lst[yr, band] == sst) & (sst > 0)
+                if not sub.any():
+                    continue
+                ys3, xs3 = np.where(sub)
+                pick = xs3.argmin() if e['edge'] == 'w' else xs3.argmax()
+                py3 = ys3[pick] + yr.start
+                px3 = xs3[pick] + band.start
+                x_lo, x_hi = (0, px3 + stub_w) if e['edge'] == 'w' else (px3 - stub_w, OUT_W)
+                walk_arr[max(0, py3 - stub_w // 2):min(OUT_H, py3 + stub_w // 2),
+                         max(0, x_lo):min(OUT_W, x_hi)] = True
+            print(f'exit edge {e["edge"]}: mouth stub carved to border')
+        # narrow each exit rect to the columns/rows that actually reach the
+        # border zone — a whole-edge rect makes center approaches stall
+        deep = int(8 + 14 * src_per_logical)
+        for e in EXITS_OUT:
+            if e['edge'] == 'n':
+                bandd = walk_arr[8:deep, :]
+                okd = np.where(bandd.any(axis=0))[0]
+            elif e['edge'] == 's':
+                bandd = walk_arr[OUT_H - deep:OUT_H - 8, :]
+                okd = np.where(bandd.any(axis=0))[0]
+            elif e['edge'] == 'w':
+                bandd = walk_arr[:, 8:deep]
+                okd = np.where(bandd.any(axis=1))[0]
+            else:
+                bandd = walk_arr[:, OUT_W - deep:OUT_W - 8]
+                okd = np.where(bandd.any(axis=1))[0]
+            if len(okd) == 0:
+                continue
+            lo2, hi2 = int(okd.min() / src_per_logical), int(okd.max() / src_per_logical)
+            r0 = e['rect']
+            if e['edge'] in ('n', 's'):
+                e['rect'] = [lo2, r0[1], hi2, r0[3]]
+            else:
+                e['rect'] = [r0[0], lo2, r0[2], hi2]
+            print(f'exit edge {e["edge"]}: rect narrowed to {lo2}..{hi2}')
+
+    # EXIT VALIDITY: an exit is real only if the player box can reach its
+    # trigger strip from spawn; phantom exits are dropped and reported
+    if EXITS_OUT:
+        freeV = _cvz.erode(walk_arr.astype(np.uint8), np.ones((hb, hb), np.uint8)).astype(bool)
+        nfv, lfv = _cvz.connectedComponents(freeV.astype(np.uint8))
+        sidv = lfv[min(OUT_H - 1, sy_px), min(OUT_W - 1, sx_px)]
+        if sidv == 0:
+            ysv, xsv = np.where(freeV)
+            if len(ysv):
+                kv = ((ysv - sy_px) ** 2 + (xsv - sx_px) ** 2).argmin()
+                sidv = lfv[ysv[kv], xsv[kv]]
+        kept = []
+        for e in EXITS_OUT:
+            x0e, y0e, x1e, y1e = [int(v * src_per_logical) for v in e['rect']]
+            # widen the probe band inward: the player stands NEAR the strip
+            pad_in = int(26 * src_per_logical)
+            if e['edge'] == 'n':
+                y1e += pad_in
+            elif e['edge'] == 's':
+                y0e -= pad_in
+            elif e['edge'] == 'w':
+                x1e += pad_in
+            else:
+                x0e -= pad_in
+            zone = lfv[max(0, y0e):min(OUT_H, y1e + 1), max(0, x0e):min(OUT_W, x1e + 1)]
+            if sidv > 0 and (zone == sidv).any():
+                kept.append(e)
+            else:
+                print(f'exit edge {e["edge"]}: PHANTOM (strip not box-reachable) — dropped')
+        EXITS_OUT[:] = kept
 
     # outputs — masks computed at source res, saved at device res (1280x896)
     DEV_W, DEV_H = 1280, 896

@@ -213,6 +213,12 @@ export function createGame(canvas, input, art) {
       g.fgCuts = [];
       const maskImg = art.roomMasks && art.roomMasks[g.mapId];
       const data = art.roomData && art.roomData[g.mapId];
+      if (!maskImg) {
+        // collision image still loading: retry so per-pixel masks replace
+        // the coarse tile fallback as soon as the asset lands
+        const id = g.mapId;
+        setTimeout(() => { if (g.mapId === id && art.roomMasks[id]) buildProps(); }, 300);
+      }
       if (maskImg) {
         const W2 = g.grid[0].length * T, H2 = g.grid.length * T;
         const mc = document.createElement('canvas');

@@ -111,12 +111,12 @@
   {
    "to": "control-room",
    "rect": [
-    0,
-    0,
-    125,
-    119
+    1,
+    319,
+    127,
+    442
    ],
-   "what": "doorway/entrance"
+   "what": "painted doorway"
   }
  ],
  "repair-bay": [

@@ -1,1 +1,1 @@
-{"snap_purity": 0.949, "play_purity": 0.933, "footprint_fraction": 0.43, "edge_alignment": 0.953, "nonwalk_containment": 0.753, "walk_conflict": 0.099, "bases_only": true, "pass": true}
+{"snap_purity": 0.954, "play_purity": 0.935, "footprint_fraction": 0.456, "edge_alignment": 0.99, "nonwalk_containment": 0.796, "walk_conflict": 0.09, "bases_only": true, "pass": true}

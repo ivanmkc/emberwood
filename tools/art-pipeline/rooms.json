@@ -20,7 +20,6 @@
       "brief": "a dense covered market alley: market stalls with patched fabric awnings, strings of hanging lanterns, a noodle counter with steam, stacked crates of produce and parts, neon signs in an invented script, puddles reflecting the lights, narrow walking lanes between the stalls",
       "exits": {
         "w": "gate-wall",
-        "s": "residential",
         "e": "anchorroom"
       }
     },
@@ -44,7 +43,6 @@
       "brief": "a courtyard between stacked modular homes: prefab housing units stacked two and three high with external metal stairs, laundry lines with clothes between units, mailbox clusters, potted plants on landings, a small shared courtyard with benches and a water spigot",
       "exits": {
         "s": "canal-docks",
-        "n": "night-bazaar",
         "e": "rooftops"
       }
     },
