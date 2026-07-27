@@ -32,6 +32,8 @@ const TILE_ART = {
   'V': 'overgrowth', 'G': 'domefloor',
 };
 
+const DISPLAY_FONT = '8px PixelDisplay, monospace';
+
 const NPC_ART = {
   elder: 'chief', merchant: 'trader', fisherman: 'angler', villager: 'settler',
   keeper: 'keeper', mara: 'settler',
@@ -134,7 +136,30 @@ export function createGame(canvas, input, art) {
     time: 0,
     deadTimer: 0,
     winShown: false,
+    hitStop: 0,
+    shake: 0,
   };
+  const walkFrames = {}; // dir -> [frameA, frameB] synthesized leg-step canvases
+
+  function stepFrames(im, dir) {
+    if (walkFrames[dir]) return walkFrames[dir];
+    const w = im.width, h = im.height;
+    const legs = Math.round(h * 0.3);
+    const mk = (leftUp) => {
+      const c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      const cc = c.getContext('2d');
+      cc.drawImage(im, 0, 0);
+      cc.clearRect(0, h - legs, w, legs);
+      const half = Math.floor(w / 2);
+      cc.drawImage(im, 0, h - legs, half, legs, 0, h - legs - (leftUp ? 2 : 0), half, legs);
+      cc.drawImage(im, half, h - legs, w - half, legs, half, h - legs - (leftUp ? 0 : 2), w - half, legs);
+      return c;
+    };
+    walkFrames[dir] = [mk(true), mk(false)];
+    return walkFrames[dir];
+  }
 
   // ---------- persistence ----------
 
@@ -413,6 +438,7 @@ export function createGame(canvas, input, art) {
     g.quest.hearts -= 1;
     g.player.invuln = 1.0;
     g.hurtFlash = 0.6;
+    g.shake = 0.3;
     const ang = Math.atan2(g.player.y - from.y, g.player.x - from.x);
     g.player.kx = Math.cos(ang) * 130;
     g.player.ky = Math.sin(ang) * 130;
@@ -499,6 +525,13 @@ export function createGame(canvas, input, art) {
       return;
     }
 
+    if (g.hitStop > 0) {
+      g.hitStop -= dt;
+      updateParticles(dt);
+      return;
+    }
+    g.shake = Math.max(0, g.shake - dt * 1.4);
+
     const p = g.player;
 
     let dx = 0, dy = 0;
@@ -545,7 +578,12 @@ export function createGame(canvas, input, art) {
           e.ky = Math.sin(ang) * 160;
           sfx.hit();
           burst(e.x + size / 2, e.y + size / 2, '#fff7d6', 5);
-          if (e.hp <= 0) killEnemy(e);
+          g.hitStop = 0.04;
+          if (e.type === 'boss') g.shake = Math.max(g.shake, 0.18);
+          if (e.hp <= 0) {
+            g.hitStop = 0.08;
+            killEnemy(e);
+          }
         }
       }
     }
@@ -702,6 +740,11 @@ export function createGame(canvas, input, art) {
       }
     }
 
+    // screen shake: offset the camera itself so every layer moves together
+    const shx = Math.round(Math.sin(g.time * 91) * 3 * g.shake);
+    const shy = Math.round(Math.cos(g.time * 83) * 3 * g.shake);
+    g.cam.x += shx;
+    g.cam.y += shy;
     const cx = g.cam.x, cy = g.cam.y;
     const x0 = Math.max(0, Math.floor(cx / T));
     const y0 = Math.max(0, Math.floor(cy / T));
@@ -723,7 +766,13 @@ export function createGame(canvas, input, art) {
         else if (ch === 'o') drawPad(lx, ly);
         else if (ch === 'C') drawCaveMouth(lx, ly);
         else drawClutter(ch, lx, ly, tx, ty);
-        if (ch === '~') drawShoreline(lx, ly, tx, ty);
+        if (ch === '~') {
+          drawShoreline(lx, ly, tx, ty);
+          // drifting ripple highlight
+          const ry = (g.time * 4 + ((tx * 7 + ty * 13) % 16)) % 16;
+          ctx.fillStyle = 'rgba(120, 220, 220, 0.10)';
+          ctx.fillRect(lx + 2 + ((tx * 3) % 5), ly + ry, 9, 1);
+        }
       }
     }
 
@@ -759,13 +808,28 @@ export function createGame(canvas, input, art) {
     }
 
     if (g.player.attack > 0) {
-      const p = facingPoint();
-      ctx.strokeStyle = 'rgba(160, 240, 255, 0.9)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
       const base = { up: -Math.PI / 2, down: Math.PI / 2, left: Math.PI, right: 0 }[g.player.dir];
       const prog = 1 - g.player.attack / 0.22;
-      ctx.arc(g.player.x + 8 - cx, g.player.y + 11 - cy, 13, base - 1.1 + prog * 0.9, base + 0.2 + prog * 0.9);
+      const ax = g.player.x + 8 - cx, ay = g.player.y + 11 - cy;
+      ctx.globalCompositeOperation = 'lighter';
+      // afterimage trail
+      ctx.strokeStyle = 'rgba(90, 190, 220, 0.25)';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(ax, ay, 13, base - 1.1 + Math.max(0, prog - 0.22) * 0.9, base + 0.2 + Math.max(0, prog - 0.22) * 0.9);
+      ctx.stroke();
+      // glow arc
+      ctx.strokeStyle = 'rgba(120, 230, 255, 0.4)';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(ax, ay, 13, base - 1.1 + prog * 0.9, base + 0.2 + prog * 0.9);
+      ctx.stroke();
+      ctx.globalCompositeOperation = 'source-over';
+      // bright core
+      ctx.strokeStyle = 'rgba(235, 255, 255, 0.95)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(ax, ay, 13, base - 1.1 + prog * 0.9, base + 0.2 + prog * 0.9);
       ctx.stroke();
     }
 
@@ -801,6 +865,8 @@ export function createGame(canvas, input, art) {
       duskPass(cx, cy, x0, y0, x1, y1);
     }
 
+    g.cam.x -= shx;
+    g.cam.y -= shy;
     drawHud();
     if (g.mode === 'dialogue') drawDialogue();
     if (g.mode === 'title') drawTitle();
@@ -812,11 +878,11 @@ export function createGame(canvas, input, art) {
   function drawJournal() {
     overlay(0.78);
     plate(10, 14, VIEW_W - 20, VIEW_H - 34);
-    centerText('FIELD JOURNAL', 24, '#ffb347', 'bold 12px monospace');
+    centerText('FIELD JOURNAL', 22, '#ffb347', '10px PixelDisplay, monospace');
     let y = 46;
     for (const [title, status] of questJournal(g.quest)) {
       const done = status.startsWith('done');
-      text(title, 22, y, done ? '#7dd6a8' : '#4ac0c0', 'bold 8px monospace');
+      text(title, 22, y, done ? '#7dd6a8' : '#4ac0c0', '7px PixelDisplay, monospace');
       const wrapped = status.match(/.{1,52}( |$)/g) || [status];
       for (const line of wrapped) {
         y += 10;
@@ -1106,8 +1172,18 @@ export function createGame(canvas, input, art) {
       const im = art.chars[e.def.art];
       dy = Math.round(Math.sin(e.anim) * (e.type === 'bat' ? 3 : 1));
       if (im && im.width) {
-        const w = im.width / DS, h = im.height / DS;
-        drawArt(im, Math.round(e.x + e.def.size / 2 - w / 2 - cx), Math.round(e.y + e.def.size - h - cy + dy));
+        let w = im.width / DS, h = im.height / DS;
+        let jx = 0;
+        if (e.type === 'slime' || e.type === 'boss') {
+          // sludge squash & stretch, volume-ish preserved
+          const s = 1 + Math.sin(e.anim * (e.type === 'boss' ? 1.4 : 2.2)) * 0.06;
+          w *= 2 - s;
+          h *= s;
+          dy = 0;
+        } else if (e.type === 'bat') {
+          jx = Math.round(Math.sin(e.anim * 9)); // rotor jitter
+        }
+        drawArt(im, Math.round(e.x + e.def.size / 2 - w / 2 - cx + jx), Math.round(e.y + e.def.size - h - cy + dy), w, h);
         return;
       }
       img = cache.sprites[e.def.sprite];
@@ -1123,12 +1199,17 @@ export function createGame(canvas, input, art) {
   function drawPlayer() {
     const p = g.player;
     if (p.invuln > 0 && Math.floor(p.invuln * 14) % 2 === 0) return;
-    const bob = p.moving ? Math.round(Math.sin(p.anim) * 1) : 0;
     const a = art.chars.player;
     if (a && a[p.dir]) {
-      drawCharArt(a[p.dir], p.x, p.y, bob);
+      if (p.moving) {
+        const frames = stepFrames(a[p.dir], p.dir);
+        drawCharArt(frames[Math.floor(p.anim * 0.9) % 2], p.x, p.y, 0);
+      } else {
+        drawCharArt(a[p.dir], p.x, p.y, 0);
+      }
       return;
     }
+    const bob = p.moving ? Math.round(Math.sin(p.anim) * 1) : 0;
     ctx.drawImage(cache.sprites[`player:${p.dir}`], Math.round(p.x - g.cam.x), Math.round(p.y - g.cam.y + bob));
   }
 
@@ -1164,7 +1245,7 @@ export function createGame(canvas, input, art) {
     }
     ctx.globalAlpha = 1;
     ctx.drawImage(cache.sprites.coin, 6, 15);
-    text(`${g.quest.coins}`, 21, 20, '#f4e4b8', 'bold 8px monospace');
+    text(`${g.quest.coins}`, 21, 20, '#f4e4b8', '8px PixelDisplay, monospace');
 
     // right plate: cell sockets + key items
     const rw = 62;
@@ -1208,12 +1289,13 @@ export function createGame(canvas, input, art) {
     ctx.lineWidth = 1;
     ctx.strokeRect(8.5, y + 2.5, VIEW_W - 17, h - 5);
     if (d.speaker) {
-      const nw = d.speaker.length * 5 + 12;
+      ctx.font = '7px PixelDisplay, monospace';
+      const nw = Math.ceil(ctx.measureText(d.speaker).width) + 14;
       ctx.fillStyle = 'rgba(8, 11, 19, 1)';
       ctx.fillRect(14, y - 8, nw, 12);
       ctx.strokeStyle = 'rgba(255, 179, 71, 0.8)';
       ctx.strokeRect(14.5, y - 7.5, nw - 1, 11);
-      text(d.speaker, 20, y - 6, '#ffb347', 'bold 8px monospace');
+      text(d.speaker, 20, y - 6, '#ffb347', '7px PixelDisplay, monospace');
     }
     let budget = Math.floor(d.chars);
     lines.forEach((line, i) => {
@@ -1257,7 +1339,7 @@ export function createGame(canvas, input, art) {
     }
     // logotype: ember gradient with glow + hard shadow
     ctx.save();
-    ctx.font = 'bold 24px monospace';
+    ctx.font = '22px PixelDisplay, monospace';
     ctx.textBaseline = 'top';
     const title = 'EMBERWOOD';
     const tw = ctx.measureText(title).width;
@@ -1282,21 +1364,29 @@ export function createGame(canvas, input, art) {
 
     const pulse = 0.55 + 0.45 * Math.sin(g.time * 3);
     ctx.globalAlpha = pulse;
-    centerText('- PRESS SPACE TO BEGIN -', 174, '#ffb347', 'bold 9px monospace');
+    centerText('- PRESS SPACE TO BEGIN -', 174, '#ffb347', '8px PixelDisplay, monospace');
     ctx.globalAlpha = 1;
   }
 
   function drawDead() {
     overlay(0.7);
     plate(VIEW_W / 2 - 100, 86, 200, 56);
-    centerText('SYSTEMS FAILING...', 100, '#e64539', 'bold 12px monospace');
+    centerText('SYSTEMS FAILING...', 98, '#e64539', '10px PixelDisplay, monospace');
     centerText('The settlers drag you back to Emberwood.', 124);
   }
 
   function drawWin() {
     overlay(0.72);
+    // rising embers behind the panel — the beacon is alive again
+    for (let i = 0; i < 18; i++) {
+      const seed = i * 97.3;
+      const py = ((seed * 5 - g.time * (10 + (i % 5) * 4)) % 260 + 260) % 260 - 10;
+      const px = (seed % VIEW_W) + Math.sin(g.time + i) * 8;
+      ctx.fillStyle = i % 3 === 0 ? 'rgba(255, 190, 90, 0.55)' : 'rgba(230, 100, 60, 0.4)';
+      ctx.fillRect(px, VIEW_H - py, i % 4 === 0 ? 2 : 1.5, i % 4 === 0 ? 2 : 1.5);
+    }
     plate(VIEW_W / 2 - 110, 48, 220, 118);
-    centerText('THE SIGNAL BURNS AGAIN!', 62, '#ffb347', 'bold 12px monospace');
+    centerText('THE SIGNAL BURNS AGAIN!', 60, '#ffb347', '9px PixelDisplay, monospace');
     centerText('Emberwood is safe. You are its hero.', 86);
     const m = Math.floor(g.time / 60), s = Math.floor(g.time % 60);
     centerText(`time ${m}m ${s}s   scrap ${g.quest.coins}   foes ${g.quest.kills}`, 110, '#c5c9d4');
