@@ -277,3 +277,26 @@ painted door boxes may not match carved mouths), (2) walker: longer taps + alway
   at boot with 25 rooms; race already mitigated by buildProps retry), enemies render 1x in
   plate rooms (no plate-room enemies yet), moveBoss 5-point sampling tunnelable through
   <=18px pillars (no plate bosses yet), exit-rect-overlaps-walkable gate in gen_rooms_index.
+
+## Run 19 — Ivan directive: "keep going. Exploration, unlocking areas"
+DESIGN (decided): gated exploration via lockable exits + flag-granting interactions.
+- Engine: plateExits gain optional lock {flag, msg[]}; update() checks g.quest.flags[flag]
+  before warping, else opens dialogue with msg (once per approach). Hotspots gain optional
+  grant {flag, msg[]}: examining sets the flag (one-shot). Journal: visited-rooms list +
+  exploration % (g.quest.visited set on loadMap).
+- Content chain (rooms.json "locks" section -> gen_rooms_index bakes into exits):
+  1. gate-wall w->outskirts LOCKED by flag hasGatePass; granted by guard-post desk hotspot
+     ("SECURITY DESK: a stamped travel permit").
+  2. underworks door->pump-station LOCKED by hasMaintKey; granted in repair-office (parts
+     shelf hotspot).
+  3. underworks e->power-plant LOCKED by hasPlantAccess; granted by control-room... circular
+     (control-room is inside power-plant) -> instead grant in transit-office (transit
+     authority pass).
+  4. rooftops n->observatory LOCKED by hasScopeInvite; granted by observatory... no ->
+     granted by noodle-bar cook hotspot (the astronomer's regular table / note).
+  Locks must never orphan rooms: verify graph connectivity treating locked edges as absent
+  EXCEPT via their grant room (grant room must be reachable without the flag) — add check
+  to gen_rooms_index.
+- Drives: matrix2 must learn locks (expect blocked-then-message without flag; set flag via
+  __ew.quest.flags and re-cross). Add exploration journal check.
+STATE: engine lock+grant+visited implementation IN PROGRESS this run; content wiring next.
