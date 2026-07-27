@@ -6,6 +6,7 @@
 // (shards/coins/hearts) — they are engine currency; only the fiction changed.
 
 export const HEART_PRICE = 10;
+export const CAPACITOR_PRICE = 30;
 
 export function newQuestState() {
   return {
@@ -125,7 +126,19 @@ export function npcDialogue(id, state) {
         }
         return { lines: [`MARO-7: A genuine Vitality Module! Yours for ${HEART_PRICE} scrap. Caches and sludge, friend — the wastes provide.`] };
       }
-      return { lines: ['MARO-7: Best customer this cycle. Alas, that was my only Vitality Module.'] };
+      if (!f.boughtDamage) {
+        if (state.coins >= CAPACITOR_PRICE) {
+          return {
+            lines: [
+              `MARO-7: For the discerning survivor: an ARC CAPACITOR, ${CAPACITOR_PRICE} scrap. Doubles your cutter's discharge.`,
+              'Your arc-cutter hums with twice the charge. Slash damage +1.',
+            ],
+            effects: { coins: -CAPACITOR_PRICE, set: { boughtDamage: true } },
+          };
+        }
+        return { lines: [`MARO-7: Save your scrap — ${CAPACITOR_PRICE} buys an Arc Capacitor. Your cutter would hit twice as hard. The big one in the mine would notice.`] };
+      }
+      return { lines: ['MARO-7: Best customer this cycle. My shelves are bare and my ledger sings.'] };
 
     case 'villager':
       if (f.petFound && !f.petReturned) {

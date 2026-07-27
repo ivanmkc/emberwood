@@ -49,7 +49,7 @@ test('full quest line end to end', () => {
   assert.match(talk(s, 'elder').lines[0], /burns again/i);
 });
 
-test('merchant sells exactly one heart container for 10 coins', () => {
+test('merchant sells one heart container, then one arc capacitor', () => {
   const s = newQuestState();
   talk(s, 'merchant');
   assert.equal(s.maxHearts, 3, 'no sale when broke');
@@ -62,10 +62,18 @@ test('merchant sells exactly one heart container for 10 coins', () => {
   assert.equal(s.coins, 2);
   assert.ok(s.flags.boughtHeart);
 
-  s.coins = 50;
+  // second sink: arc capacitor pitch when broke, sale at 30+
+  assert.match(talk(s, 'merchant').lines[0], /Arc Capacitor/i);
+  assert.ok(!s.flags.boughtDamage);
+  s.coins = 35;
   talk(s, 'merchant');
-  assert.equal(s.maxHearts, 4, 'only one container in stock');
-  assert.equal(s.coins, 50);
+  assert.ok(s.flags.boughtDamage, 'capacitor purchased');
+  assert.equal(s.coins, 5);
+
+  s.coins = 90;
+  talk(s, 'merchant');
+  assert.equal(s.coins, 90, 'shelves bare after both purchases');
+  assert.equal(s.maxHearts, 4);
 });
 
 test('Bolt side quest: find in the dome, return to Pip', () => {

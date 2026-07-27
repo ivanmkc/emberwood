@@ -20,7 +20,7 @@ const SAVE_KEY = 'emberwood-save-v2';
 const ENEMY_DEFS = {
   slime: { hp: 2, speed: 22, chaseSpeed: 36, aggroR: 90, sprite: 'slime', art: 'sludge', size: 16 },
   bat: { hp: 1, speed: 30, chaseSpeed: 56, aggroR: 110, sprite: 'bat', art: 'drone', size: 16 },
-  boss: { hp: 8, speed: 20, chaseSpeed: 30, aggroR: 220, sprite: 'boss', art: 'boss', size: 32 },
+  boss: { hp: 10, speed: 20, chaseSpeed: 30, aggroR: 220, sprite: 'boss', art: 'boss', size: 32 },
 };
 
 // map tile char -> art tile name (null = keep procedural)
@@ -383,6 +383,9 @@ export function createGame(canvas, input, art) {
 
   function doInteract(e) {
     if (e.kind === 'npc') {
+      // turn to face the player
+      const ddx = g.player.x - e.x, ddy = g.player.y - e.y;
+      e.face = Math.abs(ddx) > Math.abs(ddy) ? (ddx < 0 ? 'left' : 'right') : (ddy < 0 ? 'up' : 'down');
       openDialogue(npcDialogue(e.id, g.quest));
     } else if (e.kind === 'sign') {
       openDialogue({ lines: e.text });
@@ -571,7 +574,7 @@ export function createGame(canvas, input, art) {
         const size = e.def.size;
         if (aabb(hb.x, hb.y, hb.w, hb.h, e.x, e.y, size, size)) {
           e.lastSwing = p.swing;
-          e.hp -= 1;
+          e.hp -= g.quest.flags.boughtDamage ? 2 : 1;
           e.invuln = 0.25;
           const ang = Math.atan2(e.y - p.y, e.x - p.x);
           e.kx = Math.cos(ang) * 160;
@@ -825,8 +828,8 @@ export function createGame(canvas, input, art) {
       ctx.arc(ax, ay, 13, base - 1.1 + prog * 0.9, base + 0.2 + prog * 0.9);
       ctx.stroke();
       ctx.globalCompositeOperation = 'source-over';
-      // bright core
-      ctx.strokeStyle = 'rgba(235, 255, 255, 0.95)';
+      // bright core (amber when the Arc Capacitor is fitted)
+      ctx.strokeStyle = g.quest.flags.boughtDamage ? 'rgba(255, 214, 140, 0.95)' : 'rgba(235, 255, 255, 0.95)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.arc(ax, ay, 13, base - 1.1 + prog * 0.9, base + 0.2 + prog * 0.9);
@@ -879,16 +882,28 @@ export function createGame(canvas, input, art) {
     overlay(0.78);
     plate(10, 14, VIEW_W - 20, VIEW_H - 34);
     centerText('FIELD JOURNAL', 22, '#ffb347', '10px PixelDisplay, monospace');
-    let y = 46;
+    let y = 42;
     for (const [title, status] of questJournal(g.quest)) {
       const done = status.startsWith('done');
+      const locked = status.startsWith('locked');
       text(title, 22, y, done ? '#7dd6a8' : '#4ac0c0', '7px PixelDisplay, monospace');
+      // status chip, right-aligned
+      const chip = done ? 'DONE' : locked ? 'LOCKED' : 'ACTIVE';
+      const cc = done ? '#7dd6a8' : locked ? '#6b7286' : '#ffb347';
+      ctx.font = '6px PixelDisplay, monospace';
+      const cw2 = ctx.measureText(chip).width + 12;
+      ctx.fillStyle = 'rgba(0,0,0,0.5)';
+      ctx.fillRect(VIEW_W - 24 - cw2, y - 2, cw2, 10);
+      ctx.strokeStyle = cc;
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(VIEW_W - 24 - cw2 + 0.25, y - 1.75, cw2 - 0.5, 9.5);
+      text(chip, VIEW_W - 20 - cw2 + 4, y, cc, '6px PixelDisplay, monospace');
       const wrapped = status.match(/.{1,52}( |$)/g) || [status];
       for (const line of wrapped) {
         y += 10;
         text(line.trim(), 30, y, done ? '#9a9aa2' : '#f4f4f4');
       }
-      y += 16;
+      y += 15;
     }
     centerText('J / Space: close    M: music', VIEW_H - 14, '#9a9aa2');
   }
@@ -1063,10 +1078,11 @@ export function createGame(canvas, input, art) {
   }
 
   function drawPad(lx, ly) {
-    ctx.strokeStyle = 'rgba(255, 190, 110, 0.7)';
+    const pulse = 0.45 + 0.3 * Math.sin(g.time * 2.5 + lx * 0.3 + ly * 0.2);
+    ctx.strokeStyle = `rgba(255, 190, 110, ${pulse})`;
     ctx.lineWidth = 1;
     ctx.strokeRect(lx + 2.5, ly + 2.5, 11, 11);
-    ctx.fillStyle = 'rgba(255, 190, 110, 0.35)';
+    ctx.fillStyle = `rgba(255, 190, 110, ${pulse * 0.55})`;
     ctx.fillRect(lx + 6, ly + 6, 4, 4);
   }
 
@@ -1118,18 +1134,34 @@ export function createGame(canvas, input, art) {
     let dy = 0;
     if (e.kind === 'npc') {
       const a = art.chars[NPC_ART[e.id]];
-      const im = a && (a.down || a);
+      const im = a && ((e.face && a[e.face]) || a.down || a);
       if (im && im.width) {
         drawCharArt(im, e.x, e.y);
         return;
       }
-      img = cache.sprites[`${e.sprite}:down`];
+      img = cache.sprites[`${e.sprite}:${e.face || 'down'}`] || cache.sprites[`${e.sprite}:down`];
     } else if (e.kind === 'sign') img = cache.sprites.sign;
     else if (e.kind === 'beacon') {
       const im = art.props.beacon;
       if (im) {
         const w = im.width / DS, h = im.height / DS;
-        drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 16 - h - cy));
+        const bx2 = Math.round(e.x + 8 - w / 2 - cx), by2 = Math.round(e.y + 16 - h - cy);
+        drawArt(im, bx2, by2);
+        ctx.globalCompositeOperation = 'lighter';
+        if (g.quest.flags.beaconLit) {
+          // living core pulse
+          const a2 = 0.25 + 0.15 * Math.sin(g.time * 5);
+          const gr2 = ctx.createRadialGradient(bx2 + w / 2, by2 + h * 0.45, 1, bx2 + w / 2, by2 + h * 0.45, 12);
+          gr2.addColorStop(0, `rgba(255, 200, 90, ${a2})`);
+          gr2.addColorStop(1, 'rgba(255, 200, 90, 0)');
+          ctx.fillStyle = gr2;
+          ctx.fillRect(bx2, by2, w, h);
+        } else if (Math.floor(g.time * 1.2) % 4 === 0) {
+          // cold beacon: slow red distress blink
+          ctx.fillStyle = 'rgba(230, 60, 50, 0.7)';
+          ctx.fillRect(bx2 + w / 2 - 1, by2 + 2, 2, 2);
+        }
+        ctx.globalCompositeOperation = 'source-over';
         return;
       }
       img = cache.sprites[g.quest.flags.beaconLit ? 'beaconLit' : 'beacon'];
@@ -1160,10 +1192,15 @@ export function createGame(canvas, input, art) {
       const im = art.props.chest;
       if (im) {
         const opened = g.quest.opened[e.id];
-        if (opened) ctx.filter = 'brightness(0.55)';
+        if (opened) ctx.filter = 'brightness(0.75)';
         const w = im.width / DS, h = im.height / DS;
-        drawArt(im, Math.round(e.x + 8 - w / 2 - cx), Math.round(e.y + 16 - h - cy));
+        const chx = Math.round(e.x + 8 - w / 2 - cx), chy = Math.round(e.y + 16 - h - cy);
+        drawArt(im, chx, chy);
         ctx.filter = 'none';
+        if (opened) { // gaping empty slot: clearly looted
+          ctx.fillStyle = 'rgba(4, 6, 10, 0.85)';
+          ctx.fillRect(chx + 2, chy + 3, w - 4, 4);
+        }
         return;
       }
       img = cache.sprites[g.quest.opened[e.id] ? 'chestOpen' : 'chestClosed'];
@@ -1357,10 +1394,15 @@ export function createGame(canvas, input, art) {
     ctx.restore();
     centerText('the signal has gone dark', 84, '#8fd0d0', '8px monospace');
 
-    plate(VIEW_W / 2 - 78, 112, 156, 44);
-    centerText('Arrows / WASD   move', 118, '#c5c9d4');
-    centerText('Space   talk - open - attack', 130, '#c5c9d4');
-    centerText('J  journal        M  music', 142, '#c5c9d4');
+    plate(VIEW_W / 2 - 82, 108, 164, 52);
+    const rows = [['WASD', 'move'], ['SPACE', 'talk / open / attack'], ['J / M', 'journal / music']];
+    rows.forEach(([k, v], i) => {
+      const ry = 115 + i * 13;
+      ctx.font = '7px PixelDisplay, monospace';
+      const kw = ctx.measureText(k).width;
+      text(k, VIEW_W / 2 - 24 - kw, ry, '#ffb347', '7px PixelDisplay, monospace');
+      text(v, VIEW_W / 2 - 14, ry + 1, '#c5c9d4');
+    });
 
     const pulse = 0.55 + 0.45 * Math.sin(g.time * 3);
     ctx.globalAlpha = pulse;
