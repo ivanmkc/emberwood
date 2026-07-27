@@ -241,6 +241,36 @@ export function itemPickup(id) {
   return { lines: ['You pick it up.'] };
 }
 
+// Quest journal — pure render of quest state, drawn by the J-key overlay.
+export function questJournal(state) {
+  const f = state.flags;
+  const lines = [];
+  lines.push(['MAIN — REIGNITE THE BEACON',
+    f.beaconLit ? 'done. The signal burns again.'
+      : `${state.shards} of 3 Ember Cells found. ` + (state.shards >= 3 ? 'Take them to the beacon!' : 'Overgrowth maze - canal isle - foundry.')]);
+  if (!f.gaveRing) {
+    lines.push(['BEA\'S RING',
+      f.hasRing ? 'Return the ring to Old Finn on the shore.'
+        : 'Old Finn lost his wife\'s ring in the shore dust. He\'d trade the foundry keycard for it.']);
+  } else {
+    lines.push(['BEA\'S RING', 'done. Finn traded you the foundry keycard.']);
+  }
+  lines.push(['BOLT COME HOME',
+    f.petReturned ? 'done. Bolt hovers beside Pip again.'
+      : f.petFound ? 'Bolt follows you. Take it home to Pip.'
+        : 'Pip\'s pet drone chased a glow into the Eden Shelf overgrowth.']);
+  lines.push(['THE CANAL FILTER',
+    f.filterGiven ? 'done. Finn\'s pump runs clean.'
+      : f.filterPart ? 'Bring the pump filter to Old Finn.'
+        : f.hasCaveKey ? 'A spare pump filter waits in the foundry\'s lower gallery.'
+          : 'locked - Finn will mention it once you hold the keycard.']);
+  const logs = (f.log1 ? 1 : 0) + (f.log2 ? 1 : 0) + (f.log3 ? 1 : 0);
+  lines.push(['THE ARCHIVE LOGS',
+    f.logsDone ? 'done. Rowan knows the truth of the Quiet.'
+      : `${logs} of 3 terminals read. ` + (logs >= 3 ? 'Tell Overseer Rowan.' : 'Eden Shelf - foundry gallery - the Harroways\'.')]);
+  return lines;
+}
+
 export const INTRO_LINES = [
   'TRANSMISSION — OVERSEER ROWAN, EMBERWOOD LANDING:',
   '"Engineer. The beacon died at dusk — all three Ember Cells gone. The dark out here has teeth. Find my office in the plaza habitat. Please hurry."',

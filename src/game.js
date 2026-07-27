@@ -8,8 +8,9 @@ import { MAPS, START, buildGrid } from './maps.js';
 import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, chestLootLines,
-  terminalText, itemPickup, INTRO_LINES,
+  terminalText, itemPickup, INTRO_LINES, questJournal,
 } from './quest.js';
+import { createMusic } from './music.js';
 
 const VIEW_W = 320;
 const VIEW_H = 240;
@@ -108,6 +109,7 @@ export function createGame(canvas, input, art) {
   ctx.imageSmoothingEnabled = false;
   const cache = buildCaches();
   const sfx = createSfx();
+  const music = createMusic();
   art = art || { tiles: {}, props: {}, chars: {} };
 
   const HIT = { ox: 4, oy: 7, w: 8, h: 8 }; // hitbox within a 16px logical body
@@ -445,8 +447,21 @@ export function createGame(canvas, input, art) {
       return;
     }
 
+    if (input.consumeMute()) music.toggle();
     if (g.mode === 'title') {
-      if (input.consumeAction()) g.mode = 'play';
+      if (input.consumeAction()) {
+        g.mode = 'play';
+        music.start();
+        music.setScene(g.mapId);
+      }
+      return;
+    }
+    if (g.mode === 'journal') {
+      if (input.consumeJournal() || input.consumeAction()) g.mode = 'play';
+      return;
+    }
+    if (g.mode === 'play' && input.consumeJournal()) {
+      g.mode = 'journal';
       return;
     }
     if (g.mode === 'play' && g.pendingIntro) {
@@ -604,6 +619,7 @@ export function createGame(canvas, input, art) {
     for (const portal of g.map.portals) {
       if (portal.x === ptx && portal.y === pty) {
         loadMap(portal.to, portal.tx, portal.ty);
+        music.setScene(portal.to);
         save();
         break;
       }
@@ -780,6 +796,24 @@ export function createGame(canvas, input, art) {
     if (g.mode === 'title') drawTitle();
     if (g.mode === 'dead') drawDead();
     if (g.mode === 'win') drawWin();
+    if (g.mode === 'journal') drawJournal();
+  }
+
+  function drawJournal() {
+    overlay(0.78);
+    centerText('FIELD JOURNAL', 24, '#ffb347', 'bold 12px monospace');
+    let y = 46;
+    for (const [title, status] of questJournal(g.quest)) {
+      const done = status.startsWith('done');
+      text(title, 22, y, done ? '#7dd6a8' : '#4ac0c0', 'bold 8px monospace');
+      const wrapped = status.match(/.{1,52}( |$)/g) || [status];
+      for (const line of wrapped) {
+        y += 10;
+        text(line.trim(), 30, y, done ? '#9a9aa2' : '#f4f4f4');
+      }
+      y += 16;
+    }
+    centerText('J / Space: close    M: music', VIEW_H - 14, '#9a9aa2');
   }
 
   // dusk grade + light glows: ambient cool wash, warm pools at lights, vignette
@@ -1116,8 +1150,9 @@ export function createGame(canvas, input, art) {
     overlay(0.55);
     centerText('E M B E R W O O D', 70, '#ffb347', 'bold 16px monospace');
     centerText('The signal has gone dark.', 96, '#f4f4f4');
-    centerText('Arrows / WASD  move', 122, '#9a9aa2');
-    centerText('Space  talk - open - attack', 134, '#9a9aa2');
+    centerText('Arrows / WASD  move', 118, '#9a9aa2');
+    centerText('Space  talk - open - attack', 130, '#9a9aa2');
+    centerText('J  journal      M  music', 142, '#9a9aa2');
     centerText('Press Space to begin', 168, '#ffb347');
   }
 

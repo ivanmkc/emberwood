@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, terminalText, itemPickup,
-  INTRO_LINES, HEART_PRICE,
+  INTRO_LINES, HEART_PRICE, questJournal,
 } from '../src/quest.js';
 
 function talk(state, id) {
@@ -124,6 +124,39 @@ test('keeper Ivy: intro once, then pet hint, then post-beacon line', () => {
 test('intro transmission exists and mentions the beacon', () => {
   assert.ok(INTRO_LINES.length >= 2);
   assert.match(INTRO_LINES.join(' '), /beacon/i);
+});
+
+test('quest journal tracks every quest through its states', () => {
+  const s = newQuestState();
+  let j = Object.fromEntries(questJournal(s));
+  assert.equal(Object.keys(j).length, 5, 'journal lists main + 4 side quests');
+  assert.match(j['MAIN — REIGNITE THE BEACON'], /0 of 3/);
+  assert.match(j['THE CANAL FILTER'], /locked/);
+
+  s.flags.hasRing = true;
+  j = Object.fromEntries(questJournal(s));
+  assert.match(j["BEA'S RING"], /Return the ring/);
+
+  s.flags.gaveRing = true;
+  s.flags.hasCaveKey = true;
+  s.flags.petFound = true;
+  s.flags.filterPart = true;
+  s.flags.log1 = true;
+  s.shards = 3;
+  j = Object.fromEntries(questJournal(s));
+  assert.match(j['MAIN — REIGNITE THE BEACON'], /Take them to the beacon/);
+  assert.match(j['BOLT COME HOME'], /Take it home/);
+  assert.match(j['THE CANAL FILTER'], /Bring the pump filter/);
+  assert.match(j['THE ARCHIVE LOGS'], /1 of 3/);
+
+  s.flags.beaconLit = true;
+  s.flags.petReturned = true;
+  s.flags.filterGiven = true;
+  s.flags.log2 = true;
+  s.flags.log3 = true;
+  s.flags.logsDone = true;
+  j = Object.fromEntries(questJournal(s));
+  for (const v of Object.values(j)) assert.match(v, /done\./);
 });
 
 test('applyEffects clamps and accumulates', () => {

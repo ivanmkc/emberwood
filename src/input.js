@@ -5,6 +5,8 @@ export function createInput() {
   let actionHeld = false;
   let actionQueued = false; // edge-triggered, consumed by game
   let newGameQueued = false;
+  let journalQueued = false;
+  let muteQueued = false;
 
   const KEYMAP = {
     ArrowUp: 'up', KeyW: 'up',
@@ -22,6 +24,8 @@ export function createInput() {
       e.preventDefault();
     }
     if (e.code === 'KeyN') newGameQueued = true;
+    if (e.code === 'KeyJ' || e.code === 'Tab') { journalQueued = true; e.preventDefault(); }
+    if (e.code === 'KeyM') muteQueued = true;
   });
 
   window.addEventListener('keyup', (e) => {
@@ -41,6 +45,11 @@ export function createInput() {
     el.addEventListener('mousedown', on);
     el.addEventListener('mouseup', off);
     el.addEventListener('mouseleave', () => { held[dir] = false; });
+  }
+  for (const el of document.querySelectorAll('[data-journal]')) {
+    const on = (e) => { journalQueued = true; e.preventDefault(); };
+    el.addEventListener('touchstart', on, { passive: false });
+    el.addEventListener('mousedown', on);
   }
   for (const el of document.querySelectorAll('[data-action]')) {
     const on = (e) => { actionQueued = true; actionHeld = true; e.preventDefault(); };
@@ -62,6 +71,16 @@ export function createInput() {
       const n = newGameQueued;
       newGameQueued = false;
       return n;
+    },
+    consumeJournal() {
+      const j = journalQueued;
+      journalQueued = false;
+      return j;
+    },
+    consumeMute() {
+      const m = muteQueued;
+      muteQueued = false;
+      return m;
     },
   };
 }
