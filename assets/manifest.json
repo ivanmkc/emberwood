@@ -88,7 +88,13 @@
   "house": "props/house.png",
   "terminal": "props/terminal.png",
   "rack": "props/rack.png",
-  "vat": "props/vat.png"
+  "vat": "props/vat.png",
+  "bush": "props/bush.png",
+  "mast": "props/mast.png",
+  "crates": "props/crates.png",
+  "pipe": "props/pipe.png",
+  "stall": "props/stall.png",
+  "tree2": "props/tree2.png"
  },
  "chars": {
   "player": {

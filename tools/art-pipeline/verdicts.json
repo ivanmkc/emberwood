@@ -1904,5 +1904,292 @@
    "perspective_ok": true,
    "regressions": "Signpost sprite feels a bit flat compared to other assets. UI elements (hearts, coin) are very generic/placeholder."
   }
+ },
+ "asset:bush": {
+  "pass": true,
+  "det": {
+   "coverage": 0.863,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None."
+    }
+   ],
+   "issues": "None.",
+   "silhouette_clean": true,
+   "single_object": true,
+   "theme_fit": 9,
+   "perspective_ok": true,
+   "style_match": 8
+  }
+ },
+ "asset:mast": {
+  "pass": true,
+  "det": {
+   "coverage": 0.557,
+   "magenta_fringe": 0.0015
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good match with anchor scene style, fits the sci-fi theme well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 5,
+     "issues": "Resolution seems much lower (larger pixels) than the anchor scene, making it blurry and pixelated. The color palette doesn't quite match the vibrant neon and muted tones of the anchor."
+    }
+   ],
+   "perspective_ok": true,
+   "theme_fit": 9,
+   "issues": "Good match with anchor scene style, fits the sci-fi theme well.",
+   "single_object": true,
+   "silhouette_clean": true,
+   "style_match": 8
+  }
+ },
+ "asset:crates": {
+  "pass": true,
+  "det": {
+   "coverage": 0.989,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "None"
+    }
+   ],
+   "perspective_ok": true,
+   "theme_fit": 9,
+   "issues": "None",
+   "single_object": true,
+   "silhouette_clean": true,
+   "style_match": 8
+  }
+ },
+ "asset:pipe": {
+  "pass": true,
+  "det": {
+   "coverage": 0.908,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good match overall, style and perspective fit well."
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 5,
+     "issues": "Resolution is very low compared to the anchor image. The asset appears blurry and lacks the crisp pixel art style and distinct lighting defined in the anchor."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly low resolution compared to anchor, but fits the style well."
+    }
+   ],
+   "perspective_ok": true,
+   "theme_fit": 9,
+   "issues": "Good match overall, style and perspective fit well.",
+   "single_object": true,
+   "silhouette_clean": true,
+   "style_match": 8
+  }
+ },
+ "asset:stall": {
+  "pass": true,
+  "det": {
+   "coverage": 0.919,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 5,
+     "issues": "Palette is much muddier and lower contrast than the anchor. Pixel scaling feels slightly off (blurrier). Overall style lacks the crispness and neon accents of the anchor."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly muddy palette compared to the crisp neon/industrial contrast in the anchor, but overall style and perspective fit well."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly muddy palette compared to the crisp neon highlights in the anchor."
+    }
+   ],
+   "perspective_ok": true,
+   "theme_fit": 9,
+   "issues": "Palette is much muddier and lower contrast than the anchor. Pixel scaling feels slightly off (blurrier). Overall style lacks the crispness and neon accents of the anchor.",
+   "single_object": true,
+   "silhouette_clean": true,
+   "style_match": 8
+  }
+ },
+ "asset:tree2": {
+  "pass": true,
+  "det": {
+   "coverage": 0.778,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good match with the style anchor. Lighting and colors align well with the overall aesthetic."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Slightly more intricate root structure than anchor trees, but fits well within the style."
+    },
+    {
+     "style_match": 8,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": true,
+     "theme_fit": 9,
+     "issues": "Good match with the style anchor. Lighting and colors align well with the sci-fi setting."
+    }
+   ],
+   "perspective_ok": true,
+   "theme_fit": 9,
+   "issues": "Good match with the style anchor. Lighting and colors align well with the overall aesthetic.",
+   "single_object": true,
+   "silhouette_clean": true,
+   "style_match": 8
+  }
+ },
+ "asset:wallchunk": {
+  "pass": false,
+  "det": {
+   "coverage": 0.971,
+   "magenta_fringe": 0.0
+  },
+  "judge": {
+   "_votes": [
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": false,
+     "theme_fit": 5,
+     "issues": "Too low resolution/blurry compared to the crisp pixel art of the anchor. Contains background fragments/uneven edges."
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": true,
+     "silhouette_clean": false,
+     "theme_fit": 6,
+     "issues": "Too low resolution/blurry compared to the anchor, missing clean outlines, doesn't match the clean pixel art style."
+    },
+    {
+     "style_match": 4,
+     "perspective_ok": true,
+     "single_object": false,
+     "silhouette_clean": false,
+     "theme_fit": 5,
+     "issues": "Very low resolution/blurry compared to the crisp pixel art anchor. Looks like a cropped fragment of a larger image, not a cleanly extracted sprite with a proper silhouette. Colors are somewhat duller."
+    }
+   ],
+   "perspective_ok": true,
+   "single_object": true,
+   "theme_fit": 5,
+   "style_match": 4,
+   "silhouette_clean": false,
+   "issues": "Too low resolution/blurry compared to the crisp pixel art of the anchor. Contains background fragments/uneven edges."
+  }
  }
 }

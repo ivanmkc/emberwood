@@ -55,6 +55,39 @@ const overworldDecor = [
   [5, 29, ','], [14, 31, ','], [25, 30, ','], [36, 31, ','], [42, 30, ','],
   [40, 14, ','], [44, 21, ','], [19, 29, ','], [31, 12, ','],
   [40, 32, '#'], [6, 32, '#'], [22, 32, '#'], [44, 13, '#'],
+  // worn trail: plaza -> north field -> mountain pass
+  [38, 21, 'p'], [38, 20, 'p'], [38, 19, 'p'], [38, 18, 'p'], [38, 17, 'p'],
+  [38, 16, 'p'], [38, 15, 'p'], [38, 14, 'p'], [38, 13, 'p'],
+  [37, 13, 'p'], [36, 13, 'p'], [35, 13, 'p'], [34, 13, 'p'], [33, 13, 'p'],
+  [32, 13, 'p'], [31, 13, 'p'], [30, 13, 'p'],
+  [30, 12, 'p'], [30, 11, 'p'], [30, 10, 'p'], [30, 9, 'p'], [30, 8, 'p'],
+  // short spur: plaza -> shore
+  [29, 26, 'p'], [30, 26, 'p'], [31, 26, 'p'],
+  // lone trees breaking up the fields
+  [5, 17, '#'], [9, 19, '#'], [6, 24, '#'], [11, 23, '#'],
+  [19, 30, '#'], [26, 31, '#'], [33, 31, '#'], [43, 24, '#'],
+  [44, 17, '#'], [32, 9, '#'], [24, 10, '#'], [37, 10, '#'],
+  [42, 8, '#'], [20, 15, '#'],
+  // glowing lichen spreads
+  [4, 20, ','], [13, 17, ','], [8, 26, ','], [18, 12, ','], [27, 8, ','],
+  [34, 9, ','], [41, 11, ','], [44, 29, ','], [15, 33, ','], [28, 33, ','],
+  [37, 33, ','], [3, 15, ','], [23, 13, ','],
+  // dusty west lakeshore
+  [13, 16, 's'], [12, 17, 's'], [13, 18, 's'],
+  // wreck of freight drone FRT-9 "Pelican" (rubble reef, south field)
+  [24, 30, 'M'], [25, 30, 'M'], [25, 31, 'M'],
+  // organic coastline: erode the lake rectangle
+  [16, 16, '.'], [17, 16, '.'], [27, 16, '.'], [28, 16, '.'], [29, 16, '.'],
+  [16, 17, '.'], [29, 17, '.'],
+  [29, 24, '.'], [16, 24, 's'],
+  [16, 25, 's'], [17, 25, 's'], [28, 25, 's'], [29, 25, '.'],
+  [15, 18, '~'], [15, 19, '~'], [30, 22, '~'], [30, 23, '~'],
+  // eroded plaza: broken plate edges
+  [32, 22, '.'], [39, 22, ','], [32, 27, '.'], [34, 21, 'p'], [35, 21, 'p'],
+  [33, 28, 'p'], [37, 28, 'p'], [40, 25, 'p'], [31, 24, 'p'],
+  // wavy sand: dune spurs into the grass
+  [13, 26, '.'], [14, 27, '.'], [17, 28, 's'], [18, 28, 's'], [19, 28, 's'],
+  [26, 28, 's'], [27, 28, 's'], [12, 26, 's'], [11, 27, 's'],
 ];
 
 const houseRows = [
@@ -156,6 +189,23 @@ export const MAPS = {
     deco: [
       { type: 'lamp', x: 33, y: 22 }, { type: 'lamp', x: 40, y: 26 },
       { type: 'lamp', x: 31, y: 28 }, { type: 'lamp', x: 36, y: 21 },
+      { type: 'rack', x: 23, y: 30 }, { type: 'vat', x: 27, y: 31 },
+      { type: 'rock', x: 35, y: 8 }, { type: 'rack', x: 33, y: 8 },
+      { type: 'rock', x: 15, y: 20 }, { type: 'rock', x: 43, y: 31 },
+      { type: 'stall', x: 40, y: 22 },
+      { type: 'crates', x: 35, y: 21 }, { type: 'crates', x: 43, y: 20 },
+      { type: 'bush', x: 10, y: 16 }, { type: 'bush', x: 21, y: 14 },
+      { type: 'bush', x: 27, y: 12 }, { type: 'bush', x: 39, y: 9 },
+      { type: 'bush', x: 44, y: 26 }, { type: 'bush', x: 18, y: 28 },
+      { type: 'bush', x: 7, y: 28 }, { type: 'bush', x: 34, y: 32 },
+      { type: 'bush', x: 12, y: 25 }, { type: 'bush', x: 29, y: 15 },
+      { type: 'pipe', x: 17, y: 14 }, { type: 'pipe', x: 41, y: 15 },
+      { type: 'pipe', x: 22, y: 29 }, { type: 'pipe', x: 36, y: 30 },
+      { type: 'mast', x: 33, y: 7 }, { type: 'mast', x: 44, y: 19 },
+      { type: 'pipe', x: 42, y: 20 }, { type: 'rack', x: 44, y: 20 },
+      { type: 'bush', x: 11, y: 16 }, { type: 'bush', x: 20, y: 14 },
+      { type: 'bush', x: 43, y: 26 }, { type: 'crates', x: 33, y: 20 },
+      { type: 'bush', x: 8, y: 27 }, { type: 'pipe', x: 26, y: 29 },
     ],
     entities: [
       { kind: 'chest', id: 'shard1', x: 9, y: 7, loot: { shard: 1 } },
@@ -176,6 +226,10 @@ export const MAPS = {
       { kind: 'enemy', id: 'sl5', x: 12, y: 30, type: 'slime' },
       { kind: 'enemy', id: 'sl6', x: 30, y: 10, type: 'slime' },
       { kind: 'enemy', id: 'sl7', x: 36, y: 13, type: 'slime' },
+      { kind: 'enemy', id: 'sl8', x: 25, y: 29, type: 'slime' },
+      { kind: 'enemy', id: 'sl9', x: 40, y: 12, type: 'slime' },
+      { kind: 'chest', id: 'wreckCoins', x: 24, y: 31, loot: { coins: 9 } },
+      { kind: 'sign', id: 'wreckSign', x: 26, y: 30, text: ['Freight drone FRT-9 "PELICAN".', 'Last flight: 214 years ago. Cargo: unclaimed. Finders keepers, the wastes say.'] },
     ],
   },
   house: {
@@ -204,6 +258,8 @@ export const MAPS = {
       { type: 'vat', x: 5, y: 2 }, { type: 'vat', x: 7, y: 3 },
       { type: 'vat', x: 14, y: 9 }, { type: 'rack', x: 2, y: 1 },
       { type: 'lamp', x: 11, y: 6 },
+      { type: 'bush', x: 6, y: 10 }, { type: 'bush', x: 17, y: 4 },
+      { type: 'pipe', x: 12, y: 10 },
     ],
     entities: [
       { kind: 'npc', id: 'keeper', x: 16, y: 1, sprite: 'keeper', name: 'Keeper Ivy' },
@@ -227,6 +283,8 @@ export const MAPS = {
     deco: [
       { type: 'rack', x: 4, y: 4 }, { type: 'rack', x: 18, y: 4 },
       { type: 'vat', x: 12, y: 7 },
+      { type: 'crates', x: 7, y: 5 }, { type: 'crates', x: 16, y: 11 },
+      { type: 'pipe', x: 10, y: 9 },
     ],
     entities: [
       { kind: 'terminal', id: 'logB', x: 19, y: 5 },

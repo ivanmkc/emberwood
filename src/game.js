@@ -826,6 +826,23 @@ export function createGame(canvas, input, art) {
     ctx.drawImage(img, lx, ly, lw ?? img.width / DS, lh ?? img.height / DS);
   }
 
+  // smooth 2D value noise (bilinear over hashed lattice) for macro ground tint
+  function vnoise(tx, ty) {
+    const h2 = (a, b) => {
+      let n = (a * 374761393 + b * 668265263) | 0;
+      n = (n ^ (n >> 13)) * 1274126177;
+      return ((n ^ (n >> 16)) >>> 0) / 4294967295;
+    };
+    const cs = 5; // lattice cell size in tiles
+    const gx = Math.floor(tx / cs), gy = Math.floor(ty / cs);
+    const fx = (tx % cs) / cs, fy = (ty % cs) / cs;
+    const a = h2(gx, gy), b = h2(gx + 1, gy), c = h2(gx, gy + 1), d2 = h2(gx + 1, gy + 1);
+    const u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy);
+    return a * (1 - u) * (1 - v) + b * u * (1 - v) + c * (1 - u) * v + d2 * u * v;
+  }
+
+  const GROUNDY = new Set(['.', ',', 's', 'd', 'G']);
+
   function tileVariant(name, tx, ty) {
     const v = art.tiles[name];
     if (!v || !v.length) return null;
@@ -890,6 +907,57 @@ export function createGame(canvas, input, art) {
         else if (ch === 'o') drawPad(lx, ly);
         else if (ch === 'C') drawCaveMouth(lx, ly);
         else drawClutter(ch, lx, ly, tx, ty);
+        // macro tint: large soft patches so fields never read as one texture
+        if (GROUNDY.has(ch)) {
+          const n = vnoise(tx, ty);
+          if (n < 0.35) {
+            ctx.fillStyle = `rgba(10, 20, 16, ${(0.35 - n) * 0.4})`;
+            ctx.fillRect(lx, ly, T, T);
+          } else if (n > 0.68) {
+            ctx.fillStyle = `rgba(255, 226, 180, ${(n - 0.68) * 0.22})`;
+            ctx.fillRect(lx, ly, T, T);
+          }
+        }
+        // material transitions: dithered blend band where grounds meet —
+        // kills the grid-rectangle look at every material boundary
+        if (GROUNDY.has(ch) || ch === 'p' || ch === 'f') {
+          const nb = (ax, ay) => (g.grid[ay] && g.grid[ay][ax]);
+          const diff = (och) => och && och !== ch && och !== '~' && TILES[och] && !TILES[och].solid;
+          const dither = (edge) => {
+            ctx.fillStyle = 'rgba(8, 14, 16, 0.22)';
+            for (let k = 0; k < 8; k++) {
+              const off = ((tx * 31 + ty * 17 + k * 7) % 5);
+              if (edge === 'l') { ctx.fillRect(lx, ly + k * 2, 1.5 + (off % 2), 1.5); }
+              else if (edge === 'r') { ctx.fillRect(lx + T - 1.5 - (off % 2), ly + k * 2, 1.5 + (off % 2), 1.5); }
+              else if (edge === 't') { ctx.fillRect(lx + k * 2, ly, 1.5, 1.5 + (off % 2)); }
+              else { ctx.fillRect(lx + k * 2, ly + T - 1.5 - (off % 2), 1.5, 1.5 + (off % 2)); }
+            }
+          };
+          if (diff(nb(tx - 1, ty))) dither('l');
+          if (diff(nb(tx + 1, ty))) dither('r');
+          if (diff(nb(tx, ty - 1))) dither('t');
+          if (diff(nb(tx, ty + 1))) dither('b');
+        }
+        // height illusion: solid masses cast a face-shadow onto the tile
+        // below them, and get a lit rim where they meet open ground
+        {
+          const above = g.grid[ty - 1] && g.grid[ty - 1][tx];
+          const MASSY = above === 'M' || above === 'W' || above === 'V' || above === '#';
+          if (MASSY && TILES[ch] && !TILES[ch].solid) {
+            const grd = ctx.createLinearGradient(0, ly, 0, ly + 7);
+            grd.addColorStop(0, 'rgba(5, 8, 12, 0.5)');
+            grd.addColorStop(1, 'rgba(5, 8, 12, 0)');
+            ctx.fillStyle = grd;
+            ctx.fillRect(lx, ly, T, 7);
+          }
+          const below = g.grid[ty + 1] && g.grid[ty + 1][tx];
+          if ((ch === 'M' || ch === 'W' || ch === 'V') && below && TILES[below] && !TILES[below].solid) {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.30)';
+            ctx.fillRect(lx, ly + T - 5, T, 5);
+            ctx.fillStyle = 'rgba(255, 240, 210, 0.10)';
+            ctx.fillRect(lx, ly + T - 6, T, 1);
+          }
+        }
         if (ch === '~') {
           drawShoreline(lx, ly, tx, ty);
           // drifting ripple highlight
@@ -919,7 +987,7 @@ export function createGame(canvas, input, art) {
       if (d.player) shadowEllipse(g.player.x + 8 - cx, g.player.y + 15.5 - cy, 6);
       else if (d.prop) {
         if (d.prop.type === 'tree') shadowEllipse(d.prop.x - cx, d.prop.baseY - 1.5 - cy, 10);
-        else if (d.prop.type === 'rock' || d.prop.type === 'lamp') shadowEllipse(d.prop.x - cx, d.prop.baseY - 1 - cy, 7);
+        else if (['rock', 'lamp', 'bush', 'crates', 'pipe', 'mast', 'wallchunk', 'stall', 'vat', 'rack'].includes(d.prop.type)) shadowEllipse(d.prop.x - cx, d.prop.baseY - 1 - cy, 7);
       } else if (d.e.kind === 'enemy' || d.e.kind === 'npc' || d.e.kind === 'chest' || d.e.kind === 'beacon') {
         const sz = d.e.kind === 'enemy' ? d.e.def.size : 16;
         shadowEllipse(d.e.x + sz / 2 - cx, d.e.y + sz - 0.5 - cy, sz * 0.42);
@@ -1114,6 +1182,14 @@ export function createGame(canvas, input, art) {
     }
     ctx.globalCompositeOperation = 'source-over';
 
+    // ambient drifting motes: spores over the world, embers near the plaza
+    for (let i = 0; i < 12; i++) {
+      const seed = i * 211.7;
+      const mx = ((seed * 13 + g.time * (4 + (i % 3) * 2)) % (VIEW_W + 40)) - 20;
+      const my = ((seed * 7 + Math.sin(g.time * 0.4 + i) * 18 + i * 37) % (VIEW_H + 30)) - 15;
+      ctx.fillStyle = i % 4 === 0 ? 'rgba(255, 200, 120, 0.20)' : 'rgba(140, 230, 220, 0.16)';
+      ctx.fillRect(mx, my, 1.5, 1.5);
+    }
     const vin = ctx.createRadialGradient(VIEW_W / 2, VIEW_H / 2, 100, VIEW_W / 2, VIEW_H / 2, 230);
     vin.addColorStop(0, 'rgba(8, 12, 24, 0)');
     vin.addColorStop(1, 'rgba(8, 12, 24, 0.34)');
@@ -1126,12 +1202,19 @@ export function createGame(canvas, input, art) {
   function drawClutter(ch, lx, ly, tx, ty) {
     const h = ((tx * 2654435761) ^ (ty * 40503)) >>> 0;
     if (ch === '.' || ch === 's' || ch === 'd') {
+      if (h % 6 === 1) { // grass/grit tufts
+        ctx.fillStyle = ch === '.' ? 'rgba(30, 60, 40, 0.55)' : 'rgba(60, 52, 40, 0.5)';
+        const bx3 = lx + (h % 10) + 2, by3 = ly + ((h >> 4) % 10) + 3;
+        ctx.fillRect(bx3, by3, 1, 3);
+        ctx.fillRect(bx3 + 2, by3 + 1, 1, 2);
+        ctx.fillRect(bx3 - 2, by3 + 1, 1, 2);
+      }
       if (h % 7 === 0) {
         ctx.fillStyle = 'rgba(0,0,0,0.18)';
         ctx.fillRect(lx + (h % 9), ly + ((h >> 3) % 10), 3, 2);
         ctx.fillRect(lx + ((h >> 5) % 11), ly + ((h >> 7) % 12), 2, 2);
       }
-      if (h % 13 === 3) { // half-buried cable
+      if (h % 9 === 3) { // half-buried cable
         ctx.strokeStyle = 'rgba(20, 26, 34, 0.55)';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -1141,7 +1224,7 @@ export function createGame(canvas, input, art) {
         ctx.fillStyle = 'rgba(80, 240, 220, 0.5)';
         ctx.fillRect(lx + 7, ly + 4 + (h % 7), 1.5, 1.5);
       }
-      if (h % 19 === 5) { // scattered scrap glint
+      if (h % 13 === 5) { // scattered scrap glint
         ctx.fillStyle = 'rgba(200, 170, 90, 0.4)';
         ctx.fillRect(lx + (h % 12), ly + ((h >> 2) % 12), 2, 1.5);
       }
@@ -1253,7 +1336,7 @@ export function createGame(canvas, input, art) {
   function drawProp(pr) {
     const cxx = g.cam.x, cyy = g.cam.y;
     if (pr.type === 'tree') {
-      const img = art.props.tree;
+      const img = (pr.jitter % 2 === 1 && art.props.tree2) || art.props.tree;
       if (img) {
         const w = img.width / DS, h = img.height / DS;
         drawArt(img, Math.round(pr.x - w / 2 - cxx + (pr.jitter - 1) * 2), Math.round(pr.baseY - h - cyy));
@@ -1273,7 +1356,7 @@ export function createGame(canvas, input, art) {
     } else if (pr.type === 'lamp') {
       const img = art.props.lamp;
       if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
-    } else if (pr.type === 'vat' || pr.type === 'rack') {
+    } else {
       const img = art.props[pr.type];
       if (img) drawArt(img, Math.round(pr.x - img.width / DS / 2 - cxx), Math.round(pr.baseY - img.height / DS - cyy));
     }
