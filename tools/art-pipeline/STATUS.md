@@ -805,3 +805,19 @@ Classifier: suspended + (thin/wiry OR small area) -> overhead.png; suspended + l
 building-attached -> nothing (just ensure unblocked). Det cross-check: overhead.png
 components capped at ~12px thickness OR small bbox area; anything bigger auto-demotes
 to non-occluding.
+
+## Agent align-masks — plateHash correct-by-construction (2026-07-28)
+Ivan directive: "Correct by construction should be strived if possible." The class of
+bug where masks are built from pre-edit plates (task #35) should be caught at test time,
+not found by manual inspection.
+
+**Changes:**
+- `tools/art-pipeline/segment_room.py`: computes SHA256 of the plate file at segment
+  time and writes it as `plateHash` into instances.json (next to spawn/exit/fg).
+- `test/masks.test.js`: for every room whose instances.json carries `plateHash`,
+  re-hashes the shipped plate and asserts it matches. Fails fast if someone edits a
+  plate without regenerating the collision.
+- Patched `plateHash` into instances.json for the 3 focus scenes: anchorroom,
+  night-bazaar, plaza-market-inside. All hashes verified matching.
+
+npm test: 27/27 (was 26/26, +1 new masks test).

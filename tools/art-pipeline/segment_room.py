@@ -11,6 +11,7 @@ Gates: walkable fraction bounds + pixel BFS (4px lattice) spawn->exit.
 
 Usage: python3 tools/art-pipeline/segment_room.py
 """
+import hashlib
 import json
 import os
 import sys
@@ -131,7 +132,9 @@ def main():
     clean = os.path.join(ROOT, 'docs', 'art-options', 'nbp-scifi-anchor-clean.png')
     spawns_f = os.path.join(ROOT, 'tools', 'art-pipeline', '_char_spawns.json')
     chars_removed = NAME == 'anchorroom' and os.path.exists(clean) and os.path.exists(spawns_f)
-    plate_full = Image.open(clean if chars_removed else PLATE).convert('RGB')
+    plate_path = clean if chars_removed else PLATE
+    plate_full = Image.open(plate_path).convert('RGB')
+    plate_hash = hashlib.sha256(open(plate_path, 'rb').read()).hexdigest()
     if chars_removed:
         print('using CLEAN plate (painted characters removed)')
     SW, SH = plate_full.size  # native source res: all masks computed here
@@ -861,7 +864,9 @@ def main():
         fg_meta.append({'img': f'rooms/{fn}', 'x': round(x0 * dsx), 'y': round(y0 * dsy),
                         'baseY': round(inst['baseY'] * dsy),
                         'label': inst['label'], 'kind': inst['kind']})
-    json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'exits': EXITS_OUT, 'fg': fg_meta,
+    json.dump({'spawn': list(SPAWN_PX), 'exit': list(EXIT_RECT), 'exits': EXITS_OUT,
+               'plateHash': plate_hash,
+               'fg': fg_meta,
                'instances': [{k: v for k, v in i.items()} for i in instances]},
               open(os.path.join(rooms_dir, f'{NAME}.instances.json'), 'w'))
 
