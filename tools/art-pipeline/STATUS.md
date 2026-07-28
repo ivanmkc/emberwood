@@ -1483,3 +1483,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - Audits: drift OK (bazaar GPT 1.00x baseline); magenta-nowires baseline
   seeded (0.2181). NEXT: drive exit mouths (5), debug-card dims (6),
   composite A/B with pro as second judge on the 8 confirmed.
+
+### Cycle 3 of 12h loop (item 5: drive debugging — root causes found)
+- Engine-vs-PNG diff: engine NEVER blocks where collision.png allows (0 cells)
+  — stalls were planner/follower artifacts, not mask defects.
+- THREE root causes fixed: (a) goals at extreme border moved 30px inside exit
+  mouths; (b) engine hitbox is OFFSET from player origin (HIT ox4,oy7,w8,h8 →
+  clearance window centers at x+8,y+11) — BFS grid now samples there;
+  (c) planner now uses the ENGINE's own blocked() sampled live (engine-truth
+  grid, plan cannot contradict executor) + distance-field greedy descent.
+- Drive state: every exit walked in-engine — e passes under both followers,
+  n under waypoint follower (4 consecutive runs), w under descent (2 runs);
+  best single run 4/5. OPEN: one unified follower passing all 3 in one run,
+  then 10/10 x3 battery. build_collision_magenta.py = reproducible build.

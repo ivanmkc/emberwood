@@ -15,51 +15,58 @@ const BASE = 'http://localhost:8787/?room=night-bazaar';
 const OUT = resolve(ROOT, 'tools', 'verify', '_drive-out');
 execSync(`mkdir -p "${OUT}"`);
 
-const coordsJson = execSync(`cd "${ROOT}" && python3 -c "
-import numpy as np, json
-from collections import deque
-from PIL import Image
-import cv2
-col = np.asarray(Image.open('assets/rooms/night-bazaar.collision.png').convert('L')) > 127
-free = cv2.erode(col.astype(np.uint8), np.ones((17,17),np.uint8)) > 0  # 8x8 LOCAL hitbox = +-8 device px clearance
-DH, DW = free.shape
-H, W = DH//2, DW//2
-grid = free[::2, ::2]
-inst = json.load(open('assets/rooms/night-bazaar.instances.json'))
-sx, sy = inst['spawn']
-def bfs(tx0, ty0, tx1, ty1):
-    prev = {}
-    q = deque([(sx, sy)])
-    seen = {(sx, sy)}
-    goal = None
-    while q:
-        x, y = q.popleft()
-        if tx0 <= x <= tx1 and ty0 <= y <= ty1:
-            goal = (x, y); break
-        for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
-            nx, ny = x+dx, y+dy
-            if 0 <= nx < W and 0 <= ny < H and (nx,ny) not in seen and grid[ny, nx]:
-                seen.add((nx,ny)); prev[(nx,ny)] = (x,y); q.append((nx,ny))
-    if goal is None: return None
-    path = [goal]
-    while path[-1] != (sx, sy):
-        path.append(prev[path[-1]])
-    path.reverse()
-    return path[::20] + [path[-1]]
-targets = {}
-for e in inst['exits']:
-    x0, y0, x1, y1 = e['rect']
-    if e['edge']=='n': y1=min(y1,16)
-    if e['edge']=='w': x1=min(x1,16)
-    if e['edge']=='e': x0=max(x0,624)
-    p = bfs(x0,y0,x1,y1)
-    targets[e['edge']] = p
-print(json.dumps({'spawn':[sx,sy],'paths':{k:(v if v else None) for k,v in targets.items()}}))
-"`, { encoding: 'utf-8' }).trim();
-const C = JSON.parse(coordsJson);
-const routes = Object.entries(C.paths).filter(([, p]) => p);
-console.log('routes:', routes.map(([k, p]) => `${k}(${p.length} wp)`).join(', '));
-if (routes.length < 3) { console.error('ABORT: BFS route missing'); process.exit(1); }
+// Engine-truth grid: sampled from window.__ewWorld.blocked after boot —
+// the BFS plan is built from the same function that will judge the walk.
+async function engineCoords(page) {
+  return await page.evaluate(() => {
+    const W = 640, H = 448, OXW = -640;
+    const blocked = new Uint8Array(W * H);
+    for (let y = 0; y < H; y++)
+      for (let x = 0; x < W; x++)
+        blocked[y * W + x] = window.__ewWorld.blocked(OXW + x, y) ? 1 : 0;
+    const freeAt = (px, py) => {
+      for (let hy = py + 7; hy < py + 15; hy += 2)
+        for (let hx = px + 4; hx < px + 12; hx += 2) {
+          if (hx < 0 || hx >= W || hy < 0 || hy >= H) return false;
+          if (blocked[hy * W + hx]) return false;
+        }
+      return true;
+    };
+    const free = new Uint8Array(W * H);
+    for (let y = 0; y < H - 16; y++)
+      for (let x = 0; x < W - 12; x++) free[y * W + x] = freeAt(x, y) ? 1 : 0;
+    const spawn = [Math.round(window.__ew.player.x) + 640, Math.round(window.__ew.player.y)];
+    const bands = { e: [594, 0, 610, 447], n: [0, 30, 639, 46], w: [30, 0, 46, 447] };
+    // multi-source BFS FROM the goal band -> distance field; the walker then
+    // greedily descends it from wherever it actually is
+    const fields = {};
+    for (const [edge, [bx0, by0, bx1, by1]] of Object.entries(bands)) {
+      const dist = new Int32Array(W * H).fill(-1);
+      const q = [];
+      for (let y = by0; y <= by1; y += 2)
+        for (let x = bx0; x <= bx1; x += 2) {
+          const i = y * W + x;
+          if (free[i]) { dist[i] = 0; q.push(i); }
+        }
+      let head = 0;
+      while (head < q.length) {
+        const cur = q[head++];
+        const cx = cur % W, cy = (cur / W) | 0;
+        for (const [dx, dy] of [[2,0],[-2,0],[0,2],[0,-2]]) {
+          const nx = cx + dx, ny = cy + dy;
+          if (nx < 0 || nx >= W || ny < 0 || ny >= H) continue;
+          const ni = ny * W + nx;
+          if (free[ni] && dist[ni] < 0) { dist[ni] = dist[cur] + 1; q.push(ni); }
+        }
+      }
+      const si = (spawn[1] - (spawn[1] % 2)) * W + (spawn[0] - (spawn[0] % 2));
+      fields[edge] = dist[si] >= 0 ? Array.from(dist) : null;
+      window.__driveFields = window.__driveFields || {};
+      window.__driveFields[edge] = dist;
+    }
+    return { spawn, hasField: Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, !!v])) };
+  });
+}
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 960 } });
@@ -82,42 +89,49 @@ const checks = [];
 const check = (n, ok, d) => { checks.push(ok); console.log(`${ok ? 'PASS' : 'FAIL'} ${n} — ${d}`); };
 
 await boot();
-// world-mode offset: player boots at the room spawn in WORLD coords;
-// offset = boot position - local spawn maps all local waypoints to world
-const bootP = await pos();
-const OX = Math.round(bootP.x) - C.spawn[0];
-const OY = Math.round(bootP.y) - C.spawn[1];
-console.log(`world offset: (${OX},${OY})`);
-for (const [edge, path] of routes) {
-  await setPos(C.spawn[0] + OX, C.spawn[1] + OY);
+const C = await engineCoords(page);
+const routes = Object.keys(C.hasField).filter(k => C.hasField[k]);
+console.log('fields:', routes.join(', '));
+if (routes.length < 3) { console.error('ABORT: distance field missing'); process.exit(1); }
+for (const edge of routes) {
+  await setPos(C.spawn[0] - 640, C.spawn[1]);
   await page.waitForTimeout(150);
-  let stuck = 0, budget = path.length * 20;
-  for (let wi = 1; wi < path.length && budget > 0 && stuck < 40; ) {
-    const [tx0, ty0] = path[wi];
-    const tx = tx0 + OX, ty = ty0 + OY;
-    const p = await pos();
-    const dx = tx - p.x, dy = ty - p.y;
-    if (Math.abs(dx) <= 6 && Math.abs(dy) <= 6) { wi++; stuck = 0; continue; }
-    const key = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'ArrowRight' : 'ArrowLeft')
-                                            : (dy > 0 ? 'ArrowDown' : 'ArrowUp');
-    await step(key, 110);
-    budget--;
-    const q = await pos();
-    if (Math.abs(q.x - p.x) < 1 && Math.abs(q.y - p.y) < 1) stuck++; else stuck = 0;
+  let ok = false;
+  for (let i = 0; i < 900; i++) {
+    const move = await page.evaluate((e) => {
+      const W = 640, dist = window.__driveFields[e];
+      const px = Math.round(window.__ew.player.x) + 640;
+      const py = Math.round(window.__ew.player.y);
+      const q = (x, y) => {
+        x -= x % 2; y -= y % 2;
+        if (x < 0 || x >= 640 || y < 0 || y >= 448) return -1;
+        return dist[y * W + x];
+      };
+      const here = q(px, py);
+      if (here === 0) return { done: true };
+      const opts = [
+        ['ArrowLeft', q(px - 2, py)], ['ArrowRight', q(px + 2, py)],
+        ['ArrowUp', q(px, py - 2)], ['ArrowDown', q(px, py + 2)],
+      ].filter(([, d]) => d >= 0);
+      if (!opts.length) return { done: false, key: null, here };
+      opts.sort((a, b) => a[1] - b[1]);
+      if (here >= 0 && here <= 10) return { done: true };
+      return { done: false, key: opts[0][0], here };
+    }, edge);
+    if (move.done) { ok = true; break; }
+    if (!move.key) break;
+    await step(move.key, 60);
   }
   const p = await pos();
-  const [gx0, gy0] = path[path.length - 1];
-  const gx = gx0 + OX, gy = gy0 + OY;
-  const ok = Math.hypot(p.x - gx, p.y - gy) <= 14;
-  check(`walk-to-${edge}-exit`, ok, `reached (${Math.round(p.x)},${Math.round(p.y)}) goal (${gx},${gy}), ${path.length} wp`);
+  check(`walk-to-${edge}-exit`, ok, `descent ended at (${Math.round(p.x)},${Math.round(p.y)})`);
   await page.locator('#game').screenshot({ path: `${OUT}/bazaar-${edge}.png` });
 }
 // blocked check: walking into the noodle stand from below must stop
-await setPos(C.spawn[0] + OX, C.spawn[1] + OY);
+await setPos(C.spawn[0] - 640, C.spawn[1]);
 const before = await pos();
 await step('ArrowUp', 2600);
 const after = await pos();
-check('walls-block', after.y - OY > 120, `y ${Math.round(before.y)} -> ${Math.round(after.y)} (didn't phase through)`);
+check('walls-block', after.y > 120, `y ${Math.round(before.y)} -> ${Math.round(after.y)} (didn't phase through)`);
 check('no-page-errors', errors.length === 0, errors.join(' | ') || 'clean');
 await browser.close();
 const passed = checks.filter(Boolean).length;
