@@ -2,33 +2,33 @@
   "room": "night-bazaar",
   "rolls_attempted": 6,
   "rolls_accepted": 5,
-  "walk_frac": 0.301,
-  "mean_agreement": 0.956,
+  "walk_frac": 0.292,
+  "mean_agreement": 0.97,
   "per_roll": [
     {
       "roll": 0,
-      "purity": 0.867,
-      "walk_frac": 0.313
+      "purity": 0.858,
+      "walk_frac": 0.302
     },
     {
       "roll": 1,
-      "purity": 0.803,
-      "walk_frac": 0.284
+      "purity": 0.862,
+      "walk_frac": 0.298
     },
     {
       "roll": 2,
-      "purity": 0.868,
-      "walk_frac": 0.335
+      "purity": 0.864,
+      "walk_frac": 0.287
     },
     {
       "roll": 3,
-      "purity": 0.847,
-      "walk_frac": 0.265
+      "purity": 0.873,
+      "walk_frac": 0.291
     },
     {
       "roll": 4,
-      "purity": 0.855,
-      "walk_frac": 0.263
+      "purity": 0.857,
+      "walk_frac": 0.326
     }
   ]
 }

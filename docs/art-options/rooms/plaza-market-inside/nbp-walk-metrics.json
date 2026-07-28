@@ -1,1 +1,34 @@
-{"snap_purity": 0.881, "walk_fraction": 0.179, "edge_alignment": 0.807, "containment": 0.955, "pass": true}
+{
+  "method": "consensus5",
+  "rolls_accepted": 5,
+  "walk_frac": 0.224,
+  "mean_agreement": 0.931,
+  "pass": true,
+  "per_roll": [
+    {
+      "roll": 0,
+      "purity": 0.931,
+      "walk_frac": 0.392
+    },
+    {
+      "roll": 1,
+      "purity": 0.951,
+      "walk_frac": 0.251
+    },
+    {
+      "roll": 2,
+      "purity": 0.965,
+      "walk_frac": 0.236
+    },
+    {
+      "roll": 3,
+      "purity": 0.904,
+      "walk_frac": 0.219
+    },
+    {
+      "roll": 4,
+      "purity": 0.891,
+      "walk_frac": 0.225
+    }
+  ]
+}
