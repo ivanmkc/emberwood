@@ -794,3 +794,14 @@ must NOT block walking but MUST occlude (draw over the player). Design:
   emissive) — no baseY sort needed, it is above everything at ground level.
 Owners: v4-footprints (mask emission as part of v5 compose, taxonomy in select stage),
 stitched-world (engine rendering + collision subtraction in world mode).
+
+## Ivan refinement: building overhangs must NOT occlude
+Suspended taxonomy splits in two: (a) THIN overhead elements (cables, wires, hanging
+lanterns, small signs) = occlude-only (overhead.png, drawn over player); (b) BUILDING
+OVERHANGS (eaves, balconies, awnings attached to buildings, any LARGE suspended area)
+= neither block NOR occlude: contribute to NO mask — plain base-plate pixels, player
+walks under and is drawn ON TOP (a big opaque occluder would swallow the player).
+Classifier: suspended + (thin/wiry OR small area) -> overhead.png; suspended + large/
+building-attached -> nothing (just ensure unblocked). Det cross-check: overhead.png
+components capped at ~12px thickness OR small bbox area; anything bigger auto-demotes
+to non-occluding.
