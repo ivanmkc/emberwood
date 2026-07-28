@@ -9,7 +9,8 @@
       "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.001, "config_space_reach_frac": 0.798, "config_space_reach_px": 37449, "walk_frac": 0.012},
       "A3-v4-geometric": {"iou_vs_consensus": 0.700, "canny_edge_alignment": 0.485, "config_space_reach_frac": 0.150, "config_space_reach_px": 180165, "walk_frac": 0.362},
       "morph-walk": {"iou_vs_consensus": 0.489, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": 0.567},
-      "morph-baseline": {"iou_vs_consensus": 0.012, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null}
+      "morph-baseline": {"iou_vs_consensus": 0.012, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null},
+      "A4-amodal": {"iou_vs_consensus": 0.192, "canny_edge_alignment": 0.185, "config_space_reach_frac": 0.482, "config_space_reach_px": 495900, "walk_frac": 0.286, "amodal_instances": 100, "amodal_ok": 100}
     },
     "consensus": {"rolls_accepted": 5, "walk_frac": 0.313, "mean_agreement": 0.949},
     "orientation": {"aligned_frac": 0.937, "total_lines": 2040},
@@ -24,7 +25,8 @@
       "A5-depth-footprint": {"iou_vs_consensus": 0.039, "canny_edge_alignment": 0.027, "config_space_reach_frac": 0.474, "config_space_reach_px": 215475, "walk_frac": 0.113},
       "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.002, "config_space_reach_frac": 1.000, "config_space_reach_px": 105923, "walk_frac": 0.026},
       "morph-walk": {"iou_vs_consensus": 0.507, "canny_edge_alignment": 0.256, "config_space_reach_frac": 0.953, "config_space_reach_px": 1667388, "walk_frac": 0.445},
-      "morph-baseline": {"iou_vs_consensus": 0.043, "canny_edge_alignment": 0.133, "config_space_reach_frac": 0.218, "config_space_reach_px": 57360, "walk_frac": 0.079}
+      "morph-baseline": {"iou_vs_consensus": 0.043, "canny_edge_alignment": 0.133, "config_space_reach_frac": 0.218, "config_space_reach_px": 57360, "walk_frac": 0.079},
+      "A4-amodal": {"iou_vs_consensus": 0.399, "canny_edge_alignment": 0.282, "config_space_reach_frac": 0.420, "config_space_reach_px": 611900, "walk_frac": 0.426, "amodal_instances": 97, "amodal_ok": 97}
     },
     "consensus": {"rolls_accepted": 5, "walk_frac": 0.301, "mean_agreement": 0.956},
     "orientation": {"aligned_frac": 0.825, "total_lines": 1844},
@@ -39,7 +41,8 @@
       "A5-depth-footprint": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.014, "config_space_reach_frac": 1.000, "config_space_reach_px": 62400, "walk_frac": 0.018},
       "A6-niantic": {"iou_vs_consensus": 0.050, "canny_edge_alignment": 0.017, "config_space_reach_frac": 0.282, "config_space_reach_px": 66201, "walk_frac": 0.062},
       "morph-walk": {"iou_vs_consensus": 0.761, "canny_edge_alignment": 0.107, "config_space_reach_frac": 0.487, "config_space_reach_px": 292311, "walk_frac": 0.171},
-      "morph-baseline": {"iou_vs_consensus": 0.067, "canny_edge_alignment": 0.143, "config_space_reach_frac": 0.173, "config_space_reach_px": 61222, "walk_frac": 0.105}
+      "morph-baseline": {"iou_vs_consensus": 0.067, "canny_edge_alignment": 0.143, "config_space_reach_frac": 0.173, "config_space_reach_px": 61222, "walk_frac": 0.105},
+      "A4-amodal": {"iou_vs_consensus": 0.413, "canny_edge_alignment": 0.312, "config_space_reach_frac": 0.410, "config_space_reach_px": 420493, "walk_frac": 0.290, "amodal_instances": 36, "amodal_ok": 36}
     },
     "consensus": {"rolls_accepted": 5, "walk_frac": 0.224, "mean_agreement": 0.931},
     "orientation": {"aligned_frac": 0.844, "total_lines": 1700},
@@ -64,7 +67,7 @@
     "shipped-collision": "Production collision (walk + footprint + segment_room compose)",
     "A2-v3-xray": "Per-object NBP x-ray footprint painting (v3)",
     "A3-v4-geometric": "VLM numeric estimates + code-drawn polygons (v4, pending)",
-    "A4-amodal": "Amodal-completion footprints (pix2gestalt-style, pending)",
+    "A4-amodal": "Amodal-completion footprints (pix2gestalt-style, per-object NBP inpaint + VLM depth ratio)",
     "A5-depth-walk": "Depth Anything v2 ground-plane walkability",
     "A5-depth-footprint": "Depth Anything v2 above-plane blob footprints",
     "A6-niantic": "nianticlabs/footprints pretrained (severe domain gap)",

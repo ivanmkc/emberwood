@@ -659,6 +659,7 @@ A3-v4-geometric         0.700    -        -        0.700
 morph-walk              0.489    0.507    0.761    0.586
 shipped-collision       0.536    0.529    0.300    0.455
 A2-v3-xray              0.529    -        -        0.529
+A4-amodal               0.192    0.399    0.413    0.335
 A5-depth-walk           0.360    0.385    0.239    0.328
 A1-dense-footprint      -        0.007    0.106    0.057
 morph-baseline          0.012    0.043    0.067    0.041
@@ -670,6 +671,7 @@ Method                  anchor   bazaar   plaza
 A1-dense-walk           0.091    0.522    0.511
 shipped-collision       0.993    0.982    0.992
 A2-v3-xray              0.366    -        -
+A4-amodal               0.482    0.420    0.410
 A5-depth-walk           0.997    0.956    1.000
 A5-depth-footprint      0.364    0.474    1.000
 A6-niantic              0.798    1.000    0.282
@@ -678,6 +680,7 @@ A6-niantic              0.798    1.000    0.282
 Method                  anchor   bazaar   plaza
 A1-dense-walk           0.527    0.709    0.288
 A2-v3-xray              0.490    -        -
+A4-amodal               0.185    0.282    0.312
 shipped-collision       0.224    0.266    0.250
 A5-depth-walk           0.078    0.094    0.008
 A5-depth-footprint      0.033    0.027    0.014
@@ -722,10 +725,31 @@ bazaar (one roll at 0.315). Outpaint-from-anchor-edge (C3) is most consistent (0
 and best for non-anchor scenes by inheriting the anchor's alignment. For scene GENERATION,
 prompt-only is sufficient; for stitched-world EXPANSION, outpaint is recommended.
 
+### Completed: A4 amodal-completion footprints
+Per-object NBP amodal completion (pix2gestalt-style: paint full unoccluded object on
+magenta-keyed crop, extract bottom-band footprint scaled by VLM depth ratio). All 3 scenes:
+
+| Scene              | IoU vs consensus | Canny edge | Config reach | Walk frac | Instances |
+|--------------------|-----------------|------------|-------------|-----------|-----------|
+| anchorroom         | 0.192           | 0.185      | 0.482       | 0.286     | 100/100   |
+| night-bazaar       | 0.399           | 0.282      | 0.420       | 0.426     | 97/97     |
+| plaza-market-inside| 0.413           | 0.312      | 0.410       | 0.290     | 36/36     |
+| **mean**           | **0.335**       | **0.260**  | **0.437**   | **0.334** |           |
+
+FINDING 10: A4 amodal footprints are WEAKER than A1 dense walk (0.335 vs 0.739 mean IoU) and
+weaker than A3 v4 geometric (0.700 on anchorroom). The amodal completion + VLM depth-ratio
+pipeline successfully paints full unoccluded objects (100% ok rate, zero fallbacks), but the
+resulting footprints are too aggressive — particularly on anchorroom where 100 instances carve
+large blocked regions that disagree with the NBP consensus (0.192 IoU). The method achieves
+moderate config-space reach (0.437 mean) — better than A1 (0.375) but worse than shipped
+(0.989). The per-object approach's fundamental issue: it operates on ALL census instances
+(36-100) rather than just the impeding minority (10-15), so it blocks too much of the floor.
+This matches the literature's finding that dense formulations (Watson CVPR20) outperform
+per-object amodal pipelines for ground-occupancy problems.
+
 ### In-progress methods
-- A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation
-- A4 (amodal-completion footprints): running on 3 scenes (census + per-object NBP amodal
-  completion + code-drawn footprint extraction)
+- A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation on
+  remaining scenes (anchorroom completed: IoU 0.700)
 
 ### Board
 termchart --project emberwood --agent bench: literature method bake-off comparison board
