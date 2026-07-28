@@ -1,0 +1,76 @@
+{
+  "room": "anchorroom",
+  "anchor_baseline": {
+    "orient_score": 0.937,
+    "n_lines": 2040
+  },
+  "C1_prompt_only": {
+    "mean_orient": 0.981,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 1.0,
+        "n_lines": 2358
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 1.0,
+        "n_lines": 2283
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.943,
+        "n_lines": 2273
+      }
+    ]
+  },
+  "C2_drawn_grid": {
+    "mean_orient": 0.807,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.76,
+        "n_lines": 3086
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.85,
+        "n_lines": 3490
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.811,
+        "n_lines": 3726
+      }
+    ]
+  },
+  "C3_outpaint": {
+    "mean_orient": 0.695,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.887,
+        "n_lines": 2423
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.943,
+        "n_lines": 1950
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.254,
+        "n_lines": 2553
+      }
+    ]
+  }
+}
