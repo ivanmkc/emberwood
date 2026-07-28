@@ -1,0 +1,53 @@
+{
+  "label": "anchor-bazaar",
+  "plate_a": "/home/ivanmkc/emberwood/docs/art-options/nbp-scifi-anchor-clean.png",
+  "plate_b": "/home/ivanmkc/emberwood/docs/art-options/rooms/night-bazaar/plate.png",
+  "edge_a": "w",
+  "edge_b": "e",
+  "plate_a_shape": [
+    1792,
+    2400
+  ],
+  "plate_b_shape": [
+    1792,
+    2400
+  ],
+  "color_histogram": {
+    "color_chi2_per_channel": [
+      195.9487,
+      7.6765,
+      8.9994
+    ],
+    "color_chi2_mean": 70.8748,
+    "luma_chi2": 4.6521,
+    "mean_lab_delta": 19.69
+  },
+  "edge_continuation": {
+    "edge_continuation_rate_a_to_b": 0.3077,
+    "edge_continuation_rate_b_to_a": 0.2703,
+    "edge_continuation_rate_mean": 0.289,
+    "n_edge_pixels_a": 65,
+    "n_edge_pixels_b": 74,
+    "n_continued_a_to_b": 20,
+    "n_continued_b_to_a": 20
+  },
+  "walkable_alignment": {
+    "walkable_jaccard": 0.0,
+    "walkable_fraction_a": 0.0391,
+    "walkable_fraction_b": 0.0391,
+    "n_walk_intervals_a": 1,
+    "n_walk_intervals_b": 1,
+    "walk_intervals_a": [
+      [
+        313,
+        347
+      ]
+    ],
+    "walk_intervals_b": [
+      [
+        608,
+        642
+      ]
+    ]
+  }
+}

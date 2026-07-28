@@ -1,0 +1,26 @@
+{
+  "anchorroom": {
+    "scene": "anchorroom",
+    "census_versions": [
+      "census_v4",
+      "census_v3"
+    ],
+    "n_depth_blobs": 19,
+    "n_covered": 19,
+    "n_missed": 0,
+    "census_miss_rate": 0.0,
+    "missed_blobs": []
+  },
+  "night-bazaar": {
+    "scene": "night-bazaar",
+    "n_depth_blobs": 12,
+    "census_available": false,
+    "notes": "No census masks available for this scene"
+  },
+  "plaza-market-inside": {
+    "scene": "plaza-market-inside",
+    "n_depth_blobs": 1,
+    "census_available": false,
+    "notes": "No census masks available for this scene"
+  }
+}

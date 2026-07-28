@@ -530,3 +530,24 @@ CONCLUSIONS:
    meaningful IoU — this confirms v4's geometric approach (VLM numeric params -> code-drawn
    polygons) is the right direction for pixel art.
 5. Perspective is verifiably axis-aligned (0.98+), validating the v4 camera model assumption.
+
+### Follow-on: Seam continuity metrics (method D)
+seam_metrics.py: anchor-bazaar (anchorroom W edge <-> night-bazaar E edge).
+- Color chi2 mean: 70.87 (moderate mismatch — different lighting/palettes at edges).
+- Luma chi2: 4.65 (luminance closer than color — both are dark-toned scenes).
+- LAB delta: 19.69 (perceptible color shift across the seam).
+- Edge continuation rate: 0.289 (29% of Canny edges at the seam continue on the other side —
+  poor structural continuity, expected since rooms were generated independently).
+- Walk Jaccard: 0.0 (both rooms have border walls at seam edges — walkable intervals at the
+  literal edge line are at different positions and don't overlap; this will improve once the
+  stitched-world agent carves aligned passage strips).
+Side-by-side seam crop saved. Watching for stitched-world panorama/blend outputs to re-score.
+
+### Follow-on: Census-completeness cross-check
+census_crosscheck.py: DAv2 above-floor depth blobs vs v3/v4 census overlays.
+- Anchorroom: 19 depth blobs, 19 covered by census (0 missed, 0.0% miss rate). The v3+v4
+  census is complete relative to what DAv2 detects — no candidate missed objects.
+- Night-bazaar / plaza-market-inside: no census masks available yet (only anchorroom has
+  v3/v4 census data); 12 and 1 depth blobs detected respectively, ready for cross-check
+  when census lands.
+Visualization: green boxes = census-covered, red boxes = missed (none for anchor).
