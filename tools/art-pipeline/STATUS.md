@@ -551,3 +551,17 @@ census_crosscheck.py: DAv2 above-floor depth blobs vs v3/v4 census overlays.
   v3/v4 census data); 12 and 1 depth blobs detected respectively, ready for cross-check
   when census lands.
 Visualization: green boxes = census-covered, red boxes = missed (none for anchor).
+
+## Ivan principle (2026-07-28): CORRECT BY CONSTRUCTION wherever possible
+Prefer structures that cannot be wrong over post-hoc verify/fix. Applied translations:
+- SEAMS: single shared-opening definition in WORLD coords, both rooms carved from that one
+  interval (alignment cannot drift); neighbor art via outpaint-from-shared-edge (continuity
+  constructed, not blended); metrics remain as regression detectors only.
+- FOOTPRINTS v4: yBase comes FROM the census mask's bottom row (constructed), VLM estimates
+  only plan depth; polygon drawn by code (shape validity constructed).
+- MASK/PLATE STALENESS (the painted-door bug class): instances.json records the sha256 of
+  the plate it was built from; loader/CI asserts hash match -> stale collision becomes
+  IMPOSSIBLE to ship, not merely detectable. Regen is forced by construction.
+- SCALE: drawn tile grid conditioning at GENERATION time (grid = the scale constraint)
+  rather than measure-and-rescale after.
+- Bench board should rank methods partly by "how much is constructed vs verified".
