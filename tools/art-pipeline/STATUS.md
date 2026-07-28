@@ -1519,3 +1519,17 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - Board hygiene: DEBUG VIEW card rebuilt as three SAME-SIZE ImageLayers
   stacks (zmaps / 9-tile strips / 36-probe individual browser) per the
   ImageLayers contract; viewer PR #292 letterboxing remains the safety net.
+
+### Cycle 6 of 12h loop: magenta-first extended to ANCHORROOM (battery green)
+- Anchor legacy plate normalized to rooms/anchorroom/plate.png; wire removal
+  best-of-3 (2.41%, judge-clean); magenta v4 5/5 rolls (21.2% ground).
+- build_collision_magenta.py GENERALIZED: room arg, auto collision backup,
+  generic corridor borrow — any exit band unreachable from spawn borrows the
+  SHIPPED collision 400px inward (the bridge case triggers this on anchor's
+  west exit, as expected: magenta still refuses the bridge deck).
+- drive harness generalized (room arg, per-room world offset + exit bands).
+  ANCHOR BATTERY: 4/4 x 3 consecutive (e 489 steps, w 240 via bridge
+  corridor, walls-block, no errors). Bazaar regression check: 5/5.
+- Two of three focus scenes now fully on the magenta-first pipeline.
+  Remaining: plaza-market-inside (interior; room-mode drive), then fused
+  overhead for anchor/plaza.

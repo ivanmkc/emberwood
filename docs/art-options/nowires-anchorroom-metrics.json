@@ -1,0 +1,12 @@
+{
+ "changed_frac": 0.0241,
+ "judge": {
+  "wires_removed": true,
+  "objects_intact": true,
+  "artifacts": [
+   "missing floor texture under deleted wires near Plaza Market stall",
+   "missing shadow under deleted wire near lower plant cylinder"
+  ]
+ },
+ "candidates_seen": 3
+}
