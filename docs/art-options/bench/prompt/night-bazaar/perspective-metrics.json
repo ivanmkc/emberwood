@@ -1,0 +1,76 @@
+{
+  "room": "night-bazaar",
+  "anchor_baseline": {
+    "orient_score": 0.937,
+    "n_lines": 2040
+  },
+  "C1_prompt_only": {
+    "mean_orient": 0.7,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.825,
+        "n_lines": 1792
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.315,
+        "n_lines": 2172
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.961,
+        "n_lines": 2642
+      }
+    ]
+  },
+  "C2_drawn_grid": {
+    "mean_orient": 0.665,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.724,
+        "n_lines": 3032
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.447,
+        "n_lines": 2480
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.824,
+        "n_lines": 2686
+      }
+    ]
+  },
+  "C3_outpaint": {
+    "mean_orient": 0.896,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.873,
+        "n_lines": 1780
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.868,
+        "n_lines": 1610
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.946,
+        "n_lines": 1617
+      }
+    ]
+  }
+}
