@@ -1,0 +1,482 @@
+{
+ "room": "plaza-market-inside",
+ "summary": {
+  "objects": 67,
+  "moved": 2,
+  "median_shift": 2,
+  "max_shift": 2,
+  "mean_agree_before": 0.99,
+  "mean_agree_after": 0.991
+ },
+ "objects": {
+  "1": {
+   "px": 2110640,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.984,
+   "edge_agree_after": 0.984
+  },
+  "6": {
+   "px": 296710,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "49": {
+   "px": 124777,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.996,
+   "edge_agree_after": 0.996
+  },
+  "10": {
+   "px": 56864,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.993,
+   "edge_agree_after": 0.993
+  },
+  "60": {
+   "px": 52322,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.984,
+   "edge_agree_after": 0.984
+  },
+  "52": {
+   "px": 46054,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.982,
+   "edge_agree_after": 0.982
+  },
+  "64": {
+   "px": 45458,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "66": {
+   "px": 45051,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.999,
+   "edge_agree_after": 0.999
+  },
+  "8": {
+   "px": 38978,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.999,
+   "edge_agree_after": 0.999
+  },
+  "11": {
+   "px": 38437,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.995,
+   "edge_agree_after": 0.995
+  },
+  "67": {
+   "px": 38039,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.989,
+   "edge_agree_after": 0.989
+  },
+  "38": {
+   "px": 29049,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.987,
+   "edge_agree_after": 0.987
+  },
+  "37": {
+   "px": 26459,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.983,
+   "edge_agree_after": 0.983
+  },
+  "32": {
+   "px": 25705,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "28": {
+   "px": 22448,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.977,
+   "edge_agree_after": 0.977
+  },
+  "14": {
+   "px": 22386,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.996,
+   "edge_agree_after": 0.996
+  },
+  "9": {
+   "px": 20943,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.996,
+   "edge_agree_after": 0.996
+  },
+  "30": {
+   "px": 17455,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.985,
+   "edge_agree_after": 0.985
+  },
+  "17": {
+   "px": 16620,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "39": {
+   "px": 16273,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "40": {
+   "px": 16199,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "31": {
+   "px": 10679,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.979,
+   "edge_agree_after": 0.979
+  },
+  "12": {
+   "px": 9770,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "13": {
+   "px": 9421,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "22": {
+   "px": 8436,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.986,
+   "edge_agree_after": 0.986
+  },
+  "21": {
+   "px": 8109,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.996,
+   "edge_agree_after": 0.996
+  },
+  "20": {
+   "px": 7852,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.983,
+   "edge_agree_after": 0.983
+  },
+  "50": {
+   "px": 7250,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.995,
+   "edge_agree_after": 0.995
+  },
+  "27": {
+   "px": 7212,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.982,
+   "edge_agree_after": 0.982
+  },
+  "25": {
+   "px": 6525,
+   "dy": 1,
+   "dx": -2,
+   "edge_agree_before": 0.956,
+   "edge_agree_after": 0.993
+  },
+  "15": {
+   "px": 6276,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "57": {
+   "px": 5801,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.989,
+   "edge_agree_after": 0.989
+  },
+  "29": {
+   "px": 5693,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.997,
+   "edge_agree_after": 0.997
+  },
+  "19": {
+   "px": 5405,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.976,
+   "edge_agree_after": 0.976
+  },
+  "16": {
+   "px": 5368,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "18": {
+   "px": 5144,
+   "dy": -2,
+   "dx": -2,
+   "edge_agree_before": 0.952,
+   "edge_agree_after": 0.995
+  },
+  "23": {
+   "px": 5130,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.997,
+   "edge_agree_after": 0.997
+  },
+  "24": {
+   "px": 5118,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.992,
+   "edge_agree_after": 0.992
+  },
+  "26": {
+   "px": 4786,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "59": {
+   "px": 4720,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.975,
+   "edge_agree_after": 0.975
+  },
+  "34": {
+   "px": 4426,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "42": {
+   "px": 4415,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.973,
+   "edge_agree_after": 0.973
+  },
+  "44": {
+   "px": 4363,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.993,
+   "edge_agree_after": 0.993
+  },
+  "33": {
+   "px": 4281,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "41": {
+   "px": 4272,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.993,
+   "edge_agree_after": 0.993
+  },
+  "43": {
+   "px": 4257,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "36": {
+   "px": 4242,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "56": {
+   "px": 4172,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.979,
+   "edge_agree_after": 0.979
+  },
+  "35": {
+   "px": 4133,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "51": {
+   "px": 3840,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.989,
+   "edge_agree_after": 0.989
+  },
+  "55": {
+   "px": 3743,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.991,
+   "edge_agree_after": 0.991
+  },
+  "62": {
+   "px": 3461,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.974,
+   "edge_agree_after": 0.974
+  },
+  "63": {
+   "px": 3060,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.994,
+   "edge_agree_after": 0.994
+  },
+  "3": {
+   "px": 2881,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.981,
+   "edge_agree_after": 0.981
+  },
+  "65": {
+   "px": 2645,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.991,
+   "edge_agree_after": 0.991
+  },
+  "7": {
+   "px": 2221,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "2": {
+   "px": 2035,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.992,
+   "edge_agree_after": 0.992
+  },
+  "47": {
+   "px": 1662,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.927,
+   "edge_agree_after": 0.927
+  },
+  "45": {
+   "px": 1576,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.991,
+   "edge_agree_after": 0.991
+  },
+  "53": {
+   "px": 1383,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "46": {
+   "px": 1321,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.98,
+   "edge_agree_after": 0.98
+  },
+  "5": {
+   "px": 1289,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.998,
+   "edge_agree_after": 0.998
+  },
+  "48": {
+   "px": 1270,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.986,
+   "edge_agree_after": 0.986
+  },
+  "61": {
+   "px": 1267,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.995,
+   "edge_agree_after": 0.995
+  },
+  "54": {
+   "px": 1200,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.995,
+   "edge_agree_after": 0.995
+  },
+  "4": {
+   "px": 1143,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 1.0,
+   "edge_agree_after": 1.0
+  },
+  "58": {
+   "px": 837,
+   "dy": 0,
+   "dx": 0,
+   "edge_agree_before": 0.995,
+   "edge_agree_after": 0.995
+  }
+ }
+}

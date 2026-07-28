@@ -1330,3 +1330,23 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   as gfx panel predicted), 12 no-ev, 9 fragile. QUALITY LIMIT = roll variance:
   next step is the planned judge escalation (median-of-3 on fragile/contested)
   + 2 rolls per position before any baseY correction ships to instances.json.
+
+### Run 29: instance-mask misalignment (Ivan caught it) + realignment
+- Ivan: "i think your masks are misaligned" — CONFIRMED. plateHash matched
+  (right plate) but night-bazaar instance boundaries were off by up to 34px,
+  per-object in random directions (median |shift| 24px among moved): each
+  object's mask carries its NBP segmentation roll's local drift. Walk masks
+  are immune (5-roll pixel consensus averages drift); single judge-gated
+  class/instance rolls are not.
+- Fix: realign_instances.py — per-object edge-snap (±32px search vs plate
+  Canny, refined) → _srcmasks_<room>-aligned.npz. Bazaar: 88/89 moved, edge
+  agreement 0.472→0.713. Anchor: 7/35 moved (was mostly fine, 0.919→0.941).
+  Plaza: 2/67 (0.99, fine). It was a bazaar-specific bad segmentation roll.
+- Verdict replay on persisted evidence (zero API): contradictions 10→6,
+  false ysort verdicts removed (5→3). Remaining quality = roll variance →
+  judge escalation still the gated next step.
+- Segmentation map rendered per Ivan (segmap-overlay-*.jpg): noodle stand is
+  ONE instance spanning canopy+counter+interior — the predicted split
+  candidate; several merged blobs are visible. FOLLOW-UP flagged: downstream
+  consumers of the OLD npz (4-color previews, v4/v5 footprint compose)
+  inherit bazaar misalignment — re-emission from aligned masks needed.
