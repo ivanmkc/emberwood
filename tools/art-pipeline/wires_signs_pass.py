@@ -7,12 +7,13 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from PIL import Image
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _tl = threading.local()
 def cli():
-    if not hasattr(_tl, 'c'):
+    if getattr(_tl, 'c', None) is None:
         _tl.c = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
     return _tl.c
 
@@ -51,7 +52,7 @@ def one_roll(seg_in, W, H):
                 if pure >= 0.72 and frac <= 0.20:
                     return cand
                 print(f'  roll rejected (purity {pure:.2f}, frac {frac:.2f})')
-    except Exception as e:
+    except (genai_errors.APIError, OSError, ValueError) as e:
         print('  roll error', e)
     return None
 

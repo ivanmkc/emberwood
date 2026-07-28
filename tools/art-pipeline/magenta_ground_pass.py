@@ -18,6 +18,7 @@ import numpy as np
 from PIL import Image
 
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -25,9 +26,10 @@ _tl = threading.local()
 
 
 def cli():
-    if not hasattr(_tl, 'c'):
-        _tl.c = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
-    return _tl.c
+    c = getattr(_tl, 'c', None)
+    if c is None:
+        c = _tl.c = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
+    return c
 
 
 PROMPT = (
@@ -67,7 +69,7 @@ def one_roll(seg_in, plate_arr, W, H):
                 if raw_dir:
                     os.makedirs(raw_dir, exist_ok=True)
                     img.save(os.path.join(raw_dir,
-                        f'raw_{threading.get_ident()}_{np.random.randint(1e9)}.png'))
+                        f'raw_{threading.get_ident()}_{np.random.randint(10**9)}.png'))
                 m = np.asarray(img.resize((W, H), Image.NEAREST)).astype(np.int16)
                 near_mag = np.linalg.norm(m - MAG, axis=2) < 120
                 changed = np.abs(m - plate_arr).max(axis=2) > 42
@@ -79,7 +81,7 @@ def one_roll(seg_in, plate_arr, W, H):
                 if 0.10 <= frac <= 0.75 and offmask_change <= 0.25:
                     return cand
                 print(f'  roll rejected (ground {frac:.2f}, off-mask change {offmask_change:.2f})')
-    except Exception as e:
+    except (genai_errors.APIError, OSError, ValueError) as e:
         print('  roll error', e)
     return None
 

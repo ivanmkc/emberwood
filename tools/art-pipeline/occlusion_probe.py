@@ -15,11 +15,13 @@ import os
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass, field
 
 import numpy as np
 from PIL import Image, ImageDraw
 
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -27,9 +29,10 @@ _tl = threading.local()
 
 
 def cli():
-    if not hasattr(_tl, 'c'):
-        _tl.c = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
-    return _tl.c
+    c = getattr(_tl, 'c', None)
+    if c is None:
+        c = _tl.c = genai.Client(vertexai=True, project='adk-coding-agents', location='global')
+    return c
 
 
 SCENES = {
@@ -78,9 +81,23 @@ def sample_positions(walk, k_grid=(4, 3), margin=140):
     return pts
 
 
+@dataclass
+class ProbeResult:
+    cx0: int
+    cy0: int
+    mx: int
+    my: int
+    bbox: tuple
+    gen: Image.Image
+    visible: np.ndarray
+    unchanged: np.ndarray
+    noise: float
+    pos: tuple = (0, 0)
+    judge: dict = field(default_factory=dict)
+
+
 def probe_one(plate, sprite, x, y):
-    """Insert character at (x,y); return dict with crop box, visible mask,
-    unchanged-in-bbox mask, gen crop, noise fraction. None if roll invalid."""
+    """Insert character at (x,y); ProbeResult or None if roll invalid."""
     W, H = plate.size
     cx0 = int(np.clip(x - CROP // 2, 0, W - CROP))
     cy0 = int(np.clip(y - CROP * 0.55, 0, H - CROP))
@@ -91,7 +108,7 @@ def probe_one(plate, sprite, x, y):
     dr.line([(mx - 12, my), (mx + 12, my)], fill=(255, 0, 255), width=4)
     dr.line([(mx, my - 12), (mx, my + 12)], fill=(255, 0, 255), width=4)
 
-    for attempt in range(2):
+    for _attempt in range(2):
         try:
             r = cli().models.generate_content(
                 model='gemini-3-pro-image', contents=[marked, sprite, PROMPT],
@@ -125,10 +142,9 @@ def probe_one(plate, sprite, x, y):
                         adiff=np.abs(a - g).max(axis=2).astype(np.int16),
                         bbox=np.array([bx0, by0, bx1, by1]),
                         marker=np.array([mx, my]), origin=np.array([cx0, cy0]))
-                return {'cx0': cx0, 'cy0': cy0, 'mx': mx, 'my': my,
-                        'bbox': (bx0, by0, bx1, by1), 'gen': gen,
-                        'visible': visible, 'unchanged': unchanged, 'noise': noise}
-        except Exception as e:
+                return ProbeResult(cx0, cy0, mx, my, (bx0, by0, bx1, by1),
+                                   gen, visible, unchanged, noise)
+        except (genai_errors.APIError, OSError, ValueError) as e:
             print(f'  probe ({x},{y}) error: {e}')
     return None
 
@@ -145,7 +161,7 @@ def judge(gen, mx, my):
         r = cli().models.generate_content(model='gemini-3.1-pro-preview', contents=[gen, q])
         t = r.text or ''
         return json.loads(t[t.index('{'): t.rindex('}') + 1])
-    except Exception as e:
+    except (genai_errors.APIError, ValueError, OSError) as e:
         return {'error': str(e)}
 
 
@@ -167,8 +183,8 @@ def run(room, k_grid=(4, 3)):
         res = probe_one(plate, sprite, x, y)
         if res is None:
             return None
-        res['pos'] = (x, y)
-        res['judge'] = judge(res['gen'], res['mx'], res['my'])
+        res.pos = (x, y)
+        res.judge = judge(res.gen, res.mx, res.my)
         return res
 
     with ThreadPoolExecutor(max_workers=4) as ex:
@@ -185,10 +201,10 @@ def run(room, k_grid=(4, 3)):
     occ_evidence = np.zeros((H, W), np.int32)   # scene px drawn over the char
     zkey = np.zeros((H, W), np.float32)          # max ground-y occluded there
     for n, res in enumerate(results):
-        g = np.asarray(res['gen']).astype(np.float32)
-        vis = res['visible']
+        g = np.asarray(res.gen).astype(np.float32)
+        vis = res.visible
         g[vis] = g[vis] * 0.55 + np.array([80, 255, 120], np.float32) * 0.45
-        bx0, by0, bx1, by1 = res['bbox']
+        bx0, by0, bx1, by1 = res.bbox
         # occluder evidence = unchanged pixels INSIDE the character's visible
         # column-span (holes in the silhouette), not the whole bbox: fill each
         # column between its first and last visible row, then take unchanged
@@ -204,19 +220,19 @@ def run(room, k_grid=(4, 3)):
         t = Image.fromarray(g.clip(0, 255).astype(np.uint8))
         dr = ImageDraw.Draw(t)
         dr.rectangle([bx0, by0, bx1, by1], outline=(255, 200, 40), width=2)
-        j = res['judge']
+        j = res.judge
         lab = 'occluded by: ' + ', '.join(j.get('occluding_objects', [])[:2]) \
               if j.get('occluding_objects') else \
               ('visible' if j.get('character_present') else 'NO CHAR')
-        dr.text((6, 6), f"({res['pos'][0]},{res['pos'][1]}) {lab[:52]}", fill=(255, 255, 160))
+        dr.text((6, 6), f"({res.pos[0]},{res.pos[1]}) {lab[:52]}", fill=(255, 255, 160))
         t = t.resize((tile, tile), Image.LANCZOS)
         sheet.paste(t, ((n % cols) * tile, (n // cols) * tile))
         # accumulate full-image evidence
         oy, ox = np.nonzero(occ_cols)
-        occ_evidence[oy + res['cy0'], ox + res['cx0']] += 1
-        gy = res['pos'][1]
-        sl = zkey[oy + res['cy0'], ox + res['cx0']]
-        zkey[oy + res['cy0'], ox + res['cx0']] = np.maximum(sl, gy)
+        occ_evidence[oy + res.cy0, ox + res.cx0] += 1
+        gy = res.pos[1]
+        sl = zkey[oy + res.cy0, ox + res.cx0]
+        zkey[oy + res.cy0, ox + res.cx0] = np.maximum(sl, gy)
 
     out = os.path.join(ROOT, 'docs', 'art-options')
     sheet.save(os.path.join(out, f'occprobe-sheet-{room}.jpg'), quality=87)
@@ -233,9 +249,9 @@ def run(room, k_grid=(4, 3)):
     o.save(os.path.join(out, f'occprobe-zkey-{room}.jpg'), quality=86)
 
     json.dump({'room': room, 'probes_attempted': len(pts), 'probes_valid': len(results),
-               'probes': [{'pos': r['pos'], 'noise': round(r['noise'], 4),
-                           'visible_px': int(r['visible'].sum()),
-                           'judge': r['judge']} for r in results],
+               'probes': [{'pos': r.pos, 'noise': round(r.noise, 4),
+                           'visible_px': int(r.visible.sum()),
+                           'judge': r.judge} for r in results],
                'evidence_px': int(ev.sum())},
               open(os.path.join(out, f'occprobe-{room}-metrics.json'), 'w'), indent=1)
     print(f'[{room}] sheet + zkey written, evidence px {int(ev.sum())}')

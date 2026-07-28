@@ -16,6 +16,7 @@ Outputs per room in docs/art-options/:
 import json
 import os
 
+import cv2
 import numpy as np
 from PIL import Image
 
@@ -29,6 +30,8 @@ SCENES = {
 
 
 def load_pipe():
+    # transformers is a genuinely expensive import (~6s); only this entry
+    # point needs it and callers import this module for its helpers too
     from transformers import pipeline
     return pipeline('depth-estimation',
                     model='depth-anything/Depth-Anything-V2-Small-hf', device='cpu')
@@ -36,12 +39,7 @@ def load_pipe():
 
 def colorize(d):
     n = (d - d.min()) / max(1e-6, d.max() - d.min())
-    try:
-        import cv2
-        return cv2.applyColorMap((n * 255).astype(np.uint8), cv2.COLORMAP_TURBO)[:, :, ::-1]
-    except ImportError:
-        g = (n * 255).astype(np.uint8)
-        return np.stack([g, g, g], axis=2)
+    return cv2.applyColorMap((n * 255).astype(np.uint8), cv2.COLORMAP_TURBO)[:, :, ::-1]
 
 
 def run(pipe, room):
@@ -85,7 +83,6 @@ def run(pipe, room):
     # "not ground" != "overhead": a standing wall is also closer than the
     # ground at its row. Suspended objects are the components with NO
     # contiguous closer-than-ground support path down to walkable ground.
-    import cv2
     walk_d = cv2.dilate(walk.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0
     n, lab = cv2.connectedComponents(raised.astype(np.uint8))
     over = np.zeros((H, W), dtype=bool)

@@ -10,6 +10,7 @@ import json
 import os
 import sys
 
+import cv2
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -24,6 +25,7 @@ GRID = 32          # candidate stride (plate px)
 FRONT_MARGIN = 16  # gy must exceed object base by this to count as "front"
 FRONT_MAX = 220    # and be within this range so the char actually overlaps it
 MIN_OVERLAP = 350  # px of instance mask inside char bbox to count as a pair
+BEHIND, FRONT = 'behind', 'front'  # categorical pair kinds (single source)
 
 
 def char_bbox(x, y, W, H):
@@ -44,7 +46,6 @@ def run(room):
         stand = walk & mag  # both methods agree the character can stand here
     else:
         stand = walk
-    import cv2
     # only the FEET need walkable ground (16px pad), not the full char width
     stand = cv2.erode(stand.astype(np.uint8), np.ones((6, 16), np.uint8)) > 0
 
@@ -73,15 +74,15 @@ def run(room):
             if ov < MIN_OVERLAP:
                 continue
             if y < o['base']:
-                pairs.add((oid, 'behind'))
+                pairs.add((oid, BEHIND))
             elif o['base'] + FRONT_MARGIN < y <= o['base'] + FRONT_MAX:
-                pairs.add((oid, 'front'))
+                pairs.add((oid, FRONT))
         pair_of.append(pairs)
 
     need = {}
     for oid in objs:
-        need[(oid, 'behind')] = 2
-        need[(oid, 'front')] = 1
+        need[(oid, BEHIND)] = 2
+        need[(oid, FRONT)] = 1
 
     chosen = []
     remaining = {k: v for k, v in need.items()}
@@ -104,8 +105,8 @@ def run(room):
 
     cov = {}
     for oid, o in objs.items():
-        got_b = need[(oid, 'behind')] - remaining[(oid, 'behind')]
-        got_f = need[(oid, 'front')] - remaining[(oid, 'front')]
+        got_b = need[(oid, BEHIND)] - remaining[(oid, BEHIND)]
+        got_f = need[(oid, FRONT)] - remaining[(oid, FRONT)]
         cov[oid] = {'label': o['label'], 'behind': got_b, 'front': got_f,
                     'full': got_b >= 2 and got_f >= 1,
                     'partial': (got_b + got_f) > 0}
@@ -128,8 +129,8 @@ def run(room):
     for i in chosen:
         x, y = cands[i]
         kinds = {k for _, k in pair_of[i]}
-        col = (0, 255, 120) if kinds == {'front'} else \
-              (255, 80, 80) if kinds == {'behind'} else (255, 220, 40)
+        col = (0, 255, 120) if kinds == {FRONT} else \
+              (255, 80, 80) if kinds == {BEHIND} else (255, 220, 40)
         dr.ellipse([x - 10, y - 10, x + 10, y + 10], outline=col, width=4)
         bx0, by0, bx1, by1 = char_bbox(x, y, W, H)
         dr.rectangle([bx0, by0, bx1, by1], outline=col, width=2)

@@ -13,8 +13,11 @@ import io
 import json
 import os
 import sys
+import urllib.request
+import urllib.error
 
 import numpy as np
+import openai
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -69,7 +72,6 @@ def one_roll(client, plate_buf, W, H):
             if d.b64_json:
                 img_bytes = base64.b64decode(d.b64_json)
             else:
-                import urllib.request
                 img_bytes = urllib.request.urlopen(d.url).read()
             img = Image.open(io.BytesIO(img_bytes)).convert('RGB')
             m = np.asarray(img.resize((W, H), Image.NEAREST)).astype(np.int16)
@@ -85,13 +87,12 @@ def one_roll(client, plate_buf, W, H):
             if pure >= 0.72:
                 return cand, frac
             print('  roll rejected (purity)')
-        except Exception as e:
+        except (openai.OpenAIError, urllib.error.URLError, OSError, ValueError) as e:
             print(f'  GPT attempt {attempt} error: {e}')
     return None, None
 
 
 def run(room, n_rolls=5):
-    import openai
     key = _load_openai_key()
     if not key:
         sys.exit('FATAL: no OPENAI_API_KEY')
