@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "A2-v3-xray",
+  "iou_vs_consensus": 0.529,
+  "canny_edge_alignment": 0.49,
+  "config_space_reach_frac": 0.366,
+  "config_space_reach_px": 531113,
+  "orientation_aligned_frac": 0.937,
+  "orientation_total_lines": 2040,
+  "walk_frac": 0.424
+}

@@ -1,0 +1,11 @@
+{
+  "room": "plaza-market-inside",
+  "method": "A1-dense-footprint",
+  "iou_vs_consensus": 0.106,
+  "canny_edge_alignment": 0.24,
+  "config_space_reach_frac": 0.78,
+  "config_space_reach_px": 697862,
+  "orientation_aligned_frac": 0.844,
+  "orientation_total_lines": 1700,
+  "walk_frac": 0.253
+}

@@ -1,0 +1,34 @@
+{
+  "room": "anchorroom",
+  "rolls_attempted": 6,
+  "rolls_accepted": 5,
+  "walk_frac": 0.313,
+  "mean_agreement": 0.949,
+  "per_roll": [
+    {
+      "roll": 0,
+      "purity": 0.854,
+      "walk_frac": 0.331
+    },
+    {
+      "roll": 1,
+      "purity": 0.887,
+      "walk_frac": 0.319
+    },
+    {
+      "roll": 2,
+      "purity": 0.968,
+      "walk_frac": 0.332
+    },
+    {
+      "roll": 3,
+      "purity": 0.886,
+      "walk_frac": 0.333
+    },
+    {
+      "roll": 4,
+      "purity": 0.885,
+      "walk_frac": 0.429
+    }
+  ]
+}

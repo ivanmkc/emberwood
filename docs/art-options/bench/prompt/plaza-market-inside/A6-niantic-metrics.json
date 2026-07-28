@@ -1,0 +1,11 @@
+{
+  "room": "plaza-market-inside",
+  "method": "A6-niantic",
+  "iou_vs_consensus": 0.05,
+  "canny_edge_alignment": 0.017,
+  "config_space_reach_frac": 0.282,
+  "config_space_reach_px": 66201,
+  "orientation_aligned_frac": 0.844,
+  "orientation_total_lines": 1700,
+  "walk_frac": 0.062
+}

@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "A6-niantic",
+  "iou_vs_consensus": 0.0,
+  "canny_edge_alignment": 0.001,
+  "config_space_reach_frac": 0.798,
+  "config_space_reach_px": 37449,
+  "orientation_aligned_frac": 0.937,
+  "orientation_total_lines": 2040,
+  "walk_frac": 0.012
+}

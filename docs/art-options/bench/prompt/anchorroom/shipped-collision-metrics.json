@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "shipped-collision",
+  "iou_vs_consensus": 0.536,
+  "canny_edge_alignment": 0.224,
+  "config_space_reach_frac": 0.993,
+  "config_space_reach_px": 2257615,
+  "orientation_aligned_frac": 0.937,
+  "orientation_total_lines": 2040,
+  "walk_frac": 0.566
+}

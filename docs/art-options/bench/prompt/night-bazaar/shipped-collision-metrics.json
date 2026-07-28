@@ -1,0 +1,11 @@
+{
+  "room": "night-bazaar",
+  "method": "shipped-collision",
+  "iou_vs_consensus": 0.529,
+  "canny_edge_alignment": 0.266,
+  "config_space_reach_frac": 0.982,
+  "config_space_reach_px": 1832125,
+  "orientation_aligned_frac": 0.825,
+  "orientation_total_lines": 1844,
+  "walk_frac": 0.475
+}

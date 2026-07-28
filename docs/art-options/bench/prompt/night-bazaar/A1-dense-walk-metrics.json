@@ -1,0 +1,11 @@
+{
+  "room": "night-bazaar",
+  "method": "A1-dense-walk",
+  "iou_vs_consensus": 0.701,
+  "canny_edge_alignment": 0.709,
+  "config_space_reach_frac": 0.522,
+  "config_space_reach_px": 674653,
+  "orientation_aligned_frac": 0.825,
+  "orientation_total_lines": 1844,
+  "walk_frac": 0.409
+}

@@ -1,0 +1,11 @@
+{
+  "room": "night-bazaar",
+  "method": "A6-niantic",
+  "iou_vs_consensus": 0.0,
+  "canny_edge_alignment": 0.002,
+  "config_space_reach_frac": 1.0,
+  "config_space_reach_px": 105923,
+  "orientation_aligned_frac": 0.825,
+  "orientation_total_lines": 1844,
+  "walk_frac": 0.026
+}

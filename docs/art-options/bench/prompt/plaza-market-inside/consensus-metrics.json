@@ -1,0 +1,34 @@
+{
+  "room": "plaza-market-inside",
+  "rolls_attempted": 6,
+  "rolls_accepted": 5,
+  "walk_frac": 0.224,
+  "mean_agreement": 0.931,
+  "per_roll": [
+    {
+      "roll": 0,
+      "purity": 0.931,
+      "walk_frac": 0.392
+    },
+    {
+      "roll": 1,
+      "purity": 0.951,
+      "walk_frac": 0.251
+    },
+    {
+      "roll": 2,
+      "purity": 0.965,
+      "walk_frac": 0.236
+    },
+    {
+      "roll": 3,
+      "purity": 0.904,
+      "walk_frac": 0.219
+    },
+    {
+      "roll": 4,
+      "purity": 0.891,
+      "walk_frac": 0.225
+    }
+  ]
+}

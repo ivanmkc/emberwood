@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "A1-dense-walk",
+  "iou_vs_consensus": 0.784,
+  "canny_edge_alignment": 0.527,
+  "config_space_reach_frac": 0.091,
+  "config_space_reach_px": 93008,
+  "orientation_aligned_frac": 0.937,
+  "orientation_total_lines": 2040,
+  "walk_frac": 0.325
+}

@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "A5-depth-walk",
+  "iou_vs_consensus": 0.36,
+  "canny_edge_alignment": 0.078,
+  "config_space_reach_frac": 0.997,
+  "config_space_reach_px": 3317902,
+  "orientation_aligned_frac": 0.937,
+  "orientation_total_lines": 2040,
+  "walk_frac": 0.79
+}

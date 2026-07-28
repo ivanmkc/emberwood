@@ -1,0 +1,11 @@
+{
+  "room": "night-bazaar",
+  "method": "A5-depth-fp",
+  "iou_vs_consensus": 0.039,
+  "canny_edge_alignment": 0.027,
+  "config_space_reach_frac": 0.474,
+  "config_space_reach_px": 215475,
+  "orientation_aligned_frac": 0.825,
+  "orientation_total_lines": 1844,
+  "walk_frac": 0.113
+}
