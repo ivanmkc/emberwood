@@ -1,1 +1,12 @@
-{"snap_purity": 0.956, "play_purity": 0.948, "footprint_fraction": 0.36, "edge_alignment": 0.993, "nonwalk_containment": 0.736, "walk_conflict": 0.145, "bases_only": true, "pass": true}
+{
+  "pass": true,
+  "source": "v4-geometric-cbc",
+  "method": "correct-by-construction contact + VLM depth estimate",
+  "white_frac": 0.0608,
+  "geometric_ok": 7,
+  "fallback": 4,
+  "impeding": 11,
+  "instances": 47,
+  "thin_suspended": 1,
+  "large_suspended": 3
+}
