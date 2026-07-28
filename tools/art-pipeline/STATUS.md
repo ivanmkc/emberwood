@@ -957,3 +957,12 @@ method comparison text.
 - docs/art-options/v4/anchorroom/ — 19 files (census, footprints, collision, metrics, A/B)
 - docs/art-options/v4/hydroponics/ — 10 files
 - docs/art-options/v4/home-interior-a/ — 10 files
+
+## Ivan directive: collision overlays get a 4th color for FOREGROUND/overhead
+All collision overlays (collision-preview.jpg, board layer stacks, defect/judge
+composites) must render the overhead occlude-only layer (wires, hanging lanterns —
+overhead.png) in its own color, distinct from green=walkable-reachable /
+yellow=walkable-unreachable / red=blocked. CONVENTION: BLUE #4C8CFF tint = overhead
+(occludes, never blocks). Renderers to update: room_factory install step, align-masks
+preview/judge scripts, bench board overlay cards + legends. Regenerate previews for any
+room with overhead.png (anchorroom now; bazaar/plaza when v5 lands).
