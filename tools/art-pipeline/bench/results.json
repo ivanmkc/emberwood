@@ -80,8 +80,12 @@
         "canny_agreement_floorplan": 0.897
       },
       "A7-gpt-floorplan": {
-        "blocked": true,
-        "reason": "no OPENAI_API_KEY"
+        "iou_vs_consensus": 0.296,
+        "canny_edge_alignment": 0.458,
+        "config_space_reach_frac": 0.222,
+        "config_space_reach_px": 0,
+        "walk_frac": 0.695,
+        "canny_agreement_floorplan": 0.569
       }
     },
     "consensus": {
@@ -174,8 +178,12 @@
         "canny_agreement_floorplan": 0.943
       },
       "A7-gpt-floorplan": {
-        "blocked": true,
-        "reason": "no OPENAI_API_KEY"
+        "iou_vs_consensus": 0.233,
+        "canny_edge_alignment": 0.163,
+        "config_space_reach_frac": 0.442,
+        "config_space_reach_px": 0,
+        "walk_frac": 0.36,
+        "canny_agreement_floorplan": 0.521
       }
     },
     "consensus": {
@@ -268,8 +276,12 @@
         "canny_agreement_floorplan": 0.827
       },
       "A7-gpt-floorplan": {
-        "blocked": true,
-        "reason": "no OPENAI_API_KEY"
+        "iou_vs_consensus": 0.162,
+        "canny_edge_alignment": 0.503,
+        "config_space_reach_frac": 0.536,
+        "config_space_reach_px": 0,
+        "walk_frac": 0.597,
+        "canny_agreement_floorplan": 0.554
       }
     },
     "consensus": {
@@ -340,6 +352,6 @@
     "morph-walk": "Morphological walkability from NBP class mask",
     "morph-baseline": "Morphological base-band footprints from class mask",
     "A7-nbp-floorplan": "Screen-space architect floorplan via NBP (white=walk, gray=footprint, blue=water)",
-    "A7-gpt-floorplan": "Screen-space architect floorplan via GPT-Image-2 (BLOCKED: no API key)"
+    "A7-gpt-floorplan": "Screen-space architect floorplan via GPT-Image-2 (model: gpt-image-2)"
   }
 }
