@@ -1211,3 +1211,55 @@ experts to check all our math" → "push to board".
   alias for gemini-3-pro-image, so model pinning is not available to us.
 - Board pushed twice (post-"push to board", then + skeleton layers), all image
   URLs verified 200 before each push.
+
+## Agent align-masks — skeleton-union fusion + drift detector (2026-07-28)
+
+Commits d0f8baa (fusion) and e0b1d16 (drift detector), both pushed to main.
+
+### Skeleton-union fusion (d0f8baa)
+
+Input: 5 GPT-Image-2 wires+signs rolls per scene (2400x1792 binary masks at
+`/home/ivanmkc/.claude/jobs/92f6b395/tmp/gptrolls/{room}-roll{1..5}.png`).
+
+Algorithm (clDice lineage): per roll, connectedComponents + distanceTransform;
+split at 12px max-diameter threshold into thin (wires/cables) vs blob (signs)
+components. Thin: skeletonize each roll, union 5 skeleta, dilate by
+median-stroke half-width, CLAMP to union-of-all-rolls (prevents dilation into
+never-detected pixels). Blob: standard pixel-wise majority (>N/2). Final mask =
+thin_clamped | blob_majority.
+
+| Scene               | Skel-union | Unclamped | Majority | Union2  | Union-all | Components (skel/maj/un2) | Stroke | Radius |
+|---------------------|-----------|-----------|----------|---------|-----------|---------------------------|--------|--------|
+| night-bazaar        | 10.81%    | 14.67%    | 1.05%    | 4.77%   | 18.33%    | 110 / 381 / 449           | 10.0px | 5px    |
+| anchorroom          | 9.33%     | 11.64%    | 0.53%    | 3.24%   | 17.63%    | 105 / 322 / 512           | 8.4px  | 4px    |
+| plaza-market-inside | 6.41%     | 6.57%     | 5.34%    | 8.61%   | 17.60%    | 83 / 94 / 106             | 10.0px | 5px    |
+
+Key finding: bazaar skel-union preserves wire connectivity (110 components vs
+majority's 381 fragments) at higher coverage. The clamp innovation prevents
+dilation overreach (14.67% → 10.81%). Trade-off: 1-of-5 semantics for thin
+components means single-roll false positives (e.g. floor rails) survive.
+Candidate next step: 2-of-5 skeleton vote threshold.
+
+All 3 overlay JPGs visually verified (continuous wire runs, neon signs, overhead
+pipes captured correctly).
+
+Output files: docs/art-options/wires-signs-skel-{anchorroom,night-bazaar,
+plaza-market-inside}.{png,jpg,-metrics.json} (9 files).
+
+### Drift detector (e0b1d16)
+
+`tools/art-pipeline/drift_check.py`: reads any *-metrics.json with roll_fracs,
+compares median accepted-roll frac against `drift-baselines.json` (per room,
+per arm). Exits 0 if within 2x, exits 1 with loud message if median shifts >2x,
+exits 2 on missing/malformed data.
+
+Baseline seeds in drift-baselines.json:
+- anchorroom: nbp 0.0526, nbp_consensus 0.0077
+- night-bazaar: gpt 0.0384 (range 0.035-0.073)
+- plaza-market-inside: nbp 0.0363, nbp_consensus 0.0074
+
+Tested: bazaar GPT metrics pass at 1.0x ratio; cross-arm test (nbp-walk-metrics
+vs gpt baseline) correctly triggers 7.8x DRIFT DETECTED (exit 1); missing
+file/unknown room → exit 2.
+
+Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
