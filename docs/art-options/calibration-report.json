@@ -1,0 +1,104 @@
+{
+ "n_probes": 11,
+ "offbbox_noise": {
+  "per_probe": [
+   0.0202,
+   0.049,
+   0.0278,
+   0.0307,
+   0.0225,
+   0.0134,
+   0.0169,
+   0.0029,
+   0.0229,
+   0.0163,
+   0.0116
+  ],
+  "p50": 0.0202,
+  "max": 0.049,
+  "current_budget": 0.08,
+  "recommended_budget": 0.083
+ },
+ "blob_sizes": {
+  "speckle": {
+   "n": 170,
+   "p50": 4,
+   "p90": 255,
+   "max": 4109
+  },
+  "on_instance": {
+   "n": 148,
+   "p50": 3,
+   "p90": 98,
+   "max": 3880
+  },
+  "current_min_px": 50
+ },
+ "shadow_apron": {
+  "per_probe_mean": [
+   55.2,
+   52.5,
+   28.4,
+   44.1,
+   5.9,
+   14.3,
+   28.9,
+   22.1,
+   18.2,
+   52.7,
+   26.1
+  ],
+  "p50": 28.4,
+  "max": 55.2,
+  "current_gate": 25
+ },
+ "difft_visible_median": {
+  "30": 8194,
+  "36": 7112,
+  "42": 6184,
+  "50": 5295,
+  "60": 4083
+ },
+ "verdict_stability": {
+  "objects_with_verdicts": 15,
+  "baseline": {
+   "3": "building:no-ev",
+   "7": "building:no-ev",
+   "10": "building:contradiction",
+   "11": "building:no-ev",
+   "17": "water:no-ev",
+   "19": "water:no-ev",
+   "20": "water:no-ev",
+   "21": "water:no-ev",
+   "31": "prop:no-ev",
+   "40": "prop:no-ev",
+   "41": "prop:no-ev",
+   "42": "prop:ysort",
+   "43": "prop:no-ev",
+   "51": "prop:no-ev",
+   "61": "prop:no-ev"
+  },
+  "combos_tested": 27,
+  "objects_ever_flipping": 2,
+  "flip_counts": {
+   "prop(41)": 6,
+   "prop(42)": 15
+  }
+ },
+ "snap_radius": {
+  "area_frac_by_radius": {
+   "90": 0.2318,
+   "110": 0.2396,
+   "120": 0.2443,
+   "130": 0.2488,
+   "150": 0.259
+  },
+  "iou_vs_120": {
+   "120_vs_90": 0.9487,
+   "120_vs_110": 0.9803,
+   "120_vs_130": 0.982,
+   "120_vs_150": 0.9459
+  },
+  "n_raw_rolls": 3
+ }
+}

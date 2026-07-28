@@ -189,3 +189,39 @@ Estimated need: ~25-40 probe positions per room to cover all reachable objects.
   character can NEVER overlap from walkable ground → z-irrelevant by
   construction; they keep default y-sort. The planner needs a 2+2 rerun (was
   2+1) + front-overlap verification per the amendments.
+
+---
+
+# v3 — Calibration results (measured, 11 probe rolls + 3 magenta raws, 2026-07-28)
+
+Ivan: "the numbers make me think the algorithm can be pretty flaky" → hypotheses
+tested empirically (calibrate_probes.py, docs/art-options/calibration-report.json):
+
+- **H1a noise budget 0.08 — VALIDATED.** Off-bbox changed fraction across 11
+  clean rolls: median 2.0%, worst 4.9%. The gate sits 1.6x above the worst
+  clean roll. Keep.
+- **H1c shadow apron gate 25 — REFUTED as designed.** Median apron diff is
+  28.4, max 55.2: the proposed gate would have REJECTED 6/11 valid rolls.
+  Shadows/ground-contact edits are normal, not a defect. REVISION: no reject
+  gate; the apron becomes an EXCLUSION ZONE masked out of evidence instead
+  (converts a costly false reject into a harmless blind strip).
+- **H1b min_px=50 — REVISED.** The claimed separation (speckle <20px vs real
+  >=50px) does not exist at blob level: speckle p90=255/max 4109 vs
+  on-instance p90=98/max 3880 — heavy overlapping tails. Per-OBJECT pixel
+  totals (what we actually use) remain sensible, but the robustness comes
+  from concordance + aggregation, NOT from this threshold.
+- **H1d DIFF_T — a dial, not a cliff.** Visible px declines smoothly
+  8194→4083 over T=30→60 (~2%/unit), no plateau. Verdicts absorb it (H2).
+- **H2 verdict stability — SUPPORTED (the core claim).** 15 objects x 27
+  threshold combos (DIFF_T, min_px, concordance each at ~±50%): 13/15 (87%)
+  never flip. The 2 flippers (props 41, 42) are exactly the marginal-evidence
+  cases. ADOPTED: P2 runs a built-in 3-combo mini-sweep every time; objects
+  whose verdict is combo-dependent are auto-flagged "fragile" and routed to
+  the judge / extra probes rather than trusted.
+- **H3 snap radius — SUPPORTED.** Magenta re-snapped at radius 90-150 (±25%):
+  area moves 23.2→25.9% and IoU vs r=120 stays >=0.946 (0.98 within ±10).
+  Non-load-bearing, as the disjointness proof predicted.
+
+Net design changes: shadow gate → exclusion zone; fragile-verdict auto-flag
+via built-in sweep; all other gates keep their values, now with measured
+justification instead of judgment.

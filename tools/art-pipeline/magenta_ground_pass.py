@@ -63,6 +63,11 @@ def one_roll(seg_in, plate_arr, W, H):
         for p in (r.parts or []):
             if p.inline_data is not None:
                 img = Image.open(io.BytesIO(p.inline_data.data)).convert('RGB')
+                raw_dir = os.environ.get('MAG_RAW_DIR')
+                if raw_dir:
+                    os.makedirs(raw_dir, exist_ok=True)
+                    img.save(os.path.join(raw_dir,
+                        f'raw_{threading.get_ident()}_{np.random.randint(1e9)}.png'))
                 m = np.asarray(img.resize((W, H), Image.NEAREST)).astype(np.int16)
                 near_mag = np.linalg.norm(m - MAG, axis=2) < 120
                 changed = np.abs(m - plate_arr).max(axis=2) > 42

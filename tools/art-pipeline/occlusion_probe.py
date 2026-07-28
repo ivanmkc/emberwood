@@ -115,6 +115,16 @@ def probe_one(plate, sprite, x, y):
                     continue
                 visible = diff & bbox
                 unchanged = bbox & ~diff
+                raw_dir = os.environ.get('PROBE_RAW_DIR')
+                if raw_dir:
+                    os.makedirs(raw_dir, exist_ok=True)
+                    tag = f'{x}_{y}'
+                    gen.save(os.path.join(raw_dir, f'gen_{tag}.png'))
+                    crop.save(os.path.join(raw_dir, f'crop_{tag}.png'))
+                    np.savez_compressed(os.path.join(raw_dir, f'probe_{tag}.npz'),
+                        adiff=np.abs(a - g).max(axis=2).astype(np.int16),
+                        bbox=np.array([bx0, by0, bx1, by1]),
+                        marker=np.array([mx, my]), origin=np.array([cx0, cy0]))
                 return {'cx0': cx0, 'cy0': cy0, 'mx': mx, 'my': my,
                         'bbox': (bx0, by0, bx1, by1), 'gen': gen,
                         'visible': visible, 'unchanged': unchanged, 'noise': noise}
