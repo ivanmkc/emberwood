@@ -1,0 +1,13 @@
+{
+  "scene": "anchorroom",
+  "census_versions": [
+    "v3+v4 combined (+geometric footprints)"
+  ],
+  "n_depth_blobs": 19,
+  "n_covered": 19,
+  "n_missed": 0,
+  "census_miss_rate": 0.0,
+  "dav2_walk_vs_v4_collision_iou": 0.371,
+  "dav2_footprint_vs_v4_geometric_iou": 0.0,
+  "missed_blobs": []
+}

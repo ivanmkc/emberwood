@@ -588,12 +588,31 @@ Side-by-side seam crop saved. Watching for stitched-world panorama/blend outputs
 
 ### Follow-on: Census-completeness cross-check
 census_crosscheck.py: DAv2 above-floor depth blobs vs v3/v4 census overlays.
-- Anchorroom: 19 depth blobs, 19 covered by census (0 missed, 0.0% miss rate). The v3+v4
-  census is complete relative to what DAv2 detects — no candidate missed objects.
-- Night-bazaar / plaza-market-inside: no census masks available yet (only anchorroom has
-  v3/v4 census data); 12 and 1 depth blobs detected respectively, ready for cross-check
-  when census lands.
+- Anchorroom (v3+v4 combined, 12 census images + geometric footprints): 19 depth blobs,
+  19 covered by census (0 missed, 0.0% miss rate). Census is complete for this scene.
+- Cross-method IoU (anchorroom): DAv2-walk vs v4-collision = 0.371 (v4 is tighter than
+  depth-based walkability); DAv2-footprint vs v4-geometric-footprints = 0.000 (completely
+  different formulations — blob base bands vs precise code-drawn contact polygons).
+- Night-bazaar / plaza-market-inside: no census masks available (only anchorroom has v3/v4
+  census data); 12 and 1 depth blobs detected respectively.
 Visualization: green boxes = census-covered, red boxes = missed (none for anchor).
+
+### Re-score pass: seam blends
+No stitched-world panorama/blend outputs available yet. Seam baseline (anchor-bazaar) stands:
+edge continuation 0.289, walk Jaccard 0.0, color chi2 70.87.
+
+### Final track summary
+The lit-bench-depth track benchmarked 4 pretrained-model / classic CV methods (Depth Anything
+V2, nianticlabs/footprints, perspective detectors, morphological baseline) plus 2 follow-on
+analyses (seam continuity, census completeness) on the 3 focus scenes. The core finding is that
+pretrained photo-domain depth and footprint models fail on pixel art (nianticlabs: catastrophic,
+IoU 0.028; DAv2: noisy but structurally useful, walk IoU 0.46). The NBP semantic floor class
+remains the strongest walkability signal (morph-walk IoU 0.41), and for footprints specifically,
+neither depth-based nor morphological approaches produce meaningful masks (both ~0.04 IoU) —
+validating v4's geometric VLM-to-code approach which achieves 0.70 IoU. Perspective detectors
+confirm the axis-aligned camera assumption (0.98+). The census cross-check shows 0% miss rate
+on anchorroom. All code, artifacts, metrics, and overlays are committed under bench/depth/.
+6 scripts delivered, ~60 artifact files across the 3 scenes.
 
 ## Agent lit-bench-prompt
 Prompt-side (NBP/VLM) methods benchmarked on 3 focus scenes with advanced evaluator harness.
