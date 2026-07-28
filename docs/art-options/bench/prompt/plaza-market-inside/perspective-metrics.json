@@ -1,0 +1,76 @@
+{
+  "room": "plaza-market-inside",
+  "anchor_baseline": {
+    "orient_score": 0.937,
+    "n_lines": 2040
+  },
+  "C1_prompt_only": {
+    "mean_orient": 0.919,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.945,
+        "n_lines": 2473
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.914,
+        "n_lines": 2336
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.898,
+        "n_lines": 2146
+      }
+    ]
+  },
+  "C2_drawn_grid": {
+    "mean_orient": 0.673,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.756,
+        "n_lines": 4307
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.869,
+        "n_lines": 3399
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.393,
+        "n_lines": 3020
+      }
+    ]
+  },
+  "C3_outpaint": {
+    "mean_orient": 0.935,
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "orient_score": 0.917,
+        "n_lines": 1692
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "orient_score": 0.991,
+        "n_lines": 1574
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "orient_score": 0.896,
+        "n_lines": 1854
+      }
+    ]
+  }
+}
