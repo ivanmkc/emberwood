@@ -31,22 +31,41 @@ import argparse
 _ap = argparse.ArgumentParser()
 _ap.add_argument('--room', default=None)
 _args, _ = _ap.parse_known_args()
+_rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
 if _args.room:
     NAME = _args.room
-    ART = os.path.join(ROOT, 'docs', 'art-options', 'rooms', NAME)
-    PLATE = os.path.join(ART, 'plate.png')
-    AUTO_SPAWN = True
-    LEGACY_S = False
-    _rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
-    if NAME in _rooms['rooms']:
-        EXIT_EDGES = sorted(_rooms['rooms'][NAME]['exits'])
+    if NAME in _rooms.get('anchors', {}):
+        ART = os.path.join(ROOT, 'docs', 'art-options')
+        PLATE = os.path.join(ART, 'nbp-scifi-anchor.png')
+        AUTO_SPAWN = False
+        LEGACY_S = True
+        EXIT_EDGES = sorted(_rooms['anchors'][NAME].get('exits', {}))
     else:
-        EXIT_EDGES = ['s']  # interiors: single return exit to the parent room
+        ART = os.path.join(ROOT, 'docs', 'art-options', 'rooms', NAME)
+        PLATE = os.path.join(ART, 'plate.png')
+        AUTO_SPAWN = True
+        LEGACY_S = False
+        if NAME in _rooms['rooms']:
+            EXIT_EDGES = sorted(_rooms['rooms'][NAME]['exits'])
+        else:
+            EXIT_EDGES = ['s']  # interiors: single return exit to the parent room
 else:
     LEGACY_S = True
-    # anchor room: legacy spawn + S exit, plus graph edges from rooms.json
-    _rooms = json.load(open(os.path.join(ROOT, 'tools', 'art-pipeline', 'rooms.json')))
     EXIT_EDGES = sorted(_rooms['anchors'].get(NAME, {}).get('exits', {}))
+
+# Guard: fail loud if gated class mask is missing — silent full-body
+# degradation must never happen.
+_nbp_guard = os.path.join(ART, 'nbp-mask.png')
+_met_guard = os.path.join(ART, 'nbp-mask-metrics.json')
+if not os.path.exists(_nbp_guard) or not os.path.exists(_met_guard):
+    print(f'FATAL: no class mask at {ART}/ (expected nbp-mask.png + nbp-mask-metrics.json)',
+          file=sys.stderr)
+    sys.exit(1)
+_met_data = json.load(open(_met_guard))
+if not _met_data.get('pass'):
+    print(f'FATAL: class mask at {ART}/ is UNGATED (metrics: {json.dumps(_met_data)})',
+          file=sys.stderr)
+    sys.exit(1)
 OUT_W, OUT_H = 1280, 896      # device px (logical 640x448 at DS=2)
 SPAWN_PX = (250, 300)          # logical px, open plaza floor
 EXIT_RECT = (150, 425, 205, 447)  # logical: bottom-left stair region
