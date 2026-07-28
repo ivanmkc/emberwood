@@ -1459,3 +1459,15 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   animated awning/lantern, not walker): samples 828->181 (clean walkers),
   contradictions 141->47, ysort 27, overhead 2. NEXT: >=3 distinct gys per
   bound, walker tracking, then fuse with probe evidence (roadmap item 1->4).
+
+### Cycle 1 of 12h loop (items 1,2,4 advanced)
+- veo-z iter2: bounds need >=3 samples spanning >=24px gy — contradictions
+  47->36, ysort 22, overhead 2.
+- Height query shipped (height_query.py): 110 z-relevant parts x 2 models
+  (gemini-3.1-pro-preview + gemini-3.5-flash — NO 3.6 exists on project,
+  newest Flash used per models.list). 24 parts both-model above_head.
+- FUSION v0: overhead = both-models above_head AND veo never saw a walker
+  drawn over it -> 23 parts, 7.5% px (fused-overhead-night-bazaar.png).
+  Veo veto demoted 1 false 'awning fabric'. Best overhead layer of any
+  single method so far. NEXT cycle: composite A/B (item 3), drive exit
+  mouths (5), debug-card dims (6), audits (7).

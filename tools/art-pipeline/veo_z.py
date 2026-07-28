@@ -116,6 +116,10 @@ def main():
     fp = frozenset(pid for pid in blocking)  # video chars roam everywhere; front coverage broad
     _bound = o2.bound
     def bound_hard(vals, conc, upper):
+        # walkers must attest a bound from >=3 samples spanning >=24px of
+        # ground-y, else the bound is a single-pass fluke
+        if len(vals) < 3 or (max(vals) - min(vals)) < 24:
+            return None
         if len(vals) >= 8:
             return float(np.percentile(vals, 20 if upper else 80))
         return _bound(vals, conc, upper)

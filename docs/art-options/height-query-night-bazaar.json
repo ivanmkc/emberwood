@@ -1,0 +1,1323 @@
+{
+ "room": "night-bazaar",
+ "models": [
+  "gemini-3.1-pro-preview",
+  "gemini-3.5-flash"
+ ],
+ "parts": {
+  "5": {
+   "pro": {
+    "label": "large red pipe",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "red wall conduit",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "7": {
+   "pro": {
+    "label": "vertical neon sign",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "blue cable",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "9": {
+   "pro": {
+    "label": "awning support",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "green hanging cable",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "10": {
+   "pro": {
+    "label": "awning support",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "green cable network",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "11": {
+   "pro": {
+    "label": "awning support",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "magenta hanging cable",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "12": {
+   "pro": {
+    "label": "awning support",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "cyan hanging cable",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "13": {
+   "pro": {
+    "label": "red wire",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "wall cables",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "29": {
+   "pro": {
+    "label": "blue wire",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "overhead wire",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "33": {
+   "pro": {
+    "label": "yellow wire",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "overhead cable",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "40": {
+   "pro": {
+    "label": "green wire",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "overhead wire",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "41": {
+   "pro": {
+    "label": "vertical neon sign",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "neon sign",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "45": {
+   "pro": {
+    "label": "glowing lantern",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "cable support loop",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "46": {
+   "pro": {
+    "label": "food stall",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "vegetable stand",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "47": {
+   "pro": {
+    "label": "paper lantern",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "hanging lantern",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "52": {
+   "pro": {
+    "label": "support pole",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "neon tubes",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "62": {
+   "pro": {
+    "label": "wall pipe",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "green neon cables",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "68": {
+   "pro": {
+    "label": "fabric awning",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "fabric awning",
+    "h": "above_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "74": {
+   "pro": {
+    "label": "wall panel",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "wall cabinet",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "80": {
+   "pro": {
+    "label": "blue awning piece",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "blue fabric canopy",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "84": {
+   "pro": {
+    "label": "blue corrugated awning piece",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "corrugated metal roof",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "87": {
+   "pro": {
+    "label": "string of lanterns",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "hanging paper lanterns",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "88": {
+   "pro": {
+    "label": "box of red produce",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "wall-mounted vegetable crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "89": {
+   "pro": {
+    "label": "torn edge of tan awning",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "fabric awning",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "90": {
+   "pro": {
+    "label": "corner post of noodle stand",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "wooden awning with hanging wires",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "97": {
+   "pro": null,
+   "flash": {
+    "label": "canopy edge",
+    "h": "above_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "98": {
+   "pro": {
+    "label": "awning fabric",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "canopy patch",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "105": {
+   "pro": {
+    "label": "vertical sign box",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "wooden board",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "107": {
+   "pro": {
+    "label": "hanging fabric edge",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "canopy patch",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "108": {
+   "pro": {
+    "label": "awning support cord",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "canopy flap",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "109": {
+   "pro": {
+    "label": "hanging cable/wire",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "cable",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "110": {
+   "pro": {
+    "label": "awning fabric",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "blue canopy",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "112": {
+   "pro": {
+    "label": "lower awning edge",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "canopy flap",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "115": {
+   "pro": {
+    "label": "noodle shop front",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "noodle stall frame",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "116": {
+   "pro": {
+    "label": "shop side support",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "right support post",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "117": {
+   "pro": {
+    "label": "tarp hanging edge",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "pink bag",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "119": {
+   "pro": {
+    "label": "stone carving",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "scrap on crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "122": {
+   "pro": {
+    "label": "food stall counter and base",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "stall frame",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "123": {
+   "pro": {
+    "label": "side counter area",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "stacked plates",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "124": {
+   "pro": {
+    "label": "noodle shop front section",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "awning support",
+    "h": "above_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "126": {
+   "pro": {
+    "label": "produce crate",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "scale on crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "128": {
+   "pro": {
+    "label": "support pole",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "support post",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "131": {
+   "pro": {
+    "label": "hanging lantern",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "hanging lantern",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "134": {
+   "pro": {
+    "label": "lantern",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "red wire",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "135": {
+   "pro": {
+    "label": "pot",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "cooking pot",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "138": {
+   "pro": {
+    "label": "cooking equipment",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "stove stand",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "143": {
+   "pro": {
+    "label": "produce display",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "vegetable display tray",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "145": {
+   "pro": {
+    "label": "shop structure",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "wooden pillar",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "146": {
+   "pro": {
+    "label": "shop entrance",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "counter opening",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "147": {
+   "pro": {
+    "label": "food on shelf",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "wooden shelf divider",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "148": {
+   "pro": {
+    "label": "food on shelf",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "shelf lip",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "149": {
+   "pro": {
+    "label": "box with wires",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "wooden crate",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "150": {
+   "pro": {
+    "label": "robot",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "robot",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "151": {
+   "pro": {
+    "label": "food on shelf",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "bottom shelf",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "152": {
+   "pro": {
+    "label": "open door",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "doorway",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "153": {
+   "pro": null,
+   "flash": {
+    "label": "wooden display rack",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "154": {
+   "pro": {
+    "label": "small box",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "blue electrical box",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "155": {
+   "pro": {
+    "label": "doorway threshold",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "doorway threshold light",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "156": {
+   "pro": {
+    "label": "shelf inside stand",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "middle shelf container",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "157": {
+   "pro": {
+    "label": "upper shelf inside stand",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "upper shelf container",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "158": {
+   "pro": {
+    "label": "display stand",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "lower shelf container",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "160": {
+   "pro": {
+    "label": "food crate",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "vegetable shelf",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "163": {
+   "pro": {
+    "label": "roof edge",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "pink neon tube",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "164": {
+   "pro": {
+    "label": "awning",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "yellow neon tube",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "165": {
+   "pro": {
+    "label": "neon sign",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "blue neon tube",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "166": {
+   "pro": {
+    "label": "neon sign",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "magenta neon tube",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "168": {
+   "pro": {
+    "label": "doorway",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "green neon tube",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "176": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "small puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "177": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "178": {
+   "pro": {
+    "label": "awning",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "wall panel",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "179": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "180": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "181": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "182": {
+   "pro": {
+    "label": "small box",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle reflection",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "183": {
+   "pro": {
+    "label": "small box",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle reflection",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "184": {
+   "pro": {
+    "label": "pipe segment",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "cable",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "185": {
+   "pro": {
+    "label": "small box",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "concrete block",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "186": {
+   "pro": {
+    "label": "small box",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "187": {
+   "pro": {
+    "label": "small box",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle reflection",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "188": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "puddle reflection boundary",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "189": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "water puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "190": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "light reflection in puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "191": {
+   "pro": {
+    "label": "puddle",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "small puddle",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "197": {
+   "pro": {
+    "label": "wall-mounted box",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "electrical box",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "199": {
+   "pro": {
+    "label": "wall-mounted box",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "conduit and meter",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "200": {
+   "pro": {
+    "label": "small box on post",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "hanging banner",
+    "h": "above_head"
+   },
+   "agree_above_head": true,
+   "any_above_head": true
+  },
+  "201": {
+   "pro": {
+    "label": "shelf unit",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "market scale",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "205": {
+   "pro": {
+    "label": "crate",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "wooden crate stack",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "206": {
+   "pro": {
+    "label": "lower crate",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "wooden crate",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "207": {
+   "pro": {
+    "label": "box near noodle stand",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "generator",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "208": {
+   "pro": {
+    "label": "crates stack",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "junction box",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "209": {
+   "pro": {
+    "label": "basket",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "top tire of stack",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "210": {
+   "pro": {
+    "label": "basket",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "inner tire part",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "211": {
+   "pro": {
+    "label": "basket",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "right side of middle tire",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "212": {
+   "pro": {
+    "label": "basket",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "bottom tire of stack",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "213": {
+   "pro": {
+    "label": "post",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "lower terminal section",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "214": {
+   "pro": {
+    "label": "post",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "upper terminal section",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "215": {
+   "pro": {
+    "label": "doorway",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "wall terminal",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "216": {
+   "pro": {
+    "label": "doorway",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "wall terminal",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "217": {
+   "pro": {
+    "label": "rubble",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "skateboard",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "218": {
+   "pro": {
+    "label": "crate",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "produce crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "219": {
+   "pro": {
+    "label": "crate",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "produce crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "220": {
+   "pro": {
+    "label": "crate",
+    "h": "below_head"
+   },
+   "flash": {
+    "label": "produce crate",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "221": {
+   "pro": {
+    "label": "food crate",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "vegetable crate",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "222": {
+   "pro": {
+    "label": "railing support",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "blue container",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "223": {
+   "pro": {
+    "label": "wall pipe section",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "yellow railing light",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "225": {
+   "pro": {
+    "label": "horizontal wall pipe",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "green railing light",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "226": {
+   "pro": {
+    "label": "wall pipe",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "pink railing light",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "227": {
+   "pro": {
+    "label": "pipe piece",
+    "h": "above_head"
+   },
+   "flash": {
+    "label": "cyan railing light",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": true
+  },
+  "228": {
+   "pro": {
+    "label": "Ventilator unit",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "vent fan",
+    "h": "below_head"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  },
+  "229": {
+   "pro": {
+    "label": "Exhaust fan opening",
+    "h": "on_ground"
+   },
+   "flash": {
+    "label": "utility box",
+    "h": "on_ground"
+   },
+   "agree_above_head": false,
+   "any_above_head": false
+  }
+ }
+}

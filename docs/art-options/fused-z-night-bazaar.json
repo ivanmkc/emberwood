@@ -1,0 +1,666 @@
+{
+ "room": "night-bazaar",
+ "rule": "both-models above_head AND veo not ysort",
+ "parts": {
+  "5": {
+   "label": "large red pipe",
+   "height_agree": false,
+   "veo": "contradiction",
+   "overhead": false
+  },
+  "7": {
+   "label": "vertical neon sign",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "9": {
+   "label": "awning support",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "10": {
+   "label": "awning support",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "11": {
+   "label": "awning support",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "12": {
+   "label": "awning support",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "13": {
+   "label": "red wire",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "29": {
+   "label": "blue wire",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "33": {
+   "label": "yellow wire",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "40": {
+   "label": "green wire",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "41": {
+   "label": "vertical neon sign",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "45": {
+   "label": "glowing lantern",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "46": {
+   "label": "food stall",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "47": {
+   "label": "paper lantern",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "52": {
+   "label": "support pole",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "62": {
+   "label": "wall pipe",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "68": {
+   "label": "fabric awning",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "74": {
+   "label": "wall panel",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "80": {
+   "label": "blue awning piece",
+   "height_agree": true,
+   "veo": "contradiction",
+   "overhead": true
+  },
+  "84": {
+   "label": "blue corrugated awning piece",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "87": {
+   "label": "string of lanterns",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "88": {
+   "label": "box of red produce",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "89": {
+   "label": "torn edge of tan awning",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "90": {
+   "label": "corner post of noodle stand",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "97": {
+   "label": "canopy edge",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "98": {
+   "label": "awning fabric",
+   "height_agree": true,
+   "veo": "ysort",
+   "overhead": false
+  },
+  "105": {
+   "label": "vertical sign box",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "107": {
+   "label": "hanging fabric edge",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "108": {
+   "label": "awning support cord",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "109": {
+   "label": "hanging cable/wire",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "110": {
+   "label": "awning fabric",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "112": {
+   "label": "lower awning edge",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "115": {
+   "label": "noodle shop front",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "116": {
+   "label": "shop side support",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "117": {
+   "label": "tarp hanging edge",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "119": {
+   "label": "stone carving",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "122": {
+   "label": "food stall counter and base",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "123": {
+   "label": "side counter area",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "124": {
+   "label": "noodle shop front section",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "126": {
+   "label": "produce crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "128": {
+   "label": "support pole",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "131": {
+   "label": "hanging lantern",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "134": {
+   "label": "lantern",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "135": {
+   "label": "pot",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "138": {
+   "label": "cooking equipment",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "143": {
+   "label": "produce display",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "145": {
+   "label": "shop structure",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "146": {
+   "label": "shop entrance",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "147": {
+   "label": "food on shelf",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "148": {
+   "label": "food on shelf",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "149": {
+   "label": "box with wires",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "150": {
+   "label": "robot",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "151": {
+   "label": "food on shelf",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "152": {
+   "label": "open door",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "153": {
+   "label": "wooden display rack",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "154": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "155": {
+   "label": "doorway threshold",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "156": {
+   "label": "shelf inside stand",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "157": {
+   "label": "upper shelf inside stand",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "158": {
+   "label": "display stand",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "160": {
+   "label": "food crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "163": {
+   "label": "roof edge",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "164": {
+   "label": "awning",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "165": {
+   "label": "neon sign",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "166": {
+   "label": "neon sign",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "168": {
+   "label": "doorway",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "176": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "ysort",
+   "overhead": false
+  },
+  "177": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "178": {
+   "label": "awning",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "179": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "180": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "181": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "182": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "183": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "184": {
+   "label": "pipe segment",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "185": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "contradiction",
+   "overhead": false
+  },
+  "186": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "ysort",
+   "overhead": false
+  },
+  "187": {
+   "label": "small box",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "188": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "contradiction",
+   "overhead": false
+  },
+  "189": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "contradiction",
+   "overhead": false
+  },
+  "190": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "contradiction",
+   "overhead": false
+  },
+  "191": {
+   "label": "puddle",
+   "height_agree": false,
+   "veo": "overhead",
+   "overhead": false
+  },
+  "197": {
+   "label": "wall-mounted box",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "199": {
+   "label": "wall-mounted box",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "200": {
+   "label": "small box on post",
+   "height_agree": true,
+   "veo": "no-evidence",
+   "overhead": true
+  },
+  "201": {
+   "label": "shelf unit",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "205": {
+   "label": "crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "206": {
+   "label": "lower crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "207": {
+   "label": "box near noodle stand",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "208": {
+   "label": "crates stack",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "209": {
+   "label": "basket",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "210": {
+   "label": "basket",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "211": {
+   "label": "basket",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "212": {
+   "label": "basket",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "213": {
+   "label": "post",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "214": {
+   "label": "post",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "215": {
+   "label": "doorway",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "216": {
+   "label": "doorway",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "217": {
+   "label": "rubble",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "218": {
+   "label": "crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "219": {
+   "label": "crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "220": {
+   "label": "crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "221": {
+   "label": "food crate",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "222": {
+   "label": "railing support",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "223": {
+   "label": "wall pipe section",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "225": {
+   "label": "horizontal wall pipe",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "226": {
+   "label": "wall pipe",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "227": {
+   "label": "pipe piece",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "228": {
+   "label": "Ventilator unit",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  },
+  "229": {
+   "label": "Exhaust fan opening",
+   "height_agree": false,
+   "veo": "no-evidence",
+   "overhead": false
+  }
+ }
+}
