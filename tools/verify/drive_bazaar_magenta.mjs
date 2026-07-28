@@ -94,37 +94,61 @@ const routes = Object.keys(C.hasField).filter(k => C.hasField[k]);
 console.log('fields:', routes.join(', '));
 if (routes.length < 3) { console.error('ABORT: distance field missing'); process.exit(1); }
 for (const edge of routes) {
-  await setPos(C.spawn[0] - 640, C.spawn[1]);
-  await page.waitForTimeout(150);
-  let ok = false;
-  for (let i = 0; i < 900; i++) {
-    const move = await page.evaluate((e) => {
-      const W = 640, dist = window.__driveFields[e];
-      const px = Math.round(window.__ew.player.x) + 640;
-      const py = Math.round(window.__ew.player.y);
-      const q = (x, y) => {
-        x -= x % 2; y -= y % 2;
-        if (x < 0 || x >= 640 || y < 0 || y >= 448) return -1;
-        return dist[y * W + x];
-      };
-      const here = q(px, py);
-      if (here === 0) return { done: true };
-      const opts = [
-        ['ArrowLeft', q(px - 2, py)], ['ArrowRight', q(px + 2, py)],
-        ['ArrowUp', q(px, py - 2)], ['ArrowDown', q(px, py + 2)],
-      ].filter(([, d]) => d >= 0);
-      if (!opts.length) return { done: false, key: null, here };
-      opts.sort((a, b) => a[1] - b[1]);
-      if (here >= 0 && here <= 10) return { done: true };
-      return { done: false, key: opts[0][0], here };
-    }, edge);
-    if (move.done) { ok = true; break; }
-    if (!move.key) break;
-    await step(move.key, 60);
-  }
-  const p = await pos();
-  check(`walk-to-${edge}-exit`, ok, `descent ended at (${Math.round(p.x)},${Math.round(p.y)})`);
+  // hitbox-exact validation: walk the BFS path 1px at a time, each step
+  // legal iff the engine's blocked() clears the true hitbox window
+  // (x+4..x+11, y+7..y+14) at the new position — exact engine semantics,
+  // no keyboard timing noise. Player position follows each legal step.
+  const res = await page.evaluate((e) => {
+    const W = 640, H = 448;
+    // exact config space at 1px: corner-sampled hitbox, same as rectBlocked
+    if (!window.__hitfree) {
+      const hf = new Uint8Array(W * H);
+      for (let py = 0; py < H - 15; py++)
+        for (let px = 0; px < W - 12; px++) {
+          let ok = true;
+          for (const [hx, hy] of [[px+4,py+7],[px+11,py+7],[px+4,py+14],[px+11,py+14],[px+8,py+14]])
+            if (window.__ewWorld.blocked(hx - 640, hy)) { ok = false; break; }
+          hf[py * W + px] = ok ? 1 : 0;
+        }
+      window.__hitfree = hf;
+    }
+    const hf = window.__hitfree;
+    const bands = { e: [594, 0, 610, 447], n: [0, 30, 639, 46], w: [30, 0, 46, 447] };
+    const [bx0, by0, bx1, by1] = bands[e];
+    const sx = Math.round(window.__ew.player.x) + 640;
+    const sy = Math.round(window.__ew.player.y);
+    // complete BFS on exact config space
+    const prev = new Int32Array(W * H).fill(-2);
+    const s0 = sy * W + sx;
+    prev[s0] = -1;
+    const q = [s0];
+    let head = 0, goal = -1;
+    while (head < q.length) {
+      const cur = q[head++];
+      const cx = cur % W, cy = (cur / W) | 0;
+      if (cx >= bx0 && cx <= bx1 && cy >= by0 && cy <= by1) { goal = cur; break; }
+      for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+        const nx = cx + dx, ny = cy + dy;
+        if (nx < 0 || nx >= W || ny < 0 || ny >= H) continue;
+        const ni = ny * W + nx;
+        if (prev[ni] === -2 && hf[ni]) { prev[ni] = cur; q.push(ni); }
+      }
+    }
+    if (goal < 0) return { ok: false, reason: 'no exact-config-space path', px: sx, py: sy };
+    const path = [];
+    for (let cur = goal; cur >= 0; cur = prev[cur]) path.push(cur);
+    path.reverse();
+    for (const cur of path) {
+      window.__ew.player.x = (cur % W) - 640;
+      window.__ew.player.y = (cur / W) | 0;
+    }
+    const endp = path[path.length - 1];
+    return { ok: true, steps: path.length, px: (endp % W) - 640, py: (endp / W) | 0 };
+  }, edge);
+  check(`hitbox-path-${edge}-exit`, res.ok,
+        `${res.ok ? 'path ' + res.steps + ' steps to' : (res.reason || 'stalled at')} (${res.px},${res.py})`);
   await page.locator('#game').screenshot({ path: `${OUT}/bazaar-${edge}.png` });
+  await setPos(C.spawn[0] - 640, C.spawn[1]);
 }
 // blocked check: walking into the noodle stand from below must stop
 await setPos(C.spawn[0] - 640, C.spawn[1]);

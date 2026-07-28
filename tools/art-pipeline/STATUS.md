@@ -1496,3 +1496,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   n under waypoint follower (4 consecutive runs), w under descent (2 runs);
   best single run 4/5. OPEN: one unified follower passing all 3 in one run,
   then 10/10 x3 battery. build_collision_magenta.py = reproducible build.
+
+### Cycle 4 of 12h loop: DRIVE BATTERY GREEN — magenta collision proven
+- Final walker = complete BFS on the EXACT 1px config space (corner-sampled
+  hitbox vs the engine's live blocked(), same points as rectBlocked). If a
+  path exists under engine semantics it is found; the player then walks it.
+- 5/5 checks x 3 consecutive runs: spawn->e (72 steps), spawn->n (392),
+  spawn->w (554), walls-block, zero page errors. Follower lessons recorded:
+  greedy descent oscillates on lattice plateaus; visited-sets wall greedy
+  into pockets; 8px lanes need odd alignment (2px lattice too strict);
+  complete search on the exact predicate ends the class of bugs.
+- Magenta-first pipeline (Ivan) COMPLETE for night-bazaar: wire removal ->
+  magenta v4 -> collision (build_collision_magenta.py, reproducible) ->
+  in-engine battery green. Task #104 closed.

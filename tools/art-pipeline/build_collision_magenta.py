@@ -32,6 +32,9 @@ for e in inst.get('exits', []):
 e = [x for x in inst['exits'] if x['edge'] == 'e'][0]
 x0, y0, x1, y1 = [v * 2 for v in e['rect']]
 walk[y0:y1, W - 400:] |= old[y0:y1, W - 400:]
+# north-lane pinch at local (~564, 76-96): sub-hitbox squeeze the drive
+# located exactly; borrow the shipped collision's proven lane there
+walk[80:200, 1080:1180] |= old[80:200, 1080:1180]
 
 free = cv2.erode(walk.astype(np.uint8), np.ones((K, K), np.uint8)) > 0
 covered = cv2.dilate(free.astype(np.uint8), np.ones((K, K), np.uint8)) > 0
