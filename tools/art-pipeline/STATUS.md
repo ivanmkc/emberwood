@@ -358,3 +358,29 @@ Pilot room: anchorroom (canonical benchmark), then hydroponics/home-interior-a/s
 Script: tools/art-pipeline/nbp_v3.py (census/select/xray/compose + per-stage overlays under
 docs/art-options/v3/<room>/). Defect-sweep context: gated fresh rolls exonerated underworks
 (1.8%); home-interior-a overlay shows orange on... interior floor edges (review pending).
+
+## Run 22 (cont): Ivan live-play bug reports (2026-07-28) — TOP PRIORITY next window
+1. CHARACTER FACES WRONG DIRECTION WHEN WALKING. Check game.js player dir assignment +
+   drawCharArt/stepFrames sprite selection (left/right likely swapped or dir set from
+   wrong axis). Verify with Playwright screenshots walking each direction.
+2. TRANSITIONS DON'T LINE UP + "except the hub area the sizes are all wrong": adjacent
+   rooms' exit strips misalign across seams, and NON-ANCHOR rooms have wrong apparent
+   SCALE in-game (character vs art proportions — district plates are 2048x1536 vs anchor
+   2400x1792; NBP may have varied internal tile scale despite the prompt). Ivan suggests
+   stitching adjacent rooms and holistically assessing (via NBP judge) + making walkable
+   areas MEET at seams with matching widths. Plan: (a) seam-alignment pass: for each wired
+   pair, compare exit strip positions/widths in both rooms, shift/re-strip to align;
+   (b) SCALE audit: per room, measure feature scale (door height / character-height ratio
+   via 3.1-pro on plate vs anchor) -> rescale plates (or regen with scale reference) and
+   rebuild masks for offenders; consider drawing plate at scale factor in-engine instead.
+3. COLLISION MASKS MISALIGNED WITH THE IN-GAME IMAGE (not the overlay images — in-game).
+   Verify in-engine: debug-render maskWalk over the canvas and screenshot several rooms.
+   Suspects: (a) rooms whose plates were EDITED (doors/passages painted: night-bazaar,
+   outskirts, repair-bay, transit, power-plant) WITHOUT regenerating collision from the
+   edited plate — regen masks for all edited plates; (b) aspect squeeze 2048x1536->640x448
+   consistency; (c) maskWalk nearest-downscale shift. Fix at write-time, verify in-game.
+- v3 x-ray pilot (nbp_v3.py anchorroom) RUNNING in bg: census converging (4 rounds,
+  41 instances, 10 impeding), per-object xray gates working (LLM gate rejects bad
+  footprints; lower-band fallback). When done: overlays under docs/art-options/v3/
+  anchorroom/, then push board tab --agent art-v3 (verify URLs), scale to defect-outlier
+  rooms (hydroponics 14.1%, home-interior-a 26.8%, salvage-shed 9.5%).
