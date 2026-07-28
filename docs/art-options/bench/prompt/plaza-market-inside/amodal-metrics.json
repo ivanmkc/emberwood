@@ -1,0 +1,262 @@
+{
+  "room": "plaza-market-inside",
+  "method": "A4-amodal",
+  "instances": 36,
+  "ok": 36,
+  "fallback": 0,
+  "walk_frac": 0.29,
+  "per_instance": [
+    {
+      "id": 0,
+      "name": "box",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 3994
+    },
+    {
+      "id": 1,
+      "name": "pipe",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 1302
+    },
+    {
+      "id": 2,
+      "name": "pipe",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 1473
+    },
+    {
+      "id": 3,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.36,
+      "fp_px": 10607
+    },
+    {
+      "id": 4,
+      "name": "box",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 8517
+    },
+    {
+      "id": 5,
+      "name": "box part",
+      "status": "ok",
+      "depth_ratio": 0.39,
+      "fp_px": 8158
+    },
+    {
+      "id": 6,
+      "name": "pipe joint",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 2147
+    },
+    {
+      "id": 7,
+      "name": "shelf",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 100782
+    },
+    {
+      "id": 8,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 7589
+    },
+    {
+      "id": 10,
+      "name": "refrigerator",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 28902
+    },
+    {
+      "id": 11,
+      "name": "bag",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 5500
+    },
+    {
+      "id": 13,
+      "name": "can",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 3863
+    },
+    {
+      "id": 14,
+      "name": "shelf",
+      "status": "ok",
+      "depth_ratio": 0.32,
+      "fp_px": 133436
+    },
+    {
+      "id": 16,
+      "name": "pipe",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 3028
+    },
+    {
+      "id": 18,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.28,
+      "fp_px": 6387
+    },
+    {
+      "id": 19,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.39,
+      "fp_px": 4797
+    },
+    {
+      "id": 20,
+      "name": "bag",
+      "status": "ok",
+      "depth_ratio": 0.38,
+      "fp_px": 8709
+    },
+    {
+      "id": 25,
+      "name": "shelf",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 24234
+    },
+    {
+      "id": 26,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.28,
+      "fp_px": 2574
+    },
+    {
+      "id": 27,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.15,
+      "fp_px": 906
+    },
+    {
+      "id": 28,
+      "name": "jar",
+      "status": "ok",
+      "depth_ratio": 0.39,
+      "fp_px": 5914
+    },
+    {
+      "id": 29,
+      "name": "shelf",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 12358
+    },
+    {
+      "id": 30,
+      "name": "crate",
+      "status": "ok",
+      "depth_ratio": 0.38,
+      "fp_px": 13845
+    },
+    {
+      "id": 31,
+      "name": "crate",
+      "status": "ok",
+      "depth_ratio": 0.55,
+      "fp_px": 26735
+    },
+    {
+      "id": 32,
+      "name": "stool",
+      "status": "ok",
+      "depth_ratio": 0.35,
+      "fp_px": 10915
+    },
+    {
+      "id": 33,
+      "name": "barrels",
+      "status": "ok",
+      "depth_ratio": 0.32,
+      "fp_px": 13442
+    },
+    {
+      "id": 34,
+      "name": "stool",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 3517
+    },
+    {
+      "id": 35,
+      "name": "tool",
+      "status": "ok",
+      "depth_ratio": 0.59,
+      "fp_px": 7887
+    },
+    {
+      "id": 38,
+      "name": "tool",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 2251
+    },
+    {
+      "id": 39,
+      "name": "cash register",
+      "status": "ok",
+      "depth_ratio": 0.55,
+      "fp_px": 18827
+    },
+    {
+      "id": 43,
+      "name": "crate",
+      "status": "ok",
+      "depth_ratio": 0.35,
+      "fp_px": 18715
+    },
+    {
+      "id": 44,
+      "name": "pipe",
+      "status": "ok",
+      "depth_ratio": 0.33,
+      "fp_px": 10984
+    },
+    {
+      "id": 46,
+      "name": "crate edge",
+      "status": "ok",
+      "depth_ratio": 0.3,
+      "fp_px": 8542
+    },
+    {
+      "id": 47,
+      "name": "boxes",
+      "status": "ok",
+      "depth_ratio": 0.52,
+      "fp_px": 52560
+    },
+    {
+      "id": 48,
+      "name": "produce",
+      "status": "ok",
+      "depth_ratio": 0.35,
+      "fp_px": 1675
+    },
+    {
+      "id": 49,
+      "name": "potatoes",
+      "status": "ok",
+      "depth_ratio": 0.38,
+      "fp_px": 9614
+    }
+  ]
+}
