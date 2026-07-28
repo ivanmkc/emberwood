@@ -7,6 +7,7 @@
       "A5-depth-walk": {"iou_vs_consensus": 0.360, "canny_edge_alignment": 0.078, "config_space_reach_frac": 0.997, "config_space_reach_px": 3317902, "walk_frac": 0.790},
       "A5-depth-footprint": {"iou_vs_consensus": 0.015, "canny_edge_alignment": 0.033, "config_space_reach_frac": 0.364, "config_space_reach_px": 129030, "walk_frac": 0.092},
       "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.001, "config_space_reach_frac": 0.798, "config_space_reach_px": 37449, "walk_frac": 0.012},
+      "A3-v4-geometric": {"iou_vs_consensus": 0.700, "canny_edge_alignment": 0.485, "config_space_reach_frac": 0.150, "config_space_reach_px": 180165, "walk_frac": 0.362},
       "morph-walk": {"iou_vs_consensus": 0.489, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": 0.567},
       "morph-baseline": {"iou_vs_consensus": 0.012, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null}
     },
