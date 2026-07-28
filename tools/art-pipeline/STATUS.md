@@ -1453,3 +1453,9 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
      probe browser card, veo-z card.
   7. Audits each cycle: drift_check on new metrics, verify_defects trend,
      STATUS append per iteration, commit + board push per milestone.
+
+### Run 32b (iteration 1 of 12h cycle): veo-z decor mask
+- Temporal-occupancy decor mask (pixel differing from bg in >35% of frames =
+  animated awning/lantern, not walker): samples 828->181 (clean walkers),
+  contradictions 141->47, ysort 27, overhead 2. NEXT: >=3 distinct gys per
+  bound, walker tracking, then fuse with probe evidence (roadmap item 1->4).

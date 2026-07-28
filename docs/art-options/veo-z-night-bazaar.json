@@ -14,1765 +14,829 @@
    233
   ]
  ],
- "evidence_samples": 828,
+ "evidence_samples": 181,
  "verdict_counts": {
-  "ysort": 63,
-  "overhead": 1,
-  "contradiction": 141,
-  "no-evidence": 14
+  "ysort": 27,
+  "overhead": 2,
+  "contradiction": 47,
+  "no-evidence": 26
  },
  "objects": {
   "1": {
    "lo": null,
-   "hi": 385.8,
+   "hi": 451.0,
    "verdict": "ysort",
    "n_behind": 0,
-   "n_front": 14,
+   "n_front": 3,
    "label": "part1<1>"
   },
   "2": {
    "lo": null,
-   "hi": 386.4,
+   "hi": 443.8,
    "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 20,
+   "n_behind": 0,
+   "n_front": 5,
    "label": "part2<1>"
   },
   "3": {
    "lo": null,
-   "hi": 386.4,
+   "hi": 426.2,
    "verdict": "ysort",
    "n_behind": 0,
-   "n_front": 15,
+   "n_front": 4,
    "label": "part3<1>"
   },
   "4": {
-   "lo": 610.0,
-   "hi": 384.0,
+   "lo": 443.0,
+   "hi": 296.5,
    "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 21,
+   "n_behind": 5,
+   "n_front": 6,
    "label": "part4<1>"
   },
   "5": {
-   "lo": 1114.2,
-   "hi": 443.0,
+   "lo": 615.8000000000002,
+   "hi": 155.5,
    "verdict": "contradiction",
-   "n_behind": 53,
-   "n_front": 72,
+   "n_behind": 7,
+   "n_front": 6,
    "label": "part5<1>"
   },
   "6": {
    "lo": null,
-   "hi": 440.0,
+   "hi": 151.8,
    "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 12,
+   "n_behind": 0,
+   "n_front": 5,
    "label": "part6<1>"
   },
-  "7": {
-   "lo": 631.2,
-   "hi": 488.0,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 11,
-   "label": "part7<1>"
-  },
-  "8": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
-   "label": "part8<1>"
-  },
-  "10": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
-   "label": "part10<1>"
-  },
-  "11": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part11<1>"
-  },
-  "12": {
+  "13": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 1,
-   "n_front": 1,
-   "label": "part12<1>"
-  },
-  "13": {
-   "lo": 724.0,
-   "hi": 347.4,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 19,
+   "n_front": 2,
    "label": "part13<1>"
   },
   "14": {
    "lo": null,
-   "hi": 494.9,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 4,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part14<1>"
   },
   "15": {
-   "lo": 747.2,
-   "hi": 367.8,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 18,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part15<1>"
   },
   "16": {
    "lo": null,
-   "hi": 240.20000000000002,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 10,
-   "label": "part16<1>"
-  },
-  "17": {
-   "lo": 606.0,
-   "hi": 390.40000000000003,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 30,
-   "label": "part17<1>"
-  },
-  "18": {
-   "lo": null,
-   "hi": 219.5,
+   "hi": 239.0,
    "verdict": "ysort",
    "n_behind": 0,
    "n_front": 6,
+   "label": "part16<1>"
+  },
+  "17": {
+   "lo": 623.0,
+   "hi": 288.2,
+   "verdict": "contradiction",
+   "n_behind": 16,
+   "n_front": 27,
+   "label": "part17<1>"
+  },
+  "18": {
+   "lo": 315.0,
+   "hi": 288.0,
+   "verdict": "contradiction",
+   "n_behind": 2,
+   "n_front": 13,
    "label": "part18<1>"
   },
   "19": {
-   "lo": null,
-   "hi": 257.8,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 25,
+   "lo": 549.0,
+   "hi": 312.0,
+   "verdict": "contradiction",
+   "n_behind": 13,
+   "n_front": 18,
    "label": "part19<1>"
   },
   "20": {
-   "lo": 631.2,
-   "hi": 211.4,
+   "lo": 748.0,
+   "hi": 260.6,
    "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 17,
+   "n_behind": 6,
+   "n_front": 13,
    "label": "part20<1>"
   },
   "21": {
-   "lo": null,
-   "hi": 206.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 19,
+   "lo": 588.2,
+   "hi": 119.0,
+   "verdict": "contradiction",
+   "n_behind": 9,
+   "n_front": 18,
    "label": "part21<1>"
   },
   "22": {
-   "lo": 602.0,
-   "hi": 292.4000000000001,
+   "lo": 576.6,
+   "hi": 119.0,
    "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 18,
+   "n_behind": 10,
+   "n_front": 17,
    "label": "part22<1>"
   },
   "23": {
    "lo": null,
-   "hi": 599.0,
+   "hi": 321.0,
    "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 13,
+   "n_behind": 2,
+   "n_front": 5,
    "label": "part23<1>"
   },
   "24": {
-   "lo": null,
-   "hi": 392.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 23,
+   "lo": 631.8,
+   "hi": 316.8,
+   "verdict": "contradiction",
+   "n_behind": 7,
+   "n_front": 14,
    "label": "part24<1>"
   },
   "25": {
-   "lo": 629.8,
-   "hi": 331.0,
+   "lo": 321.0,
+   "hi": 284.0,
    "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 16,
+   "n_behind": 13,
+   "n_front": 19,
    "label": "part25<1>"
   },
   "26": {
-   "lo": null,
-   "hi": 132.2,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 7,
+   "lo": 318.0,
+   "hi": 184.00000000000003,
+   "verdict": "contradiction",
+   "n_behind": 6,
+   "n_front": 12,
    "label": "part26<1>"
   },
   "27": {
-   "lo": 424.0,
-   "hi": 286.0,
+   "lo": 321.0,
+   "hi": 289.2,
    "verdict": "contradiction",
-   "n_behind": 26,
-   "n_front": 37,
+   "n_behind": 11,
+   "n_front": 17,
    "label": "part27<1>"
   },
-  "28": {
+  "30": {
    "lo": null,
-   "hi": 156.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 2,
-   "label": "part28<1>"
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "part30<1>"
   },
-  "29": {
+  "31": {
+   "lo": 288.0,
+   "hi": 259.2,
+   "verdict": "contradiction",
+   "n_behind": 3,
+   "n_front": 8,
+   "label": "part31<1>"
+  },
+  "33": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 0,
-   "n_front": 3,
-   "label": "part29<1>"
-  },
-  "30": {
-   "lo": 468.2,
-   "hi": 286.0,
-   "verdict": "contradiction",
-   "n_behind": 23,
-   "n_front": 72,
-   "label": "part30<1>"
-  },
-  "31": {
-   "lo": null,
-   "hi": 192.20000000000002,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 15,
-   "label": "part31<1>"
-  },
-  "32": {
-   "lo": 467.0,
-   "hi": 356.6,
-   "verdict": "contradiction",
-   "n_behind": 22,
-   "n_front": 49,
-   "label": "part32<1>"
-  },
-  "33": {
-   "lo": 488.0,
-   "hi": 257.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 25,
+   "n_front": 1,
    "label": "part33<1>"
   },
-  "34": {
-   "lo": 347.0,
-   "hi": 285.6,
-   "verdict": "contradiction",
-   "n_behind": 51,
-   "n_front": 55,
-   "label": "part34<1>"
-  },
   "35": {
-   "lo": 443.0,
-   "hi": 378.0,
+   "lo": 451.0,
+   "hi": 443.8,
    "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 23,
+   "n_behind": 2,
+   "n_front": 5,
    "label": "part35<1>"
   },
   "36": {
-   "lo": null,
-   "hi": 511.60000000000014,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 15,
+   "lo": 211.80000000000004,
+   "hi": 119.0,
+   "verdict": "contradiction",
+   "n_behind": 8,
+   "n_front": 14,
    "label": "part36<1>"
   },
-  "37": {
-   "lo": null,
-   "hi": 233.4,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 22,
-   "label": "part37<1>"
-  },
-  "38": {
-   "lo": 560.0,
-   "hi": 415.20000000000005,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 9,
-   "label": "part38<1>"
-  },
   "39": {
-   "lo": 639.6,
-   "hi": 227.6,
+   "lo": 317.4,
+   "hi": 282.0,
    "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 15,
+   "n_behind": 9,
+   "n_front": 13,
    "label": "part39<1>"
   },
-  "41": {
-   "lo": 478.0,
-   "hi": 281.4,
-   "verdict": "contradiction",
-   "n_behind": 38,
-   "n_front": 68,
-   "label": "part41<1>"
+  "46": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "label": "part46<1>"
   },
-  "42": {
-   "lo": 647.8000000000001,
-   "hi": 230.0,
-   "verdict": "contradiction",
-   "n_behind": 15,
-   "n_front": 24,
-   "label": "part42<1>"
-  },
-  "43": {
-   "lo": 464.0,
-   "hi": 341.6,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 27,
-   "label": "part43<1>"
-  },
-  "44": {
-   "lo": 475.0,
-   "hi": 296.0,
-   "verdict": "contradiction",
-   "n_behind": 43,
-   "n_front": 51,
-   "label": "part44<1>"
-  },
-  "45": {
-   "lo": 564.3000000000001,
-   "hi": 283.5,
+  "48": {
+   "lo": 444.4,
+   "hi": 437.5,
    "verdict": "contradiction",
    "n_behind": 4,
    "n_front": 6,
-   "label": "part45<1>"
-  },
-  "46": {
-   "lo": 597.0,
-   "hi": 284.40000000000003,
-   "verdict": "contradiction",
-   "n_behind": 31,
-   "n_front": 59,
-   "label": "part46<1>"
-  },
-  "47": {
-   "lo": 362.1,
-   "hi": 281.6,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 23,
-   "label": "part47<1>"
-  },
-  "48": {
-   "lo": 595.4,
-   "hi": 388.2,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 28,
    "label": "part48<1>"
   },
   "49": {
-   "lo": null,
-   "hi": 423.2,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 9,
-   "label": "part49<1>"
-  },
-  "50": {
-   "lo": null,
-   "hi": 467.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 11,
-   "label": "part50<1>"
-  },
-  "51": {
-   "lo": 702.8000000000001,
-   "hi": 235.0,
-   "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 25,
-   "label": "part51<1>"
-  },
-  "52": {
-   "lo": null,
-   "hi": 319.6,
+   "lo": 525.0,
+   "hi": 528.0,
    "verdict": "ysort",
    "n_behind": 2,
-   "n_front": 14,
-   "label": "part52<1>"
+   "n_front": 2,
+   "label": "part49<1>"
   },
   "53": {
-   "lo": 761.0,
-   "hi": 423.2,
+   "lo": 569.2,
+   "hi": 437.0,
    "verdict": "contradiction",
-   "n_behind": 21,
-   "n_front": 34,
+   "n_behind": 7,
+   "n_front": 7,
    "label": "part53<1>"
   },
   "54": {
-   "lo": null,
-   "hi": 374.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 29,
+   "lo": 576.6,
+   "hi": 311.8,
+   "verdict": "contradiction",
+   "n_behind": 10,
+   "n_front": 19,
    "label": "part54<1>"
   },
   "55": {
-   "lo": 443.0,
-   "hi": 441.8,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 19,
+   "lo": null,
+   "hi": 424.2,
+   "verdict": "ysort",
+   "n_behind": 0,
+   "n_front": 5,
    "label": "part55<1>"
   },
   "56": {
-   "lo": 604.5,
-   "hi": 371.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 26,
+   "lo": null,
+   "hi": 313.0,
+   "verdict": "ysort",
+   "n_behind": 2,
+   "n_front": 16,
    "label": "part56<1>"
   },
   "57": {
-   "lo": 612.0,
-   "hi": 470.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 14,
+   "lo": 525.0,
+   "hi": 525.9,
+   "verdict": "ysort",
+   "n_behind": 3,
+   "n_front": 4,
    "label": "part57<1>"
   },
   "58": {
    "lo": null,
-   "hi": 417.2,
-   "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 8,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part58<1>"
   },
   "59": {
-   "lo": 355.40000000000003,
-   "hi": 325.0,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 26,
+   "lo": 284.0,
+   "hi": 301.0,
+   "verdict": "ysort",
+   "n_behind": 2,
+   "n_front": 6,
    "label": "part59<1>"
   },
   "60": {
-   "lo": 676.6,
-   "hi": 469.6,
+   "lo": 748.0,
+   "hi": 410.8,
    "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 15,
+   "n_behind": 6,
+   "n_front": 12,
    "label": "part60<1>"
   },
   "61": {
-   "lo": 605.0,
-   "hi": 407.2,
+   "lo": 623.0,
+   "hi": 416.4,
    "verdict": "contradiction",
-   "n_behind": 18,
-   "n_front": 39,
+   "n_behind": 16,
+   "n_front": 19,
    "label": "part61<1>"
   },
   "62": {
-   "lo": 1122.0,
-   "hi": 456.0,
-   "verdict": "contradiction",
-   "n_behind": 43,
-   "n_front": 67,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part62<1>"
   },
-  "63": {
-   "lo": 457.6,
-   "hi": 373.0,
-   "verdict": "contradiction",
-   "n_behind": 15,
-   "n_front": 26,
-   "label": "part63<1>"
-  },
   "64": {
-   "lo": null,
-   "hi": 472.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 13,
+   "lo": 525.0,
+   "hi": 290.6,
+   "verdict": "contradiction",
+   "n_behind": 3,
+   "n_front": 15,
    "label": "part64<1>"
   },
   "65": {
-   "lo": 331.0,
-   "hi": 393.8,
+   "lo": null,
+   "hi": 314.8,
    "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 23,
+   "n_behind": 1,
+   "n_front": 14,
    "label": "part65<1>"
   },
   "66": {
-   "lo": 599.0,
-   "hi": 418.4,
+   "lo": 582.2,
+   "hi": 467.6,
    "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 23,
+   "n_behind": 5,
+   "n_front": 10,
    "label": "part66<1>"
   },
   "67": {
-   "lo": 903.0,
-   "hi": 445.0,
+   "lo": 849.0,
+   "hi": 480.2,
    "verdict": "contradiction",
-   "n_behind": 39,
-   "n_front": 65,
+   "n_behind": 16,
+   "n_front": 17,
    "label": "part67<1>"
   },
   "68": {
-   "lo": 803.4000000000001,
-   "hi": 342.6,
-   "verdict": "contradiction",
-   "n_behind": 25,
-   "n_front": 28,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 2,
    "label": "part68<1>"
   },
   "69": {
-   "lo": 624.6,
-   "hi": 445.0,
+   "lo": 451.0,
+   "hi": 443.6,
    "verdict": "contradiction",
-   "n_behind": 9,
-   "n_front": 24,
+   "n_behind": 2,
+   "n_front": 4,
    "label": "part69<1>"
   },
   "70": {
-   "lo": 676.6,
-   "hi": 473.2,
+   "lo": 574.0,
+   "hi": 315.0,
    "verdict": "contradiction",
    "n_behind": 7,
-   "n_front": 23,
+   "n_front": 16,
    "label": "part70<1>"
   },
   "71": {
-   "lo": 485.0,
+   "lo": 467.0,
    "hi": 467.0,
    "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 14,
+   "n_behind": 2,
+   "n_front": 6,
    "label": "part71<1>"
   },
   "72": {
-   "lo": 642.0,
-   "hi": 423.8,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 24,
+   "lo": null,
+   "hi": 448.0,
+   "verdict": "ysort",
+   "n_behind": 1,
+   "n_front": 6,
    "label": "part72<1>"
   },
   "73": {
-   "lo": 772.2,
-   "hi": 445.0,
+   "lo": 443.0,
+   "hi": 435.3,
    "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 21,
+   "n_behind": 3,
+   "n_front": 4,
    "label": "part73<1>"
   },
-  "74": {
-   "lo": 443.0,
-   "hi": 449.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 7,
-   "label": "part74<1>"
-  },
   "75": {
-   "lo": 798.0,
-   "hi": 560.0,
-   "verdict": "contradiction",
-   "n_behind": 14,
-   "n_front": 17,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part75<1>"
   },
   "76": {
-   "lo": 848.2,
-   "hi": 747.2,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 10,
+   "lo": null,
+   "hi": 491.0,
+   "verdict": "ysort",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part76<1>"
   },
   "77": {
-   "lo": 606.0,
-   "hi": 468.6,
+   "lo": 748.0,
+   "hi": 455.4,
    "verdict": "contradiction",
-   "n_behind": 17,
-   "n_front": 30,
+   "n_behind": 7,
+   "n_front": 14,
    "label": "part77<1>"
   },
   "78": {
-   "lo": 480.0,
+   "lo": null,
    "hi": 443.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 13,
+   "verdict": "ysort",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part78<1>"
   },
   "79": {
-   "lo": 692.0,
-   "hi": 511.4,
+   "lo": 583.5,
+   "hi": 497.5,
    "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 22,
+   "n_behind": 6,
+   "n_front": 6,
    "label": "part79<1>"
   },
   "80": {
-   "lo": 1019.4,
-   "hi": 475.0,
+   "lo": 714.0,
+   "hi": 699.0,
    "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 16,
+   "n_behind": 3,
+   "n_front": 6,
    "label": "part80<1>"
-  },
-  "81": {
-   "lo": 841.6,
-   "hi": 724.0,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 11,
-   "label": "part81<1>"
   },
   "82": {
    "lo": null,
-   "hi": 695.0,
+   "hi": 720.5,
    "verdict": "ysort",
    "n_behind": 0,
-   "n_front": 2,
+   "n_front": 6,
    "label": "part82<1>"
   },
   "83": {
-   "lo": 602.0,
-   "hi": 599.0,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 21,
-   "label": "part83<1>"
-  },
-  "84": {
-   "lo": 647.0,
-   "hi": 499.0,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 7,
-   "label": "part84<1>"
-  },
-  "85": {
-   "lo": 774.2,
-   "hi": 622.8,
+   "lo": 748.0,
+   "hi": 645.0,
    "verdict": "contradiction",
    "n_behind": 5,
-   "n_front": 5,
-   "label": "part85<1>"
+   "n_front": 11,
+   "label": "part83<1>"
   },
   "86": {
-   "lo": 756.8,
-   "hi": 560.0,
-   "verdict": "contradiction",
-   "n_behind": 14,
-   "n_front": 27,
+   "lo": 631.0,
+   "hi": null,
+   "verdict": "overhead",
+   "n_behind": 2,
+   "n_front": 1,
    "label": "part86<1>"
   },
-  "87": {
-   "lo": 994.8000000000001,
-   "hi": 658.0,
-   "verdict": "contradiction",
-   "n_behind": 20,
-   "n_front": 40,
-   "label": "part87<1>"
-  },
-  "88": {
-   "lo": 653.6,
-   "hi": 607.2,
-   "verdict": "contradiction",
-   "n_behind": 8,
-   "n_front": 9,
-   "label": "part88<1>"
-  },
-  "89": {
-   "lo": null,
-   "hi": 627.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 6,
-   "label": "part89<1>"
-  },
-  "90": {
-   "lo": 905.0,
-   "hi": 758.4,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 14,
-   "label": "part90<1>"
-  },
   "91": {
-   "lo": 724.0,
-   "hi": 572.0,
+   "lo": 666.0,
+   "hi": 531.2,
    "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 24,
+   "n_behind": 3,
+   "n_front": 5,
    "label": "part91<1>"
   },
   "92": {
-   "lo": 1037.7,
-   "hi": 692.0,
+   "lo": 748.0,
+   "hi": 706.0,
    "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 8,
+   "n_behind": 9,
+   "n_front": 11,
    "label": "part92<1>"
   },
   "93": {
-   "lo": 905.8,
-   "hi": 678.8,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 15,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part93<1>"
   },
   "94": {
-   "lo": 881.6,
-   "hi": 607.0,
-   "verdict": "contradiction",
-   "n_behind": 9,
-   "n_front": 16,
+   "lo": null,
+   "hi": 645.0,
+   "verdict": "ysort",
+   "n_behind": 0,
+   "n_front": 3,
    "label": "part94<1>"
   },
-  "95": {
-   "lo": 1136.0,
-   "hi": 766.2,
-   "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 28,
-   "label": "part95<1>"
-  },
   "96": {
-   "lo": 1154.8,
-   "hi": 863.4,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 12,
+   "lo": null,
+   "hi": 806.0,
+   "verdict": "ysort",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part96<1>"
-  },
-  "97": {
-   "lo": 1122.0,
-   "hi": 726.0,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 15,
-   "label": "part97<1>"
   },
   "98": {
    "lo": null,
-   "hi": 626.6,
+   "hi": 669.0,
    "verdict": "ysort",
    "n_behind": 1,
-   "n_front": 14,
+   "n_front": 5,
    "label": "part98<1>"
-  },
-  "99": {
-   "lo": null,
-   "hi": 757.2,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 28,
-   "label": "part99<1>"
   },
   "100": {
    "lo": null,
-   "hi": 863.4,
+   "hi": 806.0,
    "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 12,
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part100<1>"
   },
   "101": {
-   "lo": 725.8000000000001,
-   "hi": 599.0,
+   "lo": 748.0,
+   "hi": 634.0,
    "verdict": "contradiction",
-   "n_behind": 19,
-   "n_front": 23,
+   "n_behind": 5,
+   "n_front": 6,
    "label": "part101<1>"
   },
   "102": {
-   "lo": 843.5,
-   "hi": 642.0,
+   "lo": 867.2,
+   "hi": 690.2,
    "verdict": "contradiction",
    "n_behind": 4,
-   "n_front": 21,
+   "n_front": 7,
    "label": "part102<1>"
   },
   "103": {
-   "lo": 1098.6,
-   "hi": 763.2,
+   "lo": 806.0,
+   "hi": 806.0,
    "verdict": "contradiction",
-   "n_behind": 14,
-   "n_front": 24,
+   "n_behind": 3,
+   "n_front": 3,
    "label": "part103<1>"
   },
   "104": {
-   "lo": 814.2,
-   "hi": 716.0,
-   "verdict": "contradiction",
-   "n_behind": 18,
-   "n_front": 26,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 2,
    "label": "part104<1>"
   },
-  "105": {
-   "lo": 1269.0,
-   "hi": 899.0,
-   "verdict": "contradiction",
-   "n_behind": 26,
-   "n_front": 31,
-   "label": "part105<1>"
-  },
-  "106": {
-   "lo": 706.0,
-   "hi": 692.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 11,
-   "label": "part106<1>"
-  },
-  "107": {
-   "lo": 803.0,
-   "hi": 715.4,
-   "verdict": "contradiction",
-   "n_behind": 10,
-   "n_front": 15,
-   "label": "part107<1>"
-  },
-  "108": {
-   "lo": 923.6,
-   "hi": 828.0,
-   "verdict": "contradiction",
-   "n_behind": 8,
-   "n_front": 11,
-   "label": "part108<1>"
-  },
-  "109": {
-   "lo": 1269.0,
-   "hi": 838.0,
-   "verdict": "contradiction",
-   "n_behind": 28,
-   "n_front": 25,
-   "label": "part109<1>"
-  },
-  "110": {
-   "lo": 1082.4,
-   "hi": 705.0,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 11,
-   "label": "part110<1>"
-  },
   "111": {
-   "lo": 1114.6,
-   "hi": 881.0,
+   "lo": 919.0,
+   "hi": 790.8,
    "verdict": "contradiction",
-   "n_behind": 22,
-   "n_front": 36,
+   "n_behind": 6,
+   "n_front": 9,
    "label": "part111<1>"
   },
   "112": {
-   "lo": 814.2,
-   "hi": 740.0,
-   "verdict": "contradiction",
-   "n_behind": 8,
-   "n_front": 15,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
    "label": "part112<1>"
   },
-  "113": {
-   "lo": null,
-   "hi": 753.4,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 5,
-   "label": "part113<1>"
-  },
   "114": {
-   "lo": 1130.8,
-   "hi": 856.0,
-   "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 13,
+   "lo": 798.0,
+   "hi": 806.0,
+   "verdict": "ysort",
+   "n_behind": 2,
+   "n_front": 2,
    "label": "part114<1>"
   },
   "115": {
-   "lo": 1301.0,
-   "hi": 934.8000000000001,
-   "verdict": "contradiction",
-   "n_behind": 46,
-   "n_front": 67,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part115<1>"
-  },
-  "116": {
-   "lo": 1408.0000000000002,
-   "hi": 1040.0,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 15,
-   "label": "part116<1>"
   },
   "117": {
    "lo": null,
-   "hi": 826.8,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 7,
-   "label": "part117<1>"
-  },
-  "118": {
-   "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 0,
-   "n_front": 2,
-   "label": "part118<1>"
-  },
-  "119": {
-   "lo": 1106.0,
-   "hi": 922.0,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 4,
-   "label": "part119<1>"
-  },
-  "120": {
-   "lo": 1169.2,
-   "hi": 1078.0,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 17,
-   "label": "part120<1>"
+   "n_front": 1,
+   "label": "part117<1>"
   },
   "121": {
-   "lo": 1144.0,
-   "hi": 884.0,
+   "lo": 933.5,
+   "hi": 862.0,
    "verdict": "contradiction",
-   "n_behind": 26,
-   "n_front": 46,
+   "n_behind": 6,
+   "n_front": 6,
    "label": "part121<1>"
   },
   "122": {
-   "lo": 1297.8,
-   "hi": 1111.4,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 28,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
    "label": "part122<1>"
   },
-  "123": {
-   "lo": 1275.5,
-   "hi": 884.8,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 5,
-   "label": "part123<1>"
-  },
-  "124": {
-   "lo": 1170.8,
-   "hi": 1051.2,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 23,
-   "label": "part124<1>"
-  },
-  "125": {
-   "lo": 1149.8,
-   "hi": 901.4,
-   "verdict": "contradiction",
-   "n_behind": 10,
-   "n_front": 35,
-   "label": "part125<1>"
-  },
-  "126": {
-   "lo": 1106.0,
-   "hi": 926.0,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 5,
-   "label": "part126<1>"
-  },
-  "127": {
-   "lo": 1239.0,
-   "hi": 1009.4,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 7,
-   "label": "part127<1>"
-  },
-  "128": {
-   "lo": 1492.8,
-   "hi": 1049.0,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 17,
-   "label": "part128<1>"
-  },
   "129": {
-   "lo": 1216.0,
-   "hi": 1146.8,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 8,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
    "label": "part129<1>"
   },
-  "130": {
-   "lo": 1073.4,
-   "hi": 987.0,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 4,
-   "label": "part130<1>"
-  },
-  "131": {
-   "lo": 1152.0,
-   "hi": 963.0,
-   "verdict": "contradiction",
-   "n_behind": 24,
-   "n_front": 27,
-   "label": "part131<1>"
-  },
-  "132": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part132<1>"
-  },
-  "133": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part133<1>"
-  },
-  "134": {
-   "lo": 1166.4,
-   "hi": 993.6,
-   "verdict": "contradiction",
-   "n_behind": 9,
-   "n_front": 22,
-   "label": "part134<1>"
-  },
-  "135": {
-   "lo": 1275.5,
-   "hi": 972.7,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 4,
-   "label": "part135<1>"
-  },
-  "136": {
-   "lo": null,
-   "hi": 1031.6,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 7,
-   "label": "part136<1>"
-  },
-  "137": {
-   "lo": null,
-   "hi": 1029.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 8,
-   "label": "part137<1>"
-  },
-  "138": {
-   "lo": 1258.5,
-   "hi": 1126.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 8,
-   "label": "part138<1>"
-  },
-  "139": {
-   "lo": 1275.5,
-   "hi": 988.6,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 4,
-   "label": "part139<1>"
-  },
-  "140": {
-   "lo": null,
-   "hi": 991.8,
-   "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 9,
-   "label": "part140<1>"
-  },
-  "141": {
-   "lo": 1224.4,
-   "hi": 1047.0,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 10,
-   "label": "part141<1>"
-  },
-  "142": {
-   "lo": 1126.0,
-   "hi": 1107.0,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 13,
-   "label": "part142<1>"
-  },
-  "143": {
-   "lo": 1150.0,
-   "hi": 1104.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 5,
-   "label": "part143<1>"
-  },
-  "144": {
-   "lo": null,
-   "hi": 1111.4,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 8,
-   "label": "part144<1>"
-  },
-  "145": {
-   "lo": 1285.0,
-   "hi": 1211.5,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 4,
-   "label": "part145<1>"
-  },
-  "146": {
-   "lo": null,
-   "hi": 1084.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 6,
-   "label": "part146<1>"
-  },
-  "148": {
-   "lo": null,
-   "hi": 1110.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 9,
-   "label": "part148<1>"
-  },
-  "149": {
-   "lo": 1219.4,
-   "hi": 1176.2,
-   "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 18,
-   "label": "part149<1>"
-  },
   "150": {
-   "lo": 1351.5,
-   "hi": 1343.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 12,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part150<1>"
   },
-  "151": {
+  "154": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 1,
-   "n_front": 3,
-   "label": "part151<1>"
-  },
-  "152": {
-   "lo": 1474.9,
-   "hi": 1276.5,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 6,
-   "label": "part152<1>"
-  },
-  "153": {
-   "lo": null,
-   "hi": 1411.2,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 9,
-   "label": "part153<1>"
-  },
-  "154": {
-   "lo": 1347.4,
-   "hi": 1282.4,
-   "verdict": "contradiction",
-   "n_behind": 10,
-   "n_front": 13,
+   "n_front": 1,
    "label": "part154<1>"
   },
-  "155": {
+  "169": {
    "lo": null,
-   "hi": 1450.7,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 4,
-   "label": "part155<1>"
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "label": "part169<7>"
   },
-  "156": {
-   "lo": 1250.4,
-   "hi": 1070.0,
-   "verdict": "contradiction",
-   "n_behind": 15,
-   "n_front": 21,
-   "label": "part156<2>"
-  },
-  "157": {
-   "lo": 1095.0,
-   "hi": 1091.4,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 8,
-   "label": "part157<2>"
-  },
-  "158": {
-   "lo": 1430.8,
-   "hi": 1211.4,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 8,
-   "label": "part158<2>"
-  },
-  "159": {
-   "lo": 1269.0,
-   "hi": 1122.0,
-   "verdict": "contradiction",
-   "n_behind": 24,
-   "n_front": 34,
-   "label": "part159<3>"
-  },
-  "160": {
-   "lo": 1411.5,
-   "hi": 1105.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 8,
-   "label": "part160<4>"
-  },
-  "163": {
+  "172": {
    "lo": null,
-   "hi": 1791.0,
+   "hi": 1785.0,
    "verdict": "ysort",
    "n_behind": 0,
    "n_front": 2,
-   "label": "part163<7>"
-  },
-  "164": {
-   "lo": 1789.0,
-   "hi": 1791.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 3,
-   "label": "part164<7>"
-  },
-  "165": {
-   "lo": 1791.0,
-   "hi": 1791.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 3,
-   "label": "part165<7>"
-  },
-  "166": {
-   "lo": 1791.0,
-   "hi": 1791.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part166<7>"
-  },
-  "167": {
-   "lo": 1791.0,
-   "hi": 1791.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part167<7>"
-  },
-  "168": {
-   "lo": 1789.0,
-   "hi": 1785.0,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 5,
-   "label": "part168<7>"
-  },
-  "170": {
-   "lo": null,
-   "hi": 1791.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 2,
-   "label": "part170<7>"
-  },
-  "174": {
-   "lo": 1791.0,
-   "hi": 1791.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 2,
-   "label": "part174<7>"
+   "label": "part172<7>"
   },
   "176": {
    "lo": null,
-   "hi": 374.40000000000003,
+   "hi": 365.8,
    "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 13,
+   "n_behind": 0,
+   "n_front": 4,
    "label": "part176<9>"
   },
-  "177": {
-   "lo": 643.6,
-   "hi": 574.8,
-   "verdict": "contradiction",
-   "n_behind": 22,
-   "n_front": 24,
-   "label": "part177<10>"
-  },
-  "178": {
-   "lo": 1173.0,
-   "hi": 974.0,
-   "verdict": "contradiction",
-   "n_behind": 16,
-   "n_front": 27,
-   "label": "part178<11>"
-  },
   "179": {
-   "lo": null,
-   "hi": 1402.0,
+   "lo": 1479.0,
+   "hi": 1481.0,
    "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 8,
+   "n_behind": 2,
+   "n_front": 2,
    "label": "part179<12>"
   },
   "180": {
-   "lo": 1489.0,
-   "hi": 1425.5,
-   "verdict": "contradiction",
+   "lo": 1479.0,
+   "hi": 1487.0,
+   "verdict": "ysort",
    "n_behind": 2,
-   "n_front": 6,
+   "n_front": 3,
    "label": "part180<12>"
   },
   "181": {
-   "lo": null,
-   "hi": 1325.4,
+   "lo": 1487.0,
+   "hi": 1492.0,
    "verdict": "ysort",
    "n_behind": 2,
-   "n_front": 5,
+   "n_front": 2,
    "label": "part181<12>"
   },
   "182": {
-   "lo": 1520.6,
-   "hi": 1373.2,
+   "lo": 1481.0,
+   "hi": 1481.0,
    "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 12,
+   "n_behind": 3,
+   "n_front": 3,
    "label": "part182<12>"
   },
   "183": {
-   "lo": null,
-   "hi": 1410.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 6,
-   "label": "part183<12>"
-  },
-  "184": {
-   "lo": null,
-   "hi": 1562.0,
+   "lo": 1479.0,
+   "hi": 1481.0,
    "verdict": "ysort",
    "n_behind": 2,
-   "n_front": 11,
-   "label": "part184<13>"
+   "n_front": 3,
+   "label": "part183<12>"
   },
   "185": {
    "lo": 1785.0,
-   "hi": 1570.0,
+   "hi": 1575.5,
    "verdict": "contradiction",
-   "n_behind": 10,
-   "n_front": 12,
+   "n_behind": 4,
+   "n_front": 6,
    "label": "part185<14>"
   },
   "186": {
-   "lo": 1742.1,
-   "hi": 1561.8,
+   "lo": 1785.0,
+   "hi": 1579.5,
    "verdict": "contradiction",
    "n_behind": 4,
-   "n_front": 12,
+   "n_front": 6,
    "label": "part186<14>"
   },
-  "187": {
-   "lo": 1785.0,
-   "hi": 1518.4,
-   "verdict": "contradiction",
-   "n_behind": 9,
-   "n_front": 14,
-   "label": "part187<14>"
-  },
   "188": {
-   "lo": 1583.2,
-   "hi": 1495.0,
+   "lo": 1705.0,
+   "hi": 1568.7,
    "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 6,
+   "n_behind": 5,
+   "n_front": 4,
    "label": "part188<14>"
   },
   "189": {
-   "lo": 1554.2,
-   "hi": 1343.0,
+   "lo": 1705.0,
+   "hi": 1535.5,
    "verdict": "contradiction",
-   "n_behind": 13,
-   "n_front": 25,
+   "n_behind": 5,
+   "n_front": 6,
    "label": "part189<14>"
   },
   "190": {
-   "lo": 1642.0,
-   "hi": 1562.2,
+   "lo": 1685.0,
+   "hi": 1576.0,
    "verdict": "contradiction",
-   "n_behind": 16,
-   "n_front": 17,
+   "n_behind": 6,
+   "n_front": 8,
    "label": "part190<14>"
   },
   "191": {
-   "lo": 1610.5,
-   "hi": 1559.0,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 10,
+   "lo": 1785.0,
+   "hi": null,
+   "verdict": "overhead",
+   "n_behind": 5,
+   "n_front": 0,
    "label": "part191<14>"
   },
   "192": {
    "lo": 1550.0,
-   "hi": 1532.9,
+   "hi": 1542.0,
    "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 4,
+   "n_behind": 3,
+   "n_front": 3,
    "label": "part192<15>"
   },
-  "193": {
-   "lo": 1232.8,
-   "hi": 1048.0,
-   "verdict": "contradiction",
-   "n_behind": 12,
-   "n_front": 23,
-   "label": "part193<16>"
-  },
-  "194": {
+  "196": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 1,
-   "n_front": 2,
-   "label": "part194<17>"
-  },
-  "195": {
-   "lo": null,
-   "hi": 1221.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 3,
-   "label": "part195<18>"
-  },
-  "196": {
-   "lo": 604.0,
-   "hi": 467.8,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 8,
+   "n_front": 1,
    "label": "part196<19>"
   },
-  "197": {
-   "lo": 752.0,
-   "hi": 572.8,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 5,
-   "label": "part197<19>"
-  },
-  "198": {
-   "lo": 1122.0,
-   "hi": 602.0,
-   "verdict": "contradiction",
-   "n_behind": 15,
-   "n_front": 20,
-   "label": "part198<20>"
-  },
-  "199": {
-   "lo": null,
-   "hi": 841.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 3,
-   "label": "part199<21>"
-  },
-  "200": {
-   "lo": null,
-   "hi": 821.2,
-   "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 5,
-   "label": "part200<22>"
-  },
   "201": {
-   "lo": 1106.0,
-   "hi": 930.0,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 6,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
    "label": "part201<23>"
-  },
-  "202": {
-   "lo": 1173.2,
-   "hi": 1110.0,
-   "verdict": "contradiction",
-   "n_behind": 15,
-   "n_front": 22,
-   "label": "part202<24>"
-  },
-  "203": {
-   "lo": 1263.9,
-   "hi": 1166.6,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 14,
-   "label": "part203<25>"
-  },
-  "204": {
-   "lo": null,
-   "hi": 1194.3,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 4,
-   "label": "part204<26>"
-  },
-  "205": {
-   "lo": 1453.4,
-   "hi": 1252.2,
-   "verdict": "contradiction",
-   "n_behind": 7,
-   "n_front": 15,
-   "label": "part205<26>"
-  },
-  "206": {
-   "lo": 1370.0,
-   "hi": 1325.2,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 7,
-   "label": "part206<26>"
-  },
-  "207": {
-   "lo": 1562.0,
-   "hi": 1224.8,
-   "verdict": "contradiction",
-   "n_behind": 8,
-   "n_front": 10,
-   "label": "part207<27>"
-  },
-  "208": {
-   "lo": null,
-   "hi": 1218.5,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 6,
-   "label": "part208<28>"
-  },
-  "209": {
-   "lo": null,
-   "hi": 1352.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 3,
-   "label": "part209<29>"
-  },
-  "210": {
-   "lo": null,
-   "hi": 1550.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 3,
-   "label": "part210<29>"
-  },
-  "211": {
-   "lo": null,
-   "hi": 1338.5,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 6,
-   "label": "part211<29>"
-  },
-  "212": {
-   "lo": null,
-   "hi": 1374.6,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 5,
-   "label": "part212<29>"
   },
   "213": {
    "lo": null,
-   "hi": 1553.8,
-   "verdict": "ysort",
+   "hi": null,
+   "verdict": "no-evidence",
    "n_behind": 0,
-   "n_front": 9,
+   "n_front": 1,
    "label": "part213<30>"
   },
   "214": {
-   "lo": 1557.0,
-   "hi": 1412.2,
-   "verdict": "contradiction",
-   "n_behind": 11,
-   "n_front": 20,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 2,
    "label": "part214<30>"
   },
   "215": {
-   "lo": 1552.0,
-   "hi": 1430.6,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 15,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 2,
    "label": "part215<30>"
   },
   "216": {
-   "lo": 1557.0,
-   "hi": 1554.4,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 10,
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
    "label": "part216<30>"
   },
-  "217": {
-   "lo": 1550.0,
-   "hi": null,
-   "verdict": "overhead",
+  "229": {
+   "lo": 1785.0,
+   "hi": 1785.0,
+   "verdict": "contradiction",
    "n_behind": 2,
    "n_front": 2,
-   "label": "part217<31>"
-  },
-  "218": {
-   "lo": 1670.5,
-   "hi": 1502.8,
-   "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 8,
-   "label": "part218<32>"
-  },
-  "219": {
-   "lo": 1539.0,
-   "hi": 1513.5,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 6,
-   "label": "part219<33>"
-  },
-  "220": {
-   "lo": null,
-   "hi": 1517.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 3,
-   "label": "part220<34>"
-  },
-  "221": {
-   "lo": null,
-   "hi": 1550.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 3,
-   "label": "part221<35>"
-  },
-  "222": {
-   "lo": null,
-   "hi": 1550.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 5,
-   "label": "part222<36>"
-  },
-  "223": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
-   "label": "part223<37>"
-  },
-  "224": {
-   "lo": null,
-   "hi": 1791.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 2,
-   "label": "part224<38>"
-  },
-  "225": {
-   "lo": null,
-   "hi": 1791.0,
-   "verdict": "ysort",
-   "n_behind": 1,
-   "n_front": 2,
-   "label": "part225<39>"
-  },
-  "226": {
-   "lo": null,
-   "hi": 1791.0,
-   "verdict": "ysort",
-   "n_behind": 0,
-   "n_front": 2,
-   "label": "part226<40>"
-  },
-  "228": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "label": "part228<42>"
-  },
-  "229": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
    "label": "part229<42>"
-  },
-  "230": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "label": "part230<42>"
   }
  }
 }

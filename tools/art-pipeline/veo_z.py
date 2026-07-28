@@ -58,6 +58,12 @@ def main():
         cap.release()
         stack = np.stack(frames[::6])
         bg = np.median(stack, axis=0).astype(np.uint8)
+        # animated decor (swaying awnings, flicker) differs from bg in MOST
+        # frames; a walker passes any pixel briefly. Exclude persistent movers.
+        occup = np.mean([(np.abs(f.astype(np.int16) - bg).max(axis=2) > FG_T)
+                         for f in frames[::6]], axis=0)
+        decor = (occup > 0.35).astype(np.uint8)
+        decor = cv2.dilate(decor, np.ones((5, 5), np.uint8))
         H, inliers = homography(bg, plate_small)
         print(f'{os.path.basename(mp4)}: {len(frames)} frames, homography inliers {inliers}')
         if H is None or inliers < 60:
@@ -65,6 +71,7 @@ def main():
             continue
         for fi in range(0, len(frames), 4):
             fg = (np.abs(frames[fi].astype(np.int16) - bg).max(axis=2) > FG_T).astype(np.uint8)
+            fg &= 1 - decor
             fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
             n, lab = cv2.connectedComponents(fg)
             for c in range(1, n):
