@@ -622,13 +622,13 @@ LLM metrics:
 ### IoU vs consensus table (all methods, all scenes)
 Method                  anchor   bazaar   plaza    mean
 A1-dense-walk           0.784    0.701    0.731    0.739
+morph-walk              0.489    0.507    0.761    0.586
 shipped-collision       0.536    0.529    0.300    0.455
 A2-v3-xray              0.529    -        -        0.529
-morph-walk              0.489    -        -        0.489
 A5-depth-walk           0.360    0.385    0.239    0.328
 A1-dense-footprint      -        0.007    0.106    0.057
+morph-baseline          0.012    0.043    0.067    0.041
 A5-depth-footprint      0.015    0.039    0.000    0.018
-morph-baseline           0.012    -        -        0.012
 A6-niantic              0.000    0.000    0.050    0.017
 
 ### Config-space reach (8x8 erosion, BFS largest component / total)
