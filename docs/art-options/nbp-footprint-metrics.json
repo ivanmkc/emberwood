@@ -1,11 +1,12 @@
 {
-  "pass": true,
-  "source": "v4-geometric",
-  "method": "VLM-estimated ground geometry + code-drawn footprint polygons",
-  "white_frac": 0.0254,
-  "geometric_ok": 8,
-  "fallback": 4,
-  "impeding": 12,
-  "instances": 132,
-  "defect_rate_v4": 0.101
+ "pass": true,
+ "source": "v4-geometric-cbc-clamped",
+ "method": "correct-by-construction contact + depth clamp (1.1x width) + overlap filter",
+ "white_frac": 0.0,
+ "geometric_ok": 0,
+ "fallback": 0,
+ "dropped": 0,
+ "impeding": 12,
+ "instances": 27,
+ "manual_fix": "pylon(inst 12) footprint restored: overlap-filter blind spot (occupancy extends beyond visible mask); ellipse from instance contact, depth clamped to width"
 }

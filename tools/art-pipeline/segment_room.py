@@ -311,12 +311,27 @@ def main():
             fp = m & fpmask
             cover = float(fp.sum()) / max(1, int(m.sum()))
             if cover < 0.02:
-                # NBP painted no base for this object: block it whole rather
-                # than let the player walk through it — but the walk pass
-                # keeps authority over standable pixels inside (stairs,
-                # balconies, flat floor stains)
-                blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
-                inst['footprint'] = 'nbp-missed'
+                # NBP painted no base for this object. For FREESTANDING
+                # objects (walkable ground above their top edge), full-body
+                # blocking would wall off the walk-behind lane — fall through
+                # to the legacy base-band heuristic instead. Wall-integrated
+                # objects still block fully (minus walk-authority pixels).
+                freestanding_miss = False
+                if nwalk_probe is not None and y0b > 20:
+                    band_m = nwalk_probe[max(0, y0b - 26):y0b - 4, x0b:x1b + 1]
+                    freestanding_miss = band_m.size > 0 and band_m.mean() > 0.35
+                if freestanding_miss:
+                    fdepth_m = max(14, int(0.28 * (y1b - y0b)))
+                    fpm = m.copy()
+                    fpm[:max(0, inst['baseY'] - fdepth_m), :] = False
+                    blocked |= fpm
+                    import cv2 as _cvm
+                    overhang_all |= _cvm.dilate((m & ~fpm).astype(np.uint8),
+                                                np.ones((13, 13), np.uint8)).astype(bool)
+                    inst['footprint'] = 'nbp-missed-band'
+                else:
+                    blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
+                    inst['footprint'] = 'nbp-missed'
             elif cover > 0.85:
                 blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
                 inst['footprint'] = 'nbp-full'
