@@ -1,0 +1,135 @@
+{
+  "instances": 27,
+  "impeding": 12,
+  "geometric_ok": 8,
+  "fallback": 4,
+  "walk_frac_v4": 0.306,
+  "grid": true,
+  "elapsed_s": 677.9,
+  "per_instance": [
+    {
+      "id": 7,
+      "name": "bed",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 277,
+            "x1": 628,
+            "yBase": 713
+          },
+          "plan_depth_px": 329,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay covers the mattress and blankets (the upper body of the bed) rather than just the area where the bed frame meets the floor.; The overlay covers the entire upper body of the bed (mattress, pillows) rather than just the floor area occupied by its frame/legs.; The overlay covers the entire upper body of the bed (mattress, pillows), not just the area where its base touches the floor."
+      }
+    },
+    {
+      "id": 8,
+      "name": "kitchen counter",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 268,
+            "x1": 692,
+            "yBase": 800
+          },
+          "plan_depth_px": 288,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay covers a large area of empty floor space in front of the cabinets rather than tracing the actual L-shaped ground base of the counter.; The footprint extends too far forward, covering open floor space rather than just the base of the counter.; The overlay extends significantly into the walking space in front of the counter, far beyond its actual ground footprint."
+      }
+    },
+    {
+      "id": 10,
+      "name": "heater",
+      "status": "ok",
+      "attempt": 3
+    },
+    {
+      "id": 11,
+      "name": "bedside table",
+      "status": "ok",
+      "attempt": 2
+    },
+    {
+      "id": 13,
+      "name": "bed headboard",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 166,
+            "x1": 344,
+            "yBase": 492
+          },
+          "plan_depth_px": 170,
+          "base_shape": "rect"
+        },
+        "attempt": 1,
+        "gate": "fail",
+        "critique": "The overlay covers the middle of the mattress and bedding, rather than the headboard area which is located at the top of the bed structure.; The red overlay covers almost the entire upper body of the bed headboard and some of the bed itself, rather than just the footprint where the headboard meets the floor.; The overlay covers the main body of the bed, not just the headboard which is the wooden piece at the top."
+      }
+    },
+    {
+      "id": 14,
+      "name": "bed footboard",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 192,
+            "x1": 206,
+            "yBase": 361
+          },
+          "plan_depth_px": 14,
+          "base_shape": "rect"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The red overlay is a single dot and does not cover the full length of the footboard base along the floor.; The red overlay is a single dot and does not cover the entire plan-view ground footprint of the bed footboard, which extends further along the bottom edge of the bed.; The red overlay is just a small square and does not capture the full width of the footboard where it meets the floor."
+      }
+    },
+    {
+      "id": 15,
+      "name": "bed center",
+      "status": "ok",
+      "attempt": 3
+    },
+    {
+      "id": 18,
+      "name": "tool box",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 19,
+      "name": "trunk",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 20,
+      "name": "ac unit",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 21,
+      "name": "crate",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 24,
+      "name": "barrel",
+      "status": "ok",
+      "attempt": 0
+    }
+  ]
+}

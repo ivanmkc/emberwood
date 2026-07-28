@@ -1,0 +1,166 @@
+{
+  "instances": 45,
+  "impeding": 15,
+  "geometric_ok": 10,
+  "fallback": 5,
+  "walk_frac_v4": 0.367,
+  "grid": false,
+  "elapsed_s": 513.4,
+  "per_instance": [
+    {
+      "id": 1,
+      "name": "repair hub stall",
+      "status": "ok",
+      "attempt": 3
+    },
+    {
+      "id": 3,
+      "name": "crates",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 42,
+            "x1": 133,
+            "yBase": 320
+          },
+          "plan_depth_px": 55,
+          "base_shape": "rect"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The red overlay only covers the front edge of the crates, not the entire base extending backward.; The overlay extends down over the side of the bottom crate."
+      }
+    },
+    {
+      "id": 8,
+      "name": "large machine console",
+      "status": "ok",
+      "attempt": 2
+    },
+    {
+      "id": 9,
+      "name": "crates",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 10,
+      "name": "barrel",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 0,
+            "x1": 22,
+            "yBase": 155
+          },
+          "plan_depth_px": 18,
+          "base_shape": "ellipse"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The red overlay does not seem to cover the ground footprint of a barrel. It is placed on the side of a vertical structure, which does not look like a barrel.; The red overlay is not correctly placed at the base of the object, which appears to be on the right side of the image, but instead floating on the left.; The red overlay does not seem to correspond to a barrel. It marks a small spot on a vertical structure, and there's no barrel visible at that location."
+      }
+    },
+    {
+      "id": 14,
+      "name": "cable/pipe",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 0,
+            "x1": 119,
+            "yBase": 138
+          },
+          "plan_depth_px": 93,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay covers the entire visible area of the cable/pipe and extends significantly beyond where it would contact the ground, rather than just representing its floor footprint.; The overlay extends far too high, covering parts of the cable/pipe that are clearly above the ground level. A ground footprint should only cover the base where it touches the floor.; The red overlay covers the entire visible area of the cable/pipe, including upper parts well above the floor, rather than just its ground footprint."
+      }
+    },
+    {
+      "id": 19,
+      "name": "barrel",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 21,
+      "name": "small machine",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 24,
+      "name": "barrels and crates",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 5,
+            "x1": 165,
+            "yBase": 630
+          },
+          "plan_depth_px": 120,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red box covers area mostly far 'in front' of the barrels and crates, extending off the bottom edge of the image rather than wrapping their base on the floor.; The overlay extends far below the base of the objects, well past where they meet the floor.; The red box is located far away from the barrels in the scene. It doesn't represent the footprint of the barrels at all, but rather seems to highlight an empty floor area near a railing."
+      }
+    },
+    {
+      "id": 25,
+      "name": "plant container",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 26,
+      "name": "plant container base",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 28,
+      "name": "plant container base",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 29,
+      "name": "cables/pipes",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 58,
+            "x1": 152,
+            "yBase": 190
+          },
+          "plan_depth_px": 70,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay extends beyond the object's base and covers part of the wall/railing in front of it.; The object is a rectangular machine/console, and its base meets the floor behind the railing. The red box is much too wide, covering areas far outside the object's visible base on the ground."
+      }
+    },
+    {
+      "id": 31,
+      "name": "AC unit on ground",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 33,
+      "name": "AC unit on ground",
+      "status": "ok",
+      "attempt": 1
+    }
+  ]
+}

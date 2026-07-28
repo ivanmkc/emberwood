@@ -1,0 +1,122 @@
+{
+  "instances": 132,
+  "impeding": 12,
+  "geometric_ok": 8,
+  "fallback": 4,
+  "walk_frac_v4": 0.362,
+  "grid": true,
+  "elapsed_s": 525.3,
+  "per_instance": [
+    {
+      "id": 14,
+      "name": "plant tube",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 52,
+      "name": "machinery pile",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 0,
+            "x1": 210,
+            "yBase": 712
+          },
+          "plan_depth_px": 140,
+          "base_shape": "rect"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The red overlay covers an empty section of floor and completely misses the machinery pile, which is located in the top-left area of the image.; The footprint is offset from the machinery pile to the left and extends significantly into the open pathway, not aligning with where the objects (like the barrel and pile on the left) meet the floor.; The red overlay is entirely misplaced; it highlights an empty section of the floor far below the actual machinery pile, which is located in the top left corner."
+      }
+    },
+    {
+      "id": 54,
+      "name": "plant tube base",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 56,
+      "name": "gas cylinder",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 62,
+      "name": "small crate",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 68,
+      "name": "pylon base",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 71,
+      "name": "plant tube",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 77,
+      "name": "pylon base",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 79,
+      "name": "barrel stack",
+      "status": "fallback",
+      "last_attempt": null
+    },
+    {
+      "id": 80,
+      "name": "barrel stack",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 0,
+            "x1": 140,
+            "yBase": 536
+          },
+          "plan_depth_px": 80,
+          "base_shape": "ellipse"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The footprint is placed too far down (foreground) and covers empty floor space instead of the actual base where the barrel stack meets the ground.; The red overlay only covers a portion of the lower barrel in the stack. The stack extends further to the right and back, so the footprint needs to be a larger circle or ellipse to cover the entire base of the bottom barrel on the ground.; The red overlay only covers the top portion of the barrel stack and extends to the left, missing the actual base of the barrels which are located further right."
+      }
+    },
+    {
+      "id": 117,
+      "name": "fallen machinery",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 68,
+            "x1": 256,
+            "yBase": 201
+          },
+          "plan_depth_px": 55,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay extends significantly to the left into empty floor space far beyond the object.; The red overlay extends significantly to the left into empty space, far beyond the visible base of the object."
+      }
+    },
+    {
+      "id": 121,
+      "name": "crate",
+      "status": "ok",
+      "attempt": 0
+    }
+  ]
+}

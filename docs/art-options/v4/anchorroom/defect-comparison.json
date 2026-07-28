@@ -1,0 +1,20 @@
+{
+  "v2": {
+    "missed_walkable_frac": 0.0285,
+    "false_walkable_frac": 0.2223,
+    "defect_frac": 0.2508,
+    "walk_frac": 0.566
+  },
+  "v3": {
+    "missed_walkable_frac": 0.0683,
+    "false_walkable_frac": 0.1382,
+    "defect_frac": 0.2065,
+    "walk_frac": 0.424
+  },
+  "v4": {
+    "missed_walkable_frac": 0.0478,
+    "false_walkable_frac": 0.0533,
+    "defect_frac": 0.1011,
+    "walk_frac": 0.362
+  }
+}
