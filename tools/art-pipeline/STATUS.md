@@ -326,3 +326,16 @@ STATE: engine lock+grant+visited implementation IN PROGRESS this run; content wi
   in plate world; legacy save migrates. 26/26 tests.
 - NOTE: intro transmission still references the old quest line — quest re-homing into the
   generated world is the next content task (permits chain already lives there).
+
+## Run 21: NBP defect-verification pass (Ivan directive) + clean plate shipped
+- FIXED: assets/rooms/anchorroom.jpg was still the PRE-CLEANUP plate (painted quartet
+  shipping since the plate-room pivot); clean plate now live (verified by md5 + live
+  screenshot; Pages was never stale — Ivan's "still the old one" was this + browser cache).
+- verify_defects.py v2: free-form "paint the defects" over-flagged (repainted all ground
+  orange incl. water); v2 = INDEPENDENT fresh walk roll (walk-v2 prompt, new seed) diffed
+  deterministically vs shipped collision: missed = fresh-green & blocked (open 11);
+  false = walkable & fresh-red, restricted to footprint-adjacent ground contact (open 11).
+  Calibration: anchor 6.7%, repair-bay 6.0%, canal-docks 4.6% (v1 said 30-60%).
+- Full 25-room sweep RUNNING (bg). Next: review defect-on-source overlays for the worst
+  rooms, patch masks (union missed-walk into walk where fresh+shipped disagree twice?),
+  add defect layers to board section 26 stacks, re-sweep until <2% everywhere.
