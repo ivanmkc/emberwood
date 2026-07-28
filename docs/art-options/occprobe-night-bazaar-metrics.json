@@ -1,0 +1,174 @@
+{
+ "room": "night-bazaar",
+ "probes_attempted": 11,
+ "probes_valid": 11,
+ "probes": [
+  {
+   "pos": [
+    474,
+    482
+   ],
+   "noise": 0.0206,
+   "visible_px": 4090,
+   "judge": {
+    "character_present": true,
+    "fully_visible": false,
+    "occluding_objects": [
+     "yellow cloth",
+     "wooden crate"
+    ],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    774,
+    313
+   ],
+   "noise": 0.0334,
+   "visible_px": 57,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    2130,
+    150
+   ],
+   "noise": 0.0213,
+   "visible_px": 0,
+   "judge": {
+    "character_present": false,
+    "fully_visible": false,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    533,
+    837
+   ],
+   "noise": 0.0107,
+   "visible_px": 5536,
+   "judge": {
+    "character_present": true,
+    "fully_visible": false,
+    "occluding_objects": [
+     "lanterns",
+     "crates",
+     "fabric"
+    ],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    834,
+    889
+   ],
+   "noise": 0.0378,
+   "visible_px": 10792,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    1517,
+    1140
+   ],
+   "noise": 0.03,
+   "visible_px": 5453,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    2167,
+    939
+   ],
+   "noise": 0.0377,
+   "visible_px": 2315,
+   "judge": {
+    "character_present": true,
+    "fully_visible": false,
+    "occluding_objects": [
+     "glowing lantern",
+     "blue tarp",
+     "wooden pole",
+     "counter edge"
+    ],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    313,
+    1511
+   ],
+   "noise": 0.0024,
+   "visible_px": 7242,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    878,
+    1374
+   ],
+   "noise": 0.0046,
+   "visible_px": 10804,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    1540,
+    1424
+   ],
+   "noise": 0.0123,
+   "visible_px": 12508,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  },
+  {
+   "pos": [
+    2033,
+    1517
+   ],
+   "noise": 0.0068,
+   "visible_px": 8824,
+   "judge": {
+    "character_present": true,
+    "fully_visible": true,
+    "occluding_objects": [],
+    "scene_altered": false
+   }
+  }
+ ],
+ "evidence_px": 38845
+}

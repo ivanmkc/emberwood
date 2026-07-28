@@ -1263,3 +1263,23 @@ vs gpt baseline) correctly triggers 7.8x DRIFT DETECTED (exit 1); missing
 file/unknown room → exit 2.
 
 Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
+
+## Run 27 (2026-07-28): occlusion probing + magenta-ground (Ivan's two new methods)
+
+- **Occlusion probes** (`occlusion_probe.py`): sample walkable positions
+  (stratified grid on consensus walk), NBP inserts the player sprite at each
+  (patch-local 800px crops, magenta cross marker, sprite as 2nd input, noise
+  budget 8% outside char bbox, judge labels). night-bazaar 11/11 valid.
+  Judge-confirmed occlusions: noodle counter over legs, awning+crates, railing
+  +cable. v1 aggregation = column-fill silhouette holes (38.8k evidence px);
+  residual issue: anti-alias speckle inside visible chars — trust judge labels
+  + large contiguous blobs; median-of-3 judging is the v2 step. Z-key map =
+  per-pixel max ground-y occluded (the engine's y-sort key, empirically).
+- **Magenta-ground** (`magenta_ground_pass.py`): "floor is painted flat
+  #FF00FF, everything else identical" — 5/5 rolls FIRST TRY on all 3 scenes
+  (keeping the scene intact stabilizes NBP vs the flaky two-color abstraction).
+  Ground fracs 20.5/21.7/11.2%; IoU vs consensus walk 0.675/0.741/0.501.
+  Bazaar: paint flows behind stand legs; wires/lantern strings stay unpainted
+  IN FRONT of magenta = free occlusion evidence. Plaza gap fully explained:
+  model refused to paint the RUG (object-on-floor reading) — prompt v2 should
+  say "including rugs/carpets".
