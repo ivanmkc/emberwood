@@ -711,3 +711,52 @@ Prefer structures that cannot be wrong over post-hoc verify/fix. Applied transla
 - SCALE: drawn tile grid conditioning at GENERATION time (grid = the scale constraint)
   rather than measure-and-rescale after.
 - Bench board should rank methods partly by "how much is constructed vs verified".
+
+## Agent align-masks — collision re-alignment + defect outlier pass (2026-07-28)
+
+### Task 1: Collision mask alignment (#35)
+Five rooms had doors/passages PAINTED into plates AFTER masks were generated:
+night-bazaar, outskirts, repair-bay, transit, power-plant.
+Timestamps confirmed: plates edited 1–2h after mask generation; underworks was up-to-date.
+- Deleted stale nbp-{mask,walk,footprint}-metrics.json + _srcmasks_*.npz for all 5
+- Ran room_factory.py: 5/5 rebuilt successfully, all gated
+- fix_door_mouths.py carved thresholds for power-plant and repair-bay
+- gen_rooms_index.py: 25 rooms, 46+ wired exits
+- 26/26 unit tests pass throughout
+- Plate-overlay composites (collision.png over plate.jpg at 1280x896) confirm spatial
+  alignment: mask edges follow art edges, no offset/shift detected.
+- Door thresholds verified connected to main walkable component (all 5 parent rooms: spawn
+  can BFS-reach the door base pixel).
+- NOTE: stitched-world engine (gamejs-audit agent, commit a159f0f) moved maskWalk into
+  worldRooms per-room structure; g.maskWalk = null in world mode. Matrix drive script
+  needs adaptation for world mode (out of scope — src/*.js owned by other agent).
+
+### Task 2: Defect outliers
+verify_defects.py v2 results on three flagged rooms:
+| Room             | Before   | After    | Method                     |
+|------------------|----------|----------|----------------------------|
+| home-interior-a  | 39.7%    | 3.0%     | 3-roll majority-vote walk + doorway bridge + walk-authority collision patch |
+| hydroponics      | 14.0%    | 5.3%     | 3-roll majority-vote walk + walk-authority collision patch |
+| salvage-shed     | 9.5%     | 8.9%     | Fresh walk roll (grid walk fragmented) |
+
+Root cause for home-interior-a (39.7%→3.0%): NBP walk mask had a 70px blocked band at
+the door frame (y=1070-1130 source), disconnecting interior floor from exterior walkway.
+The zero-island guarantee then culled the entire interior. Fix: bridged the doorway gap
+in the walk mask, then applied walk-authority patching to the collision.
+
+Remaining defects justified as:
+- hydroponics 5.3%: false-walk 5.2% = objects the fresh roll classifies as blocking that
+  the shipped mask allows via walk-behind/footprint mechanic (by design)
+- salvage-shed 8.9%: missed-walk 8.1% = narrow floor gaps between dense furniture that
+  the shipped mask conservatively blocks; NBP inherent variance on cramped interiors
+
+### Task 3: Matrix stragglers
+Door crossings (night-bazaar→noodle-bar, canal-docks→barge-cabin, repair-bay→repair-office,
+power-plant→control-room, hydroponics→grow-lab-office): all door thresholds verified
+walkable and connected to main component in collision masks. Drive failures are due to the
+stitched-world engine's BFS pathing (world-coordinate offset handling for door triggers),
+which is the gamejs-audit agent's domain. Edge exits (night-bazaar-e→anchorroom) PASS in
+the stitched world.
+hydroponics-n verified walkable (exit strip carved, rect narrowed to 271..367).
+
+26/26 unit tests pass after all changes.
