@@ -4,7 +4,7 @@
 
 import { TILES, TILE_SIZE as T } from './tiles.js';
 import { SPRITES, drawDef } from './sprites.js';
-import { MAPS, START, buildGrid } from './maps.js';
+import { MAPS, START, buildGrid, EXTERIOR_ROOMS, WORLD_LAYOUT } from './maps.js';
 import {
   newQuestState, applyEffects, npcDialogue, beaconInteract,
   lockedDoorInteract, sparkleInteract, chestLootLines,
@@ -17,6 +17,8 @@ const VIEW_W = 320;
 const VIEW_H = 240;
 const DS = 2; // device scale: canvas is VIEW*DS, art PNGs are authored at 2x
 const SAVE_KEY = 'emberwood-save-v2';
+const ROOM_PW = 640; // room width in logical (player) pixels: 40 tiles * 16px
+const ROOM_PH = 448; // room height in logical (player) pixels: 28 tiles * 16px
 
 const ENEMY_DEFS = {
   slime: { hp: 2, speed: 22, chaseSpeed: 36, aggroR: 90, sprite: 'slime', art: 'sludge', size: 16 },
@@ -120,6 +122,46 @@ export function createGame(canvas, input, art) {
 
   const HIT = { ox: 4, oy: 7, w: 8, h: 8 }; // hitbox within a 16px logical body
 
+  // stitched world: grid layout for exterior rooms
+  const worldRooms = {}; // roomId -> { gx, gy, maskWalk, fgCuts, hotspots, exits }
+  const worldGrid = {};  // "gx,gy" -> roomId
+  let worldBounds = null; // { x0, y0, x1, y1 } in logical pixels
+  let worldActive = false;
+
+  function initWorld() {
+    for (const [id, pos] of Object.entries(WORLD_LAYOUT)) {
+      const [gx, gy] = pos;
+      worldRooms[id] = { gx, gy, maskWalk: null, fgCuts: [], hotspots: [], exits: [] };
+      worldGrid[`${gx},${gy}`] = id;
+    }
+    // compute world bounds in logical pixels
+    const gxs = Object.values(WORLD_LAYOUT).map((p) => p[0]);
+    const gys = Object.values(WORLD_LAYOUT).map((p) => p[1]);
+    const minGx = Math.min(...gxs), maxGx = Math.max(...gxs);
+    const minGy = Math.min(...gys), maxGy = Math.max(...gys);
+    worldBounds = {
+      x0: minGx * ROOM_PW,
+      y0: minGy * ROOM_PH,
+      x1: (maxGx + 1) * ROOM_PW,
+      y1: (maxGy + 1) * ROOM_PH,
+      minGx, maxGx, minGy, maxGy,
+    };
+  }
+  initWorld();
+
+  function worldToRoom(wx, wy) {
+    const gx = Math.floor(wx / ROOM_PW);
+    const gy = Math.floor(wy / ROOM_PH);
+    const id = worldGrid[`${gx},${gy}`];
+    return id ? { id, lx: wx - gx * ROOM_PW, ly: wy - gy * ROOM_PH, gx, gy } : null;
+  }
+
+  function roomWorldOffset(roomId) {
+    const wr = worldRooms[roomId];
+    if (!wr) return null;
+    return { x: wr.gx * ROOM_PW, y: wr.gy * ROOM_PH };
+  }
+
   const g = {
     mode: 'title',
     quest: newQuestState(),
@@ -207,8 +249,55 @@ export function createGame(canvas, input, art) {
 
   // ---------- map / entities / props ----------
 
+  function buildMaskForRoom(roomId) {
+    const maskImg = art.roomMasks && art.roomMasks[roomId];
+    if (!maskImg) return null;
+    const mc = document.createElement('canvas');
+    mc.width = ROOM_PW;
+    mc.height = ROOM_PH;
+    const mctx = mc.getContext('2d');
+    mctx.imageSmoothingEnabled = false;
+    mctx.drawImage(maskImg, 0, 0, ROOM_PW, ROOM_PH);
+    return { w: ROOM_PW, h: ROOM_PH, data: mctx.getImageData(0, 0, ROOM_PW, ROOM_PH).data };
+  }
+
+  function buildWorldMasks() {
+    for (const id of EXTERIOR_ROOMS) {
+      const wr = worldRooms[id];
+      if (!wr) continue;
+      wr.maskWalk = buildMaskForRoom(id);
+      const data = art.roomData && art.roomData[id];
+      wr.fgCuts = data ? (data.fg || []) : [];
+      wr.hotspots = (art.roomHotspots && art.roomHotspots[id]) || [];
+      const map = MAPS[id];
+      wr.exits = (map && map.plateExits) || [];
+      if (!wr.maskWalk) {
+        let tries = 0;
+        const tick = () => {
+          if (!worldActive) return;
+          if (art.roomMasks && art.roomMasks[id]) {
+            wr.maskWalk = buildMaskForRoom(id);
+            return;
+          }
+          if (tries++ < 40) setTimeout(tick, 250);
+        };
+        setTimeout(tick, 250);
+      }
+    }
+  }
+
   function buildProps() {
     g.props = [];
+    if (worldActive) {
+      g.solidProps = [];
+      g.maskWalk = null;
+      g.roomExit = null;
+      g.fgCuts = [];
+      g.roomExits = [];
+      g.hotspots = [];
+      buildWorldMasks();
+      return;
+    }
     if (g.map.plate) { // plate rooms: scenery is painted, not synthesized
       g.solidProps = [];
       g.maskWalk = null;
@@ -217,8 +306,6 @@ export function createGame(canvas, input, art) {
       const maskImg = art.roomMasks && art.roomMasks[g.mapId];
       const data = art.roomData && art.roomData[g.mapId];
       if (!maskImg) {
-        // collision image still loading: keep retrying so per-pixel masks
-        // replace the coarse tile fallback as soon as the asset lands
         const id = g.mapId;
         let tries = 0;
         const tick = () => {
@@ -240,7 +327,7 @@ export function createGame(canvas, input, art) {
       }
       if (data) {
         g.fgCuts = (data.fg || []).map((f) => f);
-        g.roomExit = null; // legacy tile-world exit retired: plate world only
+        g.roomExit = null;
       }
       g.roomExits = g.map.plateExits || [];
       g.hotspots = (art.roomHotspots && art.roomHotspots[g.mapId]) || [];
@@ -296,16 +383,82 @@ export function createGame(canvas, input, art) {
     g.solidProps = g.props.filter((pr) => PROP_SOLID.has(pr.type));
   }
 
+  function spawnEntitiesForRoom(roomId) {
+    const map = MAPS[roomId];
+    if (!map) return;
+    const off = roomWorldOffset(roomId);
+    if (!off) return;
+    for (const e of map.entities) {
+      if (e.kind === 'sparkle' && (g.quest.flags.hasRing || g.quest.flags.gaveRing)) continue;
+      if (e.kind === 'enemy' && e.type === 'boss' && g.quest.flags.bossDefeated) continue;
+      if (e.kind === 'lockedDoor' && g.quest.flags.doorOpen) continue;
+      if (e.kind === 'item' && e.id === 'petdrone'
+          && (g.quest.flags.petFound || g.quest.flags.petReturned)) continue;
+      const ent = { ...e, x: e.x * T + off.x, y: e.y * T + off.y, tx: e.x, ty: e.y, roomId };
+      if (e.kind === 'enemy') {
+        const def = ENEMY_DEFS[e.type];
+        Object.assign(ent, {
+          hp: def.hp, def, wanderT: 0, wx: 0, wy: 0, kx: 0, ky: 0,
+          invuln: 0, lastSwing: -1, anim: Math.random() * 6, minionsSpawned: false,
+        });
+      }
+      g.entities.push(ent);
+    }
+  }
+
   function loadMap(id, tx, ty) {
     g.quest.visited = g.quest.visited || {};
-    g.quest.visited[arguments[0]] = true;
+    g.quest.visited[id] = true;
+    const map = MAPS[id];
+    const isExterior = map && map.gridPos && !map.isInterior;
+
+    if (isExterior && !worldActive) {
+      // entering the outdoor world: load all exterior rooms at once
+      worldActive = true;
+      g.mapId = id;
+      g.map = map;
+      g.grid = buildGrid(map);
+      g.drops = [];
+      g.particles = [];
+      g.entities = [];
+      g.dynPortals = [];
+      for (const rid of EXTERIOR_ROOMS) {
+        g.quest.visited[rid] = true;
+        spawnEntitiesForRoom(rid);
+      }
+      buildProps();
+      if (tx !== null && tx !== undefined) {
+        const off = roomWorldOffset(id);
+        g.player.x = tx * T + (off ? off.x : 0);
+        g.player.y = ty * T + (off ? off.y : 0);
+      }
+      updateCamera();
+      return;
+    }
+
+    if (isExterior && worldActive) {
+      // already in the world: just reposition the player
+      g.mapId = id;
+      g.map = map;
+      g.grid = buildGrid(map);
+      if (tx !== null && tx !== undefined) {
+        const off = roomWorldOffset(id);
+        g.player.x = tx * T + (off ? off.x : 0);
+        g.player.y = ty * T + (off ? off.y : 0);
+      }
+      updateCamera();
+      return;
+    }
+
+    // interior or legacy map: leave world mode
+    worldActive = false;
     g.mapId = id;
-    g.map = MAPS[id];
-    g.grid = buildGrid(g.map);
+    g.map = map;
+    g.grid = buildGrid(map);
     g.drops = [];
     g.particles = [];
     g.entities = [];
-    for (const e of g.map.entities) {
+    for (const e of map.entities) {
       if (e.kind === 'sparkle' && (g.quest.flags.hasRing || g.quest.flags.gaveRing)) continue;
       if (e.kind === 'enemy' && e.type === 'boss' && g.quest.flags.bossDefeated) continue;
       if (e.kind === 'lockedDoor' && g.quest.flags.doorOpen) continue;
@@ -325,7 +478,6 @@ export function createGame(canvas, input, art) {
     if (id === 'overworld' && g.quest.flags.petReturned) {
       g.entities.push({ kind: 'pet', id: 'bolt', x: 36 * T, y: 27 * T, anim: 0 });
     }
-    // settlement restoration: built projects reshape the world
     g.dynPortals = [];
     if (id === 'overworld') {
       const f = g.quest.flags;
@@ -365,7 +517,33 @@ export function createGame(canvas, input, art) {
       || e.kind === 'charter';
   }
 
+  function worldMaskBlocked(wx, wy) {
+    const gx = Math.floor(wx / ROOM_PW);
+    const gy = Math.floor(wy / ROOM_PH);
+    const id = worldGrid[`${gx},${gy}`];
+    if (!id) return true;
+    const wr = worldRooms[id];
+    if (!wr || !wr.maskWalk) return true;
+    const lx = wx - gx * ROOM_PW;
+    const ly = wy - gy * ROOM_PH;
+    const xi = Math.round(lx), yi = Math.round(ly);
+    const m = wr.maskWalk;
+    if (xi < 0 || yi < 0 || xi >= m.w || yi >= m.h) return true;
+    return m.data[(yi * m.w + xi) * 4] < 128;
+  }
+
   function rectBlocked(x, y, w, h, self) {
+    if (worldActive) {
+      const pts = [[x, y], [x + w - 1, y], [x, y + h - 1], [x + w - 1, y + h - 1], [x + w / 2, y + h - 1]];
+      for (const [px3, py3] of pts) {
+        if (worldMaskBlocked(px3, py3)) return true;
+      }
+      for (const e of g.entities) {
+        if (e === self || !entitySolid(e)) continue;
+        if (aabb(x, y, w, h, e.x + 2, e.y + 2, 12, 12)) return true;
+      }
+      return false;
+    }
     if (g.maskWalk) {
       const m = g.maskWalk;
       const pts = [[x, y], [x + w - 1, y], [x, y + h - 1], [x + w - 1, y + h - 1], [x + w / 2, y + h - 1]];
@@ -484,8 +662,28 @@ export function createGame(canvas, input, art) {
       if (!['npc', 'sign', 'chest', 'beacon', 'lockedDoor', 'terminal', 'charter'].includes(e.kind)) continue;
       if (p.x >= e.x && p.x < e.x + 16 && p.y >= e.y && p.y < e.y + 16) return e;
     }
-    // plate-room hotspots: examine painted scenery; smallest box wins
-    // (read from art registry lazily — the JSON may land after room entry)
+    if (worldActive) {
+      // world mode: check hotspots from all nearby rooms
+      let best = null;
+      for (const rid of EXTERIOR_ROOMS) {
+        const wr = worldRooms[rid];
+        if (!wr) continue;
+        const offx = wr.gx * ROOM_PW, offy = wr.gy * ROOM_PH;
+        if (Math.abs(p.x - offx - ROOM_PW / 2) > ROOM_PW) continue;
+        if (Math.abs(p.y - offy - ROOM_PH / 2) > ROOM_PH) continue;
+        const hspots = (art.roomHotspots && art.roomHotspots[rid]) || [];
+        for (const h of hspots) {
+          const [x0, y0, x1, y1] = h.box;
+          const wx0 = x0 + offx, wy0 = y0 + offy, wx1 = x1 + offx, wy1 = y1 + offy;
+          if (p.x >= wx0 - 5 && p.x <= wx1 + 5 && p.y >= wy0 - 5 && p.y <= wy1 + 5) {
+            const area = (x1 - x0) * (y1 - y0);
+            if (!best || area < best.area) best = { area, h };
+          }
+        }
+      }
+      if (best) return { kind: 'hotspot', ...best.h };
+      return null;
+    }
     const hspots = (g.map && g.map.plate && art.roomHotspots && art.roomHotspots[g.mapId]) || g.hotspots || [];
     let best = null;
     for (const h of hspots) {
@@ -830,6 +1028,53 @@ export function createGame(canvas, input, art) {
       if (e.kind === 'pet') e.anim += dt * 5;
     }
 
+    if (worldActive) {
+      // world mode: check door exits from all exterior rooms
+      const fx = p.x + 8, fy = p.y + 15;
+      for (const rid of EXTERIOR_ROOMS) {
+        const wr = worldRooms[rid];
+        if (!wr) continue;
+        const offx = wr.gx * ROOM_PW, offy = wr.gy * ROOM_PH;
+        for (const ex of wr.exits) {
+          if (ex.edge !== 'door') continue; // outdoor edges = seamless, skip
+          const [ex0, ey0, ex1, ey1] = ex.rect;
+          if (fx >= ex0 + offx && fx <= ex1 + offx && fy >= ey0 + offy && fy <= ey1 + offy) {
+            if (ex.lock && !g.quest.flags[ex.lock.flag]) {
+              if (!ex._warned) {
+                ex._warned = true;
+                openDialogue({ lines: ex.lock.msg }, () => { setTimeout(() => { ex._warned = false; }, 2000); });
+                p.y += 10;
+              }
+              continue;
+            }
+            loadMap(ex.to, ex.tx, ex.ty);
+            music.setScene(ex.to);
+            save();
+            return;
+          }
+        }
+        // locked non-door exits: block at boundary strip
+        for (const ex of wr.exits) {
+          if (ex.edge === 'door' || !ex.lock) continue;
+          if (g.quest.flags[ex.lock.flag]) continue;
+          const [ex0, ey0, ex1, ey1] = ex.rect;
+          if (fx >= ex0 + offx && fx <= ex1 + offx && fy >= ey0 + offy && fy <= ey1 + offy) {
+            if (!ex._warned) {
+              ex._warned = true;
+              openDialogue({ lines: ex.lock.msg }, () => { setTimeout(() => { ex._warned = false; }, 2000); });
+              if (ex.edge === 'n') p.y += 10;
+              if (ex.edge === 's') p.y -= 10;
+              if (ex.edge === 'w') p.x += 10;
+              if (ex.edge === 'e') p.x -= 10;
+            }
+          }
+        }
+      }
+      // track room for music
+      const r = worldToRoom(p.x + 8, p.y + 11);
+      if (r) music.setScene(r.id);
+      save();
+    } else {
     const ptx = Math.floor((p.x + 8) / T);
     const pty = Math.floor((p.y + 11) / T);
     if (g.roomExit) {
@@ -850,7 +1095,6 @@ export function createGame(canvas, input, art) {
           if (!ex._warned) {
             ex._warned = true;
             openDialogue({ lines: ex.lock.msg }, () => { setTimeout(() => { ex._warned = false; }, 2000); });
-            // nudge the player back out of the trigger so it doesn't re-fire
             if (ex.edge === 'n' || ex.edge === 'door') p.y += 10;
             if (ex.edge === 's') p.y -= 10;
             if (ex.edge === 'w') p.x += 10;
@@ -858,19 +1102,15 @@ export function createGame(canvas, input, art) {
           }
           continue;
         }
-        // seamless stitch: keep the cross-axis position through the door,
-        // clamped into the paired strip of the target room
         const keepX = p.x, keepY = p.y;
         loadMap(ex.to, ex.tx, ex.ty);
         if (ex.toRect) {
           const [tx0, ty0, tx1, ty1] = ex.toRect;
           const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-          // leaving north arrives at the target's SOUTH strip, and so on
           if (ex.edge === 'n' || ex.edge === 'door') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty0 - 26; }
           if (ex.edge === 's') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty1 + 10; }
           if (ex.edge === 'w') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx0 - 22; }
           if (ex.edge === 'e') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx1 + 6; }
-          // arrival spot must be free: slide along the strip until it is
           const horiz = ex.edge === 'n' || ex.edge === 's' || ex.edge === 'door';
           for (let d = 0; d <= 200; d += 4) {
             for (const s of d ? [-d, d] : [0]) {
@@ -881,7 +1121,7 @@ export function createGame(canvas, input, art) {
             }
           }
         }
-        music.setScene(ex.to); // unknown scenes fall back to overworld
+        music.setScene(ex.to);
         save();
         return;
       }
@@ -909,6 +1149,7 @@ export function createGame(canvas, input, art) {
         }
       }
     }
+    } // end of non-world exit handling
 
     // Infirmary Wing: slow regen inside the settlement
     if (g.quest.flags.baseInfirmary && g.quest.hearts < g.quest.maxHearts) {
@@ -942,6 +1183,23 @@ export function createGame(canvas, input, art) {
   }
 
   function updateCamera() {
+    if (worldActive) {
+      g.cam.x = Math.round(g.player.x + 8 - VIEW_W / 2);
+      g.cam.y = Math.round(g.player.y + 8 - VIEW_H / 2);
+      const wb = worldBounds;
+      g.cam.x = Math.max(wb.x0, Math.min(wb.x1 - VIEW_W, g.cam.x));
+      g.cam.y = Math.max(wb.y0, Math.min(wb.y1 - VIEW_H, g.cam.y));
+      // track which room cell the player is in
+      const r = worldToRoom(g.player.x + 8, g.player.y + 11);
+      if (r && r.id !== g.mapId) {
+        g.mapId = r.id;
+        g.map = MAPS[r.id];
+        g.grid = buildGrid(g.map);
+        g.quest.visited = g.quest.visited || {};
+        g.quest.visited[r.id] = true;
+      }
+      return;
+    }
     const mw = g.grid[0].length * T;
     const mh = g.grid.length * T;
     g.cam.x = Math.round(g.player.x + 8 - VIEW_W / 2);
@@ -991,12 +1249,109 @@ export function createGame(canvas, input, art) {
     return v[(tx * 73 + ty * 151) % v.length];
   }
 
+  function renderWorld() {
+    const shx = Math.round(Math.sin(g.time * 91) * 3 * g.shake);
+    const shy = Math.round(Math.cos(g.time * 83) * 3 * g.shake);
+    g.cam.x += shx;
+    g.cam.y += shy;
+    const cx = g.cam.x, cy = g.cam.y;
+
+    // draw all visible room plates
+    for (const rid of EXTERIOR_ROOMS) {
+      const wr = worldRooms[rid];
+      if (!wr) continue;
+      const rx = wr.gx * ROOM_PW - cx;
+      const ry = wr.gy * ROOM_PH - cy;
+      if (rx + ROOM_PW < 0 || rx > VIEW_W || ry + ROOM_PH < 0 || ry > VIEW_H) continue;
+      const plateImg = art.rooms && art.rooms[rid];
+      if (plateImg) {
+        ctx.drawImage(plateImg, rx, ry, ROOM_PW, ROOM_PH);
+      }
+    }
+
+    // y-sorted drawables: entities + fg cutouts from all visible rooms
+    const drawables = [];
+    for (const e of g.entities) {
+      if (e.x - cx < -80 || e.x - cx > VIEW_W + 80) continue;
+      if (e.y - cy < -40 || e.y - cy > VIEW_H + 40) continue;
+      drawables.push({ sortY: e.y + 16, e });
+    }
+    drawables.push({ sortY: g.player.y + 16, player: true });
+    for (const rid of EXTERIOR_ROOMS) {
+      const wr = worldRooms[rid];
+      if (!wr) continue;
+      const offx = wr.gx * ROOM_PW, offy = wr.gy * ROOM_PH;
+      for (const f of wr.fgCuts) {
+        if (!f.image) continue;
+        const fx = f.x / DS + offx - cx, fy = f.y / DS + offy - cy;
+        if (fx + 100 < 0 || fx > VIEW_W + 100 || fy + 100 < 0 || fy > VIEW_H + 100) continue;
+        drawables.push({ sortY: f.baseY / DS + offy + 1, cut: f, offx, offy });
+      }
+    }
+    drawables.sort((a, b) => a.sortY - b.sortY);
+
+    for (const d of drawables) {
+      if (d.player) {
+        shadowEllipse(g.player.x + 8 - cx, g.player.y + 15.5 - cy, 6);
+      } else if (d.e && (d.e.kind === 'enemy' || d.e.kind === 'npc' || d.e.kind === 'chest' || d.e.kind === 'beacon')) {
+        const sz = d.e.kind === 'enemy' ? d.e.def.size : 16;
+        shadowEllipse(d.e.x + sz / 2 - cx, d.e.y + sz - 0.5 - cy, sz * 0.42);
+      }
+    }
+    for (const d of drawables) {
+      if (d.player) drawPlayer();
+      else if (d.cut) drawArt(d.cut.image, Math.round(d.cut.x / DS + d.offx - cx), Math.round(d.cut.y / DS + d.offy - cy));
+      else if (d.e) drawEntity(d.e);
+    }
+
+    // emissive pulse per room
+    for (const rid of EXTERIOR_ROOMS) {
+      const wr = worldRooms[rid];
+      if (!wr) continue;
+      const emImg = art.roomEmissive && art.roomEmissive[rid];
+      if (!emImg) continue;
+      const rx = wr.gx * ROOM_PW - cx;
+      const ry = wr.gy * ROOM_PH - cy;
+      if (rx + ROOM_PW < 0 || rx > VIEW_W || ry + ROOM_PH < 0 || ry > VIEW_H) continue;
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.10 + 0.08 * Math.sin(g.time * 2.4);
+      ctx.drawImage(emImg, rx, ry, ROOM_PW, ROOM_PH);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    for (const pt of g.particles) {
+      ctx.fillStyle = pt.color;
+      ctx.fillRect(Math.round(pt.x - cx), Math.round(pt.y - cy), 2, 2);
+    }
+
+    // outdoor vignette
+    const vin2 = ctx.createRadialGradient(VIEW_W / 2, VIEW_H / 2, 110, VIEW_W / 2, VIEW_H / 2, 235);
+    vin2.addColorStop(0, 'rgba(8, 12, 24, 0)');
+    vin2.addColorStop(1, 'rgba(8, 12, 24, 0.3)');
+    ctx.fillStyle = vin2;
+    ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+
+    g.cam.x -= shx;
+    g.cam.y -= shy;
+    drawHud();
+    if (g.mode === 'dialogue') drawDialogue();
+    if (g.mode === 'journal') drawJournal();
+    if (g.mode === 'base') drawBase();
+  }
+
   function render() {
     ctx.setTransform(DS, 0, 0, DS, 0, 0);
     ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = '#0c0c12';
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
     if (!g.grid) return;
+
+    if (worldActive) {
+      renderWorld();
+      return;
+    }
+
     // small maps (interiors): fill out-of-bounds with dark rock instead of void
     if (g.grid[0].length * T < VIEW_W || g.grid.length * T < VIEW_H) {
       const wallArt = art.tiles.minewall && art.tiles.minewall[0];
@@ -1880,8 +2235,9 @@ export function createGame(canvas, input, art) {
         loadMap(roomId, MAPS[roomId].spawnX, MAPS[roomId].spawnY);
         const rd = art.roomData && art.roomData[roomId];
         if (rd && rd.spawn) {
-          g.player.x = rd.spawn[0] - 8;
-          g.player.y = rd.spawn[1] - 15;
+          const off = worldActive ? (roomWorldOffset(roomId) || { x: 0, y: 0 }) : { x: 0, y: 0 };
+          g.player.x = rd.spawn[0] - 8 + off.x;
+          g.player.y = rd.spawn[1] - 15 + off.y;
           updateCamera();
         }
         g.mode = 'play';

@@ -175,7 +175,7 @@ const homeRows = [
 ];
 
 import { ROOM_ANCHORROOM } from './rooms/anchorroom.js';
-import { PLATE_ROOMS } from './rooms/index.js';
+import { PLATE_ROOMS, WORLD_LAYOUT, INTERIOR_ROOMS } from './rooms/index.js';
 
 export const MAPS = {
   anchorroom: {
@@ -372,9 +372,14 @@ export function buildGrid(map) {
 
 // plate-room districts from the generated registry; the anchor keeps its
 // hand-authored entry (NPCs, legacy S exit) and only gains its edge exits.
+const INTERIOR_SET = new Set(INTERIOR_ROOMS);
 for (const [id, r] of Object.entries(PLATE_ROOMS)) {
+  const isInterior = INTERIOR_SET.has(id);
+  const gridPos = WORLD_LAYOUT[id] || null;
   if (MAPS[id]) {
     MAPS[id].plateExits = r.exits;
+    MAPS[id].gridPos = gridPos;
+    MAPS[id].isInterior = isInterior;
     continue;
   }
   MAPS[id] = {
@@ -388,5 +393,11 @@ for (const [id, r] of Object.entries(PLATE_ROOMS)) {
     plateExits: r.exits,
     portals: [],
     entities: [],
+    gridPos,
+    isInterior,
   };
 }
+
+// exterior rooms sorted by grid position for stitched rendering
+export const EXTERIOR_ROOMS = Object.keys(WORLD_LAYOUT);
+export { WORLD_LAYOUT };
