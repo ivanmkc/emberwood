@@ -12,7 +12,9 @@ import base64
 import io
 import json
 import os
+import random
 import sys
+import time
 import urllib.request
 import urllib.error
 
@@ -89,6 +91,7 @@ def one_roll(client, plate_buf, W, H):
             print('  roll rejected (purity)')
         except (openai.OpenAIError, urllib.error.URLError, OSError, ValueError) as e:
             print(f'  GPT attempt {attempt} error: {e}')
+            time.sleep(min(2 * (2 ** attempt) * random.uniform(0.5, 1.5), 32))
     return None, None
 
 

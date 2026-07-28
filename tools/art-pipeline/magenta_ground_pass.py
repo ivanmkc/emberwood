@@ -10,6 +10,8 @@ is (near-magenta) AND (changed vs plate).
 import io
 import json
 import os
+import random
+import time
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor
@@ -83,6 +85,7 @@ def one_roll(seg_in, plate_arr, W, H):
                 print(f'  roll rejected (ground {frac:.2f}, off-mask change {offmask_change:.2f})')
     except (genai_errors.APIError, OSError, ValueError) as e:
         print('  roll error', e)
+        time.sleep(4 * random.uniform(0.5, 1.5))  # transient-burst backoff
     return None
 
 

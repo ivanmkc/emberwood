@@ -12,7 +12,9 @@ diff-keying with a re-render sanity budget, judge labels per probe.
 import io
 import json
 import os
+import random
 import sys
+import time
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -146,6 +148,7 @@ def probe_one(plate, sprite, x, y):
                                    gen, visible, unchanged, noise)
         except (genai_errors.APIError, OSError, ValueError) as e:
             print(f'  probe ({x},{y}) error: {e}')
+            time.sleep(4 * random.uniform(0.5, 1.5))  # transient-burst backoff
     return None
 
 

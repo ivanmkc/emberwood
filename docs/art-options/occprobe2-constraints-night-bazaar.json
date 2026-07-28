@@ -1,0 +1,237 @@
+{
+ "room": "night-bazaar",
+ "summary": {
+  "probes": 36,
+  "crops": 14,
+  "crops_valid": 10,
+  "marker_evidences": 24,
+  "arm_b": {
+   "3": {
+    "passes": 0,
+    "fails": 4,
+    "advanced": false
+   }
+  },
+  "objects_with_verdicts": 21,
+  "verdict_counts": {
+   "ysort": 0,
+   "overhead": 1,
+   "contradiction": 7,
+   "no-evidence": 13
+  },
+  "fragile": 2,
+  "engine_containment": "0/0"
+ },
+ "objects": {
+  "3": {
+   "lo": 216.0,
+   "hi": 216.0,
+   "verdict": "contradiction",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 584
+  },
+  "7": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 1308
+  },
+  "10": {
+   "lo": 1272.0,
+   "hi": 904.0,
+   "verdict": "contradiction",
+   "n_behind": 6,
+   "n_front": 6,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 1307
+  },
+  "11": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 1179
+  },
+  "14": {
+   "lo": 1592.0,
+   "hi": null,
+   "verdict": "overhead",
+   "n_behind": 2,
+   "n_front": 0,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 1791
+  },
+  "15": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "building",
+   "engine_base_row": 1791
+  },
+  "16": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "fragile": true,
+   "label": "water",
+   "engine_base_row": 366
+  },
+  "17": {
+   "lo": 408.0,
+   "hi": 408.0,
+   "verdict": "contradiction",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": false,
+   "label": "water",
+   "engine_base_row": 592
+  },
+  "19": {
+   "lo": 1272.0,
+   "hi": 1272.0,
+   "verdict": "contradiction",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": false,
+   "label": "water",
+   "engine_base_row": 1389
+  },
+  "21": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "water",
+   "engine_base_row": 1469
+  },
+  "30": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 2,
+   "n_front": 2,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 599
+  },
+  "42": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1362
+  },
+  "43": {
+   "lo": 1272.0,
+   "hi": 900.8,
+   "verdict": "contradiction",
+   "n_behind": 5,
+   "n_front": 5,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1195
+  },
+  "47": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": true,
+   "label": "prop",
+   "engine_base_row": 1049
+  },
+  "51": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 2,
+   "n_front": 2,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1399
+  },
+  "56": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1123
+  },
+  "60": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1369
+  },
+  "63": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1399
+  },
+  "64": {
+   "lo": 1592.0,
+   "hi": 1496.0,
+   "verdict": "contradiction",
+   "n_behind": 4,
+   "n_front": 4,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1557
+  },
+  "65": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1557
+  },
+  "69": {
+   "lo": 1592.0,
+   "hi": 1592.0,
+   "verdict": "contradiction",
+   "n_behind": 2,
+   "n_front": 2,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 1612
+  }
+ }
+}

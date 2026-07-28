@@ -1296,3 +1296,17 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   two independent methods now agree); doorway thresholds unpainted. IoU vs
   walk is no longer the target metric: magenta correctly includes step-over
   area that walk consensus excludes.
+
+### Run 28: async rewrite (concurrency expert review, implemented per Ivan)
+- occprobe2_run.py: single client on client.aio, Semaphore(6), jittered exp
+  backoff (2s base, x2, cap 32s; retriable 429/500/503, permanent fail-fast),
+  numpy/PIL in asyncio.to_thread, semaphore held across a crop's attempts
+  (anti thundering-herd), TaskGroup, plate.load() Pillow<9 hardening.
+- Expert's thread-safety audit of the OLD code: SAFE (pre-loaded PIL images,
+  per-thread clients, no shared mutable state) — the gap was no retry backoff.
+  Jittered backoff sleeps added to the 4 sync roll scripts too.
+- Async validation run (bazaar): 10/14 crops valid, 24/36 evidences (sync run:
+  8/14, 20/36), ~40% faster. Arm B full-frame RECONFIRMED dead at K=3 (0/4).
+- blur-diff (k=5) added to kill pixel-art chance-match phantom holes; next
+  evidence fix identified: blur bleeds diff ~2px across object boundaries →
+  false front constraints → erode evidence masks before instance attribution.

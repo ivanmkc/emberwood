@@ -2,7 +2,7 @@
 """Overhead mask pass (separate mask, per Ivan): suspended-in-air elements —
 wires strung overhead, hanging lanterns, overhangs, awnings, jutting signs.
 5 purity-gated rolls -> per-pixel majority."""
-import io, json, os, threading
+import io, json, os, random, threading, time
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from PIL import Image
@@ -54,6 +54,7 @@ def one_roll(seg_in, W, H):
                 print(f'  roll rejected (purity {pure:.2f}, frac {frac:.2f})')
     except (genai_errors.APIError, OSError, ValueError) as e:
         print('  roll error', e)
+        time.sleep(4 * random.uniform(0.5, 1.5))  # transient-burst backoff
     return None
 
 def run(room):
