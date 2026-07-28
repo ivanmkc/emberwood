@@ -409,3 +409,29 @@ V4 DESIGN (literature-equivalent for our fixed axis-aligned 3/4 camera):
   likely fatal; note only).
 NEXT: replace nbp_v3.py stage 3 with geometric synthesis (v4), re-pilot anchor, update
 art-v3 tab with v4 layers for comparison.
+
+## Run 24 — Ivan directive: ONE CONTINUOUS OUTDOOR SCENE (no switching except indoors)
+Outdoors = one big stitched mega-scene: camera scrolls across the 13 exterior rooms laid
+out on a world grid; walking crosses borders freely (no warp); interiors keep doors.
+DESIGN:
+1. WORLD GRID: derive (gx,gy) per exterior room from the exit graph. WARNING: current graph
+   is topological, NOT planar-consistent (e.g., residential/canal-docks/rooftops collide
+   around anchor). Need a layout solve + graph re-wiring where inconsistent; possibly
+   restore removed links or re-aim exits so every wired pair is grid-adjacent on the
+   matching edges. Interiors excluded (stay as rooms behind doors).
+2. ENGINE: world coords = (gx*640+lx, gy*448+ly). Draw the <=4 visible plates at offsets;
+   rectBlocked samples the right room's maskWalk by offset; entities/hotspots/exits get
+   room-offset; camera clamps to the mega-bounds. Outdoor edge exits REMOVED (free border
+   crossing within paired strips; solid elsewhere via existing border walls minus strip
+   openings) — the adaptive strips become literal door-less openings in the border walls.
+3. SEAMS become pixel-real (task #34 merges into this): paired strips must align in world
+   position + width; carve/align at write time (align both rooms' strip intervals to their
+   union/intersection); optional NBP masked-edit to blend border art (later polish).
+4. SCALE (Ivan: non-hub rooms feel wrong size): normalize BEFORE stitching — per-room
+   feature-scale audit vs anchor (3.1-pro measures e.g. door height in px), rescale plate+
+   masks by the ratio (crop/extend to keep 640x448) or regen scenes with scale reference.
+5. Verify: BFS walk across every outdoor seam in-engine, stitched screenshot panorama +
+   NBP holistic judge (Ivan's earlier suggestion).
+Also queued: v4 geometric footprints (run 23), collision-vs-in-game alignment (#35: regen
+masks for the 5 door/passage-edited plates), defect outliers (hydroponics/home-interior-a/
+salvage-shed).
