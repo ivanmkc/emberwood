@@ -1,0 +1,416 @@
+{
+ "room": "anchorroom",
+ "objects_blocking": 26,
+ "probes": [
+  {
+   "pos": [
+    2256,
+    760
+   ],
+   "pairs": [
+    [
+     16,
+     "front"
+    ],
+    [
+     17,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1456,
+    824
+   ],
+   "pairs": [
+    [
+     1,
+     "front"
+    ],
+    [
+     12,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2128,
+    888
+   ],
+   "pairs": [
+    [
+     2,
+     "front"
+    ],
+    [
+     17,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2160,
+    1464
+   ],
+   "pairs": [
+    [
+     11,
+     "behind"
+    ],
+    [
+     21,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2160,
+    1496
+   ],
+   "pairs": [
+    [
+     11,
+     "behind"
+    ],
+    [
+     21,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    880,
+    1528
+   ],
+   "pairs": [
+    [
+     10,
+     "behind"
+    ],
+    [
+     22,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    848,
+    696
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1136,
+    760
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1808,
+    760
+   ],
+   "pairs": [
+    [
+     2,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1840,
+    760
+   ],
+   "pairs": [
+    [
+     2,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2192,
+    824
+   ],
+   "pairs": [
+    [
+     17,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    656,
+    888
+   ],
+   "pairs": [
+    [
+     9,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1456,
+    888
+   ],
+   "pairs": [
+    [
+     1,
+     "front"
+    ],
+    [
+     12,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    656,
+    1048
+   ],
+   "pairs": [
+    [
+     10,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1136,
+    1528
+   ],
+   "pairs": [
+    [
+     22,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    656,
+    1592
+   ],
+   "pairs": [
+    [
+     10,
+     "front"
+    ]
+   ]
+  }
+ ],
+ "coverage": {
+  "1": {
+   "label": "building",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "2": {
+   "label": "building",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "3": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "4": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "5": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "6": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "7": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "8": {
+   "label": "water",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "9": {
+   "label": "tank",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "10": {
+   "label": "tank",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "11": {
+   "label": "tank",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "12": {
+   "label": "pylon",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "13": {
+   "label": "pylon",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "14": {
+   "label": "pylon",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "15": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "16": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "17": {
+   "label": "prop",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "18": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "19": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "20": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "21": {
+   "label": "prop",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "22": {
+   "label": "prop",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "23": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "24": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "25": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "26": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  }
+ },
+ "summary": {
+  "probes": 16,
+  "full": 4,
+  "partial": 6,
+  "uncovered": 16
+ }
+}

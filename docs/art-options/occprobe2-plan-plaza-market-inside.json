@@ -1,0 +1,763 @@
+{
+ "room": "plaza-market-inside",
+ "objects_blocking": 67,
+ "probes": [
+  {
+   "pos": [
+    2160,
+    792
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     6,
+     "behind"
+    ],
+    [
+     11,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    496,
+    920
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     37,
+     "behind"
+    ],
+    [
+     38,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    528,
+    920
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     37,
+     "behind"
+    ],
+    [
+     38,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1136,
+    920
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     39,
+     "front"
+    ],
+    [
+     40,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1360,
+    920
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     41,
+     "front"
+    ],
+    [
+     43,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1488,
+    920
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     42,
+     "front"
+    ],
+    [
+     44,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2032,
+    952
+   ],
+   "pairs": [
+    [
+     6,
+     "front"
+    ],
+    [
+     49,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    336,
+    1496
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     60,
+     "behind"
+    ],
+    [
+     64,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2032,
+    1592
+   ],
+   "pairs": [
+    [
+     49,
+     "behind"
+    ],
+    [
+     66,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    2032,
+    1624
+   ],
+   "pairs": [
+    [
+     49,
+     "front"
+    ],
+    [
+     66,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    432,
+    1016
+   ],
+   "pairs": [
+    [
+     37,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    528,
+    1048
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     38,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    400,
+    1176
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     53,
+     "front"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    336,
+    1432
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     60,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1552,
+    1528
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     67,
+     "behind"
+    ]
+   ]
+  },
+  {
+   "pos": [
+    1552,
+    1560
+   ],
+   "pairs": [
+    [
+     1,
+     "behind"
+    ],
+    [
+     67,
+     "behind"
+    ]
+   ]
+  }
+ ],
+ "coverage": {
+  "1": {
+   "label": "building",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "2": {
+   "label": "building",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "3": {
+   "label": "building",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "4": {
+   "label": "tank",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "5": {
+   "label": "tank",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "6": {
+   "label": "tank",
+   "behind": 1,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "7": {
+   "label": "tank",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "8": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "9": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "10": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "11": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "12": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "13": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "14": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "15": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "16": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "17": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "18": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "19": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "20": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "21": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "22": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "23": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "24": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "25": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "26": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "27": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "28": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "29": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "30": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "31": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "32": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "33": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "34": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "35": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "36": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "37": {
+   "label": "prop",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "38": {
+   "label": "prop",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "39": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "40": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "41": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "42": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "43": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "44": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "45": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "46": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "47": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "48": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "49": {
+   "label": "prop",
+   "behind": 2,
+   "front": 1,
+   "full": true,
+   "partial": true
+  },
+  "50": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "51": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "52": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "53": {
+   "label": "prop",
+   "behind": 0,
+   "front": 1,
+   "full": false,
+   "partial": true
+  },
+  "54": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "55": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "56": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "57": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "58": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "59": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "60": {
+   "label": "prop",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "61": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "62": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "63": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "64": {
+   "label": "prop",
+   "behind": 1,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "65": {
+   "label": "prop",
+   "behind": 0,
+   "front": 0,
+   "full": false,
+   "partial": false
+  },
+  "66": {
+   "label": "prop",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  },
+  "67": {
+   "label": "prop",
+   "behind": 2,
+   "front": 0,
+   "full": false,
+   "partial": true
+  }
+ },
+ "summary": {
+  "probes": 16,
+  "full": 3,
+  "partial": 14,
+  "uncovered": 50
+ }
+}
