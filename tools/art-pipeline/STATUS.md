@@ -615,6 +615,47 @@ Visualization: green boxes = census-covered, red boxes = missed (none for anchor
 No stitched-world panorama/blend outputs available yet. Seam baseline (anchor-bazaar) stands:
 edge continuation 0.289, walk Jaccard 0.0, color chi2 70.87.
 
+### Mechanism debug: WHY nianticlabs/footprints fails on pixel art
+VERDICT: genuine domain gap in LEARNED TEXTURE FEATURES, not a port/normalization bug.
+
+Evidence chain:
+1. PORT IS CORRECT: Matterport model on its own test photos produces valid ground predictions
+   (lobby.jpg: 20.2% visible ground >0.5, chinatown.jpg: 66.3%). The weights loaded correctly,
+   channel order is right, resize mode works.
+
+2. MECHANISM (from intermediate heatmaps): The model's visible-ground logit map on photos shows
+   a clear spatial gradient — strongly positive (sigmoid->1.0) on floor regions (typically lower
+   image half), strongly negative (sigmoid->0.0) on walls/ceiling. On pixel art, the logit map is
+   UNIFORMLY deeply negative (range [-34.7, +0.3], mean -17.9) — the model's early ResNet34
+   features detect ZERO floor-like texture patterns anywhere in the image. The hidden-ground
+   channel is slightly less pessimistic (some bottom-edge warmth) but still mostly below threshold.
+
+3. INPUT-STATISTICS VARIANTS (coverage at >0.5 combined ground probability):
+   Variant                    Coverage    Delta vs raw
+   photo-lobby (sanity)        29.9%      (baseline: model works)
+   photo-chinatown (sanity)    66.3%      (baseline: model works)
+   pixelart-raw                 1.1%      ---
+   pixelart-blurred (gauss15)   1.2%      +0.1pp (no effect)
+   pixelart-histmatch (lobby)   9.5%      +8.4pp (partial rescue)
+   pixelart-gamma22             4.2%      +3.1pp (minor)
+   pixelart-kitti-res           1.1%      +0.0pp (no effect)
+
+   INTERPRETATION: Blurring away pixel-art's hard edges has zero effect — the failure is NOT
+   about high-frequency edge statistics. Resolution change (KITTI-ish) also has zero effect.
+   Histogram matching to a natural photo partially rescues hidden ground (+8.4pp) by shifting
+   the global color palette into the training distribution, but visible ground stays at 0.0% —
+   the model requires LOCAL texture patterns (subtle shading gradients, material micro-texture,
+   perspective foreshortening) that pixel art fundamentally lacks.
+
+4. ROOT CAUSE: The Matterport-trained ResNet34 encoder learned floor recognition from
+   photorealistic indoor textures (wood grain, carpet pile, tile reflections, subtle lighting
+   gradients). Pixel art uses flat color fills, hard outlines, and dithered shading — none of
+   these trigger the learned floor detectors. This is not fixable with input preprocessing;
+   it would require fine-tuning or a completely different architecture.
+
+Heatmap artifacts: docs/art-options/bench/depth/niantic-debug-{photo-lobby,photo-chinatown,
+pixelart-raw,pixelart-blurred,pixelart-histmatch,pixelart-gamma22,pixelart-kitti-res}.jpg
+
 ### Final track summary
 The lit-bench-depth track benchmarked 4 pretrained-model / classic CV methods (Depth Anything
 V2, nianticlabs/footprints, perspective detectors, morphological baseline) plus 2 follow-on
