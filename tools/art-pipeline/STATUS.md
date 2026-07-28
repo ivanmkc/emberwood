@@ -1129,3 +1129,15 @@ metrics {method: consensus5, rolls_accepted, mean_agreement, pass:true}. NOTE: b
 consensus masks for anchorroom + night-bazaar are STALE at the seam (blend band changed
 both plates after they were built) — REGENERATE those two; plaza-market-inside's is
 current and reusable. Applies to the in-flight rebuilds (#81-83) and every future room.
+
+## WINDOW CLOSE (run 25, ~T+3h of 5 — all agent queues complete)
+PR #2 + PR #3 merged. Final per-scene shipping config: anchorroom = single-roll walk + v5
+compose (strict consensus KILLS the bridge — only 2/5 rolls see the deck as walkable; the
+one scene where consensus regresses a critical feature; needs a compose-level narrow-
+passage guarantee before consensus can ship there — OPEN QUESTION FOR IVAN);
+night-bazaar = consensus5 (0.970 agreement) + v5 (verdict FLIPPED on stable walk: 4.85%
+vs v2 7.78%); plaza-market-inside = consensus5 (0.931) + v2 (v5 over-opens, fails sanity
+gate). Battery at merge: 27/27, coord-free drive 10/10 x3. Open follow-ups: #80 (v4
+overlap filter vs dilated instance), bridge-consensus compose guarantee, seam palette
+identity decision (accept vs re-light). Boards final: art (6 pages), bench (7 pages,
+13-method leaderboard + NBP-vs-GPT A7 + niantic mechanism), art-v3. Live game on main.
