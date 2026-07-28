@@ -1,0 +1,11 @@
+{
+  "method": "niantic-footprints",
+  "scene": "anchorroom",
+  "runtime_s": "N/A (model load + inference ~3s CPU)",
+  "notes": "nianticlabs/footprints matterport model on pixel art. Visible ground: 0.0% of image. Hidden ground: 1.2% of image. Combined walkable: 1.2%. IoU vs shipped collision: 0.000. Domain gap is severe: model trained on real photos (Matterport indoor), pixel art has fundamentally different depth cues.",
+  "iou_vs_gt": 0.0,
+  "gt_type": "5-roll-consensus",
+  "iou_vs_collision": 0.0,
+  "precision": 0.0,
+  "recall": 0.0
+}

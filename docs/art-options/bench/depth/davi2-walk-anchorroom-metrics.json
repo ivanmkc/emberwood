@@ -1,0 +1,11 @@
+{
+  "method": "davi2-walk",
+  "scene": "anchorroom",
+  "runtime_s": 0.46,
+  "notes": "DAv2-Small CPU inference 0.3s + ramp fit 0.2s. Linear depth~y ramp fitted over shipped collision mask floor samples, residual threshold at 1.5x P90 of floor residuals.",
+  "iou_vs_gt": 0.3591,
+  "gt_type": "5-roll-consensus",
+  "iou_vs_collision": 0.5649,
+  "precision": 0.3685,
+  "recall": 0.9334
+}

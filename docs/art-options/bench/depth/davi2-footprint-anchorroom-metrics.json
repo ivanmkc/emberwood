@@ -1,0 +1,11 @@
+{
+  "method": "davi2-footprint",
+  "scene": "anchorroom",
+  "runtime_s": 0.32,
+  "notes": "DAv2-Small + above-plane blob projection (k=0.25 height). Connected components on non-walk regions, footprint = base band.",
+  "iou_vs_gt": 0.0147,
+  "gt_type": "5-roll-consensus",
+  "iou_vs_collision": 0.0399,
+  "precision": 0.0633,
+  "recall": 0.0188
+}

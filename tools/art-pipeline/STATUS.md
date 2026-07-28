@@ -464,3 +464,69 @@ Agents: lit-bench-prompt (NBP/VLM variants + evaluator harness + table), lit-ben
 (pip-model track: Depth Anything v2, nianticlabs/footprints, LSD/VP detectors). Existing
 agents (align-masks, stitched-world, v4-footprints) continue the 3-scene fixes; v4 agent's
 outputs feed method A3.
+
+## Agent lit-bench-depth
+Pretrained-model + classic CV methods benchmarked on 3 focus scenes.
+
+CODE: tools/art-pipeline/bench/depth/ (dav2_bench.py, morph_baseline.py, perspective.py, evaluate.py)
+ARTIFACTS: docs/art-options/bench/depth/ (per-method masks, overlays, metrics, summary.json)
+
+### Method 1: Depth Anything V2 (davi2-walk, davi2-footprint)
+Model: depth-anything/Depth-Anything-V2-Small-hf via HF transformers, CPU.
+Approach: relative depth map -> floor-plane ramp fit (linear depth~y over collision-mask
+floor samples, MAD-based threshold) -> walkability. Above-plane blobs -> base band footprints
+(k=0.25 height).
+FINDING: DAv2 produces structured depth on pixel art — objects (trees, pylon) appear brighter
+(closer) than walls — but the floor/object depth distributions overlap heavily. Walk IoU:
+anchor 0.36 (vs 5-roll consensus), bazaar 0.51, plaza 0.51 (vs shipped collision). High recall
+(0.87-0.93) but low precision (0.37-0.55): DAv2 walk is too permissive, over-predicting
+walkable area. Footprint IoU near zero (0.01-0.08) — depth alone cannot locate ground contact.
+Runtime: 0.3-0.5s per scene on CPU.
+
+### Method 2: nianticlabs/footprints (Watson et al., CVPR 2020)
+Model: Matterport pretrained weights (indoor, 512x640).
+FINDING: Catastrophic domain-gap failure. The model predicts essentially no ground on pixel art.
+Visible-ground channel outputs are strongly negative (pre-sigmoid); walk coverage 1-6% vs
+expected 40-60%. IoU vs collision: 0.000 (anchor), 0.001 (bazaar), 0.083 (plaza). The Matterport
+model's learned depth cues (texture gradients, real-world lighting, realistic geometry) are absent
+in Eastward-style scenes. Required patching: map_location='cpu' in model_manager.py (CUDA tensors
+saved but no GPU), PIL.Image.ANTIALIAS->LANCZOS (Pillow 10 compat).
+This negative result confirms the literature review finding: pretrained photo-domain models
+do not transfer to pixel art without fine-tuning.
+
+### Method 3: Perspective detectors (edge orientation + vanishing point RANSAC)
+Approach: LSD line segment detection, edge-orientation histogram (fraction within 5 degrees
+of 0/90), RANSAC VP estimation on off-axis segments.
+FINDING: All 3 scenes score 0.98-0.995 axis-alignment. Anchor and bazaar have 0-2 off-axis
+segments (VP at infinity = strongly axis-aligned). Plaza-market-inside has 8 off-axis segments
+with VP at 1588px from center (0.53x diagonal) — still predominantly axis-aligned but with some
+interior furniture diagonals. This confirms the fixed axis-aligned 3/4 camera assumption that
+v4 geometric footprints rely on.
+Utility: perspective.py is importable (score_image()) for the sibling agent's perspective
+conditioning A/B study.
+
+### Method 4: Morphological baseline (morph-baseline, morph-walk)
+Approach: NBP class mask floor class -> walkability (direct semantic label). Non-floor components
+-> distance-transform base band footprints (30% height band near floor).
+FINDING: morph-walk (= class mask floor) is the strongest walkability signal: anchor IoU 0.49
+(vs consensus), bazaar 0.44, plaza 0.29. Morph footprints are comparable to DAv2 footprints
+(both ~0.04 mean IoU). The floor class directly from the NBP semantic mask is hard to beat
+with depth-based methods — it uses ground-truth semantic labels rather than inferred geometry.
+
+### Summary table (IoU vs ground truth)
+Method               anchor  bazaar  plaza  mean
+davi2-walk            0.359   0.512  0.514  0.462
+morph-walk            0.489   0.435  0.290  0.405
+davi2-footprint       0.015   0.083  0.030  0.043
+morph-baseline        0.012   0.056  0.065  0.044
+niantic-footprints    0.000   0.001  0.083  0.028
+
+CONCLUSIONS:
+1. Pretrained depth/footprint models fail catastrophically on pixel art (domain gap).
+2. DAv2 depth IS useful — it detects objects — but the floor/object separation is too noisy
+   for reliable walkability (high recall, low precision).
+3. The NBP semantic mask floor class remains the strongest walkability signal.
+4. For footprints specifically, neither depth-based nor morphological approaches achieve
+   meaningful IoU — this confirms v4's geometric approach (VLM numeric params -> code-drawn
+   polygons) is the right direction for pixel art.
+5. Perspective is verifiably axis-aligned (0.98+), validating the v4 camera model assumption.

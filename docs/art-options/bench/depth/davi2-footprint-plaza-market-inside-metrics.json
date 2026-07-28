@@ -1,0 +1,11 @@
+{
+  "method": "davi2-footprint",
+  "scene": "plaza-market-inside",
+  "runtime_s": 0.26,
+  "notes": "DAv2-Small + above-plane blob projection (k=0.25 height). Connected components on non-walk regions, footprint = base band.",
+  "iou_vs_gt": 0.0301,
+  "gt_type": "shipped-collision",
+  "iou_vs_collision": 0.0301,
+  "precision": 0.9076,
+  "recall": 0.0302
+}

@@ -1,0 +1,58 @@
+{
+  "anchorroom": {
+    "path": "/home/ivanmkc/emberwood/docs/art-options/nbp-scifi-anchor-clean.png",
+    "n_segments": 5787,
+    "axis_alignment_score": 0.9951,
+    "orientation_bins": {
+      "horizontal": 0.511,
+      "vertical": 0.485,
+      "diagonal": 0.005
+    },
+    "vp": {
+      "vp_distance": Infinity,
+      "vp_coords": null,
+      "n_offaxis_segments": 0,
+      "notes": "Too few off-axis segments for RANSAC; scene is strongly axis-aligned"
+    },
+    "scene": "anchorroom"
+  },
+  "night-bazaar": {
+    "path": "/home/ivanmkc/emberwood/docs/art-options/rooms/night-bazaar/plate.png",
+    "n_segments": 8089,
+    "axis_alignment_score": 0.9899,
+    "orientation_bins": {
+      "horizontal": 0.441,
+      "vertical": 0.548,
+      "diagonal": 0.01
+    },
+    "vp": {
+      "vp_distance": Infinity,
+      "vp_coords": null,
+      "n_offaxis_segments": 2,
+      "notes": "Too few off-axis segments for RANSAC; scene is strongly axis-aligned"
+    },
+    "scene": "night-bazaar"
+  },
+  "plaza-market-inside": {
+    "path": "/home/ivanmkc/emberwood/docs/art-options/rooms/plaza-market-inside/plate.png",
+    "n_segments": 6609,
+    "axis_alignment_score": 0.984,
+    "orientation_bins": {
+      "horizontal": 0.45,
+      "vertical": 0.534,
+      "diagonal": 0.016
+    },
+    "vp": {
+      "vp_distance": 1588.1,
+      "vp_distance_normalized": 0.53,
+      "vp_coords": [
+        683.2,
+        -605.7
+      ],
+      "n_offaxis_segments": 8,
+      "n_inliers": 5,
+      "notes": "VP at 1588px from center (0.53x diagonal). VP is close \u2014 perspective detected."
+    },
+    "scene": "plaza-market-inside"
+  }
+}

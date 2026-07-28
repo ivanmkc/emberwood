@@ -1,0 +1,11 @@
+{
+  "method": "morph-baseline",
+  "scene": "anchorroom",
+  "runtime_s": 0.735,
+  "notes": "Morphological footprints from NBP class mask. Non-floor components: base band (30% height) near floor (distance transform < max(20, 10% height)). Coverage: 6.2%.",
+  "iou_vs_gt": 0.0116,
+  "gt_type": "5-roll-consensus",
+  "iou_vs_collision": 0.0671,
+  "precision": 0.0688,
+  "recall": 0.0138
+}

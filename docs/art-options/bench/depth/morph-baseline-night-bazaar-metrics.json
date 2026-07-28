@@ -1,0 +1,11 @@
+{
+  "method": "morph-baseline",
+  "scene": "night-bazaar",
+  "runtime_s": 1.222,
+  "notes": "Morphological footprints from NBP class mask. Non-floor components: base band (30% height) near floor (distance transform < max(20, 10% height)). Coverage: 7.9%.",
+  "iou_vs_gt": 0.0563,
+  "gt_type": "shipped-collision",
+  "iou_vs_collision": 0.0563,
+  "precision": 0.3759,
+  "recall": 0.0621
+}

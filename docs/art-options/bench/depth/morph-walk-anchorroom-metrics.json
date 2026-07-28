@@ -1,0 +1,11 @@
+{
+  "method": "morph-walk",
+  "scene": "anchorroom",
+  "runtime_s": 0.103,
+  "notes": "Walkability from NBP class mask floor class + morphological close. Coverage: 56.7%.",
+  "iou_vs_gt": 0.4893,
+  "gt_type": "5-roll-consensus",
+  "iou_vs_collision": 0.4381,
+  "precision": 0.5091,
+  "recall": 0.9265
+}
