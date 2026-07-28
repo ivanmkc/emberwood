@@ -189,6 +189,7 @@ export function createGame(canvas, input, art) {
     regenT: 0,
   };
   window.__ew = g; // debug/drive handle: Playwright playtests read player state
+  window.__ewWorld = { worldRooms, worldGrid, worldBounds, isActive: () => worldActive, art };
   const walkFrames = {}; // dir -> [frameA, frameB] synthesized leg-step canvases
 
   function stepFrames(im, dir) {
@@ -261,7 +262,66 @@ export function createGame(canvas, input, art) {
     return { w: ROOM_PW, h: ROOM_PH, data: mctx.getImageData(0, 0, ROOM_PW, ROOM_PH).data };
   }
 
+  function openBorderStrip(mask, edge, y0, y1, x0, x1) {
+    if (!mask) return;
+    const w = mask.w, d = mask.data;
+    const BORDER = 3;
+    if (edge === 'e') {
+      for (let y = y0; y < y1; y++) {
+        for (let x = w - BORDER; x < w; x++) {
+          const i = (y * w + x) * 4;
+          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255;
+        }
+      }
+    } else if (edge === 'w') {
+      for (let y = y0; y < y1; y++) {
+        for (let x = 0; x < BORDER; x++) {
+          const i = (y * w + x) * 4;
+          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255;
+        }
+      }
+    } else if (edge === 's') {
+      const h = mask.h;
+      for (let y = h - BORDER; y < h; y++) {
+        for (let x = x0; x < x1; x++) {
+          const i = (y * w + x) * 4;
+          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255;
+        }
+      }
+    } else if (edge === 'n') {
+      for (let y = 0; y < BORDER; y++) {
+        for (let x = x0; x < x1; x++) {
+          const i = (y * w + x) * 4;
+          d[i] = 255; d[i + 1] = 255; d[i + 2] = 255; d[i + 3] = 255;
+        }
+      }
+    }
+  }
+
+  function openWorldBorders() {
+    const OPP = { n: 's', s: 'n', e: 'w', w: 'e' };
+    for (const rid of EXTERIOR_ROOMS) {
+      const wr = worldRooms[rid];
+      if (!wr || !wr.maskWalk) continue;
+      const map = MAPS[rid];
+      if (!map) continue;
+      for (const ex of wr.exits) {
+        if (ex.edge === 'door') continue;
+        const target = ex.to;
+        const targetWr = worldRooms[target];
+        if (!targetWr || !targetWr.maskWalk) continue;
+        const [ex0, ey0, ex1, ey1] = ex.rect;
+        openBorderStrip(wr.maskWalk, ex.edge, ey0, ey1, ex0, ex1);
+        if (ex.toRect) {
+          const [tx0, ty0, tx1, ty1] = ex.toRect;
+          openBorderStrip(targetWr.maskWalk, OPP[ex.edge], ty0, ty1, tx0, tx1);
+        }
+      }
+    }
+  }
+
   function buildWorldMasks() {
+    let allLoaded = true;
     for (const id of EXTERIOR_ROOMS) {
       const wr = worldRooms[id];
       if (!wr) continue;
@@ -271,18 +331,30 @@ export function createGame(canvas, input, art) {
       wr.hotspots = (art.roomHotspots && art.roomHotspots[id]) || [];
       const map = MAPS[id];
       wr.exits = (map && map.plateExits) || [];
-      if (!wr.maskWalk) {
-        let tries = 0;
-        const tick = () => {
-          if (!worldActive) return;
-          if (art.roomMasks && art.roomMasks[id]) {
+      if (!wr.maskWalk) allLoaded = false;
+    }
+    if (allLoaded) {
+      openWorldBorders();
+    } else {
+      let tries = 0;
+      const tick = () => {
+        if (!worldActive) return;
+        let ready = true;
+        for (const id of EXTERIOR_ROOMS) {
+          const wr = worldRooms[id];
+          if (!wr) continue;
+          if (!wr.maskWalk && art.roomMasks && art.roomMasks[id]) {
             wr.maskWalk = buildMaskForRoom(id);
-            return;
           }
-          if (tries++ < 40) setTimeout(tick, 250);
-        };
-        setTimeout(tick, 250);
-      }
+          if (!wr.maskWalk) ready = false;
+        }
+        if (ready) {
+          openWorldBorders();
+        } else if (tries++ < 40) {
+          setTimeout(tick, 250);
+        }
+      };
+      setTimeout(tick, 250);
     }
   }
 
@@ -526,9 +598,9 @@ export function createGame(canvas, input, art) {
     if (!wr || !wr.maskWalk) return true;
     const lx = wx - gx * ROOM_PW;
     const ly = wy - gy * ROOM_PH;
-    const xi = Math.round(lx), yi = Math.round(ly);
     const m = wr.maskWalk;
-    if (xi < 0 || yi < 0 || xi >= m.w || yi >= m.h) return true;
+    const xi = Math.min(m.w - 1, Math.max(0, Math.floor(lx)));
+    const yi = Math.min(m.h - 1, Math.max(0, Math.floor(ly)));
     return m.data[(yi * m.w + xi) * 4] < 128;
   }
 
@@ -1073,7 +1145,6 @@ export function createGame(canvas, input, art) {
       // track room for music
       const r = worldToRoom(p.x + 8, p.y + 11);
       if (r) music.setScene(r.id);
-      save();
     } else {
     const ptx = Math.floor((p.x + 8) / T);
     const pty = Math.floor((p.y + 11) / T);
