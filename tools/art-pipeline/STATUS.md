@@ -1141,3 +1141,31 @@ gate). Battery at merge: 27/27, coord-free drive 10/10 x3. Open follow-ups: #80 
 overlap filter vs dilated instance), bridge-consensus compose guarantee, seam palette
 identity decision (accept vs re-light). Boards final: art (6 pages), bench (7 pages,
 13-method leaderboard + NBP-vs-GPT A7 + niantic mechanism), art-v3. Live game on main.
+
+## Agent align-masks — consensus walk battery + preview refresh (2026-07-28)
+
+Full acceptance battery on main post-merge (PR #3 consensus walk already merged):
+
+| Check            | Result        |
+|------------------|---------------|
+| npm test         | 27/27 pass    |
+| drive (pass 1)   | 10/10         |
+| drive (pass 2)   | 10/10         |
+| drive (pass 3)   | 10/10         |
+| drive coords     | br=229 py=202 pb=281 tg=270 tb=321 |
+
+### Per-scene shipping verdict (consensus walk)
+
+| Scene               | Walk method | Agreement | Walk frac | Compose | Defects (verify_defects) |
+|---------------------|-------------|-----------|-----------|---------|--------------------------|
+| anchorroom          | single-roll | —         | 0.671     | v5      | 1.51%                    |
+| night-bazaar        | consensus5  | 0.970     | 0.408     | v5      | 5.61%                    |
+| plaza-market-inside | consensus5  | 0.931     | 0.192     | v2      | 5.81%                    |
+
+Anchorroom stays single-roll: strict consensus blocks the bridge (2/5 rolls mark deck
+as walkable; class mask says floor but majority vote requires 3/5). Night-bazaar v5
+verdict held on consensus (4.85% < v2's 7.78% in prior run; 5.61% this run within
+stochastic range). Plaza v5 still fails walk-frac sanity gate (0.84 > 0.8 upper bound).
+
+4-color collision overlays + foreground-mask views regenerated from consensus-based
+collision for all 3 scenes.
