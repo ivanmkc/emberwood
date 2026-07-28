@@ -779,3 +779,18 @@ the stitched world.
 hydroponics-n verified walkable (exit strip carved, rect narrowed to 271..367).
 
 26/26 unit tests pass after all changes.
+
+## Ivan directive (2026-07-28): OVERHEAD/ELEVATION mask layer
+Separate ground-level things from things IN THE AIR / foreground: overhead elements
+(cables strung overhead, hanging lanterns, awnings, canopies, arches, jutting signs)
+must NOT block walking but MUST occlude (draw over the player). Design:
+- Census/select taxonomy gains a third category: per instance, "ground-contact
+  (blocks via footprint)" vs "SUSPENDED/overhead (occlude-only, no collision)" vs
+  background. NBP/VLM decides ("does it touch the ground in this scene?").
+- Pipeline emits assets/rooms/<room>.overhead.png (mask of suspended pixels);
+  collision compose SUBTRACTS overhead from blocked (currently strung cables can
+  wrongly block); walk pass conflicts resolved in overhead's favor for suspended px.
+- Engine: overhead layer rendered as an always-on-top cutout (after player, before
+  emissive) — no baseY sort needed, it is above everything at ground level.
+Owners: v4-footprints (mask emission as part of v5 compose, taxonomy in select stage),
+stitched-world (engine rendering + collision subtraction in world mode).
