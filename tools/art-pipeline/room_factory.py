@@ -83,6 +83,20 @@ def build_room(room):
     blend[reach] = blend[reach] * 0.72 + np.array([40, 255, 90], np.float32) * 0.28
     isl = col & ~reach
     blend[isl] = blend[isl] * 0.45 + np.array([255, 230, 40], np.float32) * 0.55
+    blue = np.zeros((H, W), dtype=bool)
+    ohp = os.path.join(art, 'overhead.png')
+    if os.path.exists(ohp):
+        blue |= np.asarray(Image.open(ohp).convert('L').resize((W, H), Image.NEAREST)) > 127
+    fpp = os.path.join(art, 'nbp-footprint.png')
+    smp = os.path.join(AP, f'_srcmasks_{room}.npz')
+    if os.path.exists(fpp) and os.path.exists(smp):
+        fp = np.asarray(Image.open(fpp).convert('L').resize((W, H), Image.NEAREST)) > 127
+        inst_arr = np.load(smp)['inst']
+        if inst_arr.shape == (H, W):
+            blocking_ids = {i['id'] for i in inst.get('instances', []) if i.get('blocking')}
+            body_mask = np.isin(inst_arr, list(blocking_ids))
+            blue |= body_mask & ~fp & col
+    blend[blue] = blend[blue] * 0.45 + np.array([76, 140, 255], np.float32) * 0.55
     ov = Image.fromarray(blend.clip(0, 255).astype(np.uint8))
     ov.thumbnail((1400, 1400), Image.LANCZOS)
     ov.save(os.path.join(art, 'collision-preview.jpg'), quality=86)
