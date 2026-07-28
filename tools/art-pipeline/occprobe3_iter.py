@@ -100,7 +100,10 @@ def _extract(resp, ma, crop, mx, my, box, origin, pos):
         gen = Image.open(io.BytesIO(p.inline_data.data)).convert('RGB') \
                    .resize((o2.CROP, o2.CROP), Image.LANCZOS)
         g = np.asarray(gen).astype(np.int16)
-        keyed = key_mask(g)
+        # correct-by-construction: anything already green in the PLATE
+        # (produce, plants) can never be character evidence
+        plate_green = key_mask(np.asarray(crop).astype(np.int16))
+        keyed = key_mask(g) & ~plate_green
         diff = o2.blur_diff(ma, g)
         bbox = np.zeros((o2.CROP, o2.CROP), bool)
         bbox[by0:by1, bx0:bx1] = True

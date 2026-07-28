@@ -1389,3 +1389,8 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   plants) fall inside KEY_R=100 -> keyed as "character" outside bbox -> noise
   gate rejections (yield 15/36). Fix queued (correct-by-construction): mask
   out pixels already green in the PLATE from the key, not radius tuning.
+
+### Run 30b: plate-green exclusion (Ivan: "go for it")
+- keyed &= ~key_mask(plate crop): scene greens can never be char evidence.
+  Yield 15/36 -> 33/36 (91.7%). Iter 4 verdicts on parts: 6 ysort, 1 overhead,
+  5 contradiction, 23 no-ev; per-iteration change log regenerated.
