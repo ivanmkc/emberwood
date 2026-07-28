@@ -1350,36 +1350,35 @@ export function createGame(canvas, input, art) {
 
     // palette bleed at room seams: warm light from the bazaar spills into the
     // hub's west edge, cool light from the hub spills into the bazaar's east edge
-    const BLEED_W = 90;
+    const BLEED_W = 140;
     const seamX = 0 - cx; // seam at world x=0 (anchorroom west / night-bazaar east)
     if (seamX > -BLEED_W && seamX < VIEW_W + BLEED_W) {
       ctx.globalCompositeOperation = 'lighter';
-      // warm glow bleeds east into the cool hub
       const warmG = ctx.createLinearGradient(seamX, 0, seamX + BLEED_W, 0);
-      warmG.addColorStop(0, 'rgba(255, 130, 50, 0.22)');
-      warmG.addColorStop(0.4, 'rgba(255, 130, 50, 0.10)');
-      warmG.addColorStop(1, 'rgba(255, 130, 50, 0)');
+      warmG.addColorStop(0, 'rgba(255, 140, 55, 0.16)');
+      warmG.addColorStop(0.35, 'rgba(255, 140, 55, 0.06)');
+      warmG.addColorStop(1, 'rgba(255, 140, 55, 0)');
       ctx.fillStyle = warmG;
       ctx.fillRect(seamX, 0, BLEED_W, VIEW_H);
-      // cool glow bleeds west into the warm bazaar
       const coolG = ctx.createLinearGradient(seamX, 0, seamX - BLEED_W, 0);
-      coolG.addColorStop(0, 'rgba(50, 80, 140, 0.18)');
-      coolG.addColorStop(0.4, 'rgba(50, 80, 140, 0.08)');
-      coolG.addColorStop(1, 'rgba(50, 80, 140, 0)');
+      coolG.addColorStop(0, 'rgba(50, 90, 150, 0.12)');
+      coolG.addColorStop(0.35, 'rgba(50, 90, 150, 0.05)');
+      coolG.addColorStop(1, 'rgba(50, 90, 150, 0)');
       ctx.fillStyle = coolG;
       ctx.fillRect(seamX - BLEED_W, 0, BLEED_W, VIEW_H);
       ctx.globalCompositeOperation = 'source-over';
-      // subtle tint layer for palette bridging
-      const warmTint = ctx.createLinearGradient(seamX, 0, seamX + BLEED_W * 0.6, 0);
-      warmTint.addColorStop(0, 'rgba(180, 100, 40, 0.08)');
-      warmTint.addColorStop(1, 'rgba(180, 100, 40, 0)');
+      const warmTint = ctx.createLinearGradient(seamX, 0, seamX + BLEED_W, 0);
+      warmTint.addColorStop(0, 'rgba(160, 90, 35, 0.22)');
+      warmTint.addColorStop(0.4, 'rgba(160, 90, 35, 0.10)');
+      warmTint.addColorStop(1, 'rgba(160, 90, 35, 0)');
       ctx.fillStyle = warmTint;
-      ctx.fillRect(seamX, 0, BLEED_W * 0.6, VIEW_H);
-      const coolTint = ctx.createLinearGradient(seamX, 0, seamX - BLEED_W * 0.6, 0);
-      coolTint.addColorStop(0, 'rgba(30, 50, 80, 0.08)');
-      coolTint.addColorStop(1, 'rgba(30, 50, 80, 0)');
+      ctx.fillRect(seamX, 0, BLEED_W, VIEW_H);
+      const coolTint = ctx.createLinearGradient(seamX, 0, seamX - BLEED_W, 0);
+      coolTint.addColorStop(0, 'rgba(35, 55, 90, 0.20)');
+      coolTint.addColorStop(0.4, 'rgba(35, 55, 90, 0.08)');
+      coolTint.addColorStop(1, 'rgba(35, 55, 90, 0)');
       ctx.fillStyle = coolTint;
-      ctx.fillRect(seamX - BLEED_W * 0.6, 0, BLEED_W * 0.6, VIEW_H);
+      ctx.fillRect(seamX - BLEED_W, 0, BLEED_W, VIEW_H);
     }
 
     // y-sorted drawables: entities + fg cutouts from all visible rooms
