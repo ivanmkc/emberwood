@@ -384,3 +384,28 @@ docs/art-options/v3/<room>/). Defect-sweep context: gated fresh rolls exonerated
   footprints; lower-band fallback). When done: overlays under docs/art-options/v3/
   anchorroom/, then push board tab --agent art-v3 (verify URLs), scale to defect-outlier
   rooms (hydroponics 14.1%, home-interior-a 26.8%, salvage-shed 9.5%).
+
+## Run 23: literature review for x-ray footprints (Ivan: "check literature")
+CANONICAL PAPER: Watson et al., CVPR 2020, "Footprints and Free Space from a Single Color
+Image" (arXiv 2004.06376, github.com/nianticlabs/footprints) — same problem, same name.
+Key lessons for us:
+- They explicitly note amodal INSTANCE segmentation (completing hidden object masks) does
+  NOT give ground contact. Their solution predicts hidden walkable ground + object
+  footprints as DENSE whole-image predictions — the formulation our v2 pipeline uses.
+  Our v3 per-object crop painting is the formulation the literature avoided → explains
+  the ~30% clean rate (NBP overpaints when asked to imagine geometry on a crop).
+- MonoLayout (WACV 2020, arXiv 2002.08394) + Schulter et al.: amodal BEV layout; object
+  footprints are obtained GEOMETRICALLY — 3D box projected onto the ground plane — never
+  painted. Deep3DBox lineage: estimate dims/orientation, project. Ground-plane-prior work
+  (GPENet, arXiv 2211.01556) uses ground CONTACT POINTS + plane equation.
+V4 DESIGN (literature-equivalent for our fixed axis-aligned 3/4 camera):
+- Keep dense NBP walkability as the hidden-ground channel (= Watson's formulation).
+- Per impeding instance (census kept): VLM estimates NUMBERS, not pixels: {ground contact
+  segment (x0,x1,yBase), plan_depth_px, base_shape: rect|ellipse}; CODE draws the footprint
+  anchored at yBase extending UP by plan_depth (fixed oblique camera => BEV projection is a
+  pure y-shift). LLM gate verifies the drawn footprint overlay. This is MonoLayout/Deep3DBox
+  box->ground projection with the VLM as 3D estimator + known camera.
+- Optional low-prio: trial nianticlabs/footprints pretrained (domain gap to pixel art
+  likely fatal; note only).
+NEXT: replace nbp_v3.py stage 3 with geometric synthesis (v4), re-pilot anchor, update
+art-v3 tab with v4 layers for comparison.
