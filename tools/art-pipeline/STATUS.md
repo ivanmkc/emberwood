@@ -472,12 +472,26 @@ VERIFIED CROSSINGS:
 - anchorroom→night-bazaar (west): x=15 → x=-3, crosses boundary ✓
 - Movement in repair-bay: walk at 72px/s within the room ✓
 
+SCOPE CUT: Ivan reduced scope to 3 scenes — anchorroom (hub),
+night-bazaar (outdoor, stitched with hub), plaza-market-inside (indoor via door).
+
+OUTPAINTED NIGHT-BAZAAR:
+- Regenerated night-bazaar plate as outpainting of hub's west edge
+  (magenta fill + 30% hub context, gemini-3-pro-image, best-of-5)
+- Perspective gate: 82% axis-aligned, 12% diagonal (passed)
+- Panorama judge: style 10/10, camera 10/10, scale 9/10, palette 4/10, seam 2/10, overall 7/10
+- Full mask pipeline re-run: walk, class, footprint, segment → 75 fg layers, collision, emissive
+- Installed as new plate, assets, and collision data
+
+BORDER FIX:
+- openBorderStrip BORDER widened from 3 to 16 pixels
+- Root cause: hitbox extends px+4 to px+11 (8px wide), 3px corridor too narrow
+- Seam crossing now verified both directions at y=383 with position continuity
+
 KNOWN OPEN ITEMS:
-- night-bazaar lacks a north exit strip → residential cluster not seamlessly reachable
-  (needs mask regen by align-masks agent)
-- Scale normalization not yet implemented (Run 24 item 4)
-- Stitched panorama screenshot + holistic NBP judge not yet done
-- Save periodicity: world mode should save on room transitions, not per-frame
+- Palette discontinuity at seam (warm bazaar vs cool hub) — judge scores 4/10
+- night-bazaar north exit strip: residential cluster not seamlessly reachable
+- Save on room transitions (not per-frame) in world mode
 
 ## Run 25 — Ivan directive: implement ALL related literature methods, compare (5-hour bake-off)
 For each problem we hit, implement the literature-equivalent methods and benchmark them on
