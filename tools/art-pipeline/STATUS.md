@@ -989,3 +989,42 @@ recurring judge false-alarm "green on object bodies" by giving those pixels thei
    blocking objects live at edges/deliberate clusters. Baked into gen_scene BASE_STYLE;
    applies to ALL future scenes, outpaints, and blend bands.
 3. No people/characters in generated scenes (already enforced + judge-gated).
+
+## Agent v4-footprints — correct-by-construction + v5 emission (2026-07-28)
+
+### Correct-by-construction update (Ivan directive)
+Reduced estimated degrees of freedom from 5 to 2:
+- yBase: derived from census instance mask bottom (constructed, not estimated)
+- x-extent: derived from mask bottom-band horizontal range (constructed)
+- VLM estimates ONLY plan_depth_px and base_shape (2 DoF)
+- Every parameter derivable from data we already trust is one the VLM cannot get wrong
+
+### Overhead taxonomy
+After census, each instance classified deterministically (mask proximity to walkable
+floor within 10px) and by VLM:
+- ground-contact → candidate for impeding selection → footprint
+- thin-suspended (mask <13px thick) → overhead.png (occlude-only)
+- large-suspended (mask ≥13px thick) → no mask (player walks under, drawn on top)
+
+### v5 emission results (3 focus scenes)
+| Room | Instances | Impeding | Geo OK | Fallback | Thin Susp | Large Susp | FP% |
+|------|-----------|----------|--------|----------|-----------|------------|------|
+| anchorroom | 132 | 12 | 8 | 4 | 5 | 3 | 2.54% |
+| night-bazaar | 83 | 17 | 5 | 12 | 0 | 1 | 1.68% |
+| plaza-market-inside | 47 | 11 | 7 | 4 | 1 | 3 | 6.08% |
+
+Emitted files per room:
+- nbp-footprint.png + nbp-footprint-metrics.json (pass:true, source: v4-geometric-cbc)
+- overhead.png (anchorroom: 5 instances; plaza: 1 instance; night-bazaar: none)
+- v4/ directory with census, collision, footprint overlays
+
+### Failure modes (night-bazaar/plaza)
+- High fallback rate on night-bazaar (12/17): fruit crates, noodle stall cabinets, and
+  foreground barrier walls consistently confused the VLM — constructed yBase is correct
+  but depth estimates were consistently rejected by the gate. Lower-band fallback is a
+  reasonable safety net for these cases.
+- Plaza fared better (4/11 fallback): shelving units and one stool fell back.
+
+### Board
+Pushed to termchart --project emberwood --agent art-v3: v5 emission summary table,
+footprint overlays for all 3 scenes, method comparison text.
