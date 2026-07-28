@@ -1,1 +1,11 @@
-{"method": "v4-geometric-nogrid", "source": "v4/anchorroom/geometric-footprints-nogrid.png", "footprint_fraction": 0.032, "defect_frac_bench": 0.1011, "geometric_ok": 10, "fallback": 5, "pass": true}
+{
+  "pass": true,
+  "source": "v4-geometric",
+  "method": "VLM-estimated ground geometry + code-drawn footprint polygons",
+  "white_frac": 0.0254,
+  "geometric_ok": 8,
+  "fallback": 4,
+  "impeding": 12,
+  "instances": 132,
+  "defect_rate_v4": 0.101
+}
