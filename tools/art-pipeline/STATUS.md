@@ -552,6 +552,93 @@ census_crosscheck.py: DAv2 above-floor depth blobs vs v3/v4 census overlays.
   when census lands.
 Visualization: green boxes = census-covered, red boxes = missed (none for anchor).
 
+## Agent lit-bench-prompt
+Prompt-side (NBP/VLM) methods benchmarked on 3 focus scenes with advanced evaluator harness.
+
+CODE: tools/art-pipeline/bench/ (evaluate.py, nroll_consensus.py, amodal_footprints.py,
+perspective_ab.py, run_all.py)
+ARTIFACTS: docs/art-options/bench/prompt/<room>/ (overlays, metrics, consensus masks)
+
+### Ground truth: 5-roll NBP majority-vote consensus (B4)
+Per-pixel majority vote across 5 gated independent NBP walkability rolls (same walk-v2 prompt,
+each a fresh seed). Purity gate >= 0.80. Results:
+  anchorroom:          walk_frac=31.3%, mean_agreement=94.9%
+  night-bazaar:        walk_frac=30.1%, mean_agreement=95.6%
+  plaza-market-inside: walk_frac=22.4%, mean_agreement=93.1%
+High agreement (93-96%) confirms NBP walkability is reproducible across independent rolls.
+
+### Evaluator harness (evaluate.py)
+Deterministic metrics:
+- IoU vs 5-roll consensus (ground truth)
+- Canny edge alignment (fraction of source edges preserved in mask boundaries)
+- Config-space traversability (8x8 hitbox erosion + BFS largest-component reach fraction)
+- Edge-orientation histogram (HoughLinesP, fraction of long edges within 5deg of H/V)
+LLM metrics:
+- Pairwise position-debiased forced choice (two orderings x 3 votes = 6 total)
+
+### IoU vs consensus table (all methods, all scenes)
+Method                  anchor   bazaar   plaza    mean
+A1-dense-walk           0.784    0.701    0.731    0.739
+shipped-collision       0.536    0.529    0.300    0.455
+A2-v3-xray              0.529    -        -        0.529
+morph-walk              0.489    -        -        0.489
+A5-depth-walk           0.360    0.385    0.239    0.328
+A1-dense-footprint      -        0.007    0.106    0.057
+A5-depth-footprint      0.015    0.039    0.000    0.018
+morph-baseline           0.012    -        -        0.012
+A6-niantic              0.000    0.000    0.050    0.017
+
+### Config-space reach (8x8 erosion, BFS largest component / total)
+Method                  anchor   bazaar   plaza
+A1-dense-walk           0.091    0.522    0.511
+shipped-collision       0.993    0.982    0.992
+A2-v3-xray              0.366    -        -
+A5-depth-walk           0.997    0.956    1.000
+A5-depth-footprint      0.364    0.474    1.000
+A6-niantic              0.798    1.000    0.282
+
+### Canny edge alignment
+Method                  anchor   bazaar   plaza
+A1-dense-walk           0.527    0.709    0.288
+A2-v3-xray              0.490    -        -
+shipped-collision       0.224    0.266    0.250
+A5-depth-walk           0.078    0.094    0.008
+A5-depth-footprint      0.033    0.027    0.014
+A6-niantic              0.001    0.002    0.017
+
+### FINDINGS
+1. A1 (dense NBP walkability repaint) DOMINATES on IoU vs consensus: mean 0.739 across 3
+   scenes. This is the Watson CVPR20 dense formulation — the literature's recommended approach.
+2. The shipped production collision (segment_room compose pipeline) achieves 0.455 mean IoU —
+   reasonable but significantly below A1's raw walk mask. The gap comes from the compose
+   pipeline adding footprints + water + erosion that disagree with the consensus in some areas.
+3. A2 (v3 per-object x-ray painting) is comparable to shipped (0.529 on anchorroom) but did
+   not generalize to other scenes (only anchorroom had v3 data).
+4. Depth-based walk (A5) has high config-space reach (0.95+) but low IoU (0.33) — it
+   over-predicts walkable area. Depth footprints and niantic are near zero IoU.
+5. A1's config-space reach is LOW (0.09-0.52) despite high IoU. This means A1's walk mask is
+   semantically correct but fragmented (not fully traversable after hitbox erosion). The
+   production compose pipeline adds erosion-then-carve passes to fix this — that's why shipped
+   has 0.99 reach despite lower IoU. This is the correct tradeoff: start from A1's semantic
+   accuracy, then apply connectivity fixes in the compose stage.
+6. Canny alignment is highest for A1 (0.29-0.71), confirming the mask boundaries follow the
+   source image's visual edges. Depth methods have near-zero alignment (smooth depth !=
+   pixel-art edges).
+7. Perspective: all 3 scenes are strongly axis-aligned (93.7-98.4% HoughP, 98.4-99.5% LSD).
+   The prompt engineering approach works; grid/outpaint conditioning experiments are running.
+8. Seam continuity: walkable Jaccard = 0.0 between anchor-bazaar (strips at different y),
+   confirming the need for aligned carving in the stitched-world pipeline.
+
+### In-progress methods
+- A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation
+- A4 (amodal-completion footprints): running on anchorroom (pix2gestalt-style via NBP)
+- Perspective A/B: C1 prompt-only, C2 drawn-grid, C3 outpaint — generating 3 rolls per condition
+- Pairwise LLM forced choice: will run after A4 completes
+
+### Board
+termchart --project emberwood --agent bench: literature method bake-off comparison board
+with metrics tables, collision overlays per method per scene, and findings.
+
 ## Ivan principle (2026-07-28): CORRECT BY CONSTRUCTION wherever possible
 Prefer structures that cannot be wrong over post-hoc verify/fix. Applied translations:
 - SEAMS: single shared-opening definition in WORLD coords, both rooms carved from that one
