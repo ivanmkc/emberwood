@@ -356,6 +356,12 @@ def main():
         else:
             blocked |= (m & ~nwalk_probe) if nwalk_probe is not None else m
             inst['footprint'] = False
+    ohpath = os.path.join(ART, 'overhead.png')
+    if os.path.exists(ohpath):
+        overhead = np.asarray(Image.open(ohpath).convert('L')
+                              .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
+        blocked = blocked & ~overhead
+        print(f'overhead mask: subtracted {int(overhead.sum())} suspended px from blocked')
     walk_src = ~blocked
     wpath = os.path.join(ART, 'nbp-walk.png')
     wmet = os.path.join(ART, 'nbp-walk-metrics.json')
