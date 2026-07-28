@@ -50,10 +50,23 @@
   },
   "seam": {
     "anchor-bazaar": {
-      "color_chi2_mean": 70.87,
-      "mean_lab_delta": 19.69,
-      "edge_continuation_rate_mean": 0.289,
-      "walkable_jaccard": 0.0
+      "baseline_pre_outpaint": {
+        "color_chi2_mean": 70.87,
+        "mean_lab_delta": 19.69,
+        "edge_continuation_rate_mean": 0.289,
+        "walkable_jaccard": 0.0
+      },
+      "post_outpaint": {
+        "color_chi2_mean": 7.94,
+        "mean_lab_delta": 10.85,
+        "edge_continuation_rate_mean": 0.273,
+        "walkable_jaccard": 0.0
+      },
+      "improvement": {
+        "color_chi2_reduction": "-89%",
+        "lab_delta_reduction": "-45%",
+        "note": "Outpaint inherits anchor palette at border; palette diverges in interior"
+      }
     }
   },
   "perspective_ab": {
