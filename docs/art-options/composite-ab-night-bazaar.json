@@ -1,0 +1,114 @@
+{
+ "room": "night-bazaar",
+ "model": "gemini-3.5-flash",
+ "parts": {
+  "5": {
+   "part_over_char": false,
+   "overlap_px": 856
+  },
+  "9": {
+   "part_over_char": false,
+   "overlap_px": 2779
+  },
+  "10": {
+   "part_over_char": true,
+   "overlap_px": 3893
+  },
+  "11": {
+   "part_over_char": false,
+   "overlap_px": 1971
+  },
+  "29": {
+   "part_over_char": false,
+   "overlap_px": 1358
+  },
+  "33": {
+   "part_over_char": true,
+   "overlap_px": 2005
+  },
+  "41": {
+   "part_over_char": false,
+   "overlap_px": 1094
+  },
+  "45": {
+   "part_over_char": false,
+   "overlap_px": 4605
+  },
+  "47": {
+   "part_over_char": true,
+   "overlap_px": 7486
+  },
+  "68": {
+   "part_over_char": true,
+   "overlap_px": 2683
+  },
+  "74": {
+   "part_over_char": false,
+   "overlap_px": 4575
+  },
+  "87": {
+   "part_over_char": false,
+   "overlap_px": 8532
+  },
+  "89": {
+   "part_over_char": true,
+   "overlap_px": 1345
+  },
+  "90": {
+   "part_over_char": true,
+   "overlap_px": 5483
+  },
+  "107": {
+   "part_over_char": true,
+   "overlap_px": 836
+  },
+  "112": {
+   "part_over_char": false,
+   "overlap_px": 2878
+  },
+  "124": {
+   "part_over_char": false,
+   "overlap_px": 6919
+  },
+  "131": {
+   "part_over_char": true,
+   "overlap_px": 8650
+  },
+  "178": {
+   "part_over_char": false,
+   "overlap_px": 9412
+  },
+  "185": {
+   "part_over_char": false,
+   "overlap_px": 5951
+  },
+  "188": {
+   "part_over_char": false,
+   "overlap_px": 4530
+  },
+  "189": {
+   "part_over_char": false,
+   "overlap_px": 7339
+  },
+  "190": {
+   "part_over_char": false,
+   "overlap_px": 8629
+  },
+  "197": {
+   "part_over_char": false,
+   "overlap_px": 9665
+  },
+  "199": {
+   "part_over_char": true,
+   "overlap_px": 1535
+  },
+  "200": {
+   "part_over_char": true,
+   "overlap_px": 4360
+  },
+  "201": {
+   "part_over_char": false,
+   "overlap_px": 5267
+  }
+ }
+}

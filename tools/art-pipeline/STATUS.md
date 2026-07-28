@@ -1471,3 +1471,15 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   Veo veto demoted 1 false 'awning fabric'. Best overhead layer of any
   single method so far. NEXT cycle: composite A/B (item 3), drive exit
   mouths (5), debug-card dims (6), audits (7).
+
+### Cycle 2 of 12h loop (items 3, 7)
+- Composite A/B shipped (composite_ab.py): 45 contested parts, 27 judged by
+  gemini-3.5-flash on side-randomized char-over vs part-over composites at
+  real standing spots (18 unreachable = untestable, honest skip); 10 part-
+  over-char. Third independent z-source.
+- Fusion v1 TIERED: confirmed = >=2 of {height-agree, veo-overhead,
+  composite} (8 parts), probable = dual-model height only, unvetoed (15),
+  layer 7.2% px. Veo ysort evidence remains a hard veto.
+- Audits: drift OK (bazaar GPT 1.00x baseline); magenta-nowires baseline
+  seeded (0.2181). NEXT: drive exit mouths (5), debug-card dims (6),
+  composite A/B with pro as second judge on the 8 confirmed.
