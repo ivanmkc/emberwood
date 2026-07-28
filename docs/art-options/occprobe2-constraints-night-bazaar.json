@@ -1,302 +1,101 @@
 {
  "room": "night-bazaar",
- "summary": {
-  "probes": 36,
-  "crops": 36,
-  "crops_valid": 34,
-  "marker_evidences": 34,
-  "arm_b": {
-   "3": {
-    "passes": 0,
-    "fails": 4,
-    "advanced": false
-   }
-  },
-  "objects_with_verdicts": 27,
-  "verdict_counts": {
-   "ysort": 5,
-   "overhead": 0,
-   "contradiction": 10,
-   "no-evidence": 12
-  },
-  "fragile": 9,
-  "engine_containment": "1/5"
+ "note": "consensus-aligned analysis masks",
+ "verdict_counts": {
+  "ysort": 1,
+  "overhead": 1,
+  "contradiction": 2,
+  "no-evidence": 7
  },
+ "containment": "0/1",
  "objects": {
-  "3": {
-   "lo": 216.0,
-   "hi": 216.0,
+  "1": {
+   "lo": 1310.4,
+   "hi": 376.0,
    "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 2,
-   "fragile": false,
-   "label": "building",
-   "engine_base_row": 584
+   "n_behind": 15,
+   "n_front": 12,
+   "label": "building"
   },
-  "7": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
-   "fragile": false,
-   "label": "building",
-   "engine_base_row": 1308
-  },
-  "10": {
-   "lo": 1342.4,
-   "hi": 913.6,
-   "verdict": "contradiction",
-   "n_behind": 9,
-   "n_front": 9,
-   "fragile": false,
-   "label": "building",
-   "engine_base_row": 1307
-  },
-  "11": {
-   "lo": 1176.0,
-   "hi": 1208.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 2,
-   "fragile": true,
-   "label": "building",
-   "engine_base_row": 1179,
-   "engine_key_contained": true
-  },
-  "14": {
-   "lo": 1592.0,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 0,
-   "fragile": false,
-   "label": "building",
-   "engine_base_row": 1791
-  },
-  "15": {
+  "2": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 1,
    "n_front": 1,
-   "fragile": false,
-   "label": "building",
-   "engine_base_row": 1791
+   "label": "building"
   },
-  "16": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
-   "fragile": false,
-   "label": "water",
-   "engine_base_row": 366
-  },
-  "17": {
-   "lo": 731.2,
+  "9": {
+   "lo": 408.0,
    "hi": 408.0,
    "verdict": "contradiction",
    "n_behind": 4,
-   "n_front": 5,
-   "fragile": true,
-   "label": "water",
-   "engine_base_row": 592
-  },
-  "19": {
-   "lo": 1272.0,
-   "hi": 1272.0,
-   "verdict": "contradiction",
-   "n_behind": 3,
    "n_front": 3,
-   "fragile": false,
-   "label": "water",
-   "engine_base_row": 1389
+   "label": "water"
   },
-  "20": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 2,
-   "fragile": false,
-   "label": "water",
-   "engine_base_row": 1334
-  },
-  "21": {
-   "lo": 1336.0,
-   "hi": 1368.0,
-   "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 3,
-   "fragile": true,
-   "label": "water",
-   "engine_base_row": 1469,
-   "engine_key_contained": false
-  },
-  "30": {
+  "10": {
    "lo": 632.0,
    "hi": 664.0,
    "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 3,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 599,
-   "engine_key_contained": false
-  },
-  "39": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 2,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 763
-  },
-  "40": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 751
-  },
-  "41": {
-   "lo": 760.0,
-   "hi": 760.0,
-   "verdict": "contradiction",
    "n_behind": 2,
    "n_front": 2,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 770
+   "label": "water"
   },
-  "42": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1362
-  },
-  "43": {
-   "lo": 1272.0,
-   "hi": 900.8,
-   "verdict": "contradiction",
-   "n_behind": 5,
-   "n_front": 5,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1195
-  },
-  "44": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 0,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 893
-  },
-  "47": {
-   "lo": 888.0,
-   "hi": 920.0,
-   "verdict": "ysort",
-   "n_behind": 3,
-   "n_front": 3,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 1049,
-   "engine_key_contained": false
-  },
-  "51": {
-   "lo": 1406.4,
-   "hi": 1054.4,
-   "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 4,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1399
-  },
-  "56": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1123
-  },
-  "60": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1369
-  },
-  "61": {
-   "lo": null,
-   "hi": 1208.0,
-   "verdict": "ysort",
-   "n_behind": 2,
-   "n_front": 3,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 1250,
-   "engine_key_contained": false
-  },
-  "64": {
-   "lo": 1592.0,
-   "hi": 1592.0,
-   "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 3,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1557
-  },
-  "65": {
-   "lo": 1496.0,
-   "hi": 1496.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 2,
-   "fragile": false,
-   "label": "prop",
-   "engine_base_row": 1557
-  },
-  "69": {
-   "lo": 1592.0,
-   "hi": 1592.0,
-   "verdict": "contradiction",
-   "n_behind": 2,
-   "n_front": 2,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 1612
-  },
-  "70": {
+  "11": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 0,
    "n_front": 1,
-   "fragile": true,
-   "label": "prop",
-   "engine_base_row": 1612
+   "label": "water"
+  },
+  "12": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "water"
+  },
+  "14": {
+   "lo": 1464.0,
+   "hi": null,
+   "verdict": "overhead",
+   "n_behind": 2,
+   "n_front": 1,
+   "label": "water"
+  },
+  "19": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "prop"
+  },
+  "22": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "prop"
+  },
+  "26": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "prop"
+  },
+  "27": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 1,
+   "label": "prop"
   }
  }
 }

@@ -1350,3 +1350,20 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   candidate; several merged blobs are visible. FOLLOW-UP flagged: downstream
   consumers of the OLD npz (4-color previews, v4/v5 footprint compose)
   inherit bazaar misalignment — re-emission from aligned masks needed.
+
+### Run 29b: consensus re-segmentation (the real misalignment fix)
+- Translation snap + watershed both insufficient (masks DEFORMED, not just
+  shifted; watershed wobbles along texture). Real fix = same cure as walk:
+  nbp_mask_consensus.py, 5 gated class-repaint rolls -> per-pixel per-class
+  majority (impure pixels abstain, <2-vote pixels nearest-fill). Bazaar:
+  5/6 rolls, 84.9% pixels at >=3/5 agreement, edge alignment 0.99.
+- segment_room rebuild from consensus: instance edge agreement 0.963
+  (misaligned 0.472 / snap 0.713 / watershed 0.657). Probe verdict replay:
+  contradictions 10 -> 2. Ivan's "masks are misaligned" fully resolved for
+  the analysis layer.
+- SHIPPING GUARD: rebuilt collision regressed the battery (9.34% missed-walk
+  vs 6.4% shipped baseline — merged 49-instance footprints over-block), so
+  assets/rooms/* were REVERTED to HEAD; aligned artifacts live as
+  _srcmasks_night-bazaar-aligned2.npz + occprobe2-instances-*-aligned.json.
+  OPEN: retune footprint compose from consensus classes until battery <=
+  baseline, then re-ship instances+collision coherently.
