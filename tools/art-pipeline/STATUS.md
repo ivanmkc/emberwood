@@ -1428,3 +1428,28 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   from models.list): "what is this part + how high off ground" -> higher than
   character = occlude-not-block; (b) composite A/B: render char+object cut at
   both z-orders, ask Flash which is physically correct.
+
+### Run 32: veo-z derivation + 12-HOUR ITERATION MANDATE (Ivan)
+- veo_z.py: DETERMINISTIC z from Veo videos — temporal median removes walkers
+  (static cam), background subtraction extracts them, ORB homography (233-785
+  inliers) registers video->plate, silhouette holes attribute behind/front to
+  the 238-part map via probe aggregation. 828 walker samples after filters
+  (tall aspect, solidity — Veo also ANIMATES awnings/lanterns, which fake as
+  walkers). Verdicts: 63 ysort / 1 overhead / 141 contradiction / 14 no-ev.
+  Contradictions still flooded by animated-decor false walkers.
+- ITERATION ROADMAP (Ivan: "audit and keep improving over next 12 hours"):
+  1. veo-z contradiction fix: temporal-variance mask (pixels that oscillate in
+     ALL frames = animated decor, exclude); per-walker tracking (continuity
+     across frames); require >=3 distinct gys per bound; then fuse veo-z with
+     probe evidence.
+  2. Per-part height query (NBP judge + Flash id from models.list): label +
+     height-off-ground per part; > char height => occlude-not-block.
+  3. Composite A/B: render char+part cut both z-orders, Flash picks correct.
+  4. Fuse all z sources (probes, veo, height, composite) -> per-part verdict
+     with agreement count; ship overhead layer + corrected baseY where >=2
+     sources agree; judge on disagreements.
+  5. Bazaar drive completion: exit-mouth stalls (world seam semantics).
+  6. Board hygiene: debug-card uniform dims (until viewer PR #292 deploys),
+     probe browser card, veo-z card.
+  7. Audits each cycle: drift_check on new metrics, verify_defects trend,
+     STATUS append per iteration, commit + board push per milestone.
