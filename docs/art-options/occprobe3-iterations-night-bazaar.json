@@ -4,28 +4,25 @@
   {
    "iteration": 1,
    "batch_probes": 9,
-   "batch_valid": 8,
-   "cum_evidence": 8,
-   "parts_with_verdicts": 14,
+   "batch_valid": 9,
+   "cum_evidence": 9,
+   "parts_with_verdicts": 11,
    "verdicts": {
     "ysort": 0,
     "overhead": 0,
     "contradiction": 0,
-    "no-evidence": 14
+    "no-evidence": 11
    },
    "sort_order_top": [],
    "changes": [
     "part122<1>: new -> no-evidence",
-    "part145<1>: new -> no-evidence",
     "part153<1>: new -> no-evidence",
+    "part145<1>: new -> no-evidence",
     "part155<1>: new -> no-evidence",
     "part87<1>: new -> no-evidence",
-    "part89<1>: new -> no-evidence",
     "part200<22>: new -> no-evidence",
     "part187<14>: new -> no-evidence",
-    "part29<1>: new -> no-evidence",
     "part45<1>: new -> no-evidence",
-    "part68<1>: new -> no-evidence",
     "part177<10>: new -> no-evidence",
     "part156<2>: new -> no-evidence",
     "part158<2>: new -> no-evidence"
@@ -34,30 +31,23 @@
   {
    "iteration": 2,
    "batch_probes": 9,
-   "batch_valid": 8,
-   "cum_evidence": 16,
-   "parts_with_verdicts": 24,
+   "batch_valid": 9,
+   "cum_evidence": 18,
+   "parts_with_verdicts": 21,
    "verdicts": {
     "ysort": 0,
     "overhead": 0,
-    "contradiction": 1,
-    "no-evidence": 23
+    "contradiction": 0,
+    "no-evidence": 21
    },
-   "sort_order_top": [
-    [
-     "part87<1>",
-     818,
-     "contradiction"
-    ]
-   ],
+   "sort_order_top": [],
    "changes": [
-    "part87<1>: no-evidence -> contradiction",
     "part46<1>: new -> no-evidence",
     "part47<1>: new -> no-evidence",
-    "part146<1>: new -> no-evidence",
     "part152<1>: new -> no-evidence",
     "part194<17>: new -> no-evidence",
-    "part218<32>: new -> no-evidence",
+    "part144<1>: new -> no-evidence",
+    "part146<1>: new -> no-evidence",
     "part62<1>: new -> no-evidence",
     "part197<19>: new -> no-evidence",
     "part221<35>: new -> no-evidence",
@@ -68,12 +58,12 @@
    "iteration": 3,
    "batch_probes": 9,
    "batch_valid": 9,
-   "cum_evidence": 25,
-   "parts_with_verdicts": 32,
+   "cum_evidence": 27,
+   "parts_with_verdicts": 30,
    "verdicts": {
     "ysort": 3,
-    "overhead": 1,
-    "contradiction": 1,
+    "overhead": 0,
+    "contradiction": 0,
     "no-evidence": 27
    },
    "sort_order_top": [
@@ -89,32 +79,21 @@
     ],
     [
      "part87<1>",
-     818,
-     "contradiction"
-    ],
-    [
-     "part218<32>",
-     1527.0,
+     776.0,
      "ysort"
-    ],
-    [
-     "part47<1>",
-     1000000,
-     "overhead"
     ]
    ],
    "changes": [
-    "part87<1>: rank 0 -> 2",
+    "part87<1>: no-evidence -> ysort",
     "part177<10>: no-evidence -> ysort",
     "part46<1>: no-evidence -> ysort",
-    "part47<1>: no-evidence -> overhead",
-    "part218<32>: no-evidence -> ysort",
+    "part218<32>: new -> no-evidence",
     "part176<9>: new -> no-evidence",
+    "part124<1>: new -> no-evidence",
     "part128<1>: new -> no-evidence",
     "part149<1>: new -> no-evidence",
     "part207<27>: new -> no-evidence",
     "part116<1>: new -> no-evidence",
-    "part124<1>: new -> no-evidence",
     "part188<14>: new -> no-evidence",
     "part192<15>: new -> no-evidence"
    ]
@@ -122,13 +101,13 @@
   {
    "iteration": 4,
    "batch_probes": 9,
-   "batch_valid": 8,
-   "cum_evidence": 33,
-   "parts_with_verdicts": 35,
+   "batch_valid": 9,
+   "cum_evidence": 36,
+   "parts_with_verdicts": 33,
    "verdicts": {
     "ysort": 6,
-    "overhead": 1,
-    "contradiction": 5,
+    "overhead": 0,
+    "contradiction": 4,
     "no-evidence": 23
    },
    "sort_order_top": [
@@ -149,12 +128,12 @@
     ],
     [
      "part87<1>",
-     818,
-     "contradiction"
+     776.0,
+     "ysort"
     ],
     [
      "part146<1>",
-     1192.0,
+     1186.0,
      "ysort"
     ],
     [
@@ -163,14 +142,14 @@
      "ysort"
     ],
     [
+     "part145<1>",
+     1305.5,
+     "ysort"
+    ],
+    [
      "part122<1>",
      1306,
      "contradiction"
-    ],
-    [
-     "part145<1>",
-     1352.0,
-     "ysort"
     ],
     [
      "part189<14>",
@@ -181,16 +160,6 @@
      "part188<14>",
      1457,
      "contradiction"
-    ],
-    [
-     "part218<32>",
-     1527.0,
-     "ysort"
-    ],
-    [
-     "part47<1>",
-     1000000,
-     "overhead"
     ]
    ],
    "changes": [
@@ -198,15 +167,13 @@
     "part145<1>: no-evidence -> ysort",
     "part87<1>: rank 2 -> 3",
     "part177<10>: rank 1 -> 2",
-    "part47<1>: rank 4 -> 11",
-    "part146<1>: no-evidence -> ysort",
     "part152<1>: no-evidence -> ysort",
-    "part218<32>: rank 3 -> 10",
+    "part146<1>: no-evidence -> ysort",
     "part189<14>: no-evidence -> contradiction",
     "part176<9>: no-evidence -> contradiction",
     "part188<14>: no-evidence -> contradiction",
-    "part131<1>: new -> no-evidence",
-    "part178<11>: new -> no-evidence",
+    "part134<1>: new -> no-evidence",
+    "part205<26>: new -> no-evidence",
     "part181<12>: new -> no-evidence"
    ]
   }

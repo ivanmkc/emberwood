@@ -1394,3 +1394,12 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - keyed &= ~key_mask(plate crop): scene greens can never be char evidence.
   Yield 15/36 -> 33/36 (91.7%). Iter 4 verdicts on parts: 6 ysort, 1 overhead,
   5 contradiction, 23 no-ev; per-iteration change log regenerated.
+
+### Run 30c: probing PARKED; pivot to magenta-first pipeline (Ivan)
+- All per-probe intermediates persisted (docs/art-options/probes/night-bazaar/
+  it{N}_x{X}_y{Y}_{gen,extract}.jpg) and committed for individual debugging.
+  Probing approach PARKED per Ivan — magenta ground v4 is the winning method.
+- New pipeline: (1) pre-process plate to REMOVE all cables/wires (ground +
+  overhead; re-add later in post), (2) magenta v4 on the wireless plate,
+  (3) build collision directly from the magenta consensus, (4) player drive
+  verification in-game.

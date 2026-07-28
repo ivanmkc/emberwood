@@ -124,6 +124,18 @@ def _extract(resp, ma, crop, mx, my, box, origin, pos):
     return None
 
 
+def save_probe_images(room, it, r):
+    d = os.path.join(ROOT, 'docs/art-options/probes', room)
+    os.makedirs(d, exist_ok=True)
+    x, y = r['ev'].pos
+    r['gen'].save(os.path.join(d, f'it{it}_x{x}_y{y}_gen.jpg'), quality=88)
+    g = np.asarray(r['gen']).astype(np.float32)
+    g[r['ev'].visible] = g[r['ev'].visible] * 0.4 + np.array([0, 255, 64], np.float32) * 0.6
+    g[r['ev'].occluded] = g[r['ev'].occluded] * 0.4 + np.array([255, 70, 70], np.float32) * 0.6
+    Image.fromarray(g.clip(0, 255).astype(np.uint8)).save(
+        os.path.join(d, f'it{it}_x{x}_y{y}_extract.jpg'), quality=88)
+
+
 def sort_table(base, base_row):
     """Rank parts: ysort by interval midpoint (fallback base row), overhead
     last (always on top = highest z)."""
@@ -173,6 +185,8 @@ async def main(room):
     for it, batch in enumerate(batches, 1):
         results = [r for r in await asyncio.gather(
             *(probe(plate, sprite, p) for p in batch)) if r is not None]
+        for r in results:
+            save_probe_images(room, it, r)
         cum.extend(results)
         evidence = [r['ev'] for r in cum]
         # front-probed parts from evidence geometry
@@ -221,7 +235,7 @@ async def main(room):
         # iteration probe strip (this batch's keyed extractions)
         if results:
             tile = 300
-            strip = Image.new('RGB', (tile * len(results), tile), (12, 12, 16))
+            strip = Image.new('RGB', (tile * 9, tile), (12, 12, 16))  # fixed 9-tile canvas: uniform dims for ImageLayers
             for n, r in enumerate(results):
                 g = np.asarray(r['gen']).astype(np.float32)
                 g[r['ev'].visible] = g[r['ev'].visible] * 0.4 + np.array([0, 255, 64], np.float32) * 0.6
