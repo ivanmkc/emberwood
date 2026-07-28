@@ -1,0 +1,68 @@
+{
+ "best_prompt": "Repaint this EXACT image, keeping every silhouette PIXEL-IDENTICAL, as an OVERHEAD/IN-THE-AIR map. Two flat colors only:\n- pure cyan #00FFFF: ONLY elements suspended IN THE AIR above the ground \u2014 EXAMPLES: wires and cables STRUNG overhead between buildings, hanging lanterns and lamps on strings, awnings and canopies, roof overhangs and eaves jutting over the street, signs jutting out from walls, bridges/catwalks passing OVERHEAD. A walking character would pass UNDER these.\n- pure black #000000: EVERYTHING else \u2014 the ground and floors, walls, buildings themselves, all objects STANDING ON the ground (tanks, stalls, machines, crates), cables lying flat ON the floor (those are step-over, not overhead), water.\nNO dithering, NO gradients, hard boundaries.",
+ "best_train_score": 0.6201923076923077,
+ "log": [
+  {
+   "gen": 0,
+   "score": 0.6201923076923077,
+   "feedback": [
+    "anchorroom: precision 0.62 (false: tree inside glass tank (standing); door frame (standing); wall (ground)), missed suspended: [], area 0.12",
+    "night-bazaar: precision 1.00 (false: none), missed suspended: ['The large tattered blue awnings above the NOODLE stand', 'The row of three hanging paper lanterns on the left side', 'The single paper lantern hanging on the far right'], area 0.29"
+   ]
+  },
+  {
+   "gen": 1,
+   "mut": 0,
+   "score": 0.3076923076923077,
+   "feedback": [
+    "anchorroom: area fraction 0.03 out of sane range [0.03,0.35]",
+    "night-bazaar: precision 1.00 (false: none), missed suspended: ['hanging lantern above produce stand', 'hanging lantern near noodle shop entrance', 'hanging lantern over right side of noodle shop'], area 0.14"
+   ]
+  },
+  {
+   "gen": 1,
+   "mut": 1,
+   "score": 0.0,
+   "feedback": [
+    "anchorroom: area fraction 0.45 out of sane range [0.03,0.35]",
+    "night-bazaar: area fraction 0.57 out of sane range [0.03,0.35]"
+   ]
+  },
+  {
+   "gen": 2,
+   "mut": 0,
+   "score": 0.0,
+   "feedback": [
+    "anchorroom: area fraction 0.00 out of sane range [0.03,0.35]",
+    "night-bazaar: area fraction 0.48 out of sane range [0.03,0.35]"
+   ]
+  },
+  {
+   "gen": 2,
+   "mut": 1,
+   "score": 0.3076923076923077,
+   "feedback": [
+    "anchorroom: area fraction 0.46 out of sane range [0.03,0.35]",
+    "night-bazaar: precision 1.00 (false: none), missed suspended: ['Hanging paper lantern next to noodle shop awning', \"Wire running horizontally above the left building's awning\", 'Short piece of wire hanging down near the top right corner'], area 0.24"
+   ]
+  },
+  {
+   "gen": 3,
+   "mut": 0,
+   "score": 0.0703125,
+   "feedback": [
+    "anchorroom: precision 0.38 (false: a grey object with cyan outlines (standing); a grey metal structure, possibly a pipe or conduit, running along the ground and connecting to a machine or wall. (standing); a vertical pipe or wire (standing); a plant growing inside a cylindrical container (standing)), missed suspended: [\"Hanging wire connected to 'REPAIR HUB' sign\", 'Hanging wire near bottom right, connecting to the central grid area', \"Hanging wire connecting to the left side of 'PLAZA MARKET'\"], area 0.21",
+    "night-bazaar: area fraction 0.36 out of sane range [0.03,0.35]"
+   ]
+  },
+  {
+   "gen": 3,
+   "mut": 1,
+   "score": 0.3076923076923077,
+   "feedback": [
+    "anchorroom: area fraction 0.58 out of sane range [0.03,0.35]",
+    "night-bazaar: precision 1.00 (false: none), missed suspended: ['cyan awning on bottom right of the building', 'white lamp above the door', 'cyan lamp in top left corner'], area 0.15"
+   ]
+  }
+ ]
+}

@@ -1,4 +1,7 @@
 {
  "rolls_accepted": 5,
- "overhead_frac": 0.1534
+ "overhead_frac": 0.1622,
+ "method": "gepa-optimized",
+ "train_score": 0.6201923076923077,
+ "holdout_score": 0.0625
 }
