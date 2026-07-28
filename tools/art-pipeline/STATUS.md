@@ -1509,3 +1509,13 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - Magenta-first pipeline (Ivan) COMPLETE for night-bazaar: wire removal ->
   magenta v4 -> collision (build_collision_magenta.py, reproducible) ->
   in-engine battery green. Task #104 closed.
+
+### Cycle 5 of 12h loop (items 4-ship + 6)
+- SHIPPED: fused 23-part overhead layer installed as
+  assets/rooms/night-bazaar.overhead.png (RGBA plate cutout, engine
+  occlude-only path from task #67). In-game Playwright verification: player
+  legs covered by canopy part, torso visible — occlusion correct. Bazaar now
+  runs fully on the new pipeline (magenta collision + fused overhead).
+- Board hygiene: DEBUG VIEW card rebuilt as three SAME-SIZE ImageLayers
+  stacks (zmaps / 9-tile strips / 36-probe individual browser) per the
+  ImageLayers contract; viewer PR #292 letterboxing remains the safety net.
