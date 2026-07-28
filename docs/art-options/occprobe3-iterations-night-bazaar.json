@@ -1,0 +1,126 @@
+{
+ "room": "night-bazaar",
+ "iterations": [
+  {
+   "iteration": 1,
+   "batch_probes": 9,
+   "batch_valid": 5,
+   "cum_evidence": 5,
+   "parts_with_verdicts": 8,
+   "verdicts": {
+    "ysort": 0,
+    "overhead": 0,
+    "contradiction": 0,
+    "no-evidence": 8
+   },
+   "sort_order_top": [],
+   "changes": [
+    "part122<1>: new -> no-evidence",
+    "part145<1>: new -> no-evidence",
+    "part153<1>: new -> no-evidence",
+    "part155<1>: new -> no-evidence",
+    "part187<14>: new -> no-evidence",
+    "part177<10>: new -> no-evidence",
+    "part156<2>: new -> no-evidence",
+    "part158<2>: new -> no-evidence"
+   ]
+  },
+  {
+   "iteration": 2,
+   "batch_probes": 9,
+   "batch_valid": 3,
+   "cum_evidence": 8,
+   "parts_with_verdicts": 12,
+   "verdicts": {
+    "ysort": 0,
+    "overhead": 0,
+    "contradiction": 0,
+    "no-evidence": 12
+   },
+   "sort_order_top": [],
+   "changes": [
+    "part146<1>: new -> no-evidence",
+    "part152<1>: new -> no-evidence",
+    "part189<14>: new -> no-evidence",
+    "part221<35>: new -> no-evidence"
+   ]
+  },
+  {
+   "iteration": 3,
+   "batch_probes": 9,
+   "batch_valid": 4,
+   "cum_evidence": 12,
+   "parts_with_verdicts": 19,
+   "verdicts": {
+    "ysort": 0,
+    "overhead": 0,
+    "contradiction": 0,
+    "no-evidence": 19
+   },
+   "sort_order_top": [],
+   "changes": [
+    "part124<1>: new -> no-evidence",
+    "part149<1>: new -> no-evidence",
+    "part207<27>: new -> no-evidence",
+    "part116<1>: new -> no-evidence",
+    "part128<1>: new -> no-evidence",
+    "part188<14>: new -> no-evidence",
+    "part192<15>: new -> no-evidence"
+   ]
+  },
+  {
+   "iteration": 4,
+   "batch_probes": 9,
+   "batch_valid": 3,
+   "cum_evidence": 15,
+   "parts_with_verdicts": 20,
+   "verdicts": {
+    "ysort": 4,
+    "overhead": 0,
+    "contradiction": 2,
+    "no-evidence": 14
+   },
+   "sort_order_top": [
+    [
+     "part146<1>",
+     1192.0,
+     "ysort"
+    ],
+    [
+     "part152<1>",
+     1217.0,
+     "ysort"
+    ],
+    [
+     "part122<1>",
+     1306,
+     "contradiction"
+    ],
+    [
+     "part145<1>",
+     1352.0,
+     "ysort"
+    ],
+    [
+     "part189<14>",
+     1452,
+     "contradiction"
+    ],
+    [
+     "part188<14>",
+     1508.5,
+     "ysort"
+    ]
+   ],
+   "changes": [
+    "part122<1>: no-evidence -> contradiction",
+    "part145<1>: no-evidence -> ysort",
+    "part146<1>: no-evidence -> ysort",
+    "part152<1>: no-evidence -> ysort",
+    "part189<14>: no-evidence -> contradiction",
+    "part188<14>: no-evidence -> ysort",
+    "part181<12>: new -> no-evidence"
+   ]
+  }
+ ]
+}

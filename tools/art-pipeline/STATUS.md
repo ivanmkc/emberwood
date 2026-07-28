@@ -1376,3 +1376,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   panels + counter + interior + legs as separate parts -> canopy and counter
   can carry different z verdicts (structural fix for its contradiction).
 - Next cycle: re-plan probes against the parts map + judge escalation.
+
+### Run 30: chroma-keyed iterative probing on parts (Ivan's two directives)
+- Green-mannequin probe (occprobe3_iter.py): character recolored to two flat
+  greens, extraction by chroma key instead of diff — shadows/chance-matches
+  structurally eliminated. Iteration debug view: 4 batches x 9 probes,
+  per-iteration zmap + probe strip + verdict/rank change log
+  (occprobe3-iter{1..4}-*, occprobe3-iterations-*.json).
+- Verdicts now land on PARTS (canopy vs counter separable). Iter 4: 4 ysort,
+  2 contradiction, 14 no-ev on parts touched so far.
+- HONEST ISSUE found via the probe strips: the scene's own greens (produce,
+  plants) fall inside KEY_R=100 -> keyed as "character" outside bbox -> noise
+  gate rejections (yield 15/36). Fix queued (correct-by-construction): mask
+  out pixels already green in the PLATE from the key, not radius tuning.
