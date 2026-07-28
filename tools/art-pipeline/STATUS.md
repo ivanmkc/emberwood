@@ -339,3 +339,22 @@ STATE: engine lock+grant+visited implementation IN PROGRESS this run; content wi
 - Full 25-room sweep RUNNING (bg). Next: review defect-on-source overlays for the worst
   rooms, patch masks (union missed-walk into walk where fresh+shipped disagree twice?),
   add defect layers to board section 26 stacks, re-sweep until <2% everywhere.
+
+## Run 22 — Ivan directive: NEW ALGO v3 (per-object x-ray footprints), separate board tab
+Algorithm (Ivan's spec, 2026-07-28):
+1. CENSUS (iterative): NBP paints instance seg overlaid on source; verification agent
+   (3.1-pro) lists objects/structures NOT yet masked (name+box); regenerate WITH the missed
+   list appended; loop until verifier says "no more objects to add" (cap ~4).
+2. SELECT: verifier classifies each instance: keep = raised off the ground & impedes
+   movement; EXCLUDE stairs (and flat markings/ground cables).
+3. X-RAY FOOTPRINT per object INDEPENDENTLY: NBP colors the FULL plan-view footprint where
+   the object sits — including the hidden/unseen base behind its body ("x-ray") — iterate
+   per object until deterministic + LLM gates pass.
+4. Compose collision v3 = union(footprints) ∪ water ∪ background non-walk; walk-behind =
+   bodies above footprints. Compare vs v2.
+5. Push to A DIFFERENT TAB of the same board: termchart --agent art-v3 (tabs = approaches).
+Pilot room: anchorroom (canonical benchmark), then hydroponics/home-interior-a/salvage-shed
+(the reproducible defect outliers from verify_defects v2: 14.1%/26.8%/9.5%).
+Script: tools/art-pipeline/nbp_v3.py (census/select/xray/compose + per-stage overlays under
+docs/art-options/v3/<room>/). Defect-sweep context: gated fresh rolls exonerated underworks
+(1.8%); home-interior-a overlay shows orange on... interior floor edges (review pending).

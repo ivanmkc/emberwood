@@ -60,7 +60,7 @@ def check(room):
     spec.loader.exec_module(nbw)
     _sys.argv = argv0
     fresh = None
-    for _ in range(2):
+    for _ in range(3):
         img = None
         try:
             resp = cli().models.generate_content(
@@ -79,8 +79,12 @@ def check(room):
         m = np.asarray(img.resize((W, H), Image.NEAREST)).astype(np.int16)
         dg = np.linalg.norm(m - np.array([0, 255, 0], np.int16), axis=2)
         dr = np.linalg.norm(m - np.array([255, 0, 0], np.int16), axis=2)
-        if float((np.minimum(dg, dr) < 100).mean()) >= 0.75:
-            fresh = dg < dr
+        cand = dg < dr
+        pure_ok = float((np.minimum(dg, dr) < 100).mean()) >= 0.75
+        frac_ok = 0.12 <= float(cand.mean()) <= 0.75  # same sanity gate as the pipeline:
+        # an ungated fresh roll that greens the walls indicts the shipped mask falsely
+        if pure_ok and frac_ok:
+            fresh = cand
             break
     if fresh is None:
         return room, None
