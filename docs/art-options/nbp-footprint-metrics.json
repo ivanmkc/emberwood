@@ -1,1 +1,13 @@
-{"snap_purity": 0.956, "play_purity": 0.949, "footprint_fraction": 0.432, "edge_alignment": 0.99, "nonwalk_containment": 0.694, "walk_conflict": 0.147, "bases_only": true, "pass": true}
+{
+  "pass": true,
+  "source": "v4-geometric-cbc-clamped",
+  "method": "correct-by-construction + depth clamp (1.1x) + overlap filter",
+  "white_frac": 0.0191,
+  "geometric_ok": 5,
+  "fallback": 7,
+  "dropped": 0,
+  "impeding": 12,
+  "instances": 66,
+  "thin_suspended": 7,
+  "large_suspended": 4
+}

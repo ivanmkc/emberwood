@@ -88,6 +88,25 @@ RUBRICS = {
         '"perspective_ok": bool, "composition_issues": "short text — overlaps, scale errors, artifacts", '
         '"regressions": "short text — anything that looks broken or placeholder"}'
     ),
+    'collision': (
+        'You are judging a COLLISION OVERLAY for a 2D top-down sci-fi RPG room. The overlay tints a '
+        'room plate image with 4 colors:\n'
+        '  GREEN = walkable floor reachable from the player spawn\n'
+        '  YELLOW = walkable but disconnected from spawn (islands — bad unless tiny)\n'
+        '  RED = blocked (walls, solid objects, water)\n'
+        '  BLUE = ELEVATED ART — elements IN THE AIR above passable ground: overhead cables/wires, '
+        'building overhangs, pylon/tank upper bodies that the player walks BEHIND. Blue over green '
+        'floor is CORRECT (cable crossing walkable ground). Blue is NOT a defect — do NOT penalize it.\n\n'
+        'Rate these dimensions 1-10. Return JSON only:\n'
+        '{"ground_coverage": 1-10 (green covers all visible open floor; no green on walls/roofs), '
+        '"object_blocking": 1-10 (red covers solid object bases; objects are not walkable-through), '
+        '"door_access": 1-10 (doorways/exits have green approaching them; ignore edge-strip exits — '
+        'the bottom/side border is a valid exit even without a visible door), '
+        '"boundary_fit": 1-10 (collision follows the scene geometry; no large misaligned patches), '
+        '"blue_coherence": 1-10 (blue elements hang over green/red coherently — a blue cable over floor '
+        'is correct; blue floating over empty sky with no visible object is wrong), '
+        '"issues": "short text"}'
+    ),
 }
 
 

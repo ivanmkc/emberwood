@@ -1,0 +1,11 @@
+{
+  "room": "anchorroom",
+  "method": "A7-nbp-floorplan",
+  "iou_vs_consensus": 0.441,
+  "canny_edge_alignment": 0.671,
+  "config_space_reach_frac": 0.054,
+  "config_space_reach_px": 90973,
+  "orientation_aligned_frac": 0.962,
+  "orientation_total_lines": 2255,
+  "walk_frac": 0.531
+}

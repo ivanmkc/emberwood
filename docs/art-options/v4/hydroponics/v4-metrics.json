@@ -1,0 +1,281 @@
+{
+  "instances": 78,
+  "impeding": 32,
+  "geometric_ok": 26,
+  "fallback": 6,
+  "walk_frac_v4": 0.429,
+  "grid": true,
+  "elapsed_s": 929.4,
+  "per_instance": [
+    {
+      "id": 3,
+      "name": "control console",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 19,
+      "name": "gas cylinder",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 20,
+      "name": "small tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 22,
+      "name": "barrel",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 24,
+      "name": "control console",
+      "status": "ok",
+      "attempt": 2
+    },
+    {
+      "id": 25,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 30,
+      "name": "floor conduit",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 37,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 38,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 45,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 48,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 49,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 50,
+      "name": "pipe column",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 51,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 56,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 57,
+      "name": "plant tank",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 59,
+      "name": "pipe base",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 60,
+      "name": "floor pipe",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 61,
+      "name": "floor pipe",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 62,
+      "name": "plant tank base",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 63,
+      "name": "fallen machine",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 64,
+      "name": "railing section",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 110,
+            "x1": 122,
+            "yBase": 341
+          },
+          "plan_depth_px": 12,
+          "base_shape": "ellipse"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red dot is a single pixel, which is too small to be a plausible ground footprint for a section of railing. The footprint should extend along the base of the railing.; The overlay only covers a tiny dot, missing the entire length and shape of the railing's ground connection.; The railing is above the floor. The ground footprint should be located directly beneath the railing where its supports attach to the floor."
+      }
+    },
+    {
+      "id": 65,
+      "name": "railing section",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 58,
+            "x1": 412,
+            "yBase": 68
+          },
+          "plan_depth_px": 70,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay covers the entire upper body of the structure, not just the ground footprint.; The overlay covers the entire visible area of the red upper structure, not just its ground contact point, and seems to be for an elevated platform or roof rather than a ground-level railing footprint.; The overlay covers the entire visible area of the red upper object, which does not appear to be a ground-level railing section."
+      }
+    },
+    {
+      "id": 69,
+      "name": "railing post",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 121,
+            "x1": 149,
+            "yBase": 269
+          },
+          "plan_depth_px": 28,
+          "base_shape": "ellipse"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay is on the floor/wall area, not at the base of the railing post.; The red overlay marks a spot on the floor, but there is no railing post visible in the image.; The red overlay does not seem to correspond to a 'railing post'. It highlights an arbitrary spot on the floor."
+      }
+    },
+    {
+      "id": 70,
+      "name": "ac unit fan",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 58,
+            "x1": 118,
+            "yBase": 138
+          },
+          "plan_depth_px": 24,
+          "base_shape": "rect"
+        },
+        "attempt": 2,
+        "gate": "fail",
+        "critique": "The fan is mounted on the wall, not the floor.; The fan is mounted on a wall/unit above the ground, so it should not have a ground footprint itself.; The overlay is placed midway up the object's vertical face instead of at its lowest base where it would actually meet the floor."
+      }
+    },
+    {
+      "id": 71,
+      "name": "ac unit",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 58,
+            "x1": 378,
+            "yBase": 123
+          },
+          "plan_depth_px": 68,
+          "base_shape": "rect"
+        },
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay covers the entire visible area of the ac unit, including its upper body, rather than just the base where it meets the ground.; The red overlay covers the entire visible top surface of the AC unit, not its ground footprint which would be much smaller and located at the base.; The overlay extends far beyond the likely ground footprint of an AC unit in a top-down view, covering a much larger rectangular area than the object itself would occupy."
+      }
+    },
+    {
+      "id": 72,
+      "name": "railing post",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 73,
+      "name": "ground pipe",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 74,
+      "name": "ground pipe",
+      "status": "fallback",
+      "last_attempt": {
+        "geo": {
+          "ground_contact": {
+            "x0": 58,
+            "x1": 184,
+            "yBase": 142
+          },
+          "plan_depth_px": 24,
+          "base_shape": "rect"
+        },
+        "attempt": 1,
+        "gate": "fail",
+        "critique": "The red overlay represents a pipe connecting two vertical pipes, but it is elevated, not resting on the ground, so it should not have a ground footprint.; The overlay incorrectly spans the empty space between two separate vertical pipes; there is no visible horizontal pipe connecting them on the ground."
+      }
+    },
+    {
+      "id": 75,
+      "name": "ground pipe",
+      "status": "ok",
+      "attempt": 1
+    },
+    {
+      "id": 76,
+      "name": "ground pipe",
+      "status": "ok",
+      "attempt": 0
+    },
+    {
+      "id": 77,
+      "name": "railing section",
+      "status": "ok",
+      "attempt": 1
+    }
+  ]
+}

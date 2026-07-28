@@ -1,0 +1,383 @@
+{
+  "instances": 89,
+  "ground_contact": 87,
+  "thin_suspended": 1,
+  "large_suspended": 1,
+  "impeding": 23,
+  "geometric_ok": 9,
+  "fallback": 14,
+  "walk_frac_v4": 0.402,
+  "grid": true,
+  "elapsed_s": 777.2,
+  "per_instance": [
+    {
+      "id": 18,
+      "name": "crate of apples",
+      "status": "fallback",
+      "contact": {
+        "x0": 477,
+        "x1": 488,
+        "yBase": 551
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 12,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is just a tiny dot on the side of the crate and completely misses the rectangular base resting on the floor.; The overlay only covers a tiny point on the left edge, missing the entire base of the crate of apples."
+      }
+    },
+    {
+      "id": 26,
+      "name": "shelving unit",
+      "status": "fallback",
+      "contact": {
+        "x0": 2230,
+        "x1": 2330,
+        "yBase": 1001
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 16,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The shelving unit is located higher up, against the right wall (around x=16-20, y=1-13). The red overlay is at x=12-18, y=36, completely detached from the shelving unit and located on empty floor near the bar.; The overlay is positioned under the counter, not the shelving unit which is located near the top right of the image.; The red overlay is located below the object and does not align with its base or the perspective of the scene."
+      }
+    },
+    {
+      "id": 34,
+      "name": "fruit stall side",
+      "status": "fallback",
+      "contact": {
+        "x0": 188,
+        "x1": 211,
+        "yBase": 1125
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 25,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay is only a tiny square and does not cover the full extent of where the fruit stall structure meets the ground.; The red overlay is a single pixel which is far too small to represent the footprint of the large fruit stall.; The red overlay is a single point, not a footprint covering the full base of the fruit stall."
+      }
+    },
+    {
+      "id": 36,
+      "name": "awning support pole",
+      "status": "ok",
+      "contact": {
+        "x0": 1982,
+        "x1": 2006,
+        "yBase": 1231
+      },
+      "depth": 12,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 42,
+      "name": "stall pillar",
+      "status": "ok",
+      "contact": {
+        "x0": 1286,
+        "x1": 1313,
+        "yBase": 1103
+      },
+      "depth": 27,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 43,
+      "name": "stall pillar",
+      "status": "ok",
+      "contact": {
+        "x0": 1806,
+        "x1": 1832,
+        "yBase": 1099
+      },
+      "depth": 24,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 45,
+      "name": "awning pillar",
+      "status": "fallback",
+      "contact": {
+        "x0": 2013,
+        "x1": 2066,
+        "yBase": 1023
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 28,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is misplaced far to the right of the pillar and does not cover its actual base where it meets the ground.; The pillar meets the ground at the very bottom, but the footprint is drawn halfway up its visible length, missing the actual base.; The red overlay is placed on a background surface, completely disconnected from the base of the visible vertical pillar on the left."
+      }
+    },
+    {
+      "id": 47,
+      "name": "wooden stool",
+      "status": "ok",
+      "contact": {
+        "x0": 2134,
+        "x1": 2193,
+        "yBase": 1007
+      },
+      "depth": 30,
+      "shape": "ellipse",
+      "attempt": 0
+    },
+    {
+      "id": 53,
+      "name": "wooden crate",
+      "status": "fallback",
+      "contact": {
+        "x0": 2264,
+        "x1": 2282,
+        "yBase": 1205
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 8,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay only covers a very small portion of what looks like a tentacle or root, not a wooden crate. Also, it doesn't represent a ground footprint at all, just a random part of the object's body.; The red overlay highlights a small section of a curved dark object (possibly a wire or pipe), not a wooden crate, and does not represent a ground footprint.; The red overlay is placed on an area that looks like part of a pipe or structure, not a wooden crate, and it does not represent a plausible base footprint for any object in that location."
+      }
+    },
+    {
+      "id": 55,
+      "name": "stall base wall",
+      "status": "ok",
+      "contact": {
+        "x0": 1226,
+        "x1": 1260,
+        "yBase": 1247
+      },
+      "depth": 8,
+      "shape": "rect",
+      "attempt": 1
+    },
+    {
+      "id": 56,
+      "name": "stall base wall",
+      "status": "fallback",
+      "contact": {
+        "x0": 1691,
+        "x1": 1845,
+        "yBase": 1143
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 32,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay incorrectly covers the upper horizontal bar of the stall structure, not its ground-level base or footprint.; The red overlay covers the middle of the object, not where it meets the ground. In a 3/4 top-down perspective, the base footprint should be at the very bottom edge of the object's visual representation.; The overlay covers the top counter of the stall wall rather than its base where it would actually intersect the ground in this perspective."
+      }
+    },
+    {
+      "id": 57,
+      "name": "green bin",
+      "status": "fallback",
+      "contact": {
+        "x0": 82,
+        "x1": 234,
+        "yBase": 1276
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 60,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The footprint is placed too high and misses the bottom base of the bin that rests on the ground.; The overlay is positioned in the middle of the object's visual height, completely missing the actual base where it meets the ground."
+      }
+    },
+    {
+      "id": 58,
+      "name": "yellow machine",
+      "status": "ok",
+      "contact": {
+        "x0": 1859,
+        "x1": 1955,
+        "yBase": 1249
+      },
+      "depth": 56,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 62,
+      "name": "stall leg",
+      "status": "ok",
+      "contact": {
+        "x0": 1286,
+        "x1": 1373,
+        "yBase": 1244
+      },
+      "depth": 14,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 63,
+      "name": "stall leg",
+      "status": "fallback",
+      "contact": {
+        "x0": 1674,
+        "x1": 1833,
+        "yBase": 1245
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 32,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay spans horizontally across the stall's front panel instead of covering the compact ground contact area of the vertical wooden leg.; The overlay is a wide horizontal strip that does not match the localized base of a vertical support leg, instead spanning across other structures or empty space."
+      }
+    },
+    {
+      "id": 64,
+      "name": "fruit stand leg",
+      "status": "ok",
+      "contact": {
+        "x0": 1088,
+        "x1": 1125,
+        "yBase": 1209
+      },
+      "depth": 16,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 65,
+      "name": "trash bag",
+      "status": "fallback",
+      "contact": {
+        "x0": 323,
+        "x1": 336,
+        "yBase": 1252
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 10,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay only covers a tiny point instead of the full base of the trash bag.; The red overlay is a tiny dot that barely covers any of the trash bag's base, making it an implausible ground footprint."
+      }
+    },
+    {
+      "id": 66,
+      "name": "fruit stall base",
+      "status": "fallback",
+      "contact": {
+        "x0": 432,
+        "x1": 486,
+        "yBase": 1260
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 24,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay covers a small piece of fruit in a cauldron, not a fruit stall base.; The red overlay is near the top of the object, well above the ground level where the base would be.; The overlay highlights a small area in the middle of the object rather than the much wider base where it meets the ground."
+      }
+    },
+    {
+      "id": 76,
+      "name": "crate of apples",
+      "status": "ok",
+      "contact": {
+        "x0": 670,
+        "x1": 825,
+        "yBase": 1555
+      },
+      "depth": 32,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 77,
+      "name": "crate of vegetables",
+      "status": "fallback",
+      "contact": {
+        "x0": 870,
+        "x1": 965,
+        "yBase": 1546
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 32,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay covers the middle body of the crate and its contents, not its base where it meets the surface.; The overlay only covers the middle section of the crate, missing the left and right sides of its base.; The overlay is positioned too high, covering the front face of the crate rather than the base where it rests on the surface."
+      }
+    },
+    {
+      "id": 79,
+      "name": "ac unit structure",
+      "status": "fallback",
+      "contact": {
+        "x0": 2229,
+        "x1": 2239,
+        "yBase": 1791
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 11,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay only covers a single tiny tile at one corner, entirely missing the vast majority of the large structure's actual ground footprint.; The red overlay is just a single grid cell and misses the rest of the visible base of the structure.; The red overlay covers a small area at the bottom left, but ignores the extensive base footprint visible along the entire left edge and across the bottom where the structure meets the ground."
+      }
+    },
+    {
+      "id": 82,
+      "name": "large ac unit",
+      "status": "fallback",
+      "contact": {
+        "x0": 960,
+        "x1": 1546,
+        "yBase": 1747
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 96,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is a large rectangle spanning most of the width, while the AC unit is a smaller object in the upper right. The footprint is completely disjoint from the object.; The red overlay covers the front panel of the large AC unit, which is above ground level, rather than indicating its ground footprint where it rests on the floor.; The overlay covers the vertical front face of the unit rather than just the horizontal area it occupies on the ground."
+      }
+    },
+    {
+      "id": 86,
+      "name": "railing segment",
+      "status": "fallback",
+      "contact": {
+        "x0": 263,
+        "x1": 677,
+        "yBase": 1750
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 65,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay covers the entire horizontal length of the railing, including its upper parts, not just where it connects to the ground. A ground footprint for a railing should typically be a thin line or series of points representing its base posts or bottom rail, not a large rectangular block.; The overlay covers the entire visual height of the railing sprite, including the upper body, instead of just the narrow base where it would touch the floor in a 3/4 perspective."
+      }
+    }
+  ]
+}

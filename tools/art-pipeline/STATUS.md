@@ -615,6 +615,47 @@ Visualization: green boxes = census-covered, red boxes = missed (none for anchor
 No stitched-world panorama/blend outputs available yet. Seam baseline (anchor-bazaar) stands:
 edge continuation 0.289, walk Jaccard 0.0, color chi2 70.87.
 
+### Mechanism debug: WHY nianticlabs/footprints fails on pixel art
+VERDICT: genuine domain gap in LEARNED TEXTURE FEATURES, not a port/normalization bug.
+
+Evidence chain:
+1. PORT IS CORRECT: Matterport model on its own test photos produces valid ground predictions
+   (lobby.jpg: 20.2% visible ground >0.5, chinatown.jpg: 66.3%). The weights loaded correctly,
+   channel order is right, resize mode works.
+
+2. MECHANISM (from intermediate heatmaps): The model's visible-ground logit map on photos shows
+   a clear spatial gradient — strongly positive (sigmoid->1.0) on floor regions (typically lower
+   image half), strongly negative (sigmoid->0.0) on walls/ceiling. On pixel art, the logit map is
+   UNIFORMLY deeply negative (range [-34.7, +0.3], mean -17.9) — the model's early ResNet34
+   features detect ZERO floor-like texture patterns anywhere in the image. The hidden-ground
+   channel is slightly less pessimistic (some bottom-edge warmth) but still mostly below threshold.
+
+3. INPUT-STATISTICS VARIANTS (coverage at >0.5 combined ground probability):
+   Variant                    Coverage    Delta vs raw
+   photo-lobby (sanity)        29.9%      (baseline: model works)
+   photo-chinatown (sanity)    66.3%      (baseline: model works)
+   pixelart-raw                 1.1%      ---
+   pixelart-blurred (gauss15)   1.2%      +0.1pp (no effect)
+   pixelart-histmatch (lobby)   9.5%      +8.4pp (partial rescue)
+   pixelart-gamma22             4.2%      +3.1pp (minor)
+   pixelart-kitti-res           1.1%      +0.0pp (no effect)
+
+   INTERPRETATION: Blurring away pixel-art's hard edges has zero effect — the failure is NOT
+   about high-frequency edge statistics. Resolution change (KITTI-ish) also has zero effect.
+   Histogram matching to a natural photo partially rescues hidden ground (+8.4pp) by shifting
+   the global color palette into the training distribution, but visible ground stays at 0.0% —
+   the model requires LOCAL texture patterns (subtle shading gradients, material micro-texture,
+   perspective foreshortening) that pixel art fundamentally lacks.
+
+4. ROOT CAUSE: The Matterport-trained ResNet34 encoder learned floor recognition from
+   photorealistic indoor textures (wood grain, carpet pile, tile reflections, subtle lighting
+   gradients). Pixel art uses flat color fills, hard outlines, and dithered shading — none of
+   these trigger the learned floor detectors. This is not fixable with input preprocessing;
+   it would require fine-tuning or a completely different architecture.
+
+Heatmap artifacts: docs/art-options/bench/depth/niantic-debug-{photo-lobby,photo-chinatown,
+pixelart-raw,pixelart-blurred,pixelart-histmatch,pixelart-gamma22,pixelart-kitti-res}.jpg
+
 ### Final track summary
 The lit-bench-depth track benchmarked 4 pretrained-model / classic CV methods (Depth Anything
 V2, nianticlabs/footprints, perspective detectors, morphological baseline) plus 2 follow-on
@@ -659,6 +700,8 @@ A3-v4-geometric         0.700    -        -        0.700
 morph-walk              0.489    0.507    0.761    0.586
 shipped-collision       0.536    0.529    0.300    0.455
 A2-v3-xray              0.529    -        -        0.529
+A4-amodal               0.192    0.399    0.413    0.335
+A7-nbp-floorplan        0.441    0.252    0.302    0.332
 A5-depth-walk           0.360    0.385    0.239    0.328
 A1-dense-footprint      -        0.007    0.106    0.057
 morph-baseline          0.012    0.043    0.067    0.041
@@ -670,14 +713,18 @@ Method                  anchor   bazaar   plaza
 A1-dense-walk           0.091    0.522    0.511
 shipped-collision       0.993    0.982    0.992
 A2-v3-xray              0.366    -        -
+A4-amodal               0.482    0.420    0.410
 A5-depth-walk           0.997    0.956    1.000
 A5-depth-footprint      0.364    0.474    1.000
+A7-nbp-floorplan        0.054    0.034    0.406
 A6-niantic              0.798    1.000    0.282
 
 ### Canny edge alignment
 Method                  anchor   bazaar   plaza
 A1-dense-walk           0.527    0.709    0.288
+A7-nbp-floorplan        0.671    0.519    0.308
 A2-v3-xray              0.490    -        -
+A4-amodal               0.185    0.282    0.312
 shipped-collision       0.224    0.266    0.250
 A5-depth-walk           0.078    0.094    0.008
 A5-depth-footprint      0.033    0.027    0.014
@@ -722,10 +769,55 @@ bazaar (one roll at 0.315). Outpaint-from-anchor-edge (C3) is most consistent (0
 and best for non-anchor scenes by inheriting the anchor's alignment. For scene GENERATION,
 prompt-only is sufficient; for stitched-world EXPANSION, outpaint is recommended.
 
+### Completed: A4 amodal-completion footprints
+Per-object NBP amodal completion (pix2gestalt-style: paint full unoccluded object on
+magenta-keyed crop, extract bottom-band footprint scaled by VLM depth ratio). All 3 scenes:
+
+| Scene              | IoU vs consensus | Canny edge | Config reach | Walk frac | Instances |
+|--------------------|-----------------|------------|-------------|-----------|-----------|
+| anchorroom         | 0.192           | 0.185      | 0.482       | 0.286     | 100/100   |
+| night-bazaar       | 0.399           | 0.282      | 0.420       | 0.426     | 97/97     |
+| plaza-market-inside| 0.413           | 0.312      | 0.410       | 0.290     | 36/36     |
+| **mean**           | **0.335**       | **0.260**  | **0.437**   | **0.334** |           |
+
+FINDING 10: A4 amodal footprints are WEAKER than A1 dense walk (0.335 vs 0.739 mean IoU) and
+weaker than A3 v4 geometric (0.700 on anchorroom). The amodal completion + VLM depth-ratio
+pipeline successfully paints full unoccluded objects (100% ok rate, zero fallbacks), but the
+resulting footprints are too aggressive — particularly on anchorroom where 100 instances carve
+large blocked regions that disagree with the NBP consensus (0.192 IoU). The method achieves
+moderate config-space reach (0.437 mean) — better than A1 (0.375) but worse than shipped
+(0.989). The per-object approach's fundamental issue: it operates on ALL census instances
+(36-100) rather than just the impeding minority (10-15), so it blocks too much of the floor.
+This matches the literature's finding that dense formulations (Watson CVPR20) outperform
+per-object amodal pipelines for ground-occupancy problems.
+
+### Completed: A7 screen-space floorplan (NBP arm)
+NBP redraws the scene as an architect-style FLOORPLAN in the same camera/screen space
+(pixel-aligned overlay). Convention: white=walkable, black lines=walls, gray=object
+footprints, blue=water. Best-of-3 rolls gated on Canny agreement vs source plate.
+
+| Scene              | IoU vs consensus | Canny edge | Config reach | Walk frac | Canny agree |
+|--------------------|-----------------|------------|-------------|-----------|-------------|
+| anchorroom         | 0.441           | 0.671      | 0.054       | 0.531     | 0.897       |
+| night-bazaar       | 0.252           | 0.519      | 0.034       | 0.462     | 0.943       |
+| plaza-market-inside| 0.302           | 0.308      | 0.406       | 0.452     | 0.827       |
+| **mean**           | **0.332**       | **0.499**  | **0.165**   | **0.482** | **0.889**   |
+
+FINDING 11: A7 floorplans achieve HIGH Canny agreement with the source (0.83-0.94) —
+the model preserves object positions well — but moderate IoU (mean 0.332, between A4 and
+shipped). The floorplan format produces more gray footprint area than the consensus expects
+(walk_frac 0.45-0.53 vs consensus 0.22-0.31), and config-space reach is very low on anchor
+and bazaar (0.034-0.054) because the gray footprint blobs fragment the walk space. The
+method's strength is Canny alignment: 0.499 mean vs A1's 0.508, making it the second-best
+edge-following method after A1, confirming the screen-space preservation works.
+
+GPT-Image-2 arm: BLOCKED — no OPENAI_API_KEY in environment. Ivan explicitly requested
+this comparison. The GPT arm code is implemented and runs automatically when the key is set
+(env OPENAI_API_KEY). Leaderboard cells marked "blocked: no API key".
+
 ### In-progress methods
-- A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation
-- A4 (amodal-completion footprints): running on 3 scenes (census + per-object NBP amodal
-  completion + code-drawn footprint extraction)
+- A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation on
+  remaining scenes (anchorroom completed: IoU 0.700)
 
 ### Board
 termchart --project emberwood --agent bench: literature method bake-off comparison board
@@ -835,3 +927,196 @@ not found by manual inspection.
   night-bazaar, plaza-market-inside. All hashes verified matching.
 
 npm test: 27/27 (was 26/26, +1 new masks test).
+
+## Agent align-masks — v5 rebuild: anchorroom with v4 geometric footprints (2026-07-28)
+Consumed v4 no-grid geometric footprints (method v4-geometric-nogrid, 3.2% coverage,
+promoted by v4-footprints agent) and re-ran segment_room.py for anchorroom.
+
+**Before/after (anchorroom):**
+| Metric           | v2 compose | v5 (fp only) | v5 (fp + overhead) |
+|------------------|-----------:|-------------:|-------------------:|
+| defect_frac      |     5.10%  |       2.99%  |          **1.24%** |
+| missed_walkable  |     0.77%  |       2.95%  |             1.06%  |
+| false_walkable   |     4.33%  |       0.04%  |             0.18%  |
+| walk_frac        |     0.566  |       0.546  |             0.454  |
+
+v4 geometric footprints eliminated nearly all false-walkable floor (4.3% -> 0.04%).
+overhead.png subtraction freed 7,893 suspended pixels (cables, hanging lanterns)
+that were incorrectly blocking, cutting missed-walkable from 2.95% to 1.06%.
+Net defect rate improved from 5.1% to 1.24%.
+
+**Acceptance battery (final, with overhead):**
+- npm test: 27/27 (plateHash verified matching)
+- BFS exit connectivity: all exits (e, w, legacy) reachable from spawn
+- verify_defects: 1.24% (under 10% threshold, best ever)
+- Judge (median-of-3): ground_coverage=9, object_blocking=8, boundary_fit=7
+- overhead.png: 7,893 suspended px subtracted from blocked
+
+night-bazaar + plaza-market-inside: still on v2 compose (v4 footprints not yet
+emitted for these scenes; noted as pending).
+
+## Agent v4-footprints — geometric footprint pipeline (2026-07-28)
+
+### Design (literature-based)
+Watson CVPR2020 Footprints: dense prediction beats per-object painting for hidden ground.
+MonoLayout WACV2020: footprints from GEOMETRY (3D box -> ground plane projection), not painting.
+Our v4: VLM estimates numeric params (ground_contact {x0,x1,yBase}, plan_depth_px, base_shape),
+CODE draws the footprint polygon deterministically. Fixed axis-aligned 3/4 camera makes BEV
+projection a pure y-shift. Gridline conditioning (16px pitch, labeled axes every 4 cells) gives
+the VLM pixel-accurate coordinate reference (analogues: Curved Diffusion per-pixel coordinate
+conditioning, LayoutDiffusion region conditioning, proven nbp_grid_walk.py).
+
+### Pipeline stages (nbp_v4.py)
+1. CENSUS (reused from v3): iterative NBP instance-segmentation overlay + VLM miss-list loop.
+2. SELECT: improved prompt — only FREESTANDING objects whose base sits on the floor; explicitly
+   excludes wall-mounted pipes/vents/AC units, background walls, flat markings. Achieves
+   12-15/132 selection (vs v3's 10/41, vs the failed 70/84 with the old generic prompt).
+3. GEOMETRIC FOOTPRINT per instance: VLM estimates numbers with gridline-conditioned crop;
+   deterministic sanity gates (yBase in lower third, depth/width ratio in [0.15, 1.2]);
+   code draws rect/ellipse; LLM gate median-of-3 with reflective retry (critique fed back).
+   Parallel processing (2 instances at a time, 3 gate votes concurrent).
+4. COMPOSE: union(footprints) | water | ~walk; bodies above footprints = walk-behind.
+
+### Results — anchorroom (benchmark room)
+Metric              v2 (shipped)  v3 (x-ray)  v4 (geometric)
+defect_frac         25.1%         20.7%       10.1%           <- 2.5x improvement over v2
+walk_frac           0.566         0.424       0.362
+instances           -             41          132
+impeding            -             10          12
+geometric_ok        -             -           8/12 (67%)
+fallback            -             -           4/12
+
+### Gridline conditioning A/B (anchorroom)
+Condition           Geometric OK  First-Try Rate  Defect Rate
+Grid ON (16px)      8/12 (67%)    7/8 = 88%       10.1%
+Grid OFF            10/15 (67%)   2/10 = 20%      13.4%
+
+Grid conditioning dramatically improves first-try accuracy (88% vs 20%) and overall defect
+rate (10.1% vs 13.4%). NOTE: this is for the FOOTPRINT estimation task. The lit-bench-prompt
+agent found grid conditioning COUNTERPRODUCTIVE for scene GENERATION (grid artifacts). The
+difference is the task: scene generation treats the grid as unwanted content, while footprint
+estimation uses it as a coordinate system.
+
+### Extended pilot (defect outlier rooms)
+Room              v2 (shipped)  v4 (geometric)  Geometric OK  Delta
+anchorroom        25.1%         10.1%           8/12          -15.0pp (2.5x)
+hydroponics       21.4%         14.7%           26/32         -6.7pp
+home-interior-a   27.5%         10.0%           8/12          -17.5pp (2.8x)
+
+v4 beats v2 on ALL tested rooms. Home-interior-a shows the largest improvement (2.8x).
+
+### Failure modes
+Objects that consistently fall back to lower-band blocking:
+- BARREL STACKS: VLM struggles with yBase when multiple stacked objects are present
+  (stacked means the "base" concept is ambiguous).
+- FALLEN/IRREGULAR OBJECTS: VLM estimates extend into wrong floor areas; reflective retry
+  does not converge because the critique is positional ("extends to the left") but the VLM
+  re-estimates in a different wrong direction.
+- RAILINGS: depth_ratio consistently near 0 (railings are thin lines — their plan depth
+  approaches zero, which is geometrically correct but useless as collision).
+
+### Board
+termchart --project emberwood --agent art-v3: v4 section with defect tables, A/B results,
+Image overlays (footprints-on-source, collision-v4-on-source) for all 3 rooms, and
+method comparison text.
+
+### Files delivered
+- tools/art-pipeline/nbp_v4.py — the pipeline script
+- docs/art-options/v4/anchorroom/ — 19 files (census, footprints, collision, metrics, A/B)
+- docs/art-options/v4/hydroponics/ — 10 files
+- docs/art-options/v4/home-interior-a/ — 10 files
+
+## Ivan directive: collision overlays get a 4th color for FOREGROUND/overhead
+All collision overlays (collision-preview.jpg, board layer stacks, defect/judge
+composites) must render the overhead occlude-only layer (wires, hanging lanterns —
+overhead.png) in its own color, distinct from green=walkable-reachable /
+yellow=walkable-unreachable / red=blocked. CONVENTION: BLUE #4C8CFF tint = overhead
+(occludes, never blocks). Renderers to update: room_factory install step, align-masks
+preview/judge scripts, bench board overlay cards + legends. Regenerate previews for any
+room with overhead.png (anchorroom now; bazaar/plaza when v5 lands).
+
+## Ivan refinement: BLUE overlay class = everything IN THE AIR (elevated, non-blocking)
+Blue in collision overlays now covers ALL elevated art, not just thin occluders:
+- thin suspended occluders (wires, lanterns — overhead.png)
+- building/roof overhangs (no-occlude tier)
+- UPPER BODIES of tall objects above their footprints (spire/pylon tops, tank glass —
+  the liberated walk-behind regions: base blocks red, top is air = blue)
+Semantics: blue = "elevated art here; ground beneath is passable (or occluded-passable)".
+Green stays plain open floor; red = ground-contact blocking; yellow = unreachable.
+Derivation in overlay renderers: blue_px = overhead.png ∪ (blocking-instance body masks
+minus their footprint/blocked regions where collision is walkable). GAMEPLAY UNCHANGED:
+spire tops remain y-sorted cutouts (an always-on-top spire would wrongly cover a player
+standing south of it); this is a visualization/data-classing upgrade — and it removes the
+recurring judge false-alarm "green on object bodies" by giving those pixels their own class.
+
+## Ivan generation rules (standing, 2026-07-28)
+1. Ground wires/cables that can be stepped over NEVER block (already enforced: walk-v2
+   prompt green + per-component pipe step-over; keep in all future walk prompts).
+2. SCENE GENERATION: no small blocking clutter sprinkled through walking areas — floors
+   decorated only with FLAT non-blocking detail (cables, stains, markings, grates);
+   blocking objects live at edges/deliberate clusters. Baked into gen_scene BASE_STYLE;
+   applies to ALL future scenes, outpaints, and blend bands.
+3. No people/characters in generated scenes (already enforced + judge-gated).
+
+## Agent v4-footprints — correct-by-construction + v5 emission (2026-07-28)
+
+### Correct-by-construction update (Ivan directive)
+Reduced estimated degrees of freedom from 5 to 2:
+- yBase: derived from census instance mask bottom (constructed, not estimated)
+- x-extent: derived from mask bottom-band horizontal range (constructed)
+- VLM estimates ONLY plan_depth_px and base_shape (2 DoF)
+- Every parameter derivable from data we already trust is one the VLM cannot get wrong
+
+### Overhead taxonomy
+After census, each instance classified deterministically (mask proximity to walkable
+floor within 10px) and by VLM:
+- ground-contact → candidate for impeding selection → footprint
+- thin-suspended (mask <13px thick) → overhead.png (occlude-only)
+- large-suspended (mask ≥13px thick) → no mask (player walks under, drawn on top)
+
+### v5 emission results (3 focus scenes)
+| Room | Instances | Impeding | Geo OK | Fallback | Thin Susp | Large Susp | FP% |
+|------|-----------|----------|--------|----------|-----------|------------|------|
+| anchorroom | 132 | 12 | 8 | 4 | 5 | 3 | 2.54% |
+| night-bazaar | 83 | 17 | 5 | 12 | 0 | 1 | 1.68% |
+| plaza-market-inside | 47 | 11 | 7 | 4 | 1 | 3 | 6.08% |
+
+Emitted files per room:
+- nbp-footprint.png + nbp-footprint-metrics.json (pass:true, source: v4-geometric-cbc)
+- overhead.png (anchorroom: 5 instances; plaza: 1 instance; night-bazaar: none)
+- v4/ directory with census, collision, footprint overlays
+
+### Failure modes (night-bazaar/plaza)
+- High fallback rate on night-bazaar (12/17): fruit crates, noodle stall cabinets, and
+  foreground barrier walls consistently confused the VLM — constructed yBase is correct
+  but depth estimates were consistently rejected by the gate. Lower-band fallback is a
+  reasonable safety net for these cases.
+- Plaza fared better (4/11 fallback): shelving units and one stool fell back.
+
+### Board
+Pushed to termchart --project emberwood --agent art-v3: v5 emission summary table,
+footprint overlays for all 3 scenes, method comparison text.
+
+## Ivan directive: NEW BENCH METHOD A7 — screen-space FLOORPLAN generation
+Ask the image model to redraw each scene as an architect-style FLOORPLAN kept in the SAME
+camera/screen space as the plate (NOT rectified to bird's-eye) — same grid, same
+perspective, pixel-aligned so it overlays the original. Two arms: NBP (gemini-3-pro-image)
+and GPT-Image-2 for comparison (NOTE: no OPENAI_API_KEY anywhere in env/profile — the GPT
+arm is BLOCKED until Ivan provides a key; implement the harness so the arm runs the moment
+a key appears; report the block, don't fake the cells).
+Prompt sketch: "Redraw this EXACT scene as an architect floorplan in the same screen space,
+every position pixel-aligned for overlay: white = walkable floor, black lines = wall bases,
+solid gray = each object's full plan-view ground footprint (including hidden base), blue =
+water, faint 16px tile grid preserved." Extraction: white->walk mask, gray shapes->
+footprints, overlay-alignment score (Canny agreement vs plate), then the standard evaluator
+(IoU vs consensus, config-space, pairwise forced choice) + an ImageLayers overlay stack on
+the bench board (plate/floorplan toggle — the overlay IS the demo).
+
+## Ivan directive: SHIPPING masks use 5-roll consensus walkability (regression call)
+The 4-color shipping masks regressed by consuming single walk rolls. From now on the
+walkability layer that segment_room consumes = the 5-ROLL MAJORITY CONSENSUS (gated rolls,
+per-pixel vote — bench nroll_consensus.py machinery), written as nbp-walk.png with
+metrics {method: consensus5, rolls_accepted, mean_agreement, pass:true}. NOTE: bench
+consensus masks for anchorroom + night-bazaar are STALE at the seam (blend band changed
+both plates after they were built) — REGENERATE those two; plaza-market-inside's is
+current and reusable. Applies to the in-flight rebuilds (#81-83) and every future room.

@@ -1,0 +1,205 @@
+{
+  "instances": 66,
+  "ground_contact": 55,
+  "thin_suspended": 7,
+  "large_suspended": 4,
+  "impeding": 12,
+  "geometric_ok": 5,
+  "fallback": 7,
+  "walk_frac_v4": 0.382,
+  "grid": true,
+  "elapsed_s": 557.4,
+  "per_instance": [
+    {
+      "id": 1,
+      "name": "pipe structure",
+      "status": "fallback",
+      "contact": {
+        "x0": 580,
+        "x1": 630,
+        "yBase": 438
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 25,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is a horizontal line segment, which does not plausibly represent a full plan-view ground footprint for the vertical pipe structure.; The red overlay is just a small dot on a vertical pipe and does not represent the ground footprint of the extensive pipe structure seen on the wall.; The red overlay is placed on a wall-mounted pipe or handle, not on a ground-level structure, so it doesn't represent a ground footprint."
+      }
+    },
+    {
+      "id": 5,
+      "name": "plaza market stall",
+      "status": "fallback",
+      "contact": {
+        "x0": 915,
+        "x1": 1487,
+        "yBase": 789
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 140,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay covers the vertical front wall and the ground in front of the stall, rather than representing the actual base where the structure meets the floor.; The footprint extends significantly up the vertical front face of the building, covering the walls and entrance, rather than just the area it occupies on the ground."
+      }
+    },
+    {
+      "id": 23,
+      "name": "large machinery",
+      "status": "fallback",
+      "contact": {
+        "x0": 2235,
+        "x1": 2399,
+        "yBase": 848
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 60,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red area only covers a portion of the floor area beneath the machinery on the right side, ignoring the rest of the machinery footprint and incorrectly extending far beyond its right edge.; The overlay only covers a portion of the right side and doesn't span the full base of the large machinery complex.; The red overlay is far to the right of the actual machine (which is centered around column 8, rows 24-38), instead covering empty floor and a different background structure."
+      }
+    },
+    {
+      "id": 26,
+      "name": "plant tank",
+      "status": "fallback",
+      "contact": {
+        "x0": 642,
+        "x1": 781,
+        "yBase": 596
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 70,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay is placed too high, covering the middle of the tank's upper body instead of the narrow base where it actually touches the floor.; The overlay is positioned midway up the object, covering the plant rather than the base where the tank actually meets the floor.; The overlay is positioned too high, covering the midsection of the plant rather than the narrow base where it actually meets the floor."
+      }
+    },
+    {
+      "id": 30,
+      "name": "plant tank",
+      "status": "ok",
+      "contact": {
+        "x0": 643,
+        "x1": 798,
+        "yBase": 781
+      },
+      "depth": 55,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 32,
+      "name": "dark entrance",
+      "status": "fallback",
+      "contact": {
+        "x0": 1537,
+        "x1": 1641,
+        "yBase": 791
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 16,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is placed over an open doorway or archway, but it only highlights a narrow strip across the threshold. A full ground footprint for an entrance should cover the entire walkable area connecting the adjacent spaces, not just a line separating them.; The red overlay is located in front of the orange wall, not at the base of the dark entrance area on the left.; The overlay only covers a thin strip at the bottom of the visible doorway, missing the actual ground space the entrance occupies. An entrance footprint should extend back into the space to represent the passable area, not just a line."
+      }
+    },
+    {
+      "id": 33,
+      "name": "small tank",
+      "status": "ok",
+      "contact": {
+        "x0": 2133,
+        "x1": 2223,
+        "yBase": 801
+      },
+      "depth": 31,
+      "shape": "ellipse",
+      "attempt": 0
+    },
+    {
+      "id": 41,
+      "name": "plant tank",
+      "status": "fallback",
+      "contact": {
+        "x0": 649,
+        "x1": 818,
+        "yBase": 1333
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 60,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay incorrectly covers the upper leafy part of the plant tank instead of the base where it meets the ground.; The footprint is positioned in the middle of the object's height rather than at its base where it meets the ground.; The overlay is placed too high up on the sprite; a ground footprint should be positioned at the very bottom where the object's base meets the floor."
+      }
+    },
+    {
+      "id": 42,
+      "name": "plant tank",
+      "status": "fallback",
+      "contact": {
+        "x0": 2200,
+        "x1": 2323,
+        "yBase": 1335
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 61,
+        "shape": "ellipse",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The plant tank is in a vertical glass container. The footprint should be at the base of this container, not midway up the plant.; The plant tank meets the floor at a narrow, roughly circular/cylindrical base, but the red footprint incorrectly covers the wide canopy of the plant, far exceeding the actual floor contact area.; The red overlay is drawn over the leafy canopy of the plant, far above the ground level where the plant tank's base would actually meet the floor."
+      }
+    },
+    {
+      "id": 44,
+      "name": "machinery part",
+      "status": "ok",
+      "contact": {
+        "x0": 2199,
+        "x1": 2353,
+        "yBase": 1502
+      },
+      "depth": 51,
+      "shape": "ellipse",
+      "attempt": 1
+    },
+    {
+      "id": 45,
+      "name": "crate",
+      "status": "ok",
+      "contact": {
+        "x0": 1059,
+        "x1": 1100,
+        "yBase": 1554
+      },
+      "depth": 45,
+      "shape": "rect",
+      "attempt": 2
+    },
+    {
+      "id": 46,
+      "name": "crate",
+      "status": "ok",
+      "contact": {
+        "x0": 893,
+        "x1": 1053,
+        "yBase": 1555
+      },
+      "depth": 53,
+      "shape": "rect",
+      "attempt": 0
+    }
+  ]
+}

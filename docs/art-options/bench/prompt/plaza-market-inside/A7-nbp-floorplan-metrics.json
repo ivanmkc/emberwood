@@ -1,0 +1,11 @@
+{
+  "room": "plaza-market-inside",
+  "method": "A7-nbp-floorplan",
+  "iou_vs_consensus": 0.302,
+  "canny_edge_alignment": 0.308,
+  "config_space_reach_frac": 0.406,
+  "config_space_reach_px": 657571,
+  "orientation_aligned_frac": 0.844,
+  "orientation_total_lines": 1700,
+  "walk_frac": 0.452
+}

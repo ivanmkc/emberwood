@@ -1,0 +1,50 @@
+{
+  "room": "anchorroom",
+  "nbp": {
+    "method": "A7-nbp-floorplan",
+    "canny_agreement_floorplan": 0.897,
+    "gate": "pass",
+    "metrics": {
+      "room": "anchorroom",
+      "method": "A7-nbp-floorplan",
+      "iou_vs_consensus": 0.441,
+      "canny_edge_alignment": 0.671,
+      "config_space_reach_frac": 0.054,
+      "config_space_reach_px": 90973,
+      "orientation_aligned_frac": 0.962,
+      "orientation_total_lines": 2255,
+      "walk_frac": 0.531
+    },
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "canny_agreement": 0.87,
+        "walk_frac": 0.38,
+        "footprint_frac": 0.434,
+        "water_frac": 0.053
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "canny_agreement": 0.875,
+        "walk_frac": 0.338,
+        "footprint_frac": 0.464,
+        "water_frac": 0.052
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "canny_agreement": 0.897,
+        "walk_frac": 0.531,
+        "footprint_frac": 0.295,
+        "water_frac": 0.052
+      }
+    ]
+  },
+  "gpt": {
+    "method": "A7-gpt-floorplan",
+    "blocked": true,
+    "reason": "no OPENAI_API_KEY in environment"
+  }
+}
