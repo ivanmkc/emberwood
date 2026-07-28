@@ -1,0 +1,33 @@
+{
+ "anchorroom": {
+  "nbp": {
+   "baseline_median_frac": 0.0526,
+   "updated": "2026-07-28",
+   "note": "pre-consensus single-roll median"
+  },
+  "nbp_consensus": {
+   "baseline_median_frac": 0.0077,
+   "updated": "2026-07-28",
+   "note": "post-consensus5 median"
+  }
+ },
+ "night-bazaar": {
+  "gpt": {
+   "baseline_median_frac": 0.0384,
+   "updated": "2026-07-28",
+   "note": "GPT-Image-2 wires+signs median of 5 rolls (range 0.035-0.073)"
+  }
+ },
+ "plaza-market-inside": {
+  "nbp": {
+   "baseline_median_frac": 0.0363,
+   "updated": "2026-07-28",
+   "note": "pre-consensus single-roll median"
+  },
+  "nbp_consensus": {
+   "baseline_median_frac": 0.0074,
+   "updated": "2026-07-28",
+   "note": "post-consensus5 median"
+  }
+ }
+}
