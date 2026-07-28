@@ -1648,6 +1648,17 @@ export function createGame(canvas, input, art) {
     const p = g.player;
     if (p.invuln > 0 && Math.floor(p.invuln * 14) % 2 === 0) return;
     const a = art.chars.player;
+    if (a && a.left && !a._rightFixed) {
+      // the sheet's 'right' frame is left-facing art (mislabeled); rebuild
+      // right as a mirror of the verified-correct left frame
+      const c = document.createElement('canvas');
+      c.width = a.left.width; c.height = a.left.height;
+      const cc = c.getContext('2d');
+      cc.translate(c.width, 0); cc.scale(-1, 1);
+      cc.drawImage(a.left, 0, 0);
+      a.right = c;
+      a._rightFixed = true;
+    }
     if (a && a[p.dir]) {
       if (p.moving) {
         const frames = stepFrames(a[p.dir], p.dir);
