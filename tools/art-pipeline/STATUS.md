@@ -980,3 +980,12 @@ minus their footprint/blocked regions where collision is walkable). GAMEPLAY UNC
 spire tops remain y-sorted cutouts (an always-on-top spire would wrongly cover a player
 standing south of it); this is a visualization/data-classing upgrade — and it removes the
 recurring judge false-alarm "green on object bodies" by giving those pixels their own class.
+
+## Ivan generation rules (standing, 2026-07-28)
+1. Ground wires/cables that can be stepped over NEVER block (already enforced: walk-v2
+   prompt green + per-component pipe step-over; keep in all future walk prompts).
+2. SCENE GENERATION: no small blocking clutter sprinkled through walking areas — floors
+   decorated only with FLAT non-blocking detail (cables, stains, markings, grates);
+   blocking objects live at edges/deliberate clusters. Baked into gen_scene BASE_STYLE;
+   applies to ALL future scenes, outpaints, and blend bands.
+3. No people/characters in generated scenes (already enforced + judge-gated).
