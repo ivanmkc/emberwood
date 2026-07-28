@@ -436,6 +436,49 @@ Also queued: v4 geometric footprints (run 23), collision-vs-in-game alignment (#
 masks for the 5 door/passage-edited plates), defect outliers (hydroponics/home-interior-a/
 salvage-shed).
 
+## Agent stitched-world — Run 24 implementation log
+
+WORLD GRID LAYOUT:
+- world_layout.py: BFS planar embedding from exit graph, detects 2 conflicts:
+  residential wants (0,0)=anchorroom, rooftops wants (1,0)=repair-bay
+  (zero-displacement cycle: anchor→repair-bay→hydro→canal-docks→residential)
+- Fix: rewire canal-docks.n→residential → night-bazaar.n→residential;
+  canal-docks loses north exit, residential.s retargets to night-bazaar
+- Layout (13 exterior, 7×4 grid):
+  y=-2: observatory(0,-2)
+  y=-1: residential(-1,-1) rooftops(0,-1)
+  y= 0: outskirts(-3) gate-wall(-2) night-bazaar(-1) ANCHOR(0) repair-bay(1) transit(2)
+  y=+1: canal-docks(0) hydroponics(1) underworks(2) power-plant(3)
+- gen_rooms_index.py exports WORLD_LAYOUT + INTERIOR_ROOMS to src/rooms/index.js
+- Lock invariant: all 4 grant rooms reachable without their flags ✓
+
+ENGINE (game.js):
+- World mode activates when loading any exterior room; all 13 rooms loaded at once
+- worldMaskBlocked: collision samples correct room's per-pixel mask via
+  floor(wx/640)→grid cell→local offset; floor+clamp (round caused OOB at boundaries)
+- renderWorld: draws all visible room plates, emissive layers, fg cutouts,
+  y-sorted entities at grid offsets; vignette
+- openWorldBorders: clears 3px solid border in collision masks at exit strip
+  locations so players physically walk through room boundaries
+- Exit handling: outdoor edge exits removed (seamless); door exits remain as warps;
+  locked exits block at strips; interactTarget checks hotspots with world offsets
+- Camera clamps to mega-bounds; tracks current room cell for mapId + music
+- ?room= boot param spawns at correct world-coordinate position
+- 26/26 node tests pass ✓
+
+VERIFIED CROSSINGS:
+- anchorroom→repair-bay (east): player walks from x=620 to x=745 ✓
+- repair-bay→anchorroom (west): position continuity ✓
+- anchorroom→night-bazaar (west): x=15 → x=-3, crosses boundary ✓
+- Movement in repair-bay: walk at 72px/s within the room ✓
+
+KNOWN OPEN ITEMS:
+- night-bazaar lacks a north exit strip → residential cluster not seamlessly reachable
+  (needs mask regen by align-masks agent)
+- Scale normalization not yet implemented (Run 24 item 4)
+- Stitched panorama screenshot + holistic NBP judge not yet done
+- Save periodicity: world mode should save on room transitions, not per-frame
+
 ## Run 25 — Ivan directive: implement ALL related literature methods, compare (5-hour bake-off)
 For each problem we hit, implement the literature-equivalent methods and benchmark them on
 the 3 focus scenes (anchorroom, night-bazaar, plaza-market-inside) with advanced
