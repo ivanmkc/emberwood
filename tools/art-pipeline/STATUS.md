@@ -966,3 +966,17 @@ yellow=walkable-unreachable / red=blocked. CONVENTION: BLUE #4C8CFF tint = overh
 (occludes, never blocks). Renderers to update: room_factory install step, align-masks
 preview/judge scripts, bench board overlay cards + legends. Regenerate previews for any
 room with overhead.png (anchorroom now; bazaar/plaza when v5 lands).
+
+## Ivan refinement: BLUE overlay class = everything IN THE AIR (elevated, non-blocking)
+Blue in collision overlays now covers ALL elevated art, not just thin occluders:
+- thin suspended occluders (wires, lanterns — overhead.png)
+- building/roof overhangs (no-occlude tier)
+- UPPER BODIES of tall objects above their footprints (spire/pylon tops, tank glass —
+  the liberated walk-behind regions: base blocks red, top is air = blue)
+Semantics: blue = "elevated art here; ground beneath is passable (or occluded-passable)".
+Green stays plain open floor; red = ground-contact blocking; yellow = unreachable.
+Derivation in overlay renderers: blue_px = overhead.png ∪ (blocking-instance body masks
+minus their footprint/blocked regions where collision is walkable). GAMEPLAY UNCHANGED:
+spire tops remain y-sorted cutouts (an always-on-top spire would wrongly cover a player
+standing south of it); this is a visualization/data-classing upgrade — and it removes the
+recurring judge false-alarm "green on object bodies" by giving those pixels their own class.
