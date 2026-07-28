@@ -1,0 +1,6 @@
+{
+ "arm": "dav2-height",
+ "zthresh": 6.0,
+ "sigma": 17.8563,
+ "overhead_frac": 0.0061
+}

@@ -1169,3 +1169,32 @@ stochastic range). Plaza v5 still fails walk-frac sanity gate (0.84 > 0.8 upper 
 
 4-color collision overlays + foreground-mask views regenerated from consensus-based
 collision for all 3 scenes.
+
+## Run 26 (2026-07-28): wires+signs cross-model + height-map arm + math panel
+
+Ivan directives: "No dice. Try GPT two image." (bazaar wires+signs) → "pretrained
+model... flat image → height map?" → "literature review + panel of mathematical
+experts to check all our math" → "push to board".
+
+- **GPT-Image-2 arm** (`wires_signs_gpt.py`, key loaded at runtime from
+  agent-generator/.env, never logged): night-bazaar SOLVED where NBP failed —
+  5/5 rolls purity 0.99, roll fracs 3-7% (NBP: 52-57%). Majority 1.05%,
+  2-of-5 union 4.77%. Anchor/plaza GPT = scribbly (tags wall pipes / glowing
+  fridge). Verdict: evidence-routed per scene — GPT for bazaar, NBP for
+  anchor+plaza (anchor NBP 3-roll 0.77%, crisp signs+wires).
+- **NBP variance finding**: same prompt that gave clean 5-roll consensus
+  yesterday (anchor 5.26%, plaza 3.63%) today rejects 90%+ of rolls at
+  32-63% frac (awning over-paint mode). Plaza NBP retry aborted 1/12, 2/20.
+- **Height-map arm** (`height_overhead.py`, DAv2 + per-row ground disparity
+  fit): v1 flagged all standing structure (25-57%). Panel fix (fit-residual
+  sigma + ground-contact component filter) → bazaar 0.61% (over-filters:
+  awnings connect to ground via poles), anchor 20% (building facades not
+  walk-adjacent → falsely "suspended"). Verdict: useful elevation diagnostic,
+  not the wires+signs mask. Depth maps themselves are clean on this art.
+- **Math panel** (3 agents): majority threshold, purity-ball disjointness,
+  chroma-snap boundary, GPT 1024 round-trip geometry, early-stopping
+  unbiasedness all CONFIRMED. Fixes applied: per-pixel purity (impure → black),
+  union2 emission in NBP arm, weighted-linear ground fit + fit-residual sigma.
+  Open low-severity: NBP aspect_ratio 4:3 vs plate 1.3393 (0.45% sub-pixel).
+- Filename collision fixed: GPT arm now writes wires-signs-gpt-*; earlier
+  NBP anchor/plaza outputs were overwritten before the fix (regenerated).

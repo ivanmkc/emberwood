@@ -1,0 +1,14 @@
+{
+ "arm": "gpt-image-2",
+ "rolls_accepted": 5,
+ "roll_fracs": [
+  0.0699,
+  0.0821,
+  0.0659,
+  0.086,
+  0.04
+ ],
+ "overhead_frac": 0.0534,
+ "union2_frac": 0.0861,
+ "nbp_frac_cap": 0.2
+}
