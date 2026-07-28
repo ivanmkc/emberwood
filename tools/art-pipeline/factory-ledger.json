@@ -1,70 +1,61 @@
 {
- "underworks": {
-  "room": "underworks",
+ "salvage-shed": {
+  "room": "salvage-shed",
   "stages": {
    "scene": {
-    "style_match": 10,
-    "density": 8,
+    "style_match": 9,
+    "density": 9,
     "perspective_ok": true,
     "character_free": true,
     "walkable_ground": true,
-    "issues": "The liquid rendering in the candidate is slightly simpler and less textured than the glowing green liquid in the anchor, but overall style is a very strong match.",
+    "issues": "The bright desert landscape visible through the window slightly clashes with the dark, enclosed subterranean atmosphere established in the anchor.",
     "pass": true,
-    "attempts": 1
+    "attempts": 4
    },
    "class": {
-    "snap_purity": 0.986,
-    "floor_fraction": 0.388,
-    "edge_alignment": 0.996,
+    "snap_purity": 0.899,
+    "floor_fraction": 0.206,
+    "edge_alignment": 0.956,
     "pass": true
    },
    "walk": {
-    "snap_purity": 0.96,
-    "walk_fraction": 0.224,
-    "edge_alignment": 0.978,
-    "containment": 0.976,
+    "snap_purity": 0.929,
+    "walk_fraction": 0.196,
+    "edge_alignment": 0.995,
+    "containment": 0.857,
     "pass": true
    },
    "footprint": {
-    "snap_purity": 0.954,
-    "play_purity": 0.935,
-    "footprint_fraction": 0.456,
-    "edge_alignment": 0.99,
-    "nonwalk_containment": 0.796,
-    "walk_conflict": 0.09,
+    "snap_purity": 0.941,
+    "play_purity": 0.942,
+    "footprint_fraction": 0.287,
+    "edge_alignment": 0.977,
+    "nonwalk_containment": 0.944,
+    "walk_conflict": 0.014,
     "bases_only": true,
     "pass": true
    },
    "segment": {
     "pass": true,
     "log": [
-     "exit edge n: carved corridor to border",
-     "exit edge n: strip 242..293 (logical)",
-     "walkable fraction: 0.40; lattice reachable: 7372; exit reachable: True",
-     "config-space: all regions box-reachable (round 0)"
+     "walkable fraction: 0.39; lattice reachable: 7267; exit reachable: False",
+     "config-space: no corridor could be routed; leaving as-is",
+     "exit edge s: mouth stub carved to border",
+     "exit edge s: rect narrowed to 306..326"
     ]
    },
    "install": {
     "pass": true,
-    "island_px": 0,
-    "walk_frac": 0.4,
+    "island_px": 1667536,
+    "walk_frac": 0.393,
     "exits": [
      {
-      "edge": "e",
+      "edge": "s",
       "rect": [
-       622,
-       284,
-       640,
-       334
-      ]
-     },
-     {
-      "edge": "n",
-      "rect": [
-       242,
-       0,
-       293,
-       18
+       306,
+       430,
+       326,
+       447
       ]
      }
     ]

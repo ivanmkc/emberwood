@@ -1,1 +1,1 @@
-{"snap_purity": 0.9, "walk_fraction": 0.315, "edge_alignment": 0.958, "containment": 0.907, "pass": true}
+{"method": "majority-3", "snap_purity": 1.0, "walk_fraction": 0.411, "edge_alignment": 0.997, "containment": 1.0, "pass": true}
