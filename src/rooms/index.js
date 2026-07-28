@@ -218,6 +218,24 @@ export const PLATE_ROOMS = {
     ]
    },
    {
+    "edge": "n",
+    "rect": [
+     138,
+     0,
+     528,
+     18
+    ],
+    "to": "residential",
+    "tx": 27,
+    "ty": 25,
+    "toRect": [
+     237,
+     430,
+     618,
+     447
+    ]
+   },
+   {
     "edge": "w",
     "rect": [
      0,
@@ -494,9 +512,14 @@ export const PLATE_ROOMS = {
      447
     ],
     "to": "night-bazaar",
-    "tx": 29,
-    "ty": 20,
-    "toRect": null
+    "tx": 21,
+    "ty": 3,
+    "toRect": [
+     138,
+     0,
+     528,
+     18
+    ]
    },
    {
     "edge": "door",

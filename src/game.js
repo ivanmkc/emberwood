@@ -265,7 +265,7 @@ export function createGame(canvas, input, art) {
   function openBorderStrip(mask, edge, y0, y1, x0, x1) {
     if (!mask) return;
     const w = mask.w, d = mask.data;
-    const BORDER = 3;
+    const BORDER = 16;
     if (edge === 'e') {
       for (let y = y0; y < y1; y++) {
         for (let x = w - BORDER; x < w; x++) {

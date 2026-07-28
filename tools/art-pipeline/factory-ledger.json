@@ -1,6 +1,6 @@
 {
- "salvage-shed": {
-  "room": "salvage-shed",
+ "night-bazaar": {
+  "room": "night-bazaar",
   "stages": {
    "scene": {
     "style_match": 9,
@@ -8,54 +8,72 @@
     "perspective_ok": true,
     "character_free": true,
     "walkable_ground": true,
-    "issues": "The bright desert landscape visible through the window slightly clashes with the dark, enclosed subterranean atmosphere established in the anchor.",
+    "issues": "Minor AI text generation artifacts on some of the neon signs (e.g., 'NOODE').",
     "pass": true,
-    "attempts": 4
+    "attempts": 1
    },
    "class": {
-    "snap_purity": 0.899,
-    "floor_fraction": 0.206,
-    "edge_alignment": 0.956,
+    "snap_purity": 0.981,
+    "floor_fraction": 0.453,
+    "edge_alignment": 0.994,
     "pass": true
    },
    "walk": {
-    "snap_purity": 0.929,
-    "walk_fraction": 0.196,
-    "edge_alignment": 0.995,
-    "containment": 0.857,
+    "snap_purity": 0.818,
+    "walk_fraction": 0.409,
+    "edge_alignment": 0.988,
+    "containment": 0.893,
     "pass": true
    },
    "footprint": {
-    "snap_purity": 0.941,
-    "play_purity": 0.942,
-    "footprint_fraction": 0.287,
-    "edge_alignment": 0.977,
-    "nonwalk_containment": 0.944,
-    "walk_conflict": 0.014,
+    "snap_purity": 0.914,
+    "play_purity": 0.908,
+    "footprint_fraction": 0.439,
+    "edge_alignment": 0.998,
+    "nonwalk_containment": 0.659,
+    "walk_conflict": 0.167,
     "bases_only": true,
     "pass": true
    },
    "segment": {
     "pass": true,
     "log": [
-     "walkable fraction: 0.39; lattice reachable: 7267; exit reachable: False",
-     "config-space: no corridor could be routed; leaving as-is",
-     "exit edge s: mouth stub carved to border",
-     "exit edge s: rect narrowed to 306..326"
+     "exit edge w: mouth stub carved to border",
+     "exit edge e: rect narrowed to 324..438",
+     "exit edge n: rect narrowed to 138..528",
+     "exit edge w: rect narrowed to 296..438"
     ]
    },
    "install": {
     "pass": true,
-    "island_px": 1667536,
-    "walk_frac": 0.393,
+    "island_px": 1732,
+    "walk_frac": 0.476,
     "exits": [
      {
-      "edge": "s",
+      "edge": "e",
       "rect": [
-       306,
-       430,
-       326,
-       447
+       622,
+       324,
+       640,
+       438
+      ]
+     },
+     {
+      "edge": "n",
+      "rect": [
+       138,
+       0,
+       528,
+       18
+      ]
+     },
+     {
+      "edge": "w",
+      "rect": [
+       0,
+       296,
+       18,
+       438
       ]
      }
     ]
