@@ -22,8 +22,8 @@
       "A5-depth-walk": {"iou_vs_consensus": 0.385, "canny_edge_alignment": 0.094, "config_space_reach_frac": 0.956, "config_space_reach_px": 3025488, "walk_frac": 0.751},
       "A5-depth-footprint": {"iou_vs_consensus": 0.039, "canny_edge_alignment": 0.027, "config_space_reach_frac": 0.474, "config_space_reach_px": 215475, "walk_frac": 0.113},
       "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.002, "config_space_reach_frac": 1.000, "config_space_reach_px": 105923, "walk_frac": 0.026},
-      "morph-walk": {"iou_vs_consensus": null, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": 0.445},
-      "morph-baseline": {"iou_vs_consensus": null, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null}
+      "morph-walk": {"iou_vs_consensus": 0.507, "canny_edge_alignment": 0.256, "config_space_reach_frac": 0.953, "config_space_reach_px": 1667388, "walk_frac": 0.445},
+      "morph-baseline": {"iou_vs_consensus": 0.043, "canny_edge_alignment": 0.133, "config_space_reach_frac": 0.218, "config_space_reach_px": 57360, "walk_frac": 0.079}
     },
     "consensus": {"rolls_accepted": 5, "walk_frac": 0.301, "mean_agreement": 0.956},
     "orientation": {"aligned_frac": 0.825, "total_lines": 1844},
@@ -37,8 +37,8 @@
       "A5-depth-walk": {"iou_vs_consensus": 0.239, "canny_edge_alignment": 0.008, "config_space_reach_frac": 1.000, "config_space_reach_px": 4014914, "walk_frac": 0.936},
       "A5-depth-footprint": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.014, "config_space_reach_frac": 1.000, "config_space_reach_px": 62400, "walk_frac": 0.018},
       "A6-niantic": {"iou_vs_consensus": 0.050, "canny_edge_alignment": 0.017, "config_space_reach_frac": 0.282, "config_space_reach_px": 66201, "walk_frac": 0.062},
-      "morph-walk": {"iou_vs_consensus": null, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": 0.171},
-      "morph-baseline": {"iou_vs_consensus": null, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null}
+      "morph-walk": {"iou_vs_consensus": 0.761, "canny_edge_alignment": 0.107, "config_space_reach_frac": 0.487, "config_space_reach_px": 292311, "walk_frac": 0.171},
+      "morph-baseline": {"iou_vs_consensus": 0.067, "canny_edge_alignment": 0.143, "config_space_reach_frac": 0.173, "config_space_reach_px": 61222, "walk_frac": 0.105}
     },
     "consensus": {"rolls_accepted": 5, "walk_frac": 0.224, "mean_agreement": 0.931},
     "orientation": {"aligned_frac": 0.844, "total_lines": 1700},
@@ -51,6 +51,11 @@
       "edge_continuation_rate_mean": 0.289,
       "walkable_jaccard": 0.0
     }
+  },
+  "perspective_ab": {
+    "anchorroom": {"C1_prompt": 0.981, "C2_grid": 0.807, "C3_outpaint": 0.695, "baseline": 0.937},
+    "night-bazaar": {"C1_prompt": 0.700, "C2_grid": 0.665, "C3_outpaint": 0.896, "baseline": 0.825},
+    "plaza-market-inside": {"C1_prompt": 0.919, "C2_grid": 0.673, "C3_outpaint": 0.935, "baseline": 0.844}
   },
   "notes": {
     "A1-dense-walk": "Dense NBP walkability repaint (Watson CVPR20 formulation)",
