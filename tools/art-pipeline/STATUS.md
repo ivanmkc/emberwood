@@ -1084,3 +1084,12 @@ water, faint 16px tile grid preserved." Extraction: white->walk mask, gray shape
 footprints, overlay-alignment score (Canny agreement vs plate), then the standard evaluator
 (IoU vs consensus, config-space, pairwise forced choice) + an ImageLayers overlay stack on
 the bench board (plate/floorplan toggle — the overlay IS the demo).
+
+## Ivan directive: SHIPPING masks use 5-roll consensus walkability (regression call)
+The 4-color shipping masks regressed by consuming single walk rolls. From now on the
+walkability layer that segment_room consumes = the 5-ROLL MAJORITY CONSENSUS (gated rolls,
+per-pixel vote — bench nroll_consensus.py machinery), written as nbp-walk.png with
+metrics {method: consensus5, rolls_accepted, mean_agreement, pass:true}. NOTE: bench
+consensus masks for anchorroom + night-bazaar are STALE at the seam (blend band changed
+both plates after they were built) — REGENERATE those two; plaza-market-inside's is
+current and reusable. Applies to the in-flight rebuilds (#81-83) and every future room.
