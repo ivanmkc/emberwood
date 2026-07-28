@@ -1,0 +1,9 @@
+{
+ "changed_frac": 0.0278,
+ "judge": {
+  "wires_removed": true,
+  "objects_intact": true,
+  "artifacts": []
+ },
+ "candidates_seen": 3
+}

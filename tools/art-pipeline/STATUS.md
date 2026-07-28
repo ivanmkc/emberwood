@@ -1403,3 +1403,28 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   overhead; re-add later in post), (2) magenta v4 on the wireless plate,
   (3) build collision directly from the magenta consensus, (4) player drive
   verification in-game.
+
+### Run 31: magenta-first pipeline + Veo walk videos (Ivan directives)
+- wire_removal_pass.py: best-of-3 judge-gated; overhead wires/lantern strings
+  removed at 2.78% change (thick floor hoses survived — model reads them as
+  pipes; acceptable, magenta treats them as step-over). plate-nowires.png.
+- magenta v4 on wireless plate: 5/5 rolls, 21.8% ground, IoU 0.711 vs walk
+  (0.696 wired). Collision BUILT FROM MAGENTA: device-res mask + shipped east
+  corridor (magenta has no lane to east door; borrowed evidence, not carved)
+  + spawn component + config-space lane widening (skeleton of sub-hitbox
+  stretches dilated to 8-local-px clearance; +11% px). BFS: all 3 exits
+  reachable. Old collision backed up (collision-backup-night-bazaar.png).
+- verify_defects says 14.7% BUT its reference is the old two-color walk roll —
+  authority disagreement by design, not a gameplay verdict. Ivan's gate =
+  player walks. drive_bazaar_magenta.mjs (closed-loop waypoint drive, world-
+  offset aware): player walks long paths on the magenta collision in-game;
+  routes stall short of exit mouths (world-mode seam/door semantics at room
+  borders + residual narrow spots) — 2/5 checks green, drive completion OPEN.
+- Veo walk videos (veo-3.1-generate-001 via models.list): 3 videos, locked
+  static camera, character(s) walking with correct occlusion behavior;
+  GIFs at docs/art-options/veo/. Caveat: Veo reframes to 16:9 + light
+  re-render — qualitative oracle, needs registration for pixel evidence.
+- QUEUED per Ivan: (a) per-part semantic height query (NBP judge + Flash id
+  from models.list): "what is this part + how high off ground" -> higher than
+  character = occlude-not-block; (b) composite A/B: render char+object cut at
+  both z-orders, ask Flash which is physically correct.

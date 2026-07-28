@@ -54,7 +54,12 @@ PROMPT = (
 SCENES = {
  'anchorroom': 'docs/art-options/nbp-scifi-anchor-clean.png',
  'night-bazaar': 'docs/art-options/rooms/night-bazaar/plate.png',
+ 'night-bazaar-nowires': 'docs/art-options/rooms/night-bazaar/plate-nowires.png',
  'plaza-market-inside': 'docs/art-options/rooms/plaza-market-inside/plate.png',
+}
+WALK_REF = {  # consensus-walk reference per scene, where one exists
+ 'anchorroom': 'anchorroom', 'night-bazaar': 'night-bazaar',
+ 'night-bazaar-nowires': 'night-bazaar', 'plaza-market-inside': 'plaza-market-inside',
 }
 MAG = np.array([255, 0, 255], np.int16)
 
@@ -110,8 +115,8 @@ def run(room):
     ground = votes > accepted / 2
 
     walk = np.asarray(Image.open(os.path.join(
-        ROOT, 'docs', 'art-options', 'bench', 'prompt', room, 'consensus-walk.png'))
-        .convert('L').resize((W, H), Image.NEAREST)) > 127
+        ROOT, 'docs', 'art-options', 'bench', 'prompt', WALK_REF[room],
+        'consensus-walk.png')).convert('L').resize((W, H), Image.NEAREST)) > 127
     inter = float((ground & walk).sum())
     iou = inter / max(1.0, float((ground | walk).sum()))
 
