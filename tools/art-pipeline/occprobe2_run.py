@@ -47,8 +47,9 @@ NOISE_BUDGET = 0.08        # calibrated: worst clean roll 0.049
 MIN_MARKER_PX = 600
 CENTROID_TOL = 100
 MIN_CONSTRAINT_PX = 50
-CONCORDANCE = 20
+CONCORDANCE = 40  # must be >= planner grid stride (32) or 2-probe bounds cannot form
 SPACING = int(1.5 * CHAR_W)
+MAX_PER_CROP = 1  # multi-char drops ~30% of markers (P1 A/B); single-char was 11/11
 APRON_DOWN, APRON_SIDE = 20, 30
 YSORT, OVERHEAD, CONTRA, NOEV = 'ysort', 'overhead', 'contradiction', 'no-evidence'
 
@@ -101,7 +102,7 @@ def group_into_crops(positions):
         seed = todo.pop(0)
         group = [seed]
         for p in list(todo):
-            if len(group) >= 3:
+            if len(group) >= MAX_PER_CROP:
                 break
             if max(abs(p[0] - seed[0]), abs(p[1] - seed[1])) > CROP - 200:
                 continue
@@ -288,7 +289,16 @@ def bound(vals, concordance, upper):
     return None
 
 
-def aggregate(evidence, inst, blocking, min_px, concordance):
+def interior_mask(inst):
+    """False within ~2px of any instance-label boundary: blur-diff bleeds diff
+    across object edges, so boundary pixels must not attribute evidence."""
+    f = inst.astype(np.float32)
+    k = np.ones((5, 5), np.uint8)
+    return cv2.dilate(f, k) == cv2.erode(f, k)
+
+
+def aggregate(evidence, inst, interior, blocking, min_px, concordance,
+              front_probed=frozenset()):
     cons = {}
     for ev in evidence:
         gy = ev.pos[1]
@@ -297,9 +307,12 @@ def aggregate(evidence, inst, blocking, min_px, concordance):
             yy, xx = np.nonzero(m)
             if not len(yy):
                 continue
-            ids, cts = np.unique(inst[np.clip(yy + oy0, 0, inst.shape[0] - 1),
-                                      np.clip(xx + ox0, 0, inst.shape[1] - 1)],
-                                 return_counts=True)
+            gyy = np.clip(yy + oy0, 0, inst.shape[0] - 1)
+            gxx = np.clip(xx + ox0, 0, inst.shape[1] - 1)
+            keep = interior[gyy, gxx]
+            if not keep.any():
+                continue
+            ids, cts = np.unique(inst[gyy[keep], gxx[keep]], return_counts=True)
             for oid, ct in zip(ids, cts):
                 if int(oid) in blocking and ct >= min_px:
                     cons.setdefault(int(oid), {'behind': [], 'front': []})[key].append(gy)
@@ -310,7 +323,10 @@ def aggregate(evidence, inst, blocking, min_px, concordance):
         if lo is None and hi is None:
             v = NOEV
         elif hi is None:
-            v = OVERHEAD
+            # overhead ONLY if a valid front-band probe overlapped this object
+            # and the character still never covered it (gfx panel criterion);
+            # otherwise the absence of front evidence is a sampling gap
+            v = OVERHEAD if oid in front_probed else NOEV
         elif lo is None or lo < hi:
             v = YSORT
         else:
@@ -352,9 +368,23 @@ async def run_async(room):
     print(f'[{room}] Arm B ramp:')
     armb = await arm_b_ramp(plate, sprite, positions)
 
-    base = aggregate(evidence, inst, blocking, MIN_CONSTRAINT_PX, CONCORDANCE)
-    sweeps = [aggregate(evidence, inst, blocking, mp, cw)
+    interior = interior_mask(inst)
+    valid_pos = {tuple(e.pos) for e in evidence}
+    front_probed = frozenset(
+        oid for p in plan['probes'] if tuple(p['pos']) in valid_pos
+        for oid, kind in p['pairs'] if kind == 'front')
+    base = aggregate(evidence, inst, interior, blocking, MIN_CONSTRAINT_PX,
+                     CONCORDANCE, front_probed)
+    sweeps = [aggregate(evidence, inst, interior, blocking, mp, cw, front_probed)
               for mp, cw in ((25, 10), (100, 40))]
+    ev_dir = os.environ.get('OCCPROBE_EV_DIR')
+    if ev_dir:
+        os.makedirs(ev_dir, exist_ok=True)
+        for e in evidence:
+            np.savez_compressed(os.path.join(
+                ev_dir, f'ev_{room}_{e.pos[0]}_{e.pos[1]}.npz'),
+                visible=e.visible, occluded=e.occluded,
+                pos=np.array(e.pos), origin=np.array(e.origin))
     for oid, rec in base.items():
         rec['fragile'] = any(s.get(oid, {}).get('verdict') != rec['verdict'] for s in sweeps)
         rec['label'] = blocking.get(oid, '?')

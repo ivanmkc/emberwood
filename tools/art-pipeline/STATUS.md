@@ -1310,3 +1310,23 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - blur-diff (k=5) added to kill pixel-art chance-match phantom holes; next
   evidence fix identified: blur bleeds diff ~2px across object boundaries →
   false front constraints → erode evidence masks before instance attribution.
+
+### Run 28b: multi-char experiment CONCLUDED (bazaar)
+- ANSWER to "can we sample with many characters at once": NO for evidence
+  quality. Multi-char (2-3/crop) drops 30-45% of markers; full-frame K=3
+  failed 12 consecutive placements across all runs. Single-char at the SAME
+  planner positions: 34-35/36 evidences (94-97%). Async(sem=6) makes 36
+  single-char calls ~ same wall-clock as 14 multi-char calls. Per-OBJECT
+  inference (Ivan's presegmentation idea) is the part that works: 27/29
+  z-relevant objects got verdicts from 36 probes.
+- Evidence fixes landed: blur-diff (chance-match holes), interior attribution
+  (blur boundary bleed), apron exclusion, concordance 40 (>= grid stride 32 —
+  the 20px window made 2-probe bounds impossible by construction),
+  front-probed qualifier for overhead verdicts (kills scene-edge false
+  overheads). Evidence npz persisted (OCCPROBE_EV_DIR) so aggregation
+  changes replay without API spend.
+- Final bazaar verdicts: 5 ysort (1/5 contain engine key), 0 overhead,
+  10 contradiction (incl. the noodle-stand canopy+counter split candidate,
+  as gfx panel predicted), 12 no-ev, 9 fragile. QUALITY LIMIT = roll variance:
+  next step is the planned judge escalation (median-of-3 on fragile/contested)
+  + 2 rolls per position before any baseY correction ships to instances.json.

@@ -2,9 +2,9 @@
  "room": "night-bazaar",
  "summary": {
   "probes": 36,
-  "crops": 14,
-  "crops_valid": 10,
-  "marker_evidences": 24,
+  "crops": 36,
+  "crops_valid": 34,
+  "marker_evidences": 34,
   "arm_b": {
    "3": {
     "passes": 0,
@@ -12,15 +12,15 @@
     "advanced": false
    }
   },
-  "objects_with_verdicts": 21,
+  "objects_with_verdicts": 27,
   "verdict_counts": {
-   "ysort": 0,
-   "overhead": 1,
-   "contradiction": 7,
-   "no-evidence": 13
+   "ysort": 5,
+   "overhead": 0,
+   "contradiction": 10,
+   "no-evidence": 12
   },
-  "fragile": 2,
-  "engine_containment": "0/0"
+  "fragile": 9,
+  "engine_containment": "1/5"
  },
  "objects": {
   "3": {
@@ -28,7 +28,7 @@
    "hi": 216.0,
    "verdict": "contradiction",
    "n_behind": 3,
-   "n_front": 3,
+   "n_front": 2,
    "fragile": false,
    "label": "building",
    "engine_base_row": 584
@@ -37,36 +37,37 @@
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
+   "n_behind": 2,
+   "n_front": 2,
    "fragile": false,
    "label": "building",
    "engine_base_row": 1308
   },
   "10": {
-   "lo": 1272.0,
-   "hi": 904.0,
+   "lo": 1342.4,
+   "hi": 913.6,
    "verdict": "contradiction",
-   "n_behind": 6,
-   "n_front": 6,
+   "n_behind": 9,
+   "n_front": 9,
    "fragile": false,
    "label": "building",
    "engine_base_row": 1307
   },
   "11": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 1,
-   "n_front": 1,
-   "fragile": false,
+   "lo": 1176.0,
+   "hi": 1208.0,
+   "verdict": "ysort",
+   "n_behind": 2,
+   "n_front": 2,
+   "fragile": true,
    "label": "building",
-   "engine_base_row": 1179
+   "engine_base_row": 1179,
+   "engine_key_contained": true
   },
   "14": {
    "lo": 1592.0,
    "hi": null,
-   "verdict": "overhead",
+   "verdict": "no-evidence",
    "n_behind": 2,
    "n_front": 0,
    "fragile": false,
@@ -87,19 +88,19 @@
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
-   "fragile": true,
+   "n_behind": 2,
+   "n_front": 2,
+   "fragile": false,
    "label": "water",
    "engine_base_row": 366
   },
   "17": {
-   "lo": 408.0,
+   "lo": 731.2,
    "hi": 408.0,
    "verdict": "contradiction",
-   "n_behind": 3,
-   "n_front": 3,
-   "fragile": false,
+   "n_behind": 4,
+   "n_front": 5,
+   "fragile": true,
    "label": "water",
    "engine_base_row": 592
   },
@@ -113,25 +114,67 @@
    "label": "water",
    "engine_base_row": 1389
   },
+  "20": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 2,
+   "fragile": false,
+   "label": "water",
+   "engine_base_row": 1334
+  },
   "21": {
+   "lo": 1336.0,
+   "hi": 1368.0,
+   "verdict": "ysort",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": true,
+   "label": "water",
+   "engine_base_row": 1469,
+   "engine_key_contained": false
+  },
+  "30": {
+   "lo": 632.0,
+   "hi": 664.0,
+   "verdict": "ysort",
+   "n_behind": 3,
+   "n_front": 3,
+   "fragile": true,
+   "label": "prop",
+   "engine_base_row": 599,
+   "engine_key_contained": false
+  },
+  "39": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 2,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 763
+  },
+  "40": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
    "n_behind": 1,
    "n_front": 1,
    "fragile": false,
-   "label": "water",
-   "engine_base_row": 1469
+   "label": "prop",
+   "engine_base_row": 751
   },
-  "30": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
+  "41": {
+   "lo": 760.0,
+   "hi": 760.0,
+   "verdict": "contradiction",
    "n_behind": 2,
    "n_front": 2,
-   "fragile": false,
+   "fragile": true,
    "label": "prop",
-   "engine_base_row": 599
+   "engine_base_row": 770
   },
   "42": {
    "lo": null,
@@ -153,22 +196,33 @@
    "label": "prop",
    "engine_base_row": 1195
   },
-  "47": {
+  "44": {
    "lo": null,
    "hi": null,
    "verdict": "no-evidence",
+   "n_behind": 1,
+   "n_front": 0,
+   "fragile": false,
+   "label": "prop",
+   "engine_base_row": 893
+  },
+  "47": {
+   "lo": 888.0,
+   "hi": 920.0,
+   "verdict": "ysort",
    "n_behind": 3,
    "n_front": 3,
    "fragile": true,
    "label": "prop",
-   "engine_base_row": 1049
+   "engine_base_row": 1049,
+   "engine_key_contained": false
   },
   "51": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 2,
-   "n_front": 2,
+   "lo": 1406.4,
+   "hi": 1054.4,
+   "verdict": "contradiction",
+   "n_behind": 4,
+   "n_front": 4,
    "fragile": false,
    "label": "prop",
    "engine_base_row": 1399
@@ -193,32 +247,33 @@
    "label": "prop",
    "engine_base_row": 1369
   },
-  "63": {
+  "61": {
    "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
-   "fragile": false,
+   "hi": 1208.0,
+   "verdict": "ysort",
+   "n_behind": 2,
+   "n_front": 3,
+   "fragile": true,
    "label": "prop",
-   "engine_base_row": 1399
+   "engine_base_row": 1250,
+   "engine_key_contained": false
   },
   "64": {
    "lo": 1592.0,
-   "hi": 1496.0,
+   "hi": 1592.0,
    "verdict": "contradiction",
-   "n_behind": 4,
-   "n_front": 4,
+   "n_behind": 3,
+   "n_front": 3,
    "fragile": false,
    "label": "prop",
    "engine_base_row": 1557
   },
   "65": {
-   "lo": null,
-   "hi": null,
-   "verdict": "no-evidence",
-   "n_behind": 0,
-   "n_front": 1,
+   "lo": 1496.0,
+   "hi": 1496.0,
+   "verdict": "contradiction",
+   "n_behind": 2,
+   "n_front": 2,
    "fragile": false,
    "label": "prop",
    "engine_base_row": 1557
@@ -229,7 +284,17 @@
    "verdict": "contradiction",
    "n_behind": 2,
    "n_front": 2,
-   "fragile": false,
+   "fragile": true,
+   "label": "prop",
+   "engine_base_row": 1612
+  },
+  "70": {
+   "lo": null,
+   "hi": null,
+   "verdict": "no-evidence",
+   "n_behind": 0,
+   "n_front": 1,
+   "fragile": true,
    "label": "prop",
    "engine_base_row": 1612
   }
