@@ -288,6 +288,7 @@ def main():
         nwalk_probe = np.asarray(Image.open(wpath_p).convert('L')
                                  .resize((OUT_W, OUT_H), Image.NEAREST)) > 127
     blocked = np.zeros((OUT_H, OUT_W), dtype=bool)
+    fp_lock = np.zeros((OUT_H, OUT_W), dtype=bool)
     overhang_all = np.zeros((OUT_H, OUT_W), dtype=bool)
     for inst in instances:
         if not inst['blocking']:
@@ -310,6 +311,25 @@ def main():
         if fpmask is not None:
             fp = m & fpmask
             cover = float(fp.sum()) / max(1, int(m.sum()))
+            if cover < 0.02:
+                margin = max(60, int(0.15 * max(x1b - x0b, y1b - y0b)))
+                by0 = max(0, y0b - margin)
+                by1 = min(OUT_H, y1b + margin)
+                bx0 = max(0, x0b - margin)
+                bx1 = min(OUT_W, x1b + margin)
+                box_region = np.zeros_like(m)
+                box_region[by0:by1, bx0:bx1] = True
+                fp_near = box_region & fpmask
+                cover_near = float(fp_near.sum()) / max(1, int(m.sum()))
+                if cover_near >= 0.02:
+                    blocked |= fp_near
+                    fp_lock |= fp_near
+                    import cv2 as _cvne
+                    body = _cvne.dilate((m & ~fp_near).astype(np.uint8),
+                                        np.ones((13, 13), np.uint8)).astype(bool)
+                    overhang_all |= body
+                    inst['footprint'] = 'nbp-near'
+                    continue
             if cover < 0.02:
                 # NBP painted no base for this object. For FREESTANDING
                 # objects (walkable ground above their top edge), full-body
@@ -337,6 +357,7 @@ def main():
                 inst['footprint'] = 'nbp-full'
             else:
                 blocked |= fp
+                fp_lock |= fp
                 # dilate the liberated body: the painted silhouette OUTLINE is
                 # classed as neither object nor floor, so the hidden floor
                 # behind glass/columns would be ring-sealed and island-culled
@@ -427,6 +448,7 @@ def main():
     thin_red = ~walk_src & ~red_solid
     near_walk = _cv.dilate(walk_src.astype(np.uint8), np.ones((13, 13), np.uint8)).astype(bool)
     walk_src = walk_src | (thin_red & near_walk)
+    walk_src = walk_src & ~fp_lock
     # island connector: large walkable islands (bridge deck!) get a corridor
     # to the main region, routed ONLY through class-mask floor pixels — can
     # cross a red-marked shore strip, can never tunnel through buildings/water
@@ -677,7 +699,10 @@ def main():
     ninv, linv, statsv, _ = _cvz.connectedComponentsWithStats(invw)
     for ii in range(1, ninv):
         if statsv[ii, _cvz.CC_STAT_AREA] < 1500:
-            walk_arr[linv == ii] = True
+            comp = (linv == ii)
+            if (comp & fp_lock).any():
+                continue
+            walk_arr[comp] = True
     # walk-pass reference: rescue-eligibility + corridor routing surface
     nwalk_ref = np.zeros_like(walk_arr)
     wref = os.path.join(ART, 'nbp-walk.png')
