@@ -1,1 +1,393 @@
-{"spawn": [306, 264], "exit": [150, 425, 205, 447], "exits": [{"edge": "s", "rect": [0, 430, 637, 447]}], "plateHash": "c1d8524b1e65574cefed16a7515ed8f296cd7a29d5ecb1654a735c36672a0665", "fg": [{"img": "rooms/anchorroom.fg1.png", "x": 827, "y": 167, "baseY": 396, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg2.png", "x": 337, "y": 168, "baseY": 376, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg3.png", "x": 508, "y": 59, "baseY": 218, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg4.png", "x": 757, "y": 399, "baseY": 620, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg5.png", "x": 346, "y": 580, "baseY": 748, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg6.png", "x": 1167, "y": 602, "baseY": 750, "label": "solid structure and large object", "kind": "structure"}, {"img": "rooms/anchorroom.fg7.png", "x": 955, "y": 795, "baseY": 896, "label": "machines", "kind": "structure"}, {"img": "rooms/anchorroom.fg8.png", "x": 365, "y": 786, "baseY": 896, "label": "machines", "kind": "structure"}, {"img": "rooms/anchorroom.fg9.png", "x": 474, "y": 722, "baseY": 796, "label": "crates", "kind": "structure"}, {"img": "rooms/anchorroom.fg10.png", "x": 821, "y": 468, "baseY": 638, "label": "crates", "kind": "structure"}, {"img": "rooms/anchorroom.fg11.png", "x": 105, "y": 416, "baseY": 568, "label": "railings", "kind": "structure"}, {"img": "rooms/anchorroom.fg12.png", "x": 1191, "y": 270, "baseY": 366, "label": "machines", "kind": "structure"}, {"img": "rooms/anchorroom.fg13.png", "x": 467, "y": 730, "baseY": 780, "label": "person, robot and creature standing", "kind": "character"}, {"img": "rooms/anchorroom.fg14.png", "x": 346, "y": 512, "baseY": 749, "label": "person, robot and creature standing", "kind": "character"}, {"img": "rooms/anchorroom.fg15.png", "x": 344, "y": 98, "baseY": 248, "label": "person, robot and creature standing", "kind": "character"}, {"img": "rooms/anchorroom.fg16.png", "x": 1169, "y": 600, "baseY": 704, "label": "person, robot and creature standing", "kind": "character"}], "instances": [{"id": 1, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [1550, 334, 2112, 791], "baseY": 791, "footprint": false}, {"id": 2, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [631, 336, 802, 752], "baseY": 752, "footprint": false}, {"id": 3, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [952, 118, 1453, 436], "baseY": 436, "footprint": false}, {"id": 4, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [1420, 798, 1600, 1241], "baseY": 1241, "footprint": false}, {"id": 5, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [649, 1161, 819, 1495], "baseY": 1495, "footprint": false}, {"id": 6, "label": "solid structure and large object", "kind": "structure", "blocking": true, "box": [2189, 1204, 2358, 1500], "baseY": 1500, "footprint": false}, {"id": 7, "label": "machines", "kind": "structure", "blocking": true, "box": [1791, 1590, 2295, 1791], "baseY": 1791, "footprint": false}, {"id": 8, "label": "machines", "kind": "structure", "blocking": true, "box": [684, 1572, 1292, 1791], "baseY": 1791, "footprint": false}, {"id": 9, "label": "crates", "kind": "structure", "blocking": true, "box": [888, 1444, 1059, 1593], "baseY": 1593, "footprint": false}, {"id": 10, "label": "crates", "kind": "structure", "blocking": true, "box": [1540, 935, 1799, 1276], "baseY": 1276, "footprint": false}, {"id": 11, "label": "railings", "kind": "structure", "blocking": true, "box": [196, 833, 639, 1136], "baseY": 1136, "footprint": false}, {"id": 12, "label": "machines", "kind": "structure", "blocking": true, "box": [2233, 541, 2396, 731], "baseY": 731, "footprint": false}, {"id": 13, "label": "person, robot and creature standing", "kind": "character", "blocking": true, "box": [876, 1460, 1105, 1559], "baseY": 1559, "footprint": false}, {"id": 14, "label": "person, robot and creature standing", "kind": "character", "blocking": true, "box": [649, 1023, 817, 1498], "baseY": 1498, "footprint": false}, {"id": 15, "label": "person, robot and creature standing", "kind": "character", "blocking": true, "box": [645, 196, 805, 496], "baseY": 496, "footprint": false}, {"id": 16, "label": "person, robot and creature standing", "kind": "character", "blocking": true, "box": [2191, 1201, 2359, 1407], "baseY": 1407, "footprint": false}, {"id": 17, "label": "canal water", "kind": "water", "blocking": true, "box": [35, 33, 2399, 1791], "baseY": 1791}]}
+{
+ "spawn": [
+  306,
+  264
+ ],
+ "exit": [
+  150,
+  425,
+  205,
+  447
+ ],
+ "exits": [
+  {
+   "edge": "s",
+   "rect": [
+    0,
+    430,
+    637,
+    447
+   ]
+  }
+ ],
+ "plateHash": "c1d8524b1e65574cefed16a7515ed8f296cd7a29d5ecb1654a735c36672a0665",
+ "fg": [
+  {
+   "img": "rooms/anchorroom.fg1.png",
+   "x": 827,
+   "y": 167,
+   "baseY": 396,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg2.png",
+   "x": 337,
+   "y": 168,
+   "baseY": 376,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg3.png",
+   "x": 508,
+   "y": 59,
+   "baseY": 218,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg4.png",
+   "x": 757,
+   "y": 399,
+   "baseY": 620,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg5.png",
+   "x": 346,
+   "y": 580,
+   "baseY": 748,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg6.png",
+   "x": 1167,
+   "y": 602,
+   "baseY": 750,
+   "label": "solid structure and large object",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg7.png",
+   "x": 955,
+   "y": 795,
+   "baseY": 896,
+   "label": "machines",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg8.png",
+   "x": 365,
+   "y": 786,
+   "baseY": 896,
+   "label": "machines",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg9.png",
+   "x": 474,
+   "y": 722,
+   "baseY": 796,
+   "label": "crates",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg10.png",
+   "x": 821,
+   "y": 468,
+   "baseY": 638,
+   "label": "crates",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg11.png",
+   "x": 105,
+   "y": 416,
+   "baseY": 568,
+   "label": "railings",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg12.png",
+   "x": 1191,
+   "y": 270,
+   "baseY": 366,
+   "label": "machines",
+   "kind": "structure"
+  },
+  {
+   "img": "rooms/anchorroom.fg13.png",
+   "x": 467,
+   "y": 730,
+   "baseY": 780,
+   "label": "person, robot and creature standing",
+   "kind": "character"
+  },
+  {
+   "img": "rooms/anchorroom.fg14.png",
+   "x": 346,
+   "y": 512,
+   "baseY": 749,
+   "label": "person, robot and creature standing",
+   "kind": "character"
+  },
+  {
+   "img": "rooms/anchorroom.fg15.png",
+   "x": 344,
+   "y": 98,
+   "baseY": 248,
+   "label": "person, robot and creature standing",
+   "kind": "character"
+  },
+  {
+   "img": "rooms/anchorroom.fg16.png",
+   "x": 1169,
+   "y": 600,
+   "baseY": 704,
+   "label": "person, robot and creature standing",
+   "kind": "character"
+  }
+ ],
+ "instances": [
+  {
+   "id": 1,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    1550,
+    334,
+    2112,
+    791
+   ],
+   "baseY": 791,
+   "footprint": "nbp-missed"
+  },
+  {
+   "id": 2,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    631,
+    336,
+    802,
+    752
+   ],
+   "baseY": 752,
+   "footprint": "nbp"
+  },
+  {
+   "id": 3,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    952,
+    118,
+    1453,
+    436
+   ],
+   "baseY": 436,
+   "footprint": "nbp-missed"
+  },
+  {
+   "id": 4,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    1420,
+    798,
+    1600,
+    1241
+   ],
+   "baseY": 1241,
+   "footprint": "nbp-missed-band"
+  },
+  {
+   "id": 5,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    649,
+    1161,
+    819,
+    1495
+   ],
+   "baseY": 1495,
+   "footprint": "nbp"
+  },
+  {
+   "id": 6,
+   "label": "solid structure and large object",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    2189,
+    1204,
+    2358,
+    1500
+   ],
+   "baseY": 1500,
+   "footprint": "nbp"
+  },
+  {
+   "id": 7,
+   "label": "machines",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    1791,
+    1590,
+    2295,
+    1791
+   ],
+   "baseY": 1791,
+   "footprint": "nbp-missed-band"
+  },
+  {
+   "id": 8,
+   "label": "machines",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    684,
+    1572,
+    1292,
+    1791
+   ],
+   "baseY": 1791,
+   "footprint": "nbp-missed-band"
+  },
+  {
+   "id": 9,
+   "label": "crates",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    888,
+    1444,
+    1059,
+    1593
+   ],
+   "baseY": 1593,
+   "footprint": "nbp"
+  },
+  {
+   "id": 10,
+   "label": "crates",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    1540,
+    935,
+    1799,
+    1276
+   ],
+   "baseY": 1276,
+   "footprint": "mixed"
+  },
+  {
+   "id": 11,
+   "label": "railings",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    196,
+    833,
+    639,
+    1136
+   ],
+   "baseY": 1136,
+   "footprint": "mixed"
+  },
+  {
+   "id": 12,
+   "label": "machines",
+   "kind": "structure",
+   "blocking": true,
+   "box": [
+    2233,
+    541,
+    2396,
+    731
+   ],
+   "baseY": 731,
+   "footprint": "nbp-missed"
+  },
+  {
+   "id": 13,
+   "label": "person, robot and creature standing",
+   "kind": "character",
+   "blocking": true,
+   "box": [
+    876,
+    1460,
+    1105,
+    1559
+   ],
+   "baseY": 1559,
+   "footprint": "nbp"
+  },
+  {
+   "id": 14,
+   "label": "person, robot and creature standing",
+   "kind": "character",
+   "blocking": true,
+   "box": [
+    649,
+    1023,
+    817,
+    1498
+   ],
+   "baseY": 1498,
+   "footprint": "nbp-missed-band"
+  },
+  {
+   "id": 15,
+   "label": "person, robot and creature standing",
+   "kind": "character",
+   "blocking": true,
+   "box": [
+    645,
+    196,
+    805,
+    496
+   ],
+   "baseY": 496,
+   "footprint": "nbp-missed"
+  },
+  {
+   "id": 16,
+   "label": "person, robot and creature standing",
+   "kind": "character",
+   "blocking": true,
+   "box": [
+    2191,
+    1201,
+    2359,
+    1407
+   ],
+   "baseY": 1407,
+   "footprint": "mixed"
+  },
+  {
+   "id": 17,
+   "label": "canal water",
+   "kind": "water",
+   "blocking": true,
+   "box": [
+    35,
+    33,
+    2399,
+    1791
+   ],
+   "baseY": 1791
+  }
+ ]
+}
