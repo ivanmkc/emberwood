@@ -865,28 +865,24 @@ Consumed v4 no-grid geometric footprints (method v4-geometric-nogrid, 3.2% cover
 promoted by v4-footprints agent) and re-ran segment_room.py for anchorroom.
 
 **Before/after (anchorroom):**
-| Metric           | v2 compose (before) | v5 compose (after) |
-|------------------|--------------------:|-------------------:|
-| defect_frac      |              5.10%  |             2.99%  |
-| missed_walkable  |              0.77%  |             2.95%  |
-| false_walkable   |              4.33%  |             0.04%  |
-| walk_frac        |              0.566  |             0.546  |
-| footprint nbp    |    6 (broad bases)  |    9 (precise v4)  |
-| footprint missed |             12      |              9     |
+| Metric           | v2 compose | v5 (fp only) | v5 (fp + overhead) |
+|------------------|-----------:|-------------:|-------------------:|
+| defect_frac      |     5.10%  |       2.99%  |          **1.24%** |
+| missed_walkable  |     0.77%  |       2.95%  |             1.06%  |
+| false_walkable   |     4.33%  |       0.04%  |             0.18%  |
+| walk_frac        |     0.566  |       0.546  |             0.454  |
 
-v4 geometric footprints eliminated nearly all false-walkable floor (4.3% -> 0.04%)
-by using precise base-contact-only masks instead of broad lower-band heuristics.
-Missed-walkable rose moderately (0.8% -> 3.0%) as more objects get full-blocked
-when their v4 footprint is too sparse for the per-instance threshold. Net defect
-rate improved from 5.1% to 3.0%.
+v4 geometric footprints eliminated nearly all false-walkable floor (4.3% -> 0.04%).
+overhead.png subtraction freed 7,893 suspended pixels (cables, hanging lanterns)
+that were incorrectly blocking, cutting missed-walkable from 2.95% to 1.06%.
+Net defect rate improved from 5.1% to 1.24%.
 
-**Acceptance battery:**
+**Acceptance battery (final, with overhead):**
 - npm test: 27/27 (plateHash verified matching)
 - BFS exit connectivity: all exits (e, w, legacy) reachable from spawn
-- verify_defects: 2.99% (under 10% threshold)
+- verify_defects: 1.24% (under 10% threshold, best ever)
 - Judge (median-of-3): ground_coverage=9, object_blocking=8, boundary_fit=7
-  (door_access scored low due to edge-strip exits — false alarm, BFS confirms)
-- overhead.png subtraction: inert (no overhead.png exists yet for anchorroom)
+- overhead.png: 7,893 suspended px subtracted from blocked
 
 night-bazaar + plaza-market-inside: still on v2 compose (v4 footprints not yet
 emitted for these scenes; noted as pending).
