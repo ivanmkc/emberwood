@@ -435,3 +435,32 @@ DESIGN:
 Also queued: v4 geometric footprints (run 23), collision-vs-in-game alignment (#35: regen
 masks for the 5 door/passage-edited plates), defect outliers (hydroponics/home-interior-a/
 salvage-shed).
+
+## Run 25 — Ivan directive: implement ALL related literature methods, compare (5-hour bake-off)
+For each problem we hit, implement the literature-equivalent methods and benchmark them on
+the 3 focus scenes (anchorroom, night-bazaar, plaza-market-inside) with advanced
+deterministic + LLM evaluators. Experiment matrix:
+A. FOOTPRINTS/OCCUPANCY: (1) dense NBP occupancy repaint [ours v2 ~= Watson CVPR20 dense
+   formulation]; (2) per-object NBP painting [v3, known weak — baseline]; (3) geometric:
+   VLM numeric 3D params -> code-drawn polygons [v4 ~= MonoLayout/Deep3DBox projection];
+   (4) amodal-completion route [pix2gestalt-style via NBP: paint the FULL unoccluded
+   object, footprint = base band of amodal mask]; (5) depth route [Depth Anything v2 ->
+   height field -> ground-contact/support analysis under fixed 3/4 camera]; (6) pretrained
+   nianticlabs/footprints [domain-gap study — expected to fail on pixel art; failure IS a
+   result].
+B. WALKABILITY: dense repaint vs grid-cell occupancy [ours] vs depth-plane (floor =
+   dominant plane; walkable = on-plane) vs N-roll majority consensus (3-5 rolls).
+C. PERSPECTIVE ENFORCEMENT: prompt-only vs drawn-grid conditioning [Curved Diffusion
+   analogue] vs outpaint-inheritance; DETECTORS: edge-orientation histogram + vanishing
+   -point estimation (LSD lines + RANSAC; axis-aligned => VPs at infinity).
+D. SEAM CONTINUITY (stitched world): fresh generation vs outpaint-from-edge; metrics:
+   cross-seam color/texture stats, edge continuation, LLM continuity judge.
+EVALUATORS: deterministic (config-space traversability, Canny edge alignment, IoU vs
+   5-roll consensus mask, VP/orientation stats, seam metrics) + LLM (median-of-3 rubrics,
+   pairwise position-debiased A/B forced choice between methods' collision overlays,
+   verify_defects v2 fresh-roll diff). Output: tools/art-pipeline/bench/** harness,
+   docs/art-options/bench/** artifacts, comparison table -> STATUS + board section.
+Agents: lit-bench-prompt (NBP/VLM variants + evaluator harness + table), lit-bench-depth
+(pip-model track: Depth Anything v2, nianticlabs/footprints, LSD/VP detectors). Existing
+agents (align-masks, stitched-world, v4-footprints) continue the 3-scene fixes; v4 agent's
+outputs feed method A3.
