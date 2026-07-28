@@ -1283,3 +1283,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   IN FRONT of magenta = free occlusion evidence. Plaza gap fully explained:
   model refused to paint the RUG (object-on-floor reading) — prompt v2 should
   say "including rugs/carpets".
+
+### Run 27b: magenta prompt iterations (Ivan)
+- v2 "anything you can walk on incl. rugs" mid-prompt: plaza rug STILL refused
+  (IoU 0.503, unchanged). v3 rug directive LEADS the prompt in caps: plaza
+  0.877, rug painted. v4 adds Ivan's step-over gaps (grate holes, drains,
+  plate seams): bazaar 0.696/23.3%, anchor 0.686/24.4%, plaza 0.852/19.1%.
+- 15/15 rolls accepted across all versions today — magenta is the most stable
+  NBP pass in the pipeline (intact scene anchors the model).
+- Honest holdouts on anchor: central grate left unpainted as a whole (not just
+  holes); bridge deck refused (matches the 2/5 walk-roll bridge ambiguity —
+  two independent methods now agree); doorway thresholds unpainted. IoU vs
+  walk is no longer the target metric: magenta correctly includes step-over
+  area that walk consensus excludes.

@@ -31,13 +31,20 @@ def cli():
 
 
 PROMPT = (
- 'Repaint this EXACT image changing ONLY one thing: every walkable GROUND and FLOOR surface '
- 'is now painted flat pure magenta #FF00FF, like fresh opaque pink-magenta paint poured over '
- 'the entire floor. Every other pixel must stay EXACTLY identical to the input: walls, '
- 'buildings, stalls, counters, crates, plants, awnings, signs, lanterns, wires, water. '
- 'Anything STANDING ON the floor or HANGING IN FRONT of it must remain unpainted and must '
- 'cover/overlap the magenta paint behind it, exactly as it covers the floor today. '
- 'Flat magenta only — NO gradients, NO transparency, NO magenta anywhere except the floor.'
+ 'Repaint this EXACT image: paint EVERY WALKABLE SURFACE flat pure magenta #FF00FF. '
+ 'RUGS, CARPETS AND MATS ARE WALKABLE SURFACES AND MUST BE FULLY PAINTED MAGENTA — do NOT '
+ 'preserve their pattern; they disappear completely under opaque magenta paint, exactly like '
+ 'the floor around them. Also paint: the ground, floors, cables and wires lying on the floor, '
+ 'hoses, flat debris, stains, thresholds, doorway floors, low flat platforms, AND small gaps '
+ 'a person could easily step over or walk across: holes in floor grates, drain grates and '
+ 'drain slots, narrow cracks and seams between floor plates, shallow channels — paint those '
+ 'magenta too, since walking over them is easy. '
+ 'Every other pixel must stay EXACTLY identical to the input: walls, buildings, stalls, '
+ 'counters, crates, shelves, plants, awnings, signs, lanterns, hanging wires, deep water, '
+ 'wide chasms or pits too large to step across. '
+ 'Anything STANDING UPRIGHT on the floor or HANGING ABOVE it must remain unpainted and must '
+ 'cover/overlap the magenta paint behind it. '
+ 'Flat magenta only — NO gradients, NO transparency, NO magenta anywhere except walkable surfaces.'
 )
 
 SCENES = {

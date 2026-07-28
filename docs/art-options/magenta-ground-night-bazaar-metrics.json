@@ -1,5 +1,5 @@
 {
  "rolls_accepted": 5,
- "ground_frac": 0.2171,
- "iou_vs_consensus_walk": 0.7406
+ "ground_frac": 0.2331,
+ "iou_vs_consensus_walk": 0.6965
 }
