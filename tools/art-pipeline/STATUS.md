@@ -313,3 +313,16 @@ STATE: engine lock+grant+visited implementation IN PROGRESS this run; content wi
   hotspot grant PASS, 0 pageerrors. 26/26 unit tests.
 - NEXT: visited-% journal UI polish, matrix2 lock-awareness, remaining door-mouth fixes
   (persistent list above), NPCs/quests referencing the permits, wave-3 expansion.
+
+## Run 20: generated world is now EXCLUSIVE (Ivan directive)
+- START = anchorroom tile (16,18) (computed: open in mask + legacy rows). Legacy tile-world
+  unreachable in play: anchor's overworld portal removed, legacy roomExit retired (always
+  null), old saves with non-plate mapIds migrate to the plaza on load. Legacy MAPS data kept
+  so the 26 unit tests still exercise their invariants.
+- buildProps mask retry now PERSISTENT (250ms x40) — one-shot retry lost the race at fresh
+  boot with 25 rooms competing; this was the "frozen at spawn" red herring, the real one
+  being the intro-transmission dialogue (probes now dismiss it).
+- Live probes: fresh boot -> anchorroom + mask loaded; all 4 directions move; walk S stays
+  in plate world; legacy save migrates. 26/26 tests.
+- NOTE: intro transmission still references the old quest line — quest re-homing into the
+  generated world is the next content task (permits chain already lives there).

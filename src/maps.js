@@ -187,9 +187,7 @@ export const MAPS = {
     baseRows: ROOM_ANCHORROOM.baseRows,
     spawnX: ROOM_ANCHORROOM.spawn[0],
     spawnY: ROOM_ANCHORROOM.spawn[1],
-    portals: [
-      { x: ROOM_ANCHORROOM.exit[0], y: ROOM_ANCHORROOM.exit[1], to: 'overworld', tx: 38, ty: 26 },
-    ],
+    portals: [],
     entities: [
       { kind: 'npc', id: 'scavA', x: 14, y: 16, sprite: 'keeper', name: 'Sela the Scavenger' },
       { kind: 'npc', id: 'merchant', x: 24, y: 15, sprite: 'merchant', name: 'MARO-7' },
@@ -363,7 +361,7 @@ export const MAPS = {
   },
 };
 
-export const START = { map: 'overworld', x: 38, y: 26 };
+export const START = { map: 'anchorroom', x: 16, y: 18 };
 
 // Parse rows + decor into a 2D char grid.
 export function buildGrid(map) {

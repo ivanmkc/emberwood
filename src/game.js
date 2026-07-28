@@ -185,11 +185,13 @@ export function createGame(canvas, input, art) {
       if (!raw) return false;
       const s = JSON.parse(raw);
       g.quest = Object.assign(newQuestState(), s.quest);
-      g.mapId = s.mapId;
+      // legacy tile-world saves migrate into the generated world
+      const legal = MAPS[s.mapId] && MAPS[s.mapId].plate;
+      g.mapId = legal ? s.mapId : START.map;
       g.time = s.time || 0;
-      loadMap(s.mapId, null, null);
-      g.player.x = s.x;
-      g.player.y = s.y;
+      loadMap(g.mapId, null, null);
+      g.player.x = legal ? s.x : START.x * T;
+      g.player.y = legal ? s.y : START.y * T;
       return true;
     } catch { return false; }
   }
@@ -215,10 +217,16 @@ export function createGame(canvas, input, art) {
       const maskImg = art.roomMasks && art.roomMasks[g.mapId];
       const data = art.roomData && art.roomData[g.mapId];
       if (!maskImg) {
-        // collision image still loading: retry so per-pixel masks replace
-        // the coarse tile fallback as soon as the asset lands
+        // collision image still loading: keep retrying so per-pixel masks
+        // replace the coarse tile fallback as soon as the asset lands
         const id = g.mapId;
-        setTimeout(() => { if (g.mapId === id && art.roomMasks[id]) buildProps(); }, 300);
+        let tries = 0;
+        const tick = () => {
+          if (g.mapId !== id || g.maskWalk) return;
+          if (art.roomMasks[id]) { buildProps(); return; }
+          if (tries++ < 40) setTimeout(tick, 250);
+        };
+        setTimeout(tick, 250);
       }
       if (maskImg) {
         const W2 = g.grid[0].length * T, H2 = g.grid.length * T;
@@ -232,7 +240,7 @@ export function createGame(canvas, input, art) {
       }
       if (data) {
         g.fgCuts = (data.fg || []).map((f) => f);
-        g.roomExit = g.map.id === 'anchorroom' ? (data.exit || null) : null;
+        g.roomExit = null; // legacy tile-world exit retired: plate world only
       }
       g.roomExits = g.map.plateExits || [];
       g.hotspots = (art.roomHotspots && art.roomHotspots[g.mapId]) || [];
