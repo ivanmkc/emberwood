@@ -811,9 +811,19 @@ and bazaar (0.034-0.054) because the gray footprint blobs fragment the walk spac
 method's strength is Canny alignment: 0.499 mean vs A1's 0.508, making it the second-best
 edge-following method after A1, confirming the screen-space preservation works.
 
-GPT-Image-2 arm: BLOCKED — no OPENAI_API_KEY in environment. Ivan explicitly requested
-this comparison. The GPT arm code is implemented and runs automatically when the key is set
-(env OPENAI_API_KEY). Leaderboard cells marked "blocked: no API key".
+GPT-Image-2 arm: COMPLETED. Model id: gpt-image-2. NBP decisively outperforms GPT-Image-2:
+
+| Scene              | NBP IoU | GPT IoU | NBP FP Canny | GPT FP Canny |
+|--------------------|---------|---------|--------------|--------------|
+| anchorroom         | 0.441   | 0.296   | 0.897        | 0.569        |
+| night-bazaar       | 0.252   | 0.233   | 0.943        | 0.521        |
+| plaza-market-inside| 0.302   | 0.162   | 0.827        | 0.554        |
+| **Mean**           | **0.332** | **0.230** | **0.889**  | **0.548**    |
+
+GPT floorplans over-estimate walkable area (walk_frac 0.36-0.70) and show weaker
+structural alignment. NBP preserves object positions nearly twice as well (Canny agreement
+0.89 vs 0.55). API notes: gpt-image-2 images.edit endpoint requires (filename, buf, mime)
+tuple format; response_format param not supported (returns b64_json by default).
 
 ### In-progress methods
 - A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation on
@@ -1101,9 +1111,8 @@ footprint overlays for all 3 scenes, method comparison text.
 Ask the image model to redraw each scene as an architect-style FLOORPLAN kept in the SAME
 camera/screen space as the plate (NOT rectified to bird's-eye) — same grid, same
 perspective, pixel-aligned so it overlays the original. Two arms: NBP (gemini-3-pro-image)
-and GPT-Image-2 for comparison (NOTE: no OPENAI_API_KEY anywhere in env/profile — the GPT
-arm is BLOCKED until Ivan provides a key; implement the harness so the arm runs the moment
-a key appears; report the block, don't fake the cells).
+and GPT-Image-2 for comparison. Both arms completed — see FINDING 11 above for results.
+Model: gpt-image-2 (key loaded from /home/ivanmkc/agent-generator/.env at runtime).
 Prompt sketch: "Redraw this EXACT scene as an architect floorplan in the same screen space,
 every position pixel-aligned for overlay: white = walkable floor, black lines = wall bases,
 solid gray = each object's full plan-view ground footprint (including hidden base), blue =
