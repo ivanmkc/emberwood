@@ -1,0 +1,11 @@
+{
+  "room": "night-bazaar",
+  "method": "A7-nbp-floorplan",
+  "iou_vs_consensus": 0.252,
+  "canny_edge_alignment": 0.519,
+  "config_space_reach_frac": 0.034,
+  "config_space_reach_px": 47803,
+  "orientation_aligned_frac": 0.863,
+  "orientation_total_lines": 1709,
+  "walk_frac": 0.462
+}

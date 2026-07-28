@@ -1,52 +1,290 @@
 {
   "anchorroom": {
     "methods": {
-      "A1-dense-walk": {"iou_vs_consensus": 0.784, "canny_edge_alignment": 0.527, "config_space_reach_frac": 0.091, "config_space_reach_px": 93008, "walk_frac": 0.325},
-      "shipped-collision": {"iou_vs_consensus": 0.536, "canny_edge_alignment": 0.224, "config_space_reach_frac": 0.993, "config_space_reach_px": 2257615, "walk_frac": 0.566},
-      "A2-v3-xray": {"iou_vs_consensus": 0.529, "canny_edge_alignment": 0.490, "config_space_reach_frac": 0.366, "config_space_reach_px": 531113, "walk_frac": 0.424},
-      "A5-depth-walk": {"iou_vs_consensus": 0.360, "canny_edge_alignment": 0.078, "config_space_reach_frac": 0.997, "config_space_reach_px": 3317902, "walk_frac": 0.790},
-      "A5-depth-footprint": {"iou_vs_consensus": 0.015, "canny_edge_alignment": 0.033, "config_space_reach_frac": 0.364, "config_space_reach_px": 129030, "walk_frac": 0.092},
-      "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.001, "config_space_reach_frac": 0.798, "config_space_reach_px": 37449, "walk_frac": 0.012},
-      "A3-v4-geometric": {"iou_vs_consensus": 0.700, "canny_edge_alignment": 0.485, "config_space_reach_frac": 0.150, "config_space_reach_px": 180165, "walk_frac": 0.362},
-      "morph-walk": {"iou_vs_consensus": 0.489, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": 0.567},
-      "morph-baseline": {"iou_vs_consensus": 0.012, "canny_edge_alignment": null, "config_space_reach_frac": null, "walk_frac": null},
-      "A4-amodal": {"iou_vs_consensus": 0.192, "canny_edge_alignment": 0.185, "config_space_reach_frac": 0.482, "config_space_reach_px": 495900, "walk_frac": 0.286, "amodal_instances": 100, "amodal_ok": 100}
+      "A1-dense-walk": {
+        "iou_vs_consensus": 0.784,
+        "canny_edge_alignment": 0.527,
+        "config_space_reach_frac": 0.091,
+        "config_space_reach_px": 93008,
+        "walk_frac": 0.325
+      },
+      "shipped-collision": {
+        "iou_vs_consensus": 0.536,
+        "canny_edge_alignment": 0.224,
+        "config_space_reach_frac": 0.993,
+        "config_space_reach_px": 2257615,
+        "walk_frac": 0.566
+      },
+      "A2-v3-xray": {
+        "iou_vs_consensus": 0.529,
+        "canny_edge_alignment": 0.49,
+        "config_space_reach_frac": 0.366,
+        "config_space_reach_px": 531113,
+        "walk_frac": 0.424
+      },
+      "A5-depth-walk": {
+        "iou_vs_consensus": 0.36,
+        "canny_edge_alignment": 0.078,
+        "config_space_reach_frac": 0.997,
+        "config_space_reach_px": 3317902,
+        "walk_frac": 0.79
+      },
+      "A5-depth-footprint": {
+        "iou_vs_consensus": 0.015,
+        "canny_edge_alignment": 0.033,
+        "config_space_reach_frac": 0.364,
+        "config_space_reach_px": 129030,
+        "walk_frac": 0.092
+      },
+      "A6-niantic": {
+        "iou_vs_consensus": 0.0,
+        "canny_edge_alignment": 0.001,
+        "config_space_reach_frac": 0.798,
+        "config_space_reach_px": 37449,
+        "walk_frac": 0.012
+      },
+      "A3-v4-geometric": {
+        "iou_vs_consensus": 0.7,
+        "canny_edge_alignment": 0.485,
+        "config_space_reach_frac": 0.15,
+        "config_space_reach_px": 180165,
+        "walk_frac": 0.362
+      },
+      "morph-walk": {
+        "iou_vs_consensus": 0.489,
+        "canny_edge_alignment": null,
+        "config_space_reach_frac": null,
+        "walk_frac": 0.567
+      },
+      "morph-baseline": {
+        "iou_vs_consensus": 0.012,
+        "canny_edge_alignment": null,
+        "config_space_reach_frac": null,
+        "walk_frac": null
+      },
+      "A4-amodal": {
+        "iou_vs_consensus": 0.192,
+        "canny_edge_alignment": 0.185,
+        "config_space_reach_frac": 0.482,
+        "config_space_reach_px": 495900,
+        "walk_frac": 0.286,
+        "amodal_instances": 100,
+        "amodal_ok": 100
+      },
+      "A7-nbp-floorplan": {
+        "iou_vs_consensus": 0.441,
+        "canny_edge_alignment": 0.671,
+        "config_space_reach_frac": 0.054,
+        "config_space_reach_px": 90973,
+        "walk_frac": 0.531,
+        "canny_agreement_floorplan": 0.897
+      },
+      "A7-gpt-floorplan": {
+        "blocked": true,
+        "reason": "no OPENAI_API_KEY"
+      }
     },
-    "consensus": {"rolls_accepted": 5, "walk_frac": 0.313, "mean_agreement": 0.949},
-    "orientation": {"aligned_frac": 0.937, "total_lines": 2040},
-    "depth_perspective": {"axis_alignment_score": 0.995, "diagonal_frac": 0.005}
+    "consensus": {
+      "rolls_accepted": 5,
+      "walk_frac": 0.313,
+      "mean_agreement": 0.949
+    },
+    "orientation": {
+      "aligned_frac": 0.937,
+      "total_lines": 2040
+    },
+    "depth_perspective": {
+      "axis_alignment_score": 0.995,
+      "diagonal_frac": 0.005
+    }
   },
   "night-bazaar": {
     "methods": {
-      "A1-dense-walk": {"iou_vs_consensus": 0.701, "canny_edge_alignment": 0.709, "config_space_reach_frac": 0.522, "config_space_reach_px": 674653, "walk_frac": 0.409},
-      "A1-dense-footprint": {"iou_vs_consensus": 0.007, "canny_edge_alignment": 0.355, "config_space_reach_frac": 0.215, "config_space_reach_px": 241998, "walk_frac": 0.318},
-      "shipped-collision": {"iou_vs_consensus": 0.529, "canny_edge_alignment": 0.266, "config_space_reach_frac": 0.982, "config_space_reach_px": 1832125, "walk_frac": 0.475},
-      "A5-depth-walk": {"iou_vs_consensus": 0.385, "canny_edge_alignment": 0.094, "config_space_reach_frac": 0.956, "config_space_reach_px": 3025488, "walk_frac": 0.751},
-      "A5-depth-footprint": {"iou_vs_consensus": 0.039, "canny_edge_alignment": 0.027, "config_space_reach_frac": 0.474, "config_space_reach_px": 215475, "walk_frac": 0.113},
-      "A6-niantic": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.002, "config_space_reach_frac": 1.000, "config_space_reach_px": 105923, "walk_frac": 0.026},
-      "morph-walk": {"iou_vs_consensus": 0.507, "canny_edge_alignment": 0.256, "config_space_reach_frac": 0.953, "config_space_reach_px": 1667388, "walk_frac": 0.445},
-      "morph-baseline": {"iou_vs_consensus": 0.043, "canny_edge_alignment": 0.133, "config_space_reach_frac": 0.218, "config_space_reach_px": 57360, "walk_frac": 0.079},
-      "A4-amodal": {"iou_vs_consensus": 0.399, "canny_edge_alignment": 0.282, "config_space_reach_frac": 0.420, "config_space_reach_px": 611900, "walk_frac": 0.426, "amodal_instances": 97, "amodal_ok": 97}
+      "A1-dense-walk": {
+        "iou_vs_consensus": 0.701,
+        "canny_edge_alignment": 0.709,
+        "config_space_reach_frac": 0.522,
+        "config_space_reach_px": 674653,
+        "walk_frac": 0.409
+      },
+      "A1-dense-footprint": {
+        "iou_vs_consensus": 0.007,
+        "canny_edge_alignment": 0.355,
+        "config_space_reach_frac": 0.215,
+        "config_space_reach_px": 241998,
+        "walk_frac": 0.318
+      },
+      "shipped-collision": {
+        "iou_vs_consensus": 0.529,
+        "canny_edge_alignment": 0.266,
+        "config_space_reach_frac": 0.982,
+        "config_space_reach_px": 1832125,
+        "walk_frac": 0.475
+      },
+      "A5-depth-walk": {
+        "iou_vs_consensus": 0.385,
+        "canny_edge_alignment": 0.094,
+        "config_space_reach_frac": 0.956,
+        "config_space_reach_px": 3025488,
+        "walk_frac": 0.751
+      },
+      "A5-depth-footprint": {
+        "iou_vs_consensus": 0.039,
+        "canny_edge_alignment": 0.027,
+        "config_space_reach_frac": 0.474,
+        "config_space_reach_px": 215475,
+        "walk_frac": 0.113
+      },
+      "A6-niantic": {
+        "iou_vs_consensus": 0.0,
+        "canny_edge_alignment": 0.002,
+        "config_space_reach_frac": 1.0,
+        "config_space_reach_px": 105923,
+        "walk_frac": 0.026
+      },
+      "morph-walk": {
+        "iou_vs_consensus": 0.507,
+        "canny_edge_alignment": 0.256,
+        "config_space_reach_frac": 0.953,
+        "config_space_reach_px": 1667388,
+        "walk_frac": 0.445
+      },
+      "morph-baseline": {
+        "iou_vs_consensus": 0.043,
+        "canny_edge_alignment": 0.133,
+        "config_space_reach_frac": 0.218,
+        "config_space_reach_px": 57360,
+        "walk_frac": 0.079
+      },
+      "A4-amodal": {
+        "iou_vs_consensus": 0.399,
+        "canny_edge_alignment": 0.282,
+        "config_space_reach_frac": 0.42,
+        "config_space_reach_px": 611900,
+        "walk_frac": 0.426,
+        "amodal_instances": 97,
+        "amodal_ok": 97
+      },
+      "A7-nbp-floorplan": {
+        "iou_vs_consensus": 0.252,
+        "canny_edge_alignment": 0.519,
+        "config_space_reach_frac": 0.034,
+        "config_space_reach_px": 43985,
+        "walk_frac": 0.462,
+        "canny_agreement_floorplan": 0.943
+      },
+      "A7-gpt-floorplan": {
+        "blocked": true,
+        "reason": "no OPENAI_API_KEY"
+      }
     },
-    "consensus": {"rolls_accepted": 5, "walk_frac": 0.301, "mean_agreement": 0.956},
-    "orientation": {"aligned_frac": 0.825, "total_lines": 1844},
-    "depth_perspective": {"axis_alignment_score": 0.990, "diagonal_frac": 0.010}
+    "consensus": {
+      "rolls_accepted": 5,
+      "walk_frac": 0.301,
+      "mean_agreement": 0.956
+    },
+    "orientation": {
+      "aligned_frac": 0.825,
+      "total_lines": 1844
+    },
+    "depth_perspective": {
+      "axis_alignment_score": 0.99,
+      "diagonal_frac": 0.01
+    }
   },
   "plaza-market-inside": {
     "methods": {
-      "A1-dense-walk": {"iou_vs_consensus": 0.731, "canny_edge_alignment": 0.288, "config_space_reach_frac": 0.511, "config_space_reach_px": 312973, "walk_frac": 0.179},
-      "A1-dense-footprint": {"iou_vs_consensus": 0.106, "canny_edge_alignment": 0.240, "config_space_reach_frac": 0.780, "config_space_reach_px": 697862, "walk_frac": 0.253},
-      "shipped-collision": {"iou_vs_consensus": 0.300, "canny_edge_alignment": 0.250, "config_space_reach_frac": 0.992, "config_space_reach_px": 2231905, "walk_frac": 0.570},
-      "A5-depth-walk": {"iou_vs_consensus": 0.239, "canny_edge_alignment": 0.008, "config_space_reach_frac": 1.000, "config_space_reach_px": 4014914, "walk_frac": 0.936},
-      "A5-depth-footprint": {"iou_vs_consensus": 0.000, "canny_edge_alignment": 0.014, "config_space_reach_frac": 1.000, "config_space_reach_px": 62400, "walk_frac": 0.018},
-      "A6-niantic": {"iou_vs_consensus": 0.050, "canny_edge_alignment": 0.017, "config_space_reach_frac": 0.282, "config_space_reach_px": 66201, "walk_frac": 0.062},
-      "morph-walk": {"iou_vs_consensus": 0.761, "canny_edge_alignment": 0.107, "config_space_reach_frac": 0.487, "config_space_reach_px": 292311, "walk_frac": 0.171},
-      "morph-baseline": {"iou_vs_consensus": 0.067, "canny_edge_alignment": 0.143, "config_space_reach_frac": 0.173, "config_space_reach_px": 61222, "walk_frac": 0.105},
-      "A4-amodal": {"iou_vs_consensus": 0.413, "canny_edge_alignment": 0.312, "config_space_reach_frac": 0.410, "config_space_reach_px": 420493, "walk_frac": 0.290, "amodal_instances": 36, "amodal_ok": 36}
+      "A1-dense-walk": {
+        "iou_vs_consensus": 0.731,
+        "canny_edge_alignment": 0.288,
+        "config_space_reach_frac": 0.511,
+        "config_space_reach_px": 312973,
+        "walk_frac": 0.179
+      },
+      "A1-dense-footprint": {
+        "iou_vs_consensus": 0.106,
+        "canny_edge_alignment": 0.24,
+        "config_space_reach_frac": 0.78,
+        "config_space_reach_px": 697862,
+        "walk_frac": 0.253
+      },
+      "shipped-collision": {
+        "iou_vs_consensus": 0.3,
+        "canny_edge_alignment": 0.25,
+        "config_space_reach_frac": 0.992,
+        "config_space_reach_px": 2231905,
+        "walk_frac": 0.57
+      },
+      "A5-depth-walk": {
+        "iou_vs_consensus": 0.239,
+        "canny_edge_alignment": 0.008,
+        "config_space_reach_frac": 1.0,
+        "config_space_reach_px": 4014914,
+        "walk_frac": 0.936
+      },
+      "A5-depth-footprint": {
+        "iou_vs_consensus": 0.0,
+        "canny_edge_alignment": 0.014,
+        "config_space_reach_frac": 1.0,
+        "config_space_reach_px": 62400,
+        "walk_frac": 0.018
+      },
+      "A6-niantic": {
+        "iou_vs_consensus": 0.05,
+        "canny_edge_alignment": 0.017,
+        "config_space_reach_frac": 0.282,
+        "config_space_reach_px": 66201,
+        "walk_frac": 0.062
+      },
+      "morph-walk": {
+        "iou_vs_consensus": 0.761,
+        "canny_edge_alignment": 0.107,
+        "config_space_reach_frac": 0.487,
+        "config_space_reach_px": 292311,
+        "walk_frac": 0.171
+      },
+      "morph-baseline": {
+        "iou_vs_consensus": 0.067,
+        "canny_edge_alignment": 0.143,
+        "config_space_reach_frac": 0.173,
+        "config_space_reach_px": 61222,
+        "walk_frac": 0.105
+      },
+      "A4-amodal": {
+        "iou_vs_consensus": 0.413,
+        "canny_edge_alignment": 0.312,
+        "config_space_reach_frac": 0.41,
+        "config_space_reach_px": 420493,
+        "walk_frac": 0.29,
+        "amodal_instances": 36,
+        "amodal_ok": 36
+      },
+      "A7-nbp-floorplan": {
+        "iou_vs_consensus": 0.302,
+        "canny_edge_alignment": 0.308,
+        "config_space_reach_frac": 0.406,
+        "config_space_reach_px": 184120,
+        "walk_frac": 0.452,
+        "canny_agreement_floorplan": 0.827
+      },
+      "A7-gpt-floorplan": {
+        "blocked": true,
+        "reason": "no OPENAI_API_KEY"
+      }
     },
-    "consensus": {"rolls_accepted": 5, "walk_frac": 0.224, "mean_agreement": 0.931},
-    "orientation": {"aligned_frac": 0.844, "total_lines": 1700},
-    "depth_perspective": {"axis_alignment_score": 0.984, "diagonal_frac": 0.016}
+    "consensus": {
+      "rolls_accepted": 5,
+      "walk_frac": 0.224,
+      "mean_agreement": 0.931
+    },
+    "orientation": {
+      "aligned_frac": 0.844,
+      "total_lines": 1700
+    },
+    "depth_perspective": {
+      "axis_alignment_score": 0.984,
+      "diagonal_frac": 0.016
+    }
   },
   "seam": {
     "anchor-bazaar": {
@@ -70,9 +308,24 @@
     }
   },
   "perspective_ab": {
-    "anchorroom": {"C1_prompt": 0.981, "C2_grid": 0.807, "C3_outpaint": 0.695, "baseline": 0.937},
-    "night-bazaar": {"C1_prompt": 0.700, "C2_grid": 0.665, "C3_outpaint": 0.896, "baseline": 0.825},
-    "plaza-market-inside": {"C1_prompt": 0.919, "C2_grid": 0.673, "C3_outpaint": 0.935, "baseline": 0.844}
+    "anchorroom": {
+      "C1_prompt": 0.981,
+      "C2_grid": 0.807,
+      "C3_outpaint": 0.695,
+      "baseline": 0.937
+    },
+    "night-bazaar": {
+      "C1_prompt": 0.7,
+      "C2_grid": 0.665,
+      "C3_outpaint": 0.896,
+      "baseline": 0.825
+    },
+    "plaza-market-inside": {
+      "C1_prompt": 0.919,
+      "C2_grid": 0.673,
+      "C3_outpaint": 0.935,
+      "baseline": 0.844
+    }
   },
   "notes": {
     "A1-dense-walk": "Dense NBP walkability repaint (Watson CVPR20 formulation)",
@@ -85,6 +338,8 @@
     "A5-depth-footprint": "Depth Anything v2 above-plane blob footprints",
     "A6-niantic": "nianticlabs/footprints pretrained (severe domain gap)",
     "morph-walk": "Morphological walkability from NBP class mask",
-    "morph-baseline": "Morphological base-band footprints from class mask"
+    "morph-baseline": "Morphological base-band footprints from class mask",
+    "A7-nbp-floorplan": "Screen-space architect floorplan via NBP (white=walk, gray=footprint, blue=water)",
+    "A7-gpt-floorplan": "Screen-space architect floorplan via GPT-Image-2 (BLOCKED: no API key)"
   }
 }

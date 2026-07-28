@@ -701,6 +701,7 @@ morph-walk              0.489    0.507    0.761    0.586
 shipped-collision       0.536    0.529    0.300    0.455
 A2-v3-xray              0.529    -        -        0.529
 A4-amodal               0.192    0.399    0.413    0.335
+A7-nbp-floorplan        0.441    0.252    0.302    0.332
 A5-depth-walk           0.360    0.385    0.239    0.328
 A1-dense-footprint      -        0.007    0.106    0.057
 morph-baseline          0.012    0.043    0.067    0.041
@@ -715,11 +716,13 @@ A2-v3-xray              0.366    -        -
 A4-amodal               0.482    0.420    0.410
 A5-depth-walk           0.997    0.956    1.000
 A5-depth-footprint      0.364    0.474    1.000
+A7-nbp-floorplan        0.054    0.034    0.406
 A6-niantic              0.798    1.000    0.282
 
 ### Canny edge alignment
 Method                  anchor   bazaar   plaza
 A1-dense-walk           0.527    0.709    0.288
+A7-nbp-floorplan        0.671    0.519    0.308
 A2-v3-xray              0.490    -        -
 A4-amodal               0.185    0.282    0.312
 shipped-collision       0.224    0.266    0.250
@@ -787,6 +790,30 @@ moderate config-space reach (0.437 mean) — better than A1 (0.375) but worse th
 (36-100) rather than just the impeding minority (10-15), so it blocks too much of the floor.
 This matches the literature's finding that dense formulations (Watson CVPR20) outperform
 per-object amodal pipelines for ground-occupancy problems.
+
+### Completed: A7 screen-space floorplan (NBP arm)
+NBP redraws the scene as an architect-style FLOORPLAN in the same camera/screen space
+(pixel-aligned overlay). Convention: white=walkable, black lines=walls, gray=object
+footprints, blue=water. Best-of-3 rolls gated on Canny agreement vs source plate.
+
+| Scene              | IoU vs consensus | Canny edge | Config reach | Walk frac | Canny agree |
+|--------------------|-----------------|------------|-------------|-----------|-------------|
+| anchorroom         | 0.441           | 0.671      | 0.054       | 0.531     | 0.897       |
+| night-bazaar       | 0.252           | 0.519      | 0.034       | 0.462     | 0.943       |
+| plaza-market-inside| 0.302           | 0.308      | 0.406       | 0.452     | 0.827       |
+| **mean**           | **0.332**       | **0.499**  | **0.165**   | **0.482** | **0.889**   |
+
+FINDING 11: A7 floorplans achieve HIGH Canny agreement with the source (0.83-0.94) —
+the model preserves object positions well — but moderate IoU (mean 0.332, between A4 and
+shipped). The floorplan format produces more gray footprint area than the consensus expects
+(walk_frac 0.45-0.53 vs consensus 0.22-0.31), and config-space reach is very low on anchor
+and bazaar (0.034-0.054) because the gray footprint blobs fragment the walk space. The
+method's strength is Canny alignment: 0.499 mean vs A1's 0.508, making it the second-best
+edge-following method after A1, confirming the screen-space preservation works.
+
+GPT-Image-2 arm: BLOCKED — no OPENAI_API_KEY in environment. Ivan explicitly requested
+this comparison. The GPT arm code is implemented and runs automatically when the key is set
+(env OPENAI_API_KEY). Leaderboard cells marked "blocked: no API key".
 
 ### In-progress methods
 - A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation on

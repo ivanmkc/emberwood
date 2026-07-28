@@ -1,0 +1,50 @@
+{
+  "room": "plaza-market-inside",
+  "nbp": {
+    "method": "A7-nbp-floorplan",
+    "canny_agreement_floorplan": 0.827,
+    "gate": "pass",
+    "metrics": {
+      "room": "plaza-market-inside",
+      "method": "A7-nbp-floorplan",
+      "iou_vs_consensus": 0.302,
+      "canny_edge_alignment": 0.308,
+      "config_space_reach_frac": 0.406,
+      "config_space_reach_px": 657571,
+      "orientation_aligned_frac": 0.844,
+      "orientation_total_lines": 1700,
+      "walk_frac": 0.452
+    },
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "canny_agreement": 0.826,
+        "walk_frac": 0.41,
+        "footprint_frac": 0.482,
+        "water_frac": 0.0
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "canny_agreement": 0.827,
+        "walk_frac": 0.452,
+        "footprint_frac": 0.456,
+        "water_frac": 0.0
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "canny_agreement": 0.812,
+        "walk_frac": 0.281,
+        "footprint_frac": 0.44,
+        "water_frac": 0.0
+      }
+    ]
+  },
+  "gpt": {
+    "method": "A7-gpt-floorplan",
+    "blocked": true,
+    "reason": "no OPENAI_API_KEY in environment"
+  }
+}

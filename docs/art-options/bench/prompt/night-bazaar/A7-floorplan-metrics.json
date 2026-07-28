@@ -1,0 +1,50 @@
+{
+  "room": "night-bazaar",
+  "nbp": {
+    "method": "A7-nbp-floorplan",
+    "canny_agreement_floorplan": 0.943,
+    "gate": "pass",
+    "metrics": {
+      "room": "night-bazaar",
+      "method": "A7-nbp-floorplan",
+      "iou_vs_consensus": 0.252,
+      "canny_edge_alignment": 0.519,
+      "config_space_reach_frac": 0.034,
+      "config_space_reach_px": 47803,
+      "orientation_aligned_frac": 0.863,
+      "orientation_total_lines": 1709,
+      "walk_frac": 0.462
+    },
+    "rolls": [
+      {
+        "roll": 0,
+        "status": "ok",
+        "canny_agreement": 0.818,
+        "walk_frac": 0.209,
+        "footprint_frac": 0.626,
+        "water_frac": 0.038
+      },
+      {
+        "roll": 1,
+        "status": "ok",
+        "canny_agreement": 0.86,
+        "walk_frac": 0.32,
+        "footprint_frac": 0.486,
+        "water_frac": 0.038
+      },
+      {
+        "roll": 2,
+        "status": "ok",
+        "canny_agreement": 0.943,
+        "walk_frac": 0.462,
+        "footprint_frac": 0.363,
+        "water_frac": 0.037
+      }
+    ]
+  },
+  "gpt": {
+    "method": "A7-gpt-floorplan",
+    "blocked": true,
+    "reason": "no OPENAI_API_KEY in environment"
+  }
+}
