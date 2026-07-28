@@ -1367,3 +1367,12 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   _srcmasks_night-bazaar-aligned2.npz + occprobe2-instances-*-aligned.json.
   OPEN: retune footprint compose from consensus classes until battery <=
   baseline, then re-ship instances+collision coherently.
+
+### Run 29c: part-level segmentation (Ivan: "way more breakdown")
+- segment_parts.py: level 2 under the consensus instances — Felzenszwalb on
+  the plate INSIDE each instance mask (parts aligned by construction), tiny
+  fragments merged to >=3000px (~char scale). Bazaar: 49 instances -> 238
+  parts (11 large instances subdivided). Noodle stand now = sign + canopy
+  panels + counter + interior + legs as separate parts -> canopy and counter
+  can carry different z verdicts (structural fix for its contradiction).
+- Next cycle: re-plan probes against the parts map + judge escalation.
