@@ -1,0 +1,11 @@
+{
+ "rolls_accepted": 5,
+ "stepover_frac": 0.0084,
+ "rescued_px": 32462,
+ "examples": [
+  "box",
+  "hose",
+  "box",
+  "hose"
+ ]
+}
