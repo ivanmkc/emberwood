@@ -866,3 +866,74 @@ rate improved from 5.1% to 3.0%.
 
 night-bazaar + plaza-market-inside: still on v2 compose (v4 footprints not yet
 emitted for these scenes; noted as pending).
+
+## Agent v4-footprints — geometric footprint pipeline (2026-07-28)
+
+### Design (literature-based)
+Watson CVPR2020 Footprints: dense prediction beats per-object painting for hidden ground.
+MonoLayout WACV2020: footprints from GEOMETRY (3D box -> ground plane projection), not painting.
+Our v4: VLM estimates numeric params (ground_contact {x0,x1,yBase}, plan_depth_px, base_shape),
+CODE draws the footprint polygon deterministically. Fixed axis-aligned 3/4 camera makes BEV
+projection a pure y-shift. Gridline conditioning (16px pitch, labeled axes every 4 cells) gives
+the VLM pixel-accurate coordinate reference (analogues: Curved Diffusion per-pixel coordinate
+conditioning, LayoutDiffusion region conditioning, proven nbp_grid_walk.py).
+
+### Pipeline stages (nbp_v4.py)
+1. CENSUS (reused from v3): iterative NBP instance-segmentation overlay + VLM miss-list loop.
+2. SELECT: improved prompt — only FREESTANDING objects whose base sits on the floor; explicitly
+   excludes wall-mounted pipes/vents/AC units, background walls, flat markings. Achieves
+   12-15/132 selection (vs v3's 10/41, vs the failed 70/84 with the old generic prompt).
+3. GEOMETRIC FOOTPRINT per instance: VLM estimates numbers with gridline-conditioned crop;
+   deterministic sanity gates (yBase in lower third, depth/width ratio in [0.15, 1.2]);
+   code draws rect/ellipse; LLM gate median-of-3 with reflective retry (critique fed back).
+   Parallel processing (2 instances at a time, 3 gate votes concurrent).
+4. COMPOSE: union(footprints) | water | ~walk; bodies above footprints = walk-behind.
+
+### Results — anchorroom (benchmark room)
+Metric              v2 (shipped)  v3 (x-ray)  v4 (geometric)
+defect_frac         25.1%         20.7%       10.1%           <- 2.5x improvement over v2
+walk_frac           0.566         0.424       0.362
+instances           -             41          132
+impeding            -             10          12
+geometric_ok        -             -           8/12 (67%)
+fallback            -             -           4/12
+
+### Gridline conditioning A/B (anchorroom)
+Condition           Geometric OK  First-Try Rate  Defect Rate
+Grid ON (16px)      8/12 (67%)    7/8 = 88%       10.1%
+Grid OFF            10/15 (67%)   2/10 = 20%      13.4%
+
+Grid conditioning dramatically improves first-try accuracy (88% vs 20%) and overall defect
+rate (10.1% vs 13.4%). NOTE: this is for the FOOTPRINT estimation task. The lit-bench-prompt
+agent found grid conditioning COUNTERPRODUCTIVE for scene GENERATION (grid artifacts). The
+difference is the task: scene generation treats the grid as unwanted content, while footprint
+estimation uses it as a coordinate system.
+
+### Extended pilot (defect outlier rooms)
+Room              v2 (shipped)  v4 (geometric)  Geometric OK  Delta
+anchorroom        25.1%         10.1%           8/12          -15.0pp (2.5x)
+hydroponics       21.4%         14.7%           26/32         -6.7pp
+home-interior-a   27.5%         10.0%           8/12          -17.5pp (2.8x)
+
+v4 beats v2 on ALL tested rooms. Home-interior-a shows the largest improvement (2.8x).
+
+### Failure modes
+Objects that consistently fall back to lower-band blocking:
+- BARREL STACKS: VLM struggles with yBase when multiple stacked objects are present
+  (stacked means the "base" concept is ambiguous).
+- FALLEN/IRREGULAR OBJECTS: VLM estimates extend into wrong floor areas; reflective retry
+  does not converge because the critique is positional ("extends to the left") but the VLM
+  re-estimates in a different wrong direction.
+- RAILINGS: depth_ratio consistently near 0 (railings are thin lines — their plan depth
+  approaches zero, which is geometrically correct but useless as collision).
+
+### Board
+termchart --project emberwood --agent art-v3: v4 section with defect tables, A/B results,
+Image overlays (footprints-on-source, collision-v4-on-source) for all 3 rooms, and
+method comparison text.
+
+### Files delivered
+- tools/art-pipeline/nbp_v4.py — the pipeline script
+- docs/art-options/v4/anchorroom/ — 19 files (census, footprints, collision, metrics, A/B)
+- docs/art-options/v4/hydroponics/ — 10 files
+- docs/art-options/v4/home-interior-a/ — 10 files
