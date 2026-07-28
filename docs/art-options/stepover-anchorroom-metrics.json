@@ -1,0 +1,13 @@
+{
+ "rolls_accepted": 4,
+ "stepover_frac": 0.011,
+ "rescued_px": 41895,
+ "examples": [
+  "book",
+  "cord",
+  "metal fragments",
+  "wire",
+  "garbage",
+  "trash"
+ ]
+}

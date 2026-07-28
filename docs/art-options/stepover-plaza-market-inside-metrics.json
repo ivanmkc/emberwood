@@ -1,0 +1,13 @@
+{
+ "rolls_accepted": 4,
+ "stepover_frac": 0.0,
+ "rescued_px": 0,
+ "examples": [
+  "box",
+  "box",
+  "wooden box",
+  "bag",
+  "box",
+  "canister"
+ ]
+}
