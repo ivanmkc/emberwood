@@ -2,33 +2,33 @@
   "room": "anchorroom",
   "rolls_attempted": 6,
   "rolls_accepted": 5,
-  "walk_frac": 0.313,
-  "mean_agreement": 0.949,
+  "walk_frac": 0.303,
+  "mean_agreement": 0.931,
   "per_roll": [
     {
       "roll": 0,
       "purity": 0.854,
-      "walk_frac": 0.331
+      "walk_frac": 0.307
     },
     {
       "roll": 1,
-      "purity": 0.887,
-      "walk_frac": 0.319
+      "purity": 0.852,
+      "walk_frac": 0.358
     },
     {
       "roll": 2,
-      "purity": 0.968,
-      "walk_frac": 0.332
+      "purity": 0.97,
+      "walk_frac": 0.353
     },
     {
       "roll": 3,
-      "purity": 0.886,
-      "walk_frac": 0.333
+      "purity": 0.869,
+      "walk_frac": 0.294
     },
     {
       "roll": 4,
-      "purity": 0.885,
-      "walk_frac": 0.429
+      "purity": 0.843,
+      "walk_frac": 0.388
     }
   ]
 }
