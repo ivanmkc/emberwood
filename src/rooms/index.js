@@ -493,15 +493,10 @@ export const PLATE_ROOMS = {
      618,
      447
     ],
-    "to": "canal-docks",
-    "tx": 20,
-    "ty": 3,
-    "toRect": [
-     2,
-     0,
-     637,
-     18
-    ]
+    "to": "night-bazaar",
+    "tx": 29,
+    "ty": 20,
+    "toRect": null
    },
    {
     "edge": "door",
@@ -577,24 +572,6 @@ export const PLATE_ROOMS = {
      215,
      18,
      297
-    ]
-   },
-   {
-    "edge": "n",
-    "rect": [
-     2,
-     0,
-     637,
-     18
-    ],
-    "to": "residential",
-    "tx": 27,
-    "ty": 25,
-    "toRect": [
-     237,
-     430,
-     618,
-     447
     ]
    },
    {
@@ -741,7 +718,7 @@ export const PLATE_ROOMS = {
    "##########...##.....................##.#",
    "##########..........................#..#",
    "#################......############....#",
-   "#################......##############..#",
+   "#################......#############...#",
    "################.......##############..#"
   ],
   "spawn": [
@@ -1057,7 +1034,7 @@ export const PLATE_ROOMS = {
    "##########.............................#",
    "##########.............................#",
    "##########.............................#",
-   "##########.............................#",
+   "####.....#.............................#",
    "###......############.........##########"
   ],
   "spawn": [
@@ -1876,3 +1853,58 @@ export const PLATE_ROOMS = {
  }
 };
 export const PLATE_ROOM_NAMES = ["anchorroom", "barge-cabin", "canal-docks", "control-room", "gate-wall", "grow-lab-office", "guard-post", "home-interior-a", "hydroponics", "night-bazaar", "noodle-bar", "observatory", "observatory-dome", "outskirts", "plaza-market-inside", "power-plant", "pump-station", "repair-bay", "repair-office", "residential", "rooftops", "salvage-shed", "transit", "transit-office", "underworks"];
+export const WORLD_LAYOUT = {
+ "anchorroom": [
+  0,
+  0
+ ],
+ "canal-docks": [
+  0,
+  1
+ ],
+ "gate-wall": [
+  -2,
+  0
+ ],
+ "hydroponics": [
+  1,
+  1
+ ],
+ "night-bazaar": [
+  -1,
+  0
+ ],
+ "observatory": [
+  0,
+  -2
+ ],
+ "outskirts": [
+  -3,
+  0
+ ],
+ "power-plant": [
+  3,
+  1
+ ],
+ "repair-bay": [
+  1,
+  0
+ ],
+ "residential": [
+  -1,
+  -1
+ ],
+ "rooftops": [
+  0,
+  -1
+ ],
+ "transit": [
+  2,
+  0
+ ],
+ "underworks": [
+  2,
+  1
+ ]
+};
+export const INTERIOR_ROOMS = ["barge-cabin", "control-room", "grow-lab-office", "guard-post", "home-interior-a", "noodle-bar", "observatory-dome", "plaza-market-inside", "pump-station", "repair-office", "salvage-shed", "transit-office"];

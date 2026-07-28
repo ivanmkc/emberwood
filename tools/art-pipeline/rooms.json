@@ -20,7 +20,8 @@
       "brief": "a dense covered market alley: market stalls with patched fabric awnings, strings of hanging lanterns, a noodle counter with steam, stacked crates of produce and parts, neon signs in an invented script, puddles reflecting the lights, narrow walking lanes between the stalls",
       "exits": {
         "w": "gate-wall",
-        "e": "anchorroom"
+        "e": "anchorroom",
+        "n": "residential"
       }
     },
     "gate-wall": {
@@ -42,7 +43,7 @@
       "title": "Residential Stacks",
       "brief": "a courtyard between stacked modular homes: prefab housing units stacked two and three high with external metal stairs, laundry lines with clothes between units, mailbox clusters, potted plants on landings, a small shared courtyard with benches and a water spigot",
       "exits": {
-        "s": "canal-docks",
+        "s": "night-bazaar",
         "e": "rooftops"
       }
     },
@@ -50,8 +51,7 @@
       "title": "Canal Docks",
       "brief": "a waterfront dock on a teal canal: a moored rusty barge, a small cargo crane, bollards with coiled ropes, stacked shipping crates, a fish stall with hanging catch, wooden-and-metal boardwalk planks along the waterline, gulls-eye clutter of nets and floats",
       "exits": {
-        "e": "hydroponics",
-        "n": "residential"
+        "e": "hydroponics"
       }
     },
     "hydroponics": {
@@ -105,7 +105,7 @@
   },
   "interiors": {
     "plaza-market-inside": {
-      "title": "Plaza Market \u2014 Inside",
+      "title": "Plaza Market — Inside",
       "brief": "the interior of a small covered market shop: shelves of canned and dried goods with handwritten price tags, a counter with an old register terminal, hanging dried herbs and cables, a cooler cabinet with a soft glow, crates in the corners, a worn rug on the metal floor, a doorway opening at the bottom edge of the frame",
       "parent": "anchorroom"
     },
@@ -115,7 +115,7 @@
       "parent": "night-bazaar"
     },
     "home-interior-a": {
-      "title": "Stack Home \u2014 Ground Unit",
+      "title": "Stack Home — Ground Unit",
       "brief": "a cozy one-room prefab home interior: a bed with a patched quilt, a small kitchen nook with a kettle, a workbench with tools and a half-repaired drone, potted plants on a shelf, family photos on the wall, a floor heater with a soft glow, a doorway opening at the bottom edge of the frame",
       "parent": "residential"
     },
@@ -207,7 +207,7 @@
       "flag": "hasPlantAccess",
       "msg": [
         "A blast shutter bars the way east.",
-        "Stencilled: 'REACTOR HALL \u2014 transit",
+        "Stencilled: 'REACTOR HALL — transit",
         "authority clearance only.'"
       ],
       "grant_room": "transit-office",
@@ -231,10 +231,64 @@
       "grant_hotspot": 0,
       "grant_msg": [
         "Tucked under a bowl: a handwritten",
-        "INVITATION \u2014 'come see the sky.",
-        "\u2014 the astronomer.'",
+        "INVITATION — 'come see the sky.",
+        "— the astronomer.'",
         "(Scope Invite acquired)"
       ]
     }
-  ]
+  ],
+  "layout": {
+    "anchorroom": [
+      0,
+      0
+    ],
+    "canal-docks": [
+      0,
+      1
+    ],
+    "gate-wall": [
+      -2,
+      0
+    ],
+    "hydroponics": [
+      1,
+      1
+    ],
+    "night-bazaar": [
+      -1,
+      0
+    ],
+    "observatory": [
+      0,
+      -2
+    ],
+    "outskirts": [
+      -3,
+      0
+    ],
+    "power-plant": [
+      3,
+      1
+    ],
+    "repair-bay": [
+      1,
+      0
+    ],
+    "residential": [
+      -1,
+      -1
+    ],
+    "rooftops": [
+      0,
+      -1
+    ],
+    "transit": [
+      2,
+      0
+    ],
+    "underworks": [
+      2,
+      1
+    ]
+  }
 }
