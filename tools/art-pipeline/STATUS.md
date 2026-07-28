@@ -1198,3 +1198,16 @@ experts to check all our math" → "push to board".
   Open low-severity: NBP aspect_ratio 4:3 vs plate 1.3393 (0.45% sub-pixel).
 - Filename collision fixed: GPT arm now writes wires-signs-gpt-*; earlier
   NBP anchor/plaza outputs were overwritten before the fix (regenerated).
+
+### Run 26 close-out
+- Lit review: all 5 design elements SOUND (self-consistency x STAPLE; SegGPT/
+  PaintSeg lineage; v-disparity ground fit; niantic domain gap expected).
+- Skeleton-union fusion shipped (d0f8baa): thin comps skeletonize-union-redilate
+  clamped to roll union, blobs majority. Bazaar 110 components vs 381/449 —
+  continuous wires; cost = 1-of-5 semantics keeps single-roll false positives
+  (floor rails). Next step candidate: 2-of-5 skeleton vote.
+- Drift detector shipped (e0b1d16): drift_check.py + drift-baselines.json,
+  fail-loud >2x median coverage shift. Open item: Vertex exposes no dated
+  alias for gemini-3-pro-image, so model pinning is not available to us.
+- Board pushed twice (post-"push to board", then + skeleton layers), all image
+  URLs verified 200 before each push.
