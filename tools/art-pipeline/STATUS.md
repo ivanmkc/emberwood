@@ -668,15 +668,30 @@ A6-niantic              0.001    0.002    0.017
    source image's visual edges. Depth methods have near-zero alignment (smooth depth !=
    pixel-art edges).
 7. Perspective: all 3 scenes are strongly axis-aligned (93.7-98.4% HoughP, 98.4-99.5% LSD).
-   The prompt engineering approach works; grid/outpaint conditioning experiments are running.
 8. Seam continuity: walkable Jaccard = 0.0 between anchor-bazaar (strips at different y),
    confirming the need for aligned carving in the stitched-world pipeline.
+9. Pairwise forced-choice (anchorroom): A1 beat shipped 1-0, A1 beat A2 4-0. A1 vs A5: VLM
+   dropped all votes (masks too different for meaningful visual comparison).
+
+### Perspective conditioning A/B (COMPLETE)
+Condition         anchor   bazaar   plaza    mean
+C1 prompt-only    0.981    0.700    0.919    0.867
+C2 drawn-grid     0.807    0.665    0.673    0.715
+C3 outpaint       0.695    0.896    0.935    0.842
+Anchor baseline   0.937    -        -        -
+
+FINDING: Grid conditioning is COUNTERPRODUCTIVE — consistently worst across all 3 scenes
+(mean 0.715). The model treats the input grid as scene content rather than a structural
+constraint, generating images with grid-like artifacts (3000-4300 detected lines vs ~2300
+for prompt-only). Prompt-only (C1) achieves 0.981 on anchor but has high variance on
+bazaar (one roll at 0.315). Outpaint-from-anchor-edge (C3) is most consistent (0.695-0.935)
+and best for non-anchor scenes by inheriting the anchor's alignment. For scene GENERATION,
+prompt-only is sufficient; for stitched-world EXPANSION, outpaint is recommended.
 
 ### In-progress methods
 - A3 (v4 geometric footprints): v4-footprints agent running census + VLM estimation
-- A4 (amodal-completion footprints): running on anchorroom (pix2gestalt-style via NBP)
-- Perspective A/B: C1 prompt-only, C2 drawn-grid, C3 outpaint — generating 3 rolls per condition
-- Pairwise LLM forced choice: will run after A4 completes
+- A4 (amodal-completion footprints): running on 3 scenes (census + per-object NBP amodal
+  completion + code-drawn footprint extraction)
 
 ### Board
 termchart --project emberwood --agent bench: literature method bake-off comparison board
