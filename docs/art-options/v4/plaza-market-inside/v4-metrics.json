@@ -1,0 +1,169 @@
+{
+  "instances": 132,
+  "ground_contact": 119,
+  "thin_suspended": 4,
+  "large_suspended": 9,
+  "impeding": 10,
+  "geometric_ok": 5,
+  "fallback": 5,
+  "walk_frac_v4": 0.241,
+  "grid": true,
+  "elapsed_s": 496.5,
+  "per_instance": [
+    {
+      "id": 74,
+      "name": "middle shelving unit",
+      "status": "ok",
+      "contact": {
+        "x0": 950,
+        "x1": 1593,
+        "yBase": 907
+      },
+      "depth": 105,
+      "shape": "rect",
+      "attempt": 1
+    },
+    {
+      "id": 107,
+      "name": "wooden stool",
+      "status": "fallback",
+      "contact": {
+        "x0": 1149,
+        "x1": 1294,
+        "yBase": 847
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 56,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay covers a significant portion of the object's vertical front face rather than just the planar base where it contacts the ground."
+      }
+    },
+    {
+      "id": 108,
+      "name": "metal barrel",
+      "status": "ok",
+      "contact": {
+        "x0": 385,
+        "x1": 464,
+        "yBase": 996
+      },
+      "depth": 39,
+      "shape": "ellipse",
+      "attempt": 0
+    },
+    {
+      "id": 110,
+      "name": "shop counter",
+      "status": "fallback",
+      "contact": {
+        "x0": 557,
+        "x1": 836,
+        "yBase": 1673
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 306,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay only covers a small portion of the counter's base, missing the rest of its length along the floor.; The footprint is incomplete; it only covers the bottom tip of the long shop counter, missing the rest of its base extending upwards.; The overlay only covers a small section at the front of the counter's base, completely missing its long extension towards the back of the shop."
+      }
+    },
+    {
+      "id": 119,
+      "name": "produce stand base",
+      "status": "fallback",
+      "contact": {
+        "x0": 2057,
+        "x1": 2143,
+        "yBase": 1390
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 53,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay only covers a portion of the visible base and likely misses the rest of the object's footprint.; The red overlay only covers the left half of the produce stand's base, missing the right side where it also meets the floor.; The red overlay only covers a portion of the middle shelf of the produce stand, not its full base where it meets the ground."
+      }
+    },
+    {
+      "id": 121,
+      "name": "small wooden crate",
+      "status": "fallback",
+      "contact": {
+        "x0": 2197,
+        "x1": 2221,
+        "yBase": 1484
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 26,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The red overlay is just a small square on the right edge of the crate's base, vastly underestimating the total floor area the crate occupies.; The overlay is placed on the side of the crate rather than at its base, and is too small to represent the full ground footprint.; The red overlay only covers a single 1x1 grid cell at the bottom-right corner, while the full footprint of the crate should span several cells to the left to encompass its entire base."
+      }
+    },
+    {
+      "id": 124,
+      "name": "green tank",
+      "status": "ok",
+      "contact": {
+        "x0": 150,
+        "x1": 329,
+        "yBase": 1674
+      },
+      "depth": 104,
+      "shape": "ellipse",
+      "attempt": 0
+    },
+    {
+      "id": 125,
+      "name": "green crates",
+      "status": "ok",
+      "contact": {
+        "x0": 364,
+        "x1": 531,
+        "yBase": 1675
+      },
+      "depth": 100,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 126,
+      "name": "produce crate",
+      "status": "ok",
+      "contact": {
+        "x0": 1804,
+        "x1": 2017,
+        "yBase": 1643
+      },
+      "depth": 80,
+      "shape": "rect",
+      "attempt": 0
+    },
+    {
+      "id": 127,
+      "name": "potato crate",
+      "status": "fallback",
+      "contact": {
+        "x0": 1576,
+        "x1": 1782,
+        "yBase": 1616
+      },
+      "overlap": 1.0,
+      "last_attempt": {
+        "depth": 32,
+        "shape": "rect",
+        "attempt": 3,
+        "gate": "fail",
+        "critique": "The overlay highlights the middle of the crate instead of its base where it rests on the ground.; The red overlay is placed midway up the crate's height, covering the potatoes rather than the base of the crate where it meets the ground.; The overlay is placed across the middle of the crate's sprite instead of at the bottom edge where its base actually rests on the floor."
+      }
+    }
+  ]
+}

@@ -1,12 +1,13 @@
 {
   "pass": true,
-  "source": "v4-geometric-cbc",
-  "method": "correct-by-construction contact + VLM depth estimate",
-  "white_frac": 0.0608,
-  "geometric_ok": 7,
-  "fallback": 4,
-  "impeding": 11,
-  "instances": 47,
-  "thin_suspended": 1,
-  "large_suspended": 3
+  "source": "v4-geometric-cbc-clamped",
+  "method": "correct-by-construction + depth clamp (1.1x) + overlap filter",
+  "white_frac": 0.0354,
+  "geometric_ok": 5,
+  "fallback": 5,
+  "dropped": 0,
+  "impeding": 10,
+  "instances": 132,
+  "thin_suspended": 4,
+  "large_suspended": 9
 }
