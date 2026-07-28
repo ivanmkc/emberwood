@@ -1,12 +1,13 @@
 {
- "pass": true,
- "source": "v4-geometric-cbc-clamped",
- "method": "correct-by-construction contact + depth clamp (1.1x width) + overlap filter",
- "white_frac": 0.0,
- "geometric_ok": 0,
- "fallback": 0,
- "dropped": 0,
- "impeding": 12,
- "instances": 27,
- "manual_fix": "pylon(inst 12) footprint restored: overlap-filter blind spot (occupancy extends beyond visible mask); ellipse from instance contact, depth clamped to width"
+  "pass": true,
+  "source": "v4-geometric-cbc-clamped",
+  "method": "correct-by-construction + depth clamp (1.1x) + overlap filter",
+  "white_frac": 0.0191,
+  "geometric_ok": 5,
+  "fallback": 7,
+  "dropped": 0,
+  "impeding": 12,
+  "instances": 66,
+  "thin_suspended": 7,
+  "large_suspended": 4
 }

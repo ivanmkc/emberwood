@@ -301,12 +301,20 @@ def process_instance(inst, src, use_grid, W, H):
 
         depth = int(depth)
         depth_ratio = depth / max(1, contact_width)
-        if not (0.15 <= depth_ratio <= 1.5):
+        if depth_ratio < 0.15:
             critique = (f'plan_depth_px={depth} gives depth/width ratio '
-                        f'{depth_ratio:.2f}, outside [0.15, 1.5]. Adjust.')
+                        f'{depth_ratio:.2f}, below 0.15. Increase depth.')
             print(f'  [{inst["id"]}:{nm}] attempt {attempt}: '
-                  f'depth_ratio {depth_ratio:.2f} OOB', flush=True)
+                  f'depth_ratio {depth_ratio:.2f} too low', flush=True)
             continue
+
+        # DEPTH CLAMP: a pedestal can't be deeper than ~1.1x its width
+        max_depth = int(1.1 * contact_width)
+        if depth > max_depth:
+            print(f'  [{inst["id"]}:{nm}] attempt {attempt}: '
+                  f'depth {depth} clamped to {max_depth} (1.1x width)',
+                  flush=True)
+            depth = max_depth
 
         fp_mask = draw_footprint(crop_w, crop_h, x0_crop, x1_crop,
                                  yBase_crop, depth, shape)
@@ -343,11 +351,23 @@ def process_instance(inst, src, use_grid, W, H):
     else:
         fb = inst['mask'].copy()
         fb[:max(0, y1 - max(20, (y1 - y0) // 4)), :] = False
+        # OVERLAP FILTER: a fallback band that misses its own instance is
+        # worse than no footprint (segment_room full-blocks the instance)
+        overlap = float((fb & inst['mask']).sum()) / max(1, float(fb.sum()))
+        if overlap < 0.40:
+            print(f'  [{inst["id"]}:{nm}] FALLBACK DROPPED: '
+                  f'overlap={overlap:.2f} < 0.40', flush=True)
+            result = {'id': inst['id'], 'name': nm, 'status': 'dropped',
+                      'contact': {'x0': x0_full, 'x1': x1_full,
+                                  'yBase': yBase_full},
+                      'overlap': overlap, 'last_attempt': best_attempt}
+            return inst['id'], full_mask, result
         full_mask = fb
-        print(f'  [{inst["id"]}:{nm}] FALLBACK lower-band', flush=True)
+        print(f'  [{inst["id"]}:{nm}] FALLBACK lower-band '
+              f'(overlap={overlap:.2f})', flush=True)
         result = {'id': inst['id'], 'name': nm, 'status': 'fallback',
                   'contact': {'x0': x0_full, 'x1': x1_full, 'yBase': yBase_full},
-                  'last_attempt': best_attempt}
+                  'overlap': overlap, 'last_attempt': best_attempt}
 
     return inst['id'], full_mask, result
 
@@ -563,13 +583,15 @@ def main():
 
     ok_count = sum(1 for r in per_inst_results if r['status'] == 'ok')
     fb_count = sum(1 for r in per_inst_results if r['status'] == 'fallback')
+    drop_count = sum(1 for r in per_inst_results if r['status'] == 'dropped')
     fp_metrics = {
         'pass': True,
-        'source': 'v4-geometric-cbc',
-        'method': 'correct-by-construction contact + VLM depth estimate',
+        'source': 'v4-geometric-cbc-clamped',
+        'method': 'correct-by-construction + depth clamp (1.1x) + overlap filter',
         'white_frac': round(float(fp_union.mean()), 4),
         'geometric_ok': ok_count,
         'fallback': fb_count,
+        'dropped': drop_count,
         'impeding': len(kept),
         'instances': len(insts),
         'thin_suspended': len(thin_susp),
