@@ -1,0 +1,29 @@
+{
+ "method": "skeleton-union (clamped) + blob-majority",
+ "blob_threshold_px": 12,
+ "median_thin_stroke_px": 10.0,
+ "dilate_radius_px": 5,
+ "n_rolls": 5,
+ "per_roll_thin_comps": [
+  73,
+  63,
+  66,
+  83,
+  44
+ ],
+ "per_roll_blob_comps": [
+  3,
+  43,
+  19,
+  43,
+  14
+ ],
+ "coverage_skel_union": 0.1081,
+ "coverage_skel_unclamped": 0.1467,
+ "coverage_majority": 0.0105,
+ "coverage_union2": 0.0477,
+ "coverage_union_all": 0.1833,
+ "n_components_skel_union": 110,
+ "n_components_majority": 381,
+ "n_components_union2": 449
+}
