@@ -1028,3 +1028,18 @@ Emitted files per room:
 ### Board
 Pushed to termchart --project emberwood --agent art-v3: v5 emission summary table,
 footprint overlays for all 3 scenes, method comparison text.
+
+## Ivan directive: NEW BENCH METHOD A7 — screen-space FLOORPLAN generation
+Ask the image model to redraw each scene as an architect-style FLOORPLAN kept in the SAME
+camera/screen space as the plate (NOT rectified to bird's-eye) — same grid, same
+perspective, pixel-aligned so it overlays the original. Two arms: NBP (gemini-3-pro-image)
+and GPT-Image-2 for comparison (NOTE: no OPENAI_API_KEY anywhere in env/profile — the GPT
+arm is BLOCKED until Ivan provides a key; implement the harness so the arm runs the moment
+a key appears; report the block, don't fake the cells).
+Prompt sketch: "Redraw this EXACT scene as an architect floorplan in the same screen space,
+every position pixel-aligned for overlay: white = walkable floor, black lines = wall bases,
+solid gray = each object's full plan-view ground footprint (including hidden base), blue =
+water, faint 16px tile grid preserved." Extraction: white->walk mask, gray shapes->
+footprints, overlay-alignment score (Canny agreement vs plate), then the standard evaluator
+(IoU vs consensus, config-space, pairwise forced choice) + an ImageLayers overlay stack on
+the bench board (plate/floorplan toggle — the overlay IS the demo).
