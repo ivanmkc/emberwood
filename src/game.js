@@ -189,7 +189,14 @@ export function createGame(canvas, input, art) {
     regenT: 0,
   };
   window.__ew = g; // debug/drive handle: Playwright playtests read player state
-  window.__ewWorld = { worldRooms, worldGrid, worldBounds, isActive: () => worldActive, art };
+  window.__ewWorld = {
+    worldRooms, worldGrid, worldBounds, isActive: () => worldActive, art,
+    blocked: (wx, wy) => worldActive ? worldMaskBlocked(wx, wy) : (g.maskWalk ? ((() => {
+      const m = g.maskWalk, xi = Math.round(wx), yi = Math.round(wy);
+      return xi < 0 || yi < 0 || xi >= m.w || yi >= m.h || m.data[(yi * m.w + xi) * 4] < 128;
+    })()) : true),
+    roomOffset: (rid) => roomWorldOffset(rid),
+  };
   const walkFrames = {}; // dir -> [frameA, frameB] synthesized leg-step canvases
 
   function stepFrames(im, dir) {
@@ -1173,15 +1180,16 @@ export function createGame(canvas, input, art) {
           }
           continue;
         }
-        const keepX = p.x, keepY = p.y;
         loadMap(ex.to, ex.tx, ex.ty);
         if (ex.toRect) {
-          const [tx0, ty0, tx1, ty1] = ex.toRect;
+          const woff = worldActive ? roomWorldOffset(ex.to) : null;
+          const ox = woff ? woff.x : 0, oy = woff ? woff.y : 0;
+          const [tx0, ty0, tx1, ty1] = [ex.toRect[0] + ox, ex.toRect[1] + oy, ex.toRect[2] + ox, ex.toRect[3] + oy];
           const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-          if (ex.edge === 'n' || ex.edge === 'door') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty0 - 26; }
-          if (ex.edge === 's') { p.x = clamp(keepX, tx0, tx1 - 16); p.y = ty1 + 10; }
-          if (ex.edge === 'w') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx0 - 22; }
-          if (ex.edge === 'e') { p.y = clamp(keepY, ty0, ty1 - 16); p.x = tx1 + 6; }
+          if (ex.edge === 'n' || ex.edge === 'door') { p.x = clamp(p.x, tx0, tx1 - 16); p.y = ty0 - 26; }
+          if (ex.edge === 's') { p.x = clamp(p.x, tx0, tx1 - 16); p.y = ty1 + 10; }
+          if (ex.edge === 'w') { p.y = clamp(p.y, ty0, ty1 - 16); p.x = tx0 - 22; }
+          if (ex.edge === 'e') { p.y = clamp(p.y, ty0, ty1 - 16); p.x = tx1 + 6; }
           const horiz = ex.edge === 'n' || ex.edge === 's' || ex.edge === 'door';
           for (let d = 0; d <= 200; d += 4) {
             for (const s of d ? [-d, d] : [0]) {
@@ -1373,6 +1381,18 @@ export function createGame(canvas, input, art) {
       if (d.player) drawPlayer();
       else if (d.cut) drawArt(d.cut.image, Math.round(d.cut.x / DS + d.offx - cx), Math.round(d.cut.y / DS + d.offy - cy));
       else if (d.e) drawEntity(d.e);
+    }
+
+    // overhead occlude-only layer: suspended elements drawn on top of everything
+    for (const rid of EXTERIOR_ROOMS) {
+      const wr = worldRooms[rid];
+      if (!wr) continue;
+      const ohImg = art.roomOverhead && art.roomOverhead[rid];
+      if (!ohImg) continue;
+      const rx = wr.gx * ROOM_PW - cx;
+      const ry = wr.gy * ROOM_PH - cy;
+      if (rx + ROOM_PW < 0 || rx > VIEW_W || ry + ROOM_PH < 0 || ry > VIEW_H) continue;
+      ctx.drawImage(ohImg, rx, ry, ROOM_PW, ROOM_PH);
     }
 
     // emissive pulse per room
@@ -1575,6 +1595,10 @@ export function createGame(canvas, input, art) {
       else if (d.prop) drawProp(d.prop);
       else if (d.cut) drawArt(d.cut.image, Math.round(d.cut.x / DS - cx), Math.round(d.cut.y / DS - cy));
       else drawEntity(d.e);
+    }
+    // overhead occlude-only layer
+    if (plateImg && art.roomOverhead && art.roomOverhead[g.mapId]) {
+      ctx.drawImage(art.roomOverhead[g.mapId], -cx, -cy, g.grid[0].length * T, g.grid.length * T);
     }
     // emissive pulse: the plate's neon and core breathe
     if (plateImg && art.roomEmissive && art.roomEmissive[g.mapId]) {

@@ -12,6 +12,7 @@ async function jobsRooms(art, base, loadImg) {
     loadImg(`rooms/${name}.jpg`).then((img) => { art.rooms[name] = img; });
     loadImg(`rooms/${name}.collision.png`).then((img) => { art.roomMasks[name] = img; });
     loadImg(`rooms/${name}.emissive.png`).then((img) => { art.roomEmissive[name] = img; });
+    loadImg(`rooms/${name}.overhead.png`).then((img) => { if (img) art.roomOverhead[name] = img; });
     fetch(`${base}rooms/${name}.hotspots.json`).then(async (r) => {
       if (r.ok) art.roomHotspots[name] = await r.json();
     }).catch(() => {});
@@ -47,7 +48,7 @@ export async function loadArt(base = 'assets/') {
     img.src = base + path;
   });
 
-  const art = { tiles: {}, props: {}, chars: {}, rooms: {}, roomMasks: {}, roomEmissive: {}, roomData: {}, roomHotspots: {} };
+  const art = { tiles: {}, props: {}, chars: {}, rooms: {}, roomMasks: {}, roomEmissive: {}, roomOverhead: {}, roomData: {}, roomHotspots: {} };
   await jobsRooms(art, base, loadImg);
   const jobs = [];
   for (const [name, variants] of Object.entries(manifest.tiles || {})) {
