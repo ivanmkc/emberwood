@@ -2238,3 +2238,15 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - Remaining follow-ups for future windows: video probes for the 10 small
   interiors + coverage top-ups for rooftops/power-plant (38-48% unvisited);
   human review of the 2 flagged rooms; in-game spot verification batch.
+
+## Run 54 (2026-07-29) — in-game verification pass over shipped overheads
+- 6 rooms sampled across tri-rater batches (hydroponics, residential,
+  transit, canal-docks, night-bazaar, control-room): all overhead PNGs load
+  (200, correct 1280x896 scale), zero page errors, occlusion behavior
+  correct, no ghosts (spot-verified screenshots independently). Alpha
+  coverage 2-20% per room — wires/signs/suspended only, as designed.
+- Expected 404s only for the 2 FLAGGED rooms (pump-station, rooftops) which
+  ship no overhead by decision; engine degrades gracefully.
+- 18h window deliverables complete: game-wide two-arm layer sweep live on
+  emberwood/layers-sweep; 23/25 rooms with production overheads; estimator
+  hardened + held-out validated (6.7%); all boards current.
