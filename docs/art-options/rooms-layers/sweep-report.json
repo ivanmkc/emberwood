@@ -282,5 +282,47 @@
     "n_unreliable_parts": 35,
     "n_total_parts": 238,
     "notes": "35 collision-prior (unvisited) parts"
+  },
+  "guard-post": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ysort": 17,
+      "overhead": 23,
+      "collision-prior": 43,
+      "ground": 8,
+      "collision": 73
+    },
+    "n_unreliable_parts": 43,
+    "n_total_parts": 164,
+    "notes": "43 collision-prior (unvisited) parts"
+  },
+  "home-interior-a": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ysort": 25,
+      "ground": 4,
+      "collision": 114,
+      "overhead": 34,
+      "collision-prior": 11
+    },
+    "n_unreliable_parts": 11,
+    "n_total_parts": 188,
+    "notes": "11 collision-prior (unvisited) parts"
+  },
+  "observatory-dome": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 43,
+      "collision-prior": 41,
+      "overhead": 51,
+      "ysort": 18,
+      "ground": 3
+    },
+    "n_unreliable_parts": 41,
+    "n_total_parts": 156,
+    "notes": "41 collision-prior (unvisited) parts"
   }
 }

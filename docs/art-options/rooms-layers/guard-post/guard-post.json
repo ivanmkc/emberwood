@@ -1,0 +1,3847 @@
+{
+ "votes": {
+  "1": {
+   "occ_front": 0,
+   "occ_behind": 11327,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "2": {
+   "occ_front": 3566,
+   "occ_behind": 354,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "3": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "4": {
+   "occ_front": 72,
+   "occ_behind": 0,
+   "under_front": 38,
+   "under_behind": 0
+  },
+  "5": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "6": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "7": {
+   "occ_front": 1291,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "8": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "9": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "10": {
+   "occ_front": 213,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "11": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "12": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "13": {
+   "occ_front": 335,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "14": {
+   "occ_front": 918,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "15": {
+   "occ_front": 508,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "16": {
+   "occ_front": 0,
+   "occ_behind": 196,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "17": {
+   "occ_front": 0,
+   "occ_behind": 603,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "18": {
+   "occ_front": 140,
+   "occ_behind": 21,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "19": {
+   "occ_front": 151,
+   "occ_behind": 0,
+   "under_front": 889,
+   "under_behind": 0
+  },
+  "20": {
+   "occ_front": 2266,
+   "occ_behind": 5215,
+   "under_front": 534,
+   "under_behind": 1381
+  },
+  "21": {
+   "occ_front": 657,
+   "occ_behind": 440,
+   "under_front": 154,
+   "under_behind": 97
+  },
+  "22": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "23": {
+   "occ_front": 216,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "24": {
+   "occ_front": 863,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "25": {
+   "occ_front": 0,
+   "occ_behind": 572,
+   "under_front": 484,
+   "under_behind": 124
+  },
+  "26": {
+   "occ_front": 862,
+   "occ_behind": 3630,
+   "under_front": 945,
+   "under_behind": 1041
+  },
+  "27": {
+   "occ_front": 359,
+   "occ_behind": 2230,
+   "under_front": 787,
+   "under_behind": 439
+  },
+  "28": {
+   "occ_front": 0,
+   "occ_behind": 705,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "29": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 774,
+   "under_behind": 0
+  },
+  "30": {
+   "occ_front": 721,
+   "occ_behind": 2024,
+   "under_front": 1556,
+   "under_behind": 211
+  },
+  "31": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 270,
+   "under_behind": 0
+  },
+  "32": {
+   "occ_front": 99,
+   "occ_behind": 0,
+   "under_front": 384,
+   "under_behind": 0
+  },
+  "33": {
+   "occ_front": 587,
+   "occ_behind": 89,
+   "under_front": 3324,
+   "under_behind": 72
+  },
+  "34": {
+   "occ_front": 148,
+   "occ_behind": 0,
+   "under_front": 1345,
+   "under_behind": 0
+  },
+  "35": {
+   "occ_front": 10,
+   "occ_behind": 0,
+   "under_front": 454,
+   "under_behind": 0
+  },
+  "36": {
+   "occ_front": 1976,
+   "occ_behind": 32,
+   "under_front": 4455,
+   "under_behind": 202
+  },
+  "37": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "38": {
+   "occ_front": 159,
+   "occ_behind": 0,
+   "under_front": 196,
+   "under_behind": 1245
+  },
+  "39": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "40": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "41": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 28
+  },
+  "42": {
+   "occ_front": 4177,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "43": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "44": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "45": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "46": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "47": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "48": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "49": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "50": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "51": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "52": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "53": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "54": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "55": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "56": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "57": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "58": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "59": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "60": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "61": {
+   "occ_front": 1235,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "62": {
+   "occ_front": 134,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "63": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "64": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "65": {
+   "occ_front": 10,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "66": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "67": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "68": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 32,
+   "under_behind": 0
+  },
+  "69": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "70": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "71": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "72": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 52,
+   "under_behind": 0
+  },
+  "73": {
+   "occ_front": 23,
+   "occ_behind": 0,
+   "under_front": 75,
+   "under_behind": 0
+  },
+  "74": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 13,
+   "under_behind": 0
+  },
+  "75": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "76": {
+   "occ_front": 40,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "77": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "78": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "79": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "80": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "81": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "82": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "83": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "84": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "85": {
+   "occ_front": 301,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "86": {
+   "occ_front": 0,
+   "occ_behind": 393,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "87": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "88": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "89": {
+   "occ_front": 680,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "90": {
+   "occ_front": 410,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "91": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "92": {
+   "occ_front": 491,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "93": {
+   "occ_front": 1375,
+   "occ_behind": 2243,
+   "under_front": 1650,
+   "under_behind": 534
+  },
+  "94": {
+   "occ_front": 6202,
+   "occ_behind": 750,
+   "under_front": 2,
+   "under_behind": 0
+  },
+  "95": {
+   "occ_front": 87,
+   "occ_behind": 0,
+   "under_front": 605,
+   "under_behind": 0
+  },
+  "96": {
+   "occ_front": 495,
+   "occ_behind": 0,
+   "under_front": 2750,
+   "under_behind": 0
+  },
+  "97": {
+   "occ_front": 9493,
+   "occ_behind": 1649,
+   "under_front": 5538,
+   "under_behind": 671
+  },
+  "98": {
+   "occ_front": 148,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "99": {
+   "occ_front": 244,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "100": {
+   "occ_front": 937,
+   "occ_behind": 0,
+   "under_front": 77,
+   "under_behind": 0
+  },
+  "101": {
+   "occ_front": 0,
+   "occ_behind": 3,
+   "under_front": 229,
+   "under_behind": 0
+  },
+  "102": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "103": {
+   "occ_front": 795,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "104": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "105": {
+   "occ_front": 1728,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "106": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 11,
+   "under_behind": 0
+  },
+  "107": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 376,
+   "under_behind": 0
+  },
+  "108": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 10,
+   "under_behind": 0
+  },
+  "109": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 126,
+   "under_behind": 0
+  },
+  "110": {
+   "occ_front": 13,
+   "occ_behind": 0,
+   "under_front": 194,
+   "under_behind": 0
+  },
+  "111": {
+   "occ_front": 65,
+   "occ_behind": 0,
+   "under_front": 166,
+   "under_behind": 0
+  },
+  "112": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 106,
+   "under_behind": 0
+  },
+  "113": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 188,
+   "under_behind": 0
+  },
+  "114": {
+   "occ_front": 160,
+   "occ_behind": 0,
+   "under_front": 2657,
+   "under_behind": 0
+  },
+  "115": {
+   "occ_front": 441,
+   "occ_behind": 0,
+   "under_front": 3461,
+   "under_behind": 0
+  },
+  "116": {
+   "occ_front": 102,
+   "occ_behind": 0,
+   "under_front": 351,
+   "under_behind": 0
+  },
+  "117": {
+   "occ_front": 257,
+   "occ_behind": 0,
+   "under_front": 3080,
+   "under_behind": 0
+  },
+  "118": {
+   "occ_front": 5,
+   "occ_behind": 0,
+   "under_front": 1355,
+   "under_behind": 0
+  },
+  "119": {
+   "occ_front": 60,
+   "occ_behind": 0,
+   "under_front": 1353,
+   "under_behind": 0
+  },
+  "120": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "121": {
+   "occ_front": 85,
+   "occ_behind": 520,
+   "under_front": 319,
+   "under_behind": 134
+  },
+  "122": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "123": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "124": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "125": {
+   "occ_front": 168,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "126": {
+   "occ_front": 94,
+   "occ_behind": 0,
+   "under_front": 568,
+   "under_behind": 0
+  },
+  "127": {
+   "occ_front": 187,
+   "occ_behind": 0,
+   "under_front": 2056,
+   "under_behind": 0
+  },
+  "128": {
+   "occ_front": 333,
+   "occ_behind": 0,
+   "under_front": 932,
+   "under_behind": 0
+  },
+  "129": {
+   "occ_front": 106,
+   "occ_behind": 0,
+   "under_front": 1655,
+   "under_behind": 0
+  },
+  "130": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "131": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "132": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "133": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 11,
+   "under_behind": 0
+  },
+  "134": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 256,
+   "under_behind": 0
+  },
+  "135": {
+   "occ_front": 7,
+   "occ_behind": 0,
+   "under_front": 104,
+   "under_behind": 0
+  },
+  "136": {
+   "occ_front": 187,
+   "occ_behind": 0,
+   "under_front": 20,
+   "under_behind": 0
+  },
+  "137": {
+   "occ_front": 1,
+   "occ_behind": 0,
+   "under_front": 51,
+   "under_behind": 0
+  },
+  "138": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "139": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "140": {
+   "occ_front": 163,
+   "occ_behind": 0,
+   "under_front": 188,
+   "under_behind": 0
+  },
+  "141": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 277,
+   "under_behind": 0
+  },
+  "142": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 524,
+   "under_behind": 0
+  },
+  "143": {
+   "occ_front": 31,
+   "occ_behind": 0,
+   "under_front": 2126,
+   "under_behind": 0
+  },
+  "144": {
+   "occ_front": 2,
+   "occ_behind": 0,
+   "under_front": 253,
+   "under_behind": 0
+  },
+  "145": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 235,
+   "under_behind": 0
+  },
+  "146": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 10,
+   "under_behind": 0
+  },
+  "147": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 63,
+   "under_behind": 0
+  },
+  "148": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "149": {
+   "occ_front": 22,
+   "occ_behind": 0,
+   "under_front": 32,
+   "under_behind": 0
+  },
+  "150": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 65,
+   "under_behind": 0
+  },
+  "151": {
+   "occ_front": 11,
+   "occ_behind": 0,
+   "under_front": 303,
+   "under_behind": 0
+  },
+  "152": {
+   "occ_front": 228,
+   "occ_behind": 0,
+   "under_front": 5164,
+   "under_behind": 0
+  },
+  "153": {
+   "occ_front": 304,
+   "occ_behind": 0,
+   "under_front": 4645,
+   "under_behind": 0
+  },
+  "154": {
+   "occ_front": 289,
+   "occ_behind": 0,
+   "under_front": 4985,
+   "under_behind": 0
+  },
+  "155": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 2
+  },
+  "156": {
+   "occ_front": 27,
+   "occ_behind": 0,
+   "under_front": 336,
+   "under_behind": 0
+  },
+  "157": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "158": {
+   "occ_front": 2297,
+   "occ_behind": 980,
+   "under_front": 243,
+   "under_behind": 30
+  },
+  "159": {
+   "occ_front": 380,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "160": {
+   "occ_front": 102,
+   "occ_behind": 0,
+   "under_front": 135,
+   "under_behind": 8
+  },
+  "161": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "162": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "163": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "164": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  }
+ },
+ "base_y": {
+  "1": 1791,
+  "2": 1304,
+  "3": 806,
+  "4": 577,
+  "5": 377,
+  "6": 184,
+  "7": 573,
+  "8": 178,
+  "9": 292,
+  "10": 276,
+  "11": 763,
+  "12": 458,
+  "13": 427,
+  "14": 394,
+  "15": 329,
+  "16": 843,
+  "17": 935,
+  "18": 611,
+  "19": 903,
+  "20": 881,
+  "21": 628,
+  "22": 646,
+  "23": 604,
+  "24": 660,
+  "25": 1094,
+  "26": 909,
+  "27": 935,
+  "28": 1269,
+  "29": 776,
+  "30": 935,
+  "31": 723,
+  "32": 709,
+  "33": 886,
+  "34": 755,
+  "35": 755,
+  "36": 752,
+  "37": 1271,
+  "38": 1270,
+  "39": 1173,
+  "40": 1276,
+  "41": 1270,
+  "42": 1341,
+  "43": 1387,
+  "44": 1791,
+  "45": 1563,
+  "46": 1791,
+  "47": 1738,
+  "48": 1745,
+  "49": 1791,
+  "50": 1791,
+  "51": 329,
+  "52": 322,
+  "53": 276,
+  "54": 325,
+  "55": 329,
+  "56": 325,
+  "57": 325,
+  "58": 363,
+  "59": 363,
+  "60": 356,
+  "61": 550,
+  "62": 552,
+  "63": 867,
+  "64": 839,
+  "65": 854,
+  "66": 529,
+  "67": 524,
+  "68": 529,
+  "69": 568,
+  "70": 534,
+  "71": 545,
+  "72": 558,
+  "73": 568,
+  "74": 632,
+  "75": 725,
+  "76": 1062,
+  "77": 830,
+  "78": 1236,
+  "79": 1671,
+  "80": 1697,
+  "81": 353,
+  "82": 352,
+  "83": 354,
+  "84": 354,
+  "85": 233,
+  "86": 945,
+  "87": 386,
+  "88": 386,
+  "89": 386,
+  "90": 340,
+  "91": 337,
+  "92": 377,
+  "93": 861,
+  "94": 752,
+  "95": 899,
+  "96": 899,
+  "97": 844,
+  "98": 572,
+  "99": 578,
+  "100": 571,
+  "101": 935,
+  "102": 393,
+  "103": 457,
+  "104": 407,
+  "105": 501,
+  "106": 595,
+  "107": 552,
+  "108": 641,
+  "109": 671,
+  "110": 698,
+  "111": 662,
+  "112": 664,
+  "113": 636,
+  "114": 752,
+  "115": 747,
+  "116": 716,
+  "117": 847,
+  "118": 775,
+  "119": 775,
+  "120": 644,
+  "121": 643,
+  "122": 475,
+  "123": 540,
+  "124": 535,
+  "125": 531,
+  "126": 753,
+  "127": 787,
+  "128": 746,
+  "129": 839,
+  "130": 545,
+  "131": 701,
+  "132": 671,
+  "133": 637,
+  "134": 697,
+  "135": 719,
+  "136": 825,
+  "137": 720,
+  "138": 769,
+  "139": 784,
+  "140": 906,
+  "141": 910,
+  "142": 1005,
+  "143": 1097,
+  "144": 1151,
+  "145": 1106,
+  "146": 1102,
+  "147": 1085,
+  "148": 746,
+  "149": 813,
+  "150": 796,
+  "151": 827,
+  "152": 819,
+  "153": 883,
+  "154": 883,
+  "155": 1233,
+  "156": 1181,
+  "157": 1197,
+  "158": 1265,
+  "159": 1275,
+  "160": 1256,
+  "161": 1269,
+  "162": 1474,
+  "163": 1549,
+  "164": 1505
+ },
+ "unreliable": {
+  "1": "mixed-geometry (span 7.7x walker height)",
+  "2": "mixed-geometry (span 5.3x walker height)",
+  "3": "mixed-geometry (span 3.0x walker height)",
+  "11": "mixed-geometry (span 2.8x walker height)",
+  "16": "mixed-geometry (span 2.6x walker height)",
+  "17": "mixed-geometry (span 2.9x walker height)",
+  "20": "mixed-geometry (span 2.9x walker height)",
+  "25": "mixed-geometry (span 3.3x walker height)",
+  "28": "mixed-geometry (span 3.5x walker height)",
+  "37": "mixed-geometry (span 2.8x walker height)",
+  "38": "mixed-geometry (span 2.7x walker height)",
+  "86": "mixed-geometry (span 3.4x walker height)",
+  "96": "mixed-geometry (span 2.6x walker height)",
+  "101": "mixed-geometry (span 2.7x walker height)"
+ },
+ "footprint_top": {
+  "1": 1418,
+  "2": null,
+  "3": null,
+  "4": null,
+  "5": null,
+  "6": null,
+  "7": null,
+  "8": null,
+  "9": null,
+  "10": null,
+  "11": null,
+  "12": null,
+  "13": null,
+  "14": null,
+  "15": null,
+  "16": 662,
+  "17": null,
+  "18": null,
+  "19": null,
+  "20": 714,
+  "21": null,
+  "22": null,
+  "23": null,
+  "24": null,
+  "25": null,
+  "26": 710,
+  "27": 722,
+  "28": 662,
+  "29": null,
+  "30": 692,
+  "31": null,
+  "32": null,
+  "33": 713,
+  "34": null,
+  "35": null,
+  "36": 663,
+  "37": null,
+  "38": null,
+  "39": null,
+  "40": null,
+  "41": null,
+  "42": null,
+  "43": null,
+  "44": null,
+  "45": null,
+  "46": null,
+  "47": null,
+  "48": null,
+  "49": null,
+  "50": null,
+  "51": null,
+  "52": null,
+  "53": null,
+  "54": null,
+  "55": null,
+  "56": null,
+  "57": null,
+  "58": null,
+  "59": null,
+  "60": null,
+  "61": null,
+  "62": null,
+  "63": null,
+  "64": null,
+  "65": null,
+  "66": null,
+  "67": null,
+  "68": null,
+  "69": null,
+  "70": null,
+  "71": null,
+  "72": null,
+  "73": null,
+  "74": null,
+  "75": null,
+  "76": null,
+  "77": null,
+  "78": null,
+  "79": null,
+  "80": null,
+  "81": null,
+  "82": null,
+  "83": null,
+  "84": null,
+  "85": null,
+  "86": 662,
+  "87": null,
+  "88": null,
+  "89": null,
+  "90": null,
+  "91": null,
+  "92": null,
+  "93": 684,
+  "94": 666,
+  "95": null,
+  "96": null,
+  "97": 694,
+  "98": null,
+  "99": null,
+  "100": null,
+  "101": null,
+  "102": null,
+  "103": null,
+  "104": null,
+  "105": null,
+  "106": null,
+  "107": null,
+  "108": null,
+  "109": null,
+  "110": null,
+  "111": null,
+  "112": null,
+  "113": null,
+  "114": null,
+  "115": null,
+  "116": null,
+  "117": null,
+  "118": null,
+  "119": null,
+  "120": null,
+  "121": null,
+  "122": null,
+  "123": null,
+  "124": null,
+  "125": null,
+  "126": null,
+  "127": null,
+  "128": null,
+  "129": null,
+  "130": null,
+  "131": null,
+  "132": null,
+  "133": null,
+  "134": null,
+  "135": null,
+  "136": null,
+  "137": null,
+  "138": null,
+  "139": null,
+  "140": null,
+  "141": null,
+  "142": null,
+  "143": null,
+  "144": null,
+  "145": null,
+  "146": null,
+  "147": null,
+  "148": null,
+  "149": null,
+  "150": null,
+  "151": null,
+  "152": null,
+  "153": null,
+  "154": null,
+  "155": null,
+  "156": null,
+  "157": null,
+  "158": 1219,
+  "159": null,
+  "160": null,
+  "161": null,
+  "162": null,
+  "163": null,
+  "164": null
+ },
+ "behind_rows": {
+  "1": [
+   1371,
+   1371,
+   1393,
+   1393,
+   1398,
+   1398,
+   1417,
+   1417,
+   1424,
+   1424,
+   1438,
+   1438,
+   1438,
+   1438,
+   1450,
+   1450,
+   1457,
+   1457,
+   1473,
+   1473,
+   1473,
+   1473,
+   1492,
+   1492,
+   1513,
+   1513,
+   1527,
+   1527
+  ],
+  "2": [
+   658,
+   661,
+   661,
+   681
+  ],
+  "16": [
+   658,
+   661,
+   661,
+   681,
+   702
+  ],
+  "17": [
+   883,
+   886
+  ],
+  "18": [
+   594
+  ],
+  "20": [
+   645,
+   656,
+   674,
+   674,
+   693,
+   709,
+   725,
+   749,
+   760,
+   768,
+   789,
+   810,
+   829,
+   829,
+   829,
+   840,
+   842,
+   845,
+   850,
+   864,
+   864,
+   864
+  ],
+  "21": [
+   594,
+   594,
+   610
+  ],
+  "25": [
+   883,
+   883,
+   886,
+   886
+  ],
+  "26": [
+   645,
+   645,
+   656,
+   674,
+   674,
+   693,
+   702,
+   709,
+   709,
+   725,
+   749,
+   760,
+   768,
+   789,
+   810,
+   829,
+   829,
+   829,
+   829,
+   840,
+   840,
+   842,
+   845,
+   850,
+   864,
+   864,
+   882,
+   893,
+   898
+  ],
+  "27": [
+   645,
+   656,
+   674,
+   702,
+   709,
+   760,
+   829,
+   829,
+   829,
+   840,
+   842,
+   845,
+   864,
+   864,
+   882,
+   893,
+   898,
+   917
+  ],
+  "28": [
+   658,
+   661,
+   661,
+   681,
+   702,
+   829,
+   867,
+   873
+  ],
+  "30": [
+   658,
+   661,
+   661,
+   681,
+   702,
+   829,
+   829,
+   842,
+   864,
+   867,
+   873,
+   882,
+   893,
+   898,
+   917
+  ],
+  "33": [
+   610,
+   692,
+   719,
+   737,
+   748,
+   767,
+   767,
+   788
+  ],
+  "36": [
+   634,
+   647,
+   658,
+   674,
+   692,
+   719,
+   719,
+   737,
+   737,
+   748
+  ],
+  "38": [
+   1233,
+   1236
+  ],
+  "41": [
+   1231,
+   1236
+  ],
+  "86": [
+   658,
+   661,
+   661,
+   681,
+   702
+  ],
+  "93": [
+   645,
+   656,
+   656,
+   674,
+   674,
+   674,
+   693,
+   709,
+   725,
+   725,
+   749,
+   760,
+   768,
+   789,
+   810,
+   829,
+   829,
+   829,
+   840,
+   842,
+   845,
+   845,
+   850
+  ],
+  "94": [
+   645,
+   656,
+   674,
+   674,
+   693,
+   709,
+   725
+  ],
+  "97": [
+   645,
+   656,
+   674,
+   674,
+   674,
+   693,
+   693,
+   709,
+   725,
+   749,
+   749,
+   760,
+   760,
+   768,
+   768,
+   789,
+   789,
+   810,
+   810,
+   829,
+   829,
+   829,
+   829,
+   829,
+   840
+  ],
+  "101": [
+   886
+  ],
+  "121": [
+   594,
+   610,
+   634
+  ],
+  "158": [
+   1191,
+   1213,
+   1220,
+   1237,
+   1242,
+   1245,
+   1247,
+   1253
+  ]
+ },
+ "iterations": [
+  {
+   "iteration": 1,
+   "video": "guard-post-walk0_stab.mp4",
+   "projection": {
+    "depth_aware": false,
+    "height_slope": 0.0,
+    "h_const": 179
+   },
+   "counts": {
+    "collision": 87,
+    "collision-prior": 53,
+    "overhead": 11,
+    "ysort": 9,
+    "ground": 4
+   },
+   "changes": [],
+   "debug": {
+    "occ-front": {
+     "frame": 134,
+     "occ_px": 5500
+    },
+    "occ-behind": {
+     "frame": 14,
+     "occ_px": 1245
+    }
+   },
+   "tracks": [
+    [
+     [
+      8,
+      229,
+      867
+     ],
+     [
+      10,
+      224,
+      661
+     ],
+     [
+      12,
+      226,
+      661
+     ],
+     [
+      14,
+      233,
+      658
+     ]
+    ],
+    [
+     [
+      12,
+      217,
+      1220
+     ],
+     [
+      14,
+      217,
+      1191
+     ],
+     [
+      16,
+      242,
+      1045
+     ],
+     [
+      18,
+      283,
+      1053
+     ],
+     [
+      20,
+      296,
+      1061
+     ],
+     [
+      22,
+      291,
+      1063
+     ],
+     [
+      24,
+      233,
+      1066
+     ],
+     [
+      26,
+      298,
+      1071
+     ],
+     [
+      28,
+      355,
+      1066
+     ],
+     [
+      30,
+      401,
+      1071
+     ],
+     [
+      32,
+      445,
+      1071
+     ],
+     [
+      34,
+      466,
+      1074
+     ],
+     [
+      36,
+      471,
+      1077
+     ],
+     [
+      38,
+      466,
+      1077
+     ],
+     [
+      40,
+      461,
+      1077
+     ],
+     [
+      42,
+      450,
+      1077
+     ],
+     [
+      44,
+      445,
+      1071
+     ],
+     [
+      46,
+      475,
+      1071
+     ],
+     [
+      48,
+      527,
+      1071
+     ],
+     [
+      50,
+      599,
+      1071
+     ],
+     [
+      52,
+      673,
+      1071
+     ],
+     [
+      54,
+      731,
+      1077
+     ],
+     [
+      56,
+      763,
+      1079
+     ],
+     [
+      58,
+      776,
+      1079
+     ],
+     [
+      60,
+      784,
+      1079
+     ],
+     [
+      62,
+      781,
+      1077
+     ],
+     [
+      64,
+      869,
+      1077
+     ],
+     [
+      66,
+      872,
+      1079
+     ],
+     [
+      68,
+      874,
+      1077
+     ],
+     [
+      70,
+      864,
+      1072
+     ],
+     [
+      72,
+      856,
+      1066
+     ],
+     [
+      74,
+      848,
+      1058
+     ],
+     [
+      76,
+      866,
+      1058
+     ],
+     [
+      78,
+      921,
+      1045
+     ],
+     [
+      80,
+      983,
+      1040
+     ],
+     [
+      82,
+      1054,
+      1032
+     ],
+     [
+      84,
+      1107,
+      1024
+     ],
+     [
+      86,
+      1153,
+      1021
+     ],
+     [
+      88,
+      1175,
+      1016
+     ],
+     [
+      90,
+      1180,
+      1013
+     ],
+     [
+      92,
+      1179,
+      1008
+     ],
+     [
+      94,
+      1182,
+      1005
+     ],
+     [
+      96,
+      1166,
+      997
+     ],
+     [
+      98,
+      1156,
+      992
+     ],
+     [
+      100,
+      1166,
+      992
+     ],
+     [
+      102,
+      1198,
+      987
+     ],
+     [
+      104,
+      1317,
+      979
+     ],
+     [
+      106,
+      1320,
+      987
+     ],
+     [
+      108,
+      1387,
+      984
+     ],
+     [
+      110,
+      1434,
+      989
+     ],
+     [
+      112,
+      1487,
+      987
+     ],
+     [
+      114,
+      1512,
+      992
+     ],
+     [
+      116,
+      1527,
+      992
+     ],
+     [
+      118,
+      1525,
+      995
+     ],
+     [
+      120,
+      1520,
+      992
+     ],
+     [
+      122,
+      1513,
+      992
+     ],
+     [
+      124,
+      1508,
+      992
+     ],
+     [
+      126,
+      1512,
+      992
+     ],
+     [
+      128,
+      1675,
+      987
+     ],
+     [
+      130,
+      1675,
+      987
+     ],
+     [
+      132,
+      1659,
+      997
+     ],
+     [
+      134,
+      1707,
+      1011
+     ],
+     [
+      136,
+      1702,
+      1032
+     ],
+     [
+      138,
+      1696,
+      1050
+     ],
+     [
+      140,
+      1694,
+      1072
+     ],
+     [
+      142,
+      1694,
+      1066
+     ],
+     [
+      144,
+      1753,
+      1088
+     ],
+     [
+      146,
+      1757,
+      1117
+     ],
+     [
+      148,
+      1752,
+      1135
+     ],
+     [
+      150,
+      1763,
+      1162
+     ],
+     [
+      152,
+      1763,
+      1164
+     ],
+     [
+      154,
+      1731,
+      1170
+     ],
+     [
+      156,
+      1688,
+      1196
+     ],
+     [
+      158,
+      1679,
+      1215
+     ],
+     [
+      160,
+      1665,
+      1220
+     ],
+     [
+      162,
+      1646,
+      1209
+     ],
+     [
+      164,
+      1688,
+      1212
+     ],
+     [
+      166,
+      1604,
+      1217
+     ],
+     [
+      168,
+      1553,
+      1212
+     ],
+     [
+      170,
+      1517,
+      1215
+     ],
+     [
+      172,
+      1503,
+      1215
+     ],
+     [
+      174,
+      1508,
+      1212
+     ],
+     [
+      176,
+      1519,
+      1209
+     ],
+     [
+      178,
+      1519,
+      1209
+     ],
+     [
+      180,
+      1539,
+      1201
+     ],
+     [
+      182,
+      1505,
+      1201
+     ],
+     [
+      184,
+      1450,
+      1201
+     ],
+     [
+      186,
+      1370,
+      1204
+     ],
+     [
+      188,
+      1299,
+      1204
+     ],
+     [
+      190,
+      1252,
+      1207
+     ]
+    ],
+    [
+     [
+      134,
+      1728,
+      594
+     ],
+     [
+      136,
+      1725,
+      610
+     ],
+     [
+      138,
+      1720,
+      634
+     ],
+     [
+      140,
+      1725,
+      647
+     ],
+     [
+      142,
+      1725,
+      658
+     ],
+     [
+      144,
+      1727,
+      674
+     ],
+     [
+      146,
+      1731,
+      692
+     ],
+     [
+      148,
+      1733,
+      719
+     ],
+     [
+      150,
+      1736,
+      737
+     ],
+     [
+      152,
+      1737,
+      748
+     ],
+     [
+      154,
+      1736,
+      767
+     ],
+     [
+      156,
+      1723,
+      788
+     ]
+    ]
+   ],
+   "layers": {
+    "1": "collision",
+    "2": "collision-prior",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "collision-prior",
+    "6": "collision-prior",
+    "7": "overhead",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "collision-prior",
+    "14": "collision-prior",
+    "15": "overhead",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision",
+    "20": "collision-prior",
+    "21": "overhead",
+    "22": "collision-prior",
+    "23": "collision-prior",
+    "24": "overhead",
+    "25": "collision-prior",
+    "26": "collision-prior",
+    "27": "collision-prior",
+    "28": "ysort",
+    "29": "ground",
+    "30": "ysort",
+    "31": "collision-prior",
+    "32": "collision-prior",
+    "33": "overhead",
+    "34": "collision-prior",
+    "35": "collision-prior",
+    "36": "overhead",
+    "37": "collision-prior",
+    "38": "collision-prior",
+    "39": "collision-prior",
+    "40": "collision-prior",
+    "41": "collision-prior",
+    "42": "collision",
+    "43": "collision",
+    "44": "collision",
+    "45": "collision",
+    "46": "collision",
+    "47": "collision",
+    "48": "collision",
+    "49": "collision",
+    "50": "collision",
+    "51": "collision",
+    "52": "collision",
+    "53": "collision",
+    "54": "collision",
+    "55": "collision",
+    "56": "collision",
+    "57": "collision",
+    "58": "collision",
+    "59": "collision",
+    "60": "collision",
+    "61": "overhead",
+    "62": "collision",
+    "63": "collision",
+    "64": "collision",
+    "65": "collision",
+    "66": "collision",
+    "67": "collision",
+    "68": "collision",
+    "69": "collision",
+    "70": "collision",
+    "71": "collision",
+    "72": "collision",
+    "73": "collision",
+    "74": "collision-prior",
+    "75": "collision-prior",
+    "76": "collision",
+    "77": "collision",
+    "78": "collision",
+    "79": "collision",
+    "80": "collision",
+    "81": "collision",
+    "82": "collision",
+    "83": "collision",
+    "84": "collision",
+    "85": "collision",
+    "86": "collision-prior",
+    "87": "collision-prior",
+    "88": "collision-prior",
+    "89": "overhead",
+    "90": "collision",
+    "91": "collision",
+    "92": "collision",
+    "93": "ysort",
+    "94": "collision",
+    "95": "collision",
+    "96": "ysort",
+    "97": "ysort",
+    "98": "collision",
+    "99": "collision",
+    "100": "overhead",
+    "101": "collision",
+    "102": "collision",
+    "103": "overhead",
+    "104": "collision",
+    "105": "overhead",
+    "106": "collision-prior",
+    "107": "collision-prior",
+    "108": "collision-prior",
+    "109": "collision-prior",
+    "110": "collision-prior",
+    "111": "collision-prior",
+    "112": "collision-prior",
+    "113": "collision-prior",
+    "114": "ground",
+    "115": "ground",
+    "116": "collision-prior",
+    "117": "ground",
+    "118": "collision",
+    "119": "collision",
+    "120": "collision",
+    "121": "ysort",
+    "122": "collision",
+    "123": "collision",
+    "124": "collision",
+    "125": "collision",
+    "126": "collision",
+    "127": "collision",
+    "128": "collision",
+    "129": "collision",
+    "130": "collision",
+    "131": "collision",
+    "132": "collision-prior",
+    "133": "collision-prior",
+    "134": "collision",
+    "135": "collision",
+    "136": "collision",
+    "137": "collision-prior",
+    "138": "collision",
+    "139": "collision",
+    "140": "collision",
+    "141": "collision",
+    "142": "collision",
+    "143": "collision",
+    "144": "collision",
+    "145": "collision",
+    "146": "collision",
+    "147": "collision",
+    "148": "collision",
+    "149": "collision",
+    "150": "collision-prior",
+    "151": "collision-prior",
+    "152": "ysort",
+    "153": "ysort",
+    "154": "ysort",
+    "155": "collision",
+    "156": "collision",
+    "157": "collision",
+    "158": "collision-prior",
+    "159": "collision-prior",
+    "160": "collision-prior",
+    "161": "collision-prior",
+    "162": "collision",
+    "163": "collision",
+    "164": "collision"
+   }
+  },
+  {
+   "iteration": 2,
+   "video": "guard-post-walk1_stab.mp4",
+   "projection": {
+    "depth_aware": false,
+    "height_slope": 0.0,
+    "h_const": 155
+   },
+   "counts": {
+    "ysort": 14,
+    "overhead": 23,
+    "collision-prior": 44,
+    "collision": 76,
+    "ground": 7
+   },
+   "changes": [
+    "part1: collision -> ysort",
+    "part2: collision-prior -> overhead",
+    "part14: collision-prior -> overhead",
+    "part20: collision-prior -> overhead",
+    "part25: collision-prior -> ground",
+    "part26: collision-prior -> overhead",
+    "part27: collision-prior -> ysort",
+    "part30: ysort -> overhead",
+    "part34: collision-prior -> ground",
+    "part38: collision-prior -> ground",
+    "part42: collision -> overhead",
+    "part92: collision -> overhead",
+    "part93: ysort -> overhead",
+    "part94: collision -> overhead"
+   ],
+   "debug": {
+    "occ-front": {
+     "frame": 178,
+     "occ_px": 4465
+    },
+    "occ-behind": {
+     "frame": 182,
+     "occ_px": 4551
+    }
+   },
+   "tracks": [
+    [
+     [
+      4,
+      2264,
+      883
+     ],
+     [
+      6,
+      2262,
+      886
+     ]
+    ],
+    [
+     [
+      8,
+      2258,
+      1233
+     ],
+     [
+      10,
+      2247,
+      1236
+     ],
+     [
+      12,
+      2230,
+      1236
+     ],
+     [
+      14,
+      2215,
+      1231
+     ],
+     [
+      16,
+      2210,
+      1231
+     ],
+     [
+      18,
+      2205,
+      1236
+     ],
+     [
+      20,
+      2207,
+      1231
+     ],
+     [
+      22,
+      2189,
+      1231
+     ],
+     [
+      24,
+      2157,
+      1233
+     ],
+     [
+      26,
+      2113,
+      1231
+     ],
+     [
+      28,
+      2066,
+      1231
+     ],
+     [
+      30,
+      2022,
+      1225
+     ],
+     [
+      32,
+      1983,
+      1225
+     ],
+     [
+      34,
+      1959,
+      1230
+     ],
+     [
+      36,
+      1949,
+      1236
+     ],
+     [
+      38,
+      1936,
+      1230
+     ],
+     [
+      40,
+      1930,
+      1236
+     ],
+     [
+      42,
+      1933,
+      1230
+     ],
+     [
+      44,
+      1912,
+      1230
+     ],
+     [
+      46,
+      1880,
+      1236
+     ],
+     [
+      48,
+      1848,
+      1225
+     ],
+     [
+      50,
+      1805,
+      1212
+     ],
+     [
+      52,
+      1772,
+      1201
+     ],
+     [
+      54,
+      1726,
+      1185
+     ],
+     [
+      56,
+      1682,
+      1174
+     ],
+     [
+      58,
+      1654,
+      1169
+     ],
+     [
+      60,
+      1634,
+      1163
+     ],
+     [
+      62,
+      1612,
+      1155
+     ],
+     [
+      64,
+      1613,
+      1150
+     ],
+     [
+      66,
+      1604,
+      1145
+     ],
+     [
+      68,
+      1586,
+      1139
+     ],
+     [
+      70,
+      1568,
+      1139
+     ],
+     [
+      72,
+      1543,
+      1139
+     ],
+     [
+      74,
+      1505,
+      1139
+     ],
+     [
+      76,
+      1452,
+      1134
+     ],
+     [
+      78,
+      1403,
+      1134
+     ],
+     [
+      80,
+      1352,
+      1134
+     ],
+     [
+      82,
+      1307,
+      1129
+     ],
+     [
+      84,
+      1275,
+      1131
+     ],
+     [
+      86,
+      1267,
+      1131
+     ],
+     [
+      88,
+      1232,
+      1126
+     ],
+     [
+      90,
+      1185,
+      1126
+     ],
+     [
+      92,
+      1158,
+      1128
+     ],
+     [
+      94,
+      1137,
+      1131
+     ],
+     [
+      96,
+      1123,
+      1134
+     ],
+     [
+      98,
+      1102,
+      1131
+     ],
+     [
+      100,
+      1091,
+      1126
+     ],
+     [
+      102,
+      1082,
+      1126
+     ],
+     [
+      104,
+      1054,
+      1123
+     ],
+     [
+      106,
+      1020,
+      1115
+     ],
+     [
+      108,
+      969,
+      1118
+     ],
+     [
+      110,
+      908,
+      1115
+     ],
+     [
+      112,
+      848,
+      1104
+     ],
+     [
+      114,
+      823,
+      1110
+     ],
+     [
+      116,
+      793,
+      1110
+     ],
+     [
+      118,
+      785,
+      1110
+     ],
+     [
+      120,
+      776,
+      1104
+     ],
+     [
+      122,
+      767,
+      1104
+     ],
+     [
+      124,
+      752,
+      1102
+     ],
+     [
+      126,
+      732,
+      1104
+     ],
+     [
+      128,
+      708,
+      1099
+     ],
+     [
+      130,
+      612,
+      1019
+     ],
+     [
+      132,
+      600,
+      1093
+     ],
+     [
+      134,
+      573,
+      1083
+     ],
+     [
+      136,
+      505,
+      1069
+     ],
+     [
+      138,
+      477,
+      1064
+     ],
+     [
+      140,
+      456,
+      1064
+     ],
+     [
+      142,
+      436,
+      1051
+     ],
+     [
+      144,
+      424,
+      1043
+     ],
+     [
+      146,
+      421,
+      1035
+     ],
+     [
+      148,
+      405,
+      1024
+     ],
+     [
+      150,
+      396,
+      1008
+     ],
+     [
+      152,
+      302,
+      850
+     ],
+     [
+      152,
+      379,
+      995
+     ],
+     [
+      154,
+      280,
+      840
+     ],
+     [
+      154,
+      344,
+      984
+     ],
+     [
+      156,
+      296,
+      829
+     ],
+     [
+      156,
+      328,
+      973
+     ],
+     [
+      160,
+      315,
+      973
+     ],
+     [
+      162,
+      317,
+      973
+     ],
+     [
+      164,
+      359,
+      973
+     ],
+     [
+      166,
+      355,
+      829
+     ],
+     [
+      166,
+      371,
+      960
+     ],
+     [
+      168,
+      365,
+      842
+     ],
+     [
+      168,
+      360,
+      933
+     ],
+     [
+      170,
+      318,
+      864
+     ],
+     [
+      170,
+      315,
+      994
+     ],
+     [
+      172,
+      360,
+      893
+     ],
+     [
+      172,
+      373,
+      1029
+     ],
+     [
+      174,
+      363,
+      917
+     ],
+     [
+      174,
+      373,
+      1053
+     ],
+     [
+      176,
+      333,
+      938
+     ],
+     [
+      178,
+      331,
+      960
+     ],
+     [
+      180,
+      352,
+      981
+     ],
+     [
+      182,
+      349,
+      997
+     ],
+     [
+      184,
+      320,
+      1016
+     ],
+     [
+      186,
+      333,
+      1032
+     ]
+    ],
+    [
+     [
+      158,
+      358,
+      760
+     ],
+     [
+      160,
+      297,
+      709
+     ],
+     [
+      162,
+      326,
+      674
+     ],
+     [
+      164,
+      299,
+      645
+     ],
+     [
+      166,
+      336,
+      656
+     ],
+     [
+      168,
+      343,
+      674
+     ],
+     [
+      170,
+      344,
+      693
+     ],
+     [
+      172,
+      331,
+      725
+     ],
+     [
+      174,
+      354,
+      749
+     ],
+     [
+      176,
+      344,
+      768
+     ],
+     [
+      178,
+      344,
+      789
+     ],
+     [
+      180,
+      343,
+      810
+     ],
+     [
+      182,
+      363,
+      829
+     ],
+     [
+      184,
+      334,
+      845
+     ],
+     [
+      186,
+      326,
+      864
+     ],
+     [
+      188,
+      318,
+      882
+     ],
+     [
+      190,
+      302,
+      898
+     ]
+    ],
+    [
+     [
+      176,
+      373,
+      1398
+     ],
+     [
+      178,
+      370,
+      1417
+     ],
+     [
+      180,
+      367,
+      1438
+     ],
+     [
+      182,
+      306,
+      1457
+     ],
+     [
+      184,
+      303,
+      1473
+     ],
+     [
+      186,
+      293,
+      1492
+     ],
+     [
+      188,
+      313,
+      1371
+     ],
+     [
+      188,
+      286,
+      1513
+     ],
+     [
+      190,
+      323,
+      1393
+     ],
+     [
+      190,
+      281,
+      1527
+     ]
+    ]
+   ],
+   "layers": {
+    "1": "ysort",
+    "2": "overhead",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "collision-prior",
+    "6": "collision-prior",
+    "7": "overhead",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "collision-prior",
+    "14": "overhead",
+    "15": "overhead",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision",
+    "20": "overhead",
+    "21": "overhead",
+    "22": "collision-prior",
+    "23": "collision-prior",
+    "24": "overhead",
+    "25": "ground",
+    "26": "overhead",
+    "27": "ysort",
+    "28": "ysort",
+    "29": "ground",
+    "30": "overhead",
+    "31": "collision-prior",
+    "32": "collision-prior",
+    "33": "overhead",
+    "34": "ground",
+    "35": "collision-prior",
+    "36": "overhead",
+    "37": "collision-prior",
+    "38": "ground",
+    "39": "collision-prior",
+    "40": "collision-prior",
+    "41": "collision-prior",
+    "42": "overhead",
+    "43": "collision",
+    "44": "collision",
+    "45": "collision",
+    "46": "collision",
+    "47": "collision",
+    "48": "collision",
+    "49": "collision",
+    "50": "collision",
+    "51": "collision",
+    "52": "collision",
+    "53": "collision",
+    "54": "collision",
+    "55": "collision",
+    "56": "collision",
+    "57": "collision",
+    "58": "collision",
+    "59": "collision",
+    "60": "collision",
+    "61": "overhead",
+    "62": "collision",
+    "63": "collision",
+    "64": "collision",
+    "65": "collision",
+    "66": "collision",
+    "67": "collision",
+    "68": "collision",
+    "69": "collision",
+    "70": "collision",
+    "71": "collision",
+    "72": "collision",
+    "73": "collision",
+    "74": "collision-prior",
+    "75": "collision-prior",
+    "76": "collision",
+    "77": "collision",
+    "78": "collision",
+    "79": "collision",
+    "80": "collision",
+    "81": "collision",
+    "82": "collision",
+    "83": "collision",
+    "84": "collision",
+    "85": "collision",
+    "86": "collision-prior",
+    "87": "collision-prior",
+    "88": "collision-prior",
+    "89": "overhead",
+    "90": "collision",
+    "91": "collision",
+    "92": "overhead",
+    "93": "overhead",
+    "94": "overhead",
+    "95": "collision",
+    "96": "overhead",
+    "97": "overhead",
+    "98": "collision",
+    "99": "collision",
+    "100": "overhead",
+    "101": "collision",
+    "102": "collision",
+    "103": "overhead",
+    "104": "collision",
+    "105": "overhead",
+    "106": "collision-prior",
+    "107": "collision-prior",
+    "108": "collision-prior",
+    "109": "collision-prior",
+    "110": "collision-prior",
+    "111": "collision-prior",
+    "112": "collision-prior",
+    "113": "collision-prior",
+    "114": "ground",
+    "115": "ground",
+    "116": "collision-prior",
+    "117": "ground",
+    "118": "ysort",
+    "119": "ysort",
+    "120": "collision",
+    "121": "ysort",
+    "122": "collision",
+    "123": "collision",
+    "124": "collision",
+    "125": "collision",
+    "126": "collision",
+    "127": "ysort",
+    "128": "ysort",
+    "129": "ysort",
+    "130": "collision",
+    "131": "collision",
+    "132": "collision-prior",
+    "133": "collision-prior",
+    "134": "collision",
+    "135": "collision",
+    "136": "collision",
+    "137": "collision-prior",
+    "138": "collision",
+    "139": "collision",
+    "140": "collision",
+    "141": "collision",
+    "142": "ysort",
+    "143": "ysort",
+    "144": "collision",
+    "145": "collision",
+    "146": "collision",
+    "147": "collision",
+    "148": "collision",
+    "149": "collision",
+    "150": "collision-prior",
+    "151": "collision-prior",
+    "152": "ysort",
+    "153": "ysort",
+    "154": "ysort",
+    "155": "collision",
+    "156": "collision",
+    "157": "collision",
+    "158": "overhead",
+    "159": "collision-prior",
+    "160": "collision-prior",
+    "161": "collision-prior",
+    "162": "collision",
+    "163": "collision",
+    "164": "collision"
+   }
+  },
+  {
+   "iteration": 3,
+   "video": "guard-post-walk2_stab.mp4",
+   "projection": {
+    "depth_aware": false,
+    "height_slope": 0.0,
+    "h_const": 173
+   },
+   "counts": {
+    "ysort": 17,
+    "overhead": 23,
+    "collision-prior": 43,
+    "ground": 8,
+    "collision": 73
+   },
+   "changes": [
+    "part19: collision -> ysort",
+    "part35: collision-prior -> ground",
+    "part95: collision -> ysort",
+    "part126: collision -> ysort"
+   ],
+   "debug": {
+    "occ-front": {
+     "frame": 184,
+     "occ_px": 5859
+    },
+    "occ-behind": {
+     "frame": 184,
+     "occ_px": 2701
+    }
+   },
+   "tracks": [
+    [
+     [
+      18,
+      225,
+      681
+     ],
+     [
+      20,
+      218,
+      702
+     ]
+    ],
+    [
+     [
+      18,
+      218,
+      1247
+     ],
+     [
+      18,
+      218,
+      1424
+     ],
+     [
+      20,
+      225,
+      1253
+     ],
+     [
+      22,
+      228,
+      1054
+     ],
+     [
+      24,
+      223,
+      1054
+     ],
+     [
+      26,
+      342,
+      1038
+     ],
+     [
+      28,
+      383,
+      1052
+     ],
+     [
+      30,
+      411,
+      1068
+     ],
+     [
+      32,
+      419,
+      1081
+     ],
+     [
+      34,
+      427,
+      1086
+     ],
+     [
+      36,
+      419,
+      1094
+     ],
+     [
+      38,
+      495,
+      1110
+     ],
+     [
+      40,
+      548,
+      1110
+     ],
+     [
+      42,
+      567,
+      1121
+     ],
+     [
+      44,
+      571,
+      1121
+     ],
+     [
+      46,
+      569,
+      1115
+     ],
+     [
+      48,
+      725,
+      1116
+     ],
+     [
+      50,
+      769,
+      1126
+     ],
+     [
+      52,
+      789,
+      1134
+     ],
+     [
+      54,
+      752,
+      1137
+     ],
+     [
+      56,
+      826,
+      1150
+     ],
+     [
+      58,
+      897,
+      1148
+     ],
+     [
+      60,
+      932,
+      1161
+     ],
+     [
+      62,
+      948,
+      1166
+     ],
+     [
+      64,
+      956,
+      1164
+     ],
+     [
+      66,
+      958,
+      1151
+     ],
+     [
+      68,
+      1131,
+      1151
+     ],
+     [
+      70,
+      1165,
+      1162
+     ],
+     [
+      72,
+      1184,
+      1162
+     ],
+     [
+      74,
+      1162,
+      1172
+     ],
+     [
+      76,
+      1234,
+      1175
+     ],
+     [
+      78,
+      1306,
+      1178
+     ],
+     [
+      80,
+      1336,
+      1188
+     ],
+     [
+      82,
+      1343,
+      1191
+     ],
+     [
+      84,
+      1344,
+      1178
+     ],
+     [
+      86,
+      1485,
+      1173
+     ],
+     [
+      88,
+      1521,
+      1186
+     ],
+     [
+      90,
+      1547,
+      1191
+     ],
+     [
+      92,
+      1558,
+      1194
+     ],
+     [
+      94,
+      1571,
+      1192
+     ],
+     [
+      96,
+      1571,
+      1181
+     ],
+     [
+      98,
+      1602,
+      1186
+     ],
+     [
+      100,
+      1648,
+      1192
+     ],
+     [
+      102,
+      1716,
+      1192
+     ],
+     [
+      104,
+      1722,
+      1171
+     ],
+     [
+      106,
+      1701,
+      1178
+     ],
+     [
+      108,
+      1701,
+      1178
+     ],
+     [
+      110,
+      1701,
+      1178
+     ],
+     [
+      112,
+      1776,
+      1157
+     ],
+     [
+      114,
+      1769,
+      1139
+     ],
+     [
+      116,
+      1785,
+      1091
+     ],
+     [
+      118,
+      1608,
+      1072
+     ],
+     [
+      120,
+      1635,
+      1093
+     ],
+     [
+      122,
+      1619,
+      1088
+     ],
+     [
+      124,
+      1632,
+      1083
+     ],
+     [
+      126,
+      1457,
+      1080
+     ],
+     [
+      128,
+      1430,
+      1093
+     ],
+     [
+      130,
+      1470,
+      1101
+     ],
+     [
+      132,
+      1394,
+      1112
+     ],
+     [
+      134,
+      1306,
+      1117
+     ],
+     [
+      136,
+      1295,
+      1135
+     ],
+     [
+      138,
+      1291,
+      1141
+     ],
+     [
+      140,
+      1202,
+      1151
+     ],
+     [
+      142,
+      1125,
+      1159
+     ],
+     [
+      144,
+      1099,
+      1172
+     ],
+     [
+      146,
+      1083,
+      1175
+     ],
+     [
+      148,
+      1078,
+      1175
+     ],
+     [
+      150,
+      1059,
+      1169
+     ],
+     [
+      152,
+      890,
+      1158
+     ],
+     [
+      154,
+      855,
+      1169
+     ],
+     [
+      156,
+      890,
+      1172
+     ],
+     [
+      158,
+      797,
+      1174
+     ],
+     [
+      160,
+      725,
+      1171
+     ],
+     [
+      162,
+      699,
+      1182
+     ],
+     [
+      164,
+      694,
+      1177
+     ],
+     [
+      166,
+      680,
+      1161
+     ],
+     [
+      168,
+      610,
+      1171
+     ],
+     [
+      170,
+      516,
+      1171
+     ],
+     [
+      172,
+      440,
+      1168
+     ],
+     [
+      174,
+      395,
+      1165
+     ],
+     [
+      176,
+      387,
+      1165
+     ],
+     [
+      178,
+      390,
+      1173
+     ],
+     [
+      180,
+      384,
+      1195
+     ],
+     [
+      182,
+      391,
+      1213
+     ],
+     [
+      186,
+      403,
+      1245
+     ],
+     [
+      188,
+      387,
+      1242
+     ],
+     [
+      190,
+      380,
+      1237
+     ]
+    ]
+   ],
+   "layers": {
+    "1": "ysort",
+    "2": "overhead",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "collision-prior",
+    "6": "collision-prior",
+    "7": "overhead",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "collision-prior",
+    "14": "overhead",
+    "15": "overhead",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "ysort",
+    "20": "overhead",
+    "21": "overhead",
+    "22": "collision-prior",
+    "23": "collision-prior",
+    "24": "overhead",
+    "25": "ground",
+    "26": "overhead",
+    "27": "ysort",
+    "28": "ysort",
+    "29": "ground",
+    "30": "overhead",
+    "31": "collision-prior",
+    "32": "collision-prior",
+    "33": "overhead",
+    "34": "ground",
+    "35": "ground",
+    "36": "overhead",
+    "37": "collision-prior",
+    "38": "ground",
+    "39": "collision-prior",
+    "40": "collision-prior",
+    "41": "collision-prior",
+    "42": "overhead",
+    "43": "collision",
+    "44": "collision",
+    "45": "collision",
+    "46": "collision",
+    "47": "collision",
+    "48": "collision",
+    "49": "collision",
+    "50": "collision",
+    "51": "collision",
+    "52": "collision",
+    "53": "collision",
+    "54": "collision",
+    "55": "collision",
+    "56": "collision",
+    "57": "collision",
+    "58": "collision",
+    "59": "collision",
+    "60": "collision",
+    "61": "overhead",
+    "62": "collision",
+    "63": "collision",
+    "64": "collision",
+    "65": "collision",
+    "66": "collision",
+    "67": "collision",
+    "68": "collision",
+    "69": "collision",
+    "70": "collision",
+    "71": "collision",
+    "72": "collision",
+    "73": "collision",
+    "74": "collision-prior",
+    "75": "collision-prior",
+    "76": "collision",
+    "77": "collision",
+    "78": "collision",
+    "79": "collision",
+    "80": "collision",
+    "81": "collision",
+    "82": "collision",
+    "83": "collision",
+    "84": "collision",
+    "85": "collision",
+    "86": "collision-prior",
+    "87": "collision-prior",
+    "88": "collision-prior",
+    "89": "overhead",
+    "90": "collision",
+    "91": "collision",
+    "92": "overhead",
+    "93": "overhead",
+    "94": "overhead",
+    "95": "ysort",
+    "96": "overhead",
+    "97": "overhead",
+    "98": "collision",
+    "99": "collision",
+    "100": "overhead",
+    "101": "collision",
+    "102": "collision",
+    "103": "overhead",
+    "104": "collision",
+    "105": "overhead",
+    "106": "collision-prior",
+    "107": "collision-prior",
+    "108": "collision-prior",
+    "109": "collision-prior",
+    "110": "collision-prior",
+    "111": "collision-prior",
+    "112": "collision-prior",
+    "113": "collision-prior",
+    "114": "ground",
+    "115": "ground",
+    "116": "collision-prior",
+    "117": "ground",
+    "118": "ysort",
+    "119": "ysort",
+    "120": "collision",
+    "121": "ysort",
+    "122": "collision",
+    "123": "collision",
+    "124": "collision",
+    "125": "collision",
+    "126": "ysort",
+    "127": "ysort",
+    "128": "ysort",
+    "129": "ysort",
+    "130": "collision",
+    "131": "collision",
+    "132": "collision-prior",
+    "133": "collision-prior",
+    "134": "collision",
+    "135": "collision",
+    "136": "collision",
+    "137": "collision-prior",
+    "138": "collision",
+    "139": "collision",
+    "140": "collision",
+    "141": "collision",
+    "142": "ysort",
+    "143": "ysort",
+    "144": "collision",
+    "145": "collision",
+    "146": "collision",
+    "147": "collision",
+    "148": "collision",
+    "149": "collision",
+    "150": "collision-prior",
+    "151": "collision-prior",
+    "152": "ysort",
+    "153": "ysort",
+    "154": "ysort",
+    "155": "collision",
+    "156": "collision",
+    "157": "collision",
+    "158": "overhead",
+    "159": "collision-prior",
+    "160": "collision-prior",
+    "161": "collision-prior",
+    "162": "collision",
+    "163": "collision",
+    "164": "collision"
+   }
+  }
+ ]
+}
