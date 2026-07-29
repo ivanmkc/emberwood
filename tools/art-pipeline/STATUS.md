@@ -1616,3 +1616,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   self-consistent criteria per rater. Single-model height/composite/veo
   sources remain R&D. Next scene overhead layers will use the tri-rater
   pipeline directly (13 sheets, 3 raters, unanimity gate).
+
+### Cycle 9 of 12h loop: anchor tri-rater overhead — labels green, install HELD
+- 3 raters on 54 anchor parts: agreement 0.93-0.94, 7 UNANIMOUS overhead
+  (the storefront signs). Layer built (gold-overhead-anchorroom, 4.9% px).
+- INSTALL HELD by verification: in-game screenshot shows a translucent
+  PLAZA MARKET ghost over the orange door; plate region is clean there, so
+  a sign part's mask (anchor uses translation-SNAPPED segmentation, not
+  consensus) is misregistered. Anchor needs the bazaar treatment
+  (nbp_mask_consensus + parts rebuild) before its overhead ships.
+  assets overhead.png reverted to prior state; gold artifacts committed.
+- Round-2 readability: first reader ~10/10 and caught a REAL stale row —
+  dashboard credited the invalidated fusion as the live bazaar overhead
+  source; fixed to "unanimous 3-rater gold (35 parts)".
