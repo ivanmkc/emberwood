@@ -2194,3 +2194,13 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   gates + sweep-report.json, batched commits.
 - holdout4 (planner + all fixes, seeds 160-171) still running under heavy
   shared CPU.
+- Run 49 synthesis (splitting agent's deeper finding): the video estimator's
+  overhead recall is EVIDENCE-CEILING-limited on cluttered real scenes (0/17
+  genuinely-overhead sub-parts converted even with correct segmentation).
+  Production division of labor confirmed and now executed game-wide:
+  * OVERHEAD -> tri-rater VLM path (ships assets/rooms/<room>.overhead.png);
+    synth3d agent dispatched to run it for ALL remaining rooms.
+  * GROUND / YSORT / FOOTPRINT BANDS / pass-through collision -> the video
+    estimator (synthetic: 1.00/1.00 with 0-unsafe footprints), running
+    per-room via room-runner.
+  The two arms + per-part unreliable flags are the complete tool.
