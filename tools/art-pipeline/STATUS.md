@@ -1690,3 +1690,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   artifacts are harmless. Takeaway: Veo resists pass-behind paths — occlusion
   evidence is expensive per video; tri-rater gold stays the production
   overhead source, veo layer votes are corroborating evidence.
+
+## Run 38 (2026-07-29) — anchorroom overhead SHIPPED (task #108 unblocked)
+- Root-cause insight: a cutout copied from the SHIPPED ROOM ASSET cannot ghost —
+  identical pixels drawn over themselves are invisible. The old ghost came from
+  cutting from a different source. New build: alpha = 7 unanimous tri-rater
+  parts (4,27,31,33,36,49,55) ∩ consensus building-class mask (trims <1% spill),
+  RGB from assets/rooms/anchorroom.jpg at room scale (1280x896), left 91px seam
+  blend band zeroed. 55,922 alpha px.
+- In-game verify (?room=anchor — NOTE room id is 'anchor', ?room=anchorroom
+  silently boots elsewhere): no ghost at PLAZA MARKET / REPAIR HUB signs or the
+  orange door; player fully visible standing in the door mouth (312,212);
+  player correctly occluded behind the facade pillar (355,196). Door trigger
+  rect [281,197,349,207] — earlier verify accidentally teleported through it.
