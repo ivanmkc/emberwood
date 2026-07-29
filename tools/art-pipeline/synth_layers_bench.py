@@ -21,6 +21,7 @@ import os
 import cv2
 import numpy as np
 
+import layers_harness
 import veo_layers_v4 as v4
 
 ROOT = v4.ROOT
@@ -196,14 +197,9 @@ def main():
                       os.path.join(OUT, 'synth-layers'))
     last = [r for r in res['iterations'] if 'skipped' not in r][-1]
     pred = {int(k): v for k, v in last['layers'].items()}
-    conf = {}
-    errors = []
-    for pid, t in truth.items():
-        p = pred.get(pid, 'missing')
-        conf[(t, p)] = conf.get((t, p), 0) + 1
-        if p != t and not (t == v4.YSORT and p in (v4.COLLISION, v4.COLLISION_PRIOR)):
-            errors.append({'part': pid, 'truth': t, 'pred': p,
-                           'votes': res['votes'][str(pid)]})
+    conf, errors = layers_harness.score_vs_truth(pred, truth)
+    for e in errors:
+        e['votes'] = res['votes'][str(e['part'])]
     print('\nconfusion (truth -> pred):')
     for (t, p), n in sorted(conf.items()):
         flag = '' if t == p or (t == v4.YSORT and p.startswith(v4.COLLISION)) else '  <-- WRONG'
