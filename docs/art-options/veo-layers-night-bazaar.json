@@ -1,0 +1,97 @@
+{
+ "room": "night-bazaar",
+ "model": "ground->character->collision->overhead",
+ "iterations": [
+  {
+   "iteration": 1,
+   "video": "walk0_stab.mp4",
+   "counts": {
+    "collision": 161,
+    "collision-prior": 33,
+    "ground": 39,
+    "conflict": 4,
+    "overhead": 1
+   },
+   "changes": []
+  },
+  {
+   "iteration": 2,
+   "video": "walk1_stab.mp4",
+   "counts": {
+    "collision": 148,
+    "collision-prior": 16,
+    "ground": 68,
+    "conflict": 6
+   },
+   "changes": [
+    "part30: collision-prior -> ground",
+    "part45: collision -> ground",
+    "part62: collision-prior -> ground",
+    "part63: collision-prior -> ground",
+    "part87: ground -> conflict",
+    "part150: collision -> ground",
+    "part153: collision-prior -> ground",
+    "part178: collision-prior -> ground",
+    "part180: collision -> ground",
+    "part181: collision -> ground",
+    "part184: collision-prior -> ground",
+    "part185: collision-prior -> ground"
+   ]
+  },
+  {
+   "iteration": 3,
+   "video": "walk2_stab.mp4",
+   "counts": {
+    "collision": 120,
+    "collision-prior": 13,
+    "ground": 95,
+    "conflict": 10
+   },
+   "changes": [
+    "part11: collision -> ground",
+    "part12: collision -> ground",
+    "part13: collision -> ground",
+    "part34: collision-prior -> conflict",
+    "part58: collision -> ground",
+    "part68: collision -> ground",
+    "part81: collision -> ground",
+    "part87: conflict -> collision",
+    "part90: collision -> ground",
+    "part116: collision -> ground",
+    "part124: collision -> ground",
+    "part128: collision -> ground"
+   ]
+  },
+  {
+   "iteration": 4,
+   "video": "walk3_stab.mp4",
+   "counts": {
+    "collision": 116,
+    "collision-prior": 9,
+    "ground": 104,
+    "conflict": 8,
+    "overhead": 1
+   },
+   "changes": [
+    "part28: collision-prior -> ground",
+    "part32: collision-prior -> ground",
+    "part34: conflict -> ground",
+    "part43: collision-prior -> ground",
+    "part145: collision -> ground",
+    "part198: conflict -> ground",
+    "part199: collision -> ground",
+    "part205: ground -> conflict",
+    "part206: collision -> ground",
+    "part207: conflict -> ground",
+    "part208: collision -> ground",
+    "part236: collision-prior -> overhead"
+   ]
+  },
+  {
+   "iteration": 5,
+   "video": "walk4_stab.mp4",
+   "skipped": "registration failed (6 inliers)"
+  }
+ ],
+ "final_layers": {}
+}

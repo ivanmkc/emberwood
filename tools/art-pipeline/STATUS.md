@@ -1642,3 +1642,21 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   (borrow-corridors + widen-lanes), veo P=0.00 bridged to cause (homography
   registration + part-granularity attribution), plain-English metric glosses
   in the glossary.
+
+### Run 36: 4-LAYER MODEL + STABILIZATION (Ivan respec)
+- Z-indexes REPLACED by Ivan's 4-layer model: GROUND (magenta consensus
+  prior) -> CHARACTER -> COLLISION (occlude+block) -> OVERHEAD (occlude only).
+  Prior: all segmented objects start in COLLISION (blocking known from the
+  shipped collision mask); every stabilized video frame votes objects down
+  to GROUND (char drew over it) or confirms occlusion; feet-inside-footprint
+  across >=3 frames = passes-through = NON-COLLIDER (Ivan's rule; encoded as
+  a vote since Veo physics can clip). Both-ways votes = CONFLICT (the y-sort
+  exceptions the model squeezes out; surfaced, 8 parts).
+- CAMERA MOTION measured (Ivan: "big problem" — confirmed): raw drift median
+  up to 91px/600w. persistence-of-dreams tools/stabilize.py (video mode,
+  median-frame reference) -> walk0/1/3 at 0.0-0.5px median; walk2 one
+  excursion; walk4 unrecoverable (excluded). veo_layers.py runs on
+  stabilized input: iter1..4 = collision 161->116, ground 39->104,
+  overhead 1, conflict 8, per-iteration layer maps layers-iterN-*.jpg.
+- QUEUED: GEPA prompt search for camera stillness (drift metric as scorer);
+  board reorg one-algorithm-per-page (started).
