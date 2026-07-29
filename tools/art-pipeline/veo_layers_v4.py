@@ -50,7 +50,9 @@ MIN_BUCKET_FRAMES = 3        # temporal consensus: a vote bucket counts only
 FRAME_STRIDE = 2             # sample every Nth frame; must be small enough
                              # that one genuine crossing yields >=3 samples
 FEET_SIGMA_FRAC = 0.12       # feet uncertainty ~ boot height ~12% of walker
-MIN_WALKER_PX, MAX_WALKER_PX = 400, 30000   # keyed-component size gate
+MIN_WALKER_PX, MAX_WALKER_PX = 120, 30000   # keyed-component size gate: the
+# chroma contract means ONLY the suit can key, so the floor is set by far-
+# depth perspective walkers (~10x23px), not by false-positive suppression
 DEPTH_AWARE_MIN_SAMPLES = 8   # minimum (feet_y, height) pairs for a valid fit
 DEPTH_AWARE_MIN_SLOPE = 0.02  # minimum |slope| before falling back to constant
 DEPTH_AWARE_TRUNC_FRAC = 0.85 # silhouette/expected fraction below which truncation kicks in
@@ -430,7 +432,11 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                 open_tracks.append(best_t)
             best_t[0], best_t[1], best_t[2] = fi_, fx_, fy_
             best_t[3].append((fi_, fpx_, fpy_))
-        tracks = [t[3] for t in open_tracks if len(t[3]) >= 4]
+        # keep ALL fragments for the trace visualization — occlusion and
+        # far-depth size dropouts fragment tracks, and discarding short
+        # fragments hid whole walk segments from the board maps
+        tracks = [t[3] for t in open_tracks if len(t[3]) >= 2]
+        dots = [t[3][0] for t in open_tracks if len(t[3]) == 1]
 
         b = plate_bgr[:, :, ::-1].astype(np.float32) * 0.30
         b[ground] = b[ground] * 0.55 + np.array((255, 80, 255), np.float32) * 0.225
@@ -438,6 +444,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
             m = parts == pid   # paint the full part: class color wins over ground tint
             b[m] = b[m] * 0.35 + np.array(COL_MAP[layers[pid]], np.float32) * 0.65
         arr = b.clip(0, 255).astype(np.uint8)
+        tracks.sort(key=lambda tr: tr[0][0])
         for ti, tr in enumerate(tracks):
             col = TRACE_COLORS[ti % len(TRACE_COLORS)]
             pts = np.array([(p[1], p[2]) for p in tr], np.int32).reshape(-1, 1, 2)
@@ -446,10 +453,29 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                 cv2.circle(arr, (px_, py_), 4, col, -1)
             cv2.circle(arr, (tr[0][1], tr[0][2]), 9, col, 2)          # start ring
             cv2.circle(arr, (tr[-1][1], tr[-1][2]), 9, (255, 255, 255), 2)  # end
+            # dashed bridge to the next fragment: the walker was hidden
+            # (occluded or below the far-depth size floor) between the two
+            if ti + 1 < len(tracks):
+                nxt = tracks[ti + 1]
+                a = np.array([tr[-1][1], tr[-1][2]], float)
+                bpt = np.array([nxt[0][1], nxt[0][2]], float)
+                d = np.linalg.norm(bpt - a)
+                if 0 < d < 500:
+                    n_seg = max(2, int(d / 18))
+                    for k in range(0, n_seg, 2):
+                        p0 = a + (bpt - a) * k / n_seg
+                        p1 = a + (bpt - a) * min(1, (k + 1) / n_seg)
+                        cv2.line(arr, tuple(p0.astype(int)), tuple(p1.astype(int)),
+                                 col, 1, cv2.LINE_AA)
+        for _, px_, py_ in dots:
+            cv2.circle(arr, (px_, py_), 4, (255, 255, 255), -1)
         img = Image.fromarray(arr)
         img.thumbnail((1400, 1400))
         img.save(f'{out_prefix}-iter{it}.jpg', quality=86)
         records.append({'iteration': it, 'video': os.path.basename(mp4),
+                        'projection': {'depth_aware': use_depth_aware,
+                                       'height_slope': round(h_slope, 4),
+                                       'h_const': h_est_const},
                         'counts': counts, 'changes': changes[:14], 'debug': dbg_meta,
                         'tracks': [[(int(f), int(x), int(y)) for f, x, y in tr]
                                    for tr in tracks],
