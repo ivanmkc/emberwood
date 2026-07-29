@@ -1928,6 +1928,27 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
 
+## Run 47 (2026-07-29) — 3D bench: calibrated height detector (dd9b339)
+- ESTIMATOR CHANGE (team-lead, dd9b339): perspective height detector
+  recalibrated — upper-envelope fit (per-20px-bin maxima) with physical gates
+  (positive slope only; horizon extrapolation above walk area; >=70% bins
+  within 8% of line). Walk2 fitted slope moved 0.051 -> 0.103 (true ~0.117).
+- **3D bench: 0 hard errors (21/21 correct)** — no classification change.
+- FOOTPRINT SCORING — identical to Run 46: 0 unsafe.
+    - pid 7 (kiosk): +0px OK | pid 8 (bookshelf): +4px OK
+    - pid 12 (tower): -16px CONSERVATIVE | pid 21 (brick): -26px CONSERVATIVE
+    - 7 parts: None | median err: -8px
+- PROJECTION CALIBRATION RECORD (per-iteration):
+    iter  1: h_const=43 | iter  2: h_const=68 | iter  3: h_const=47
+    iter  4: h_const=44 | iter  5: h_const=48
+    iter  6: DEPTH_AWARE slope=0.1026 h_const=50  (walk2, best fit, true~0.117)
+    iter  7: h_const=49 | iter  8: h_const=59
+    iter  9: DEPTH_AWARE slope=0.064 h_const=60
+    iter 10: DEPTH_AWARE slope=0.0619 h_const=63
+    iter 11: DEPTH_AWARE slope=0.0588 h_const=55
+    iter 12: h_const=49 | iter 13: h_const=49
+  4/13 iterations depth-aware; iter 6 (walk2) closest to true slope.
+
 ## Run 46 (2026-07-29) — 3D bench: MIN_WALKER_PX 400→120 + trace rendering
 - ESTIMATOR CHANGES (team-lead, on main): MIN_WALKER_PX lowered from 400 to
   120 — far-depth perspective walkers (~250 keyed px) were falling below the
