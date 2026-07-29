@@ -44,6 +44,12 @@ SIDE_MARGIN = 10             # kept for probe-path guidance docs
 SOFT_MARGIN_CORE = 3.0       # hard-zero zone; soft ramp beyond (math panel #5)
 BOUNDARY_GUARD = 3           # px: under-votes within this of a part edge are
                              # registration bleed, not evidence (dev finding)
+MIN_BUCKET_FRAMES = 3        # temporal consensus: a vote bucket counts only
+                             # with >=3 distinct frames (no single frame may
+                             # classify a part — math panel, dev finding)
+FRAME_STRIDE = 2             # sample every Nth frame; must be small enough
+                             # that one genuine crossing yields >=3 samples
+FEET_SIGMA_FRAC = 0.12       # feet uncertainty ~ boot height ~12% of walker
 MIN_WALKER_PX, MAX_WALKER_PX = 400, 30000   # keyed-component size gate
 DEPTH_AWARE_MIN_SAMPLES = 8   # minimum (feet_y, height) pairs for a valid fit
 DEPTH_AWARE_MIN_SLOPE = 0.02  # minimum |slope| before falling back to constant
@@ -72,8 +78,9 @@ def classify(v, blocks_pid, passes_through, min_evid=MIN_EVID):
         # a standing object can NEVER occlude a walker in front of it —
         # solid occ_front is the unambiguous suspended signature
         return OVERHEAD
-    if ub >= min_evid and ub > 2 * (of + ob):
-        return GROUND
+    ground_dom = 4 if blocks_pid else 2   # a blocking footprint is a strong
+    if ub >= min_evid * (2 if blocks_pid else 1) and ub > ground_dom * (of + ob):
+        return GROUND                     # prior — overriding it needs more
     if ob >= min_evid or (uf >= min_evid and ob > 0):
         return YSORT
     if uf >= min_evid:
@@ -133,7 +140,17 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         base_y[pid] = int(np.nonzero(m)[0].max())
         part_area[pid] = int(m.sum())
         nong = m & ~ground
-        blocks[pid] = bool(nong.sum() and (~coll[nong]).mean() > 0.5)
+        # blocks = "has a blocking base": majority of the part's COLUMNS
+        # contain blocked pixels. An area-fraction test fails footprint-band
+        # objects (a tower blocks only at its base — tiny fraction of a tall
+        # sprite, yet it definitely blocks)
+        if nong.sum():
+            cols = np.unique(np.nonzero(nong)[1])
+            blocked = ~coll & nong
+            bcols = np.unique(np.nonzero(blocked)[1]) if blocked.any() else []
+            blocks[pid] = len(bcols) > 0.5 * len(cols)
+        else:
+            blocks[pid] = False
 
     # under-vote boundary guard: suit pixels within BOUNDARY_GUARD px of a
     # part edge are homography-registration bleed — a walker can never truly
@@ -144,6 +161,8 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
     near_edge = (cv2.dilate(pf, pk) != cv2.erode(pf, pk))
     V = {p: {'occ_front': 0, 'occ_behind': 0, 'under_front': 0, 'under_behind': 0}
          for p in pids}
+    F = {p: {'occ_front': set(), 'occ_behind': set(),
+             'under_front': set(), 'under_behind': set()} for p in pids}
     feet_hits = {p: 0 for p in pids}
     # footprint-band evidence (Ivan's tower case): a walker occluded from
     # BEHIND a part at feet row Y proves row Y is walkable behind it. The
@@ -198,7 +217,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         # all observed heights; the depth-aware model fits h(y) = slope*y + intercept
         # from (feet_y, height) pairs sampled from unoccluded frames.
         height_samples = []   # (feet_y, height) pairs
-        for fi in range(0, len(frames), 4):
+        for fi in range(0, len(frames), FRAME_STRIDE):
             for comp in walker_groups(frames[fi])[0]:
                 ys, xs_ = np.nonzero(comp)
                 h = int(ys.max() - ys.min())
@@ -242,7 +261,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         dbg_best = {c: {'score': 0} for c in DBG_CASES}
         feet_obs = []   # (frame_idx, fx_video, feety_video, fpx_plate, fpy_plate)
         prev_feet = []  # per-track last feet (video px) for displacement weights
-        for fi in range(0, len(frames), 4):
+        for fi in range(0, len(frames), FRAME_STRIDE):
             groups, keyed_all = walker_groups(frames[fi])
             static = np.abs(frames[fi].astype(np.int16) - bg).max(axis=2) < STATIC_T
             occluder = static & partsmask_v & ~keyed_all
@@ -337,13 +356,19 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                             continue
                         # soft base margin (math panel #5): hard-zero only in
                         # the 3px core, linear ramp scaled to part size
-                        sigma_base = max(5.0, 0.01 * part_area[pid] ** 0.5)
+                        sigma_base = max(5.0, 0.01 * part_area[pid] ** 0.5,
+                                         FEET_SIGMA_FRAC * h_exp * sy)
                         w_side = min(1.0, max(
                             0.0, (abs(fpy - base_y[pid]) - SOFT_MARGIN_CORE) / sigma_base))
                         if w_side <= 0.0:
                             continue
                         side = FRONT if fpy > base_y[pid] else BEHIND
+                        if os.environ.get('V4_DEBUG_PID') == str(pid):
+                            print(f'DBG pid={pid} it={it} fi={fi} {kind}_{side} '
+                                  f'ct={ct} fpy={fpy} base={base_y[pid]} '
+                                  f'wd={w_disp:.2f} ws={w_side:.2f} feet_v={feet_y}')
                         V[pid][f'{kind}_{side}'] += int(ct * w_disp * w_side)
+                        F[pid][f'{kind}_{side}'].add((it, fi))
                         if kind == 'occ':
                             occ_px_by_side[side] += int(ct)
                             if side == BEHIND:
@@ -369,8 +394,13 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         def min_evid_for(pid):
             return float(np.clip(EVID_ALPHA * part_area[pid] ** 0.5 * med_w_plate,
                                  MIN_EVID_FLOOR, MIN_EVID_CAP))
-        layers = {pid: classify(V[pid], blocks[pid], feet_hits[pid] >= 3,
-                                min_evid_for(pid))
+        def consensus_votes(pid):
+            # temporal consensus: buckets fed by fewer than MIN_BUCKET_FRAMES
+            # distinct frames are treated as noise
+            return {b: (V[pid][b] if len(F[pid][b]) >= MIN_BUCKET_FRAMES else 0)
+                    for b in V[pid]}
+        layers = {pid: classify(consensus_votes(pid), blocks[pid],
+                                feet_hits[pid] >= 3, min_evid_for(pid))
                   for pid in pids}
         prev = records[-1].get('layers', {}) if records else {}
         changes = [f'part{p}: {prev[str(p)]} -> {l}' for p, l in layers.items()

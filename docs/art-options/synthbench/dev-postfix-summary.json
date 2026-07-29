@@ -1,0 +1,148 @@
+{
+ "n_scenes": 3,
+ "failed_scenes": [],
+ "per_class_accuracy": {
+  "ground": {
+   "mean": 1.0,
+   "std": 0.0,
+   "p5": 1.0,
+   "p95": 1.0
+  },
+  "ysort": {
+   "mean": 0.867,
+   "std": 0.189,
+   "p5": 0.64,
+   "p95": 1.0
+  },
+  "overhead": {
+   "mean": 0.767,
+   "std": 0.205,
+   "p5": 0.53,
+   "p95": 0.98
+  }
+ },
+ "hard_errors": {
+  "total": 4,
+  "scenes_clean": 1,
+  "max_in_scene": 3
+ },
+ "footprint_err_px": {
+  "n": 11,
+  "median": -69.0,
+  "p25": -104.5,
+  "p75": -42.5,
+  "min": -122,
+  "max": -20,
+  "over_blocks_conservative": 11,
+  "under_blocks_unsafe": 0
+ },
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "results": [
+  {
+   "seed": 0,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "ground"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     4,
+     4
+    ],
+    "overhead": [
+     1,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -69,
+    -90,
+    -47,
+    -35
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 1,
+   "hard_errors": 0,
+   "errors": [],
+   "per_class": {
+    "ground": [
+     2,
+     2
+    ],
+    "ysort": [
+     3,
+     3
+    ],
+    "overhead": [
+     2,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -20,
+    -38,
+    -110
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 2,
+   "hard_errors": 3,
+   "errors": [
+    {
+     "part": 2,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 3,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     3,
+     5
+    ],
+    "overhead": [
+     4,
+     5
+    ]
+   },
+   "footprint_errs": [
+    -122,
+    -99,
+    -63,
+    -111
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  }
+ ]
+}

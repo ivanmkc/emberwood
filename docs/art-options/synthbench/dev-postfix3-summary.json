@@ -1,0 +1,322 @@
+{
+ "n_scenes": 6,
+ "failed_scenes": [],
+ "per_class_accuracy": {
+  "ground": {
+   "mean": 1.0,
+   "std": 0.0,
+   "p5": 1.0,
+   "p95": 1.0
+  },
+  "ysort": {
+   "mean": 0.703,
+   "std": 0.184,
+   "p5": 0.45,
+   "p95": 0.95
+  },
+  "overhead": {
+   "mean": 0.333,
+   "std": 0.243,
+   "p5": 0.0,
+   "p95": 0.575
+  }
+ },
+ "hard_errors": {
+  "total": 21,
+  "scenes_clean": 0,
+  "max_in_scene": 5
+ },
+ "footprint_err_px": {
+  "n": 24,
+  "median": -72.0,
+  "p25": -93.0,
+  "p75": -44.75,
+  "min": -122,
+  "max": -14,
+  "over_blocks_conservative": 24,
+  "under_blocks_unsafe": 0
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  5,
+  7,
+  9
+ ],
+ "results": [
+  {
+   "seed": 0,
+   "hard_errors": 3,
+   "errors": [
+    {
+     "part": 4,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 6,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     3,
+     4
+    ],
+    "overhead": [
+     0,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -69,
+    -90,
+    -47,
+    -35
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 1,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 6,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     2,
+     2
+    ],
+    "ysort": [
+     3,
+     3
+    ],
+    "overhead": [
+     1,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -20,
+    -38,
+    -110
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 2,
+   "hard_errors": 5,
+   "errors": [
+    {
+     "part": 2,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 3,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 5,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 8,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     2,
+     5
+    ],
+    "overhead": [
+     3,
+     5
+    ]
+   },
+   "footprint_errs": [
+    -122,
+    -99,
+    -63,
+    -111
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 5,
+   "hard_errors": 4,
+   "errors": [
+    {
+     "part": 3,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 6,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 8,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     2,
+     2
+    ],
+    "ysort": [
+     3,
+     5
+    ],
+    "overhead": [
+     2,
+     4
+    ]
+   },
+   "footprint_errs": [
+    -90,
+    -69,
+    -72,
+    -102,
+    -79
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 7,
+   "hard_errors": 4,
+   "errors": [
+    {
+     "part": 4,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 9,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     4,
+     5
+    ],
+    "overhead": [
+     2,
+     5
+    ]
+   },
+   "footprint_errs": [
+    -86,
+    -14,
+    -91,
+    -111,
+    -65
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 9,
+   "hard_errors": 4,
+   "errors": [
+    {
+     "part": 4,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 5,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 6,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    },
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     2,
+     3
+    ],
+    "overhead": [
+     0,
+     3
+    ]
+   },
+   "footprint_errs": [
+    -18,
+    -26,
+    -72
+   ],
+   "n_parts": 7,
+   "skipped_iters": 2
+  }
+ ]
+}
