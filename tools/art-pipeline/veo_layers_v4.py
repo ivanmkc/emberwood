@@ -233,23 +233,43 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         all_heights = [s[1] for s in height_samples]
         h_est_const = int(np.percentile(all_heights, 90))
 
-        # attempt depth-aware linear fit from the tallest observations
-        # (unoccluded walkers should be at or near their full height)
-        h_p70 = np.percentile(all_heights, 70)
-        tall_samples = [(fy, h) for fy, h in height_samples if h >= h_p70]
+        # depth-aware fit on the UPPER ENVELOPE: per feet-row bin maxima.
+        # Occlusion can only SHORTEN a silhouette, i.e. push samples below
+        # the envelope — a p70 height filter biased the slope to half its
+        # true value and let occlusion runs fake negative slopes (calibration
+        # test vs the 3D camera's known horizon caught both)
         use_depth_aware = False
         h_slope = 0.0
         h_intercept = float(h_est_const)
-        if len(tall_samples) >= DEPTH_AWARE_MIN_SAMPLES:
-            fy_arr = np.array([s[0] for s in tall_samples], np.float64)
-            h_arr = np.array([s[1] for s in tall_samples], np.float64)
+        bins = {}
+        for fy_, h_ in height_samples:
+            b_ = fy_ // 20
+            if h_ > bins.get(b_, (0, 0))[1]:
+                bins[b_] = (fy_, h_)
+        env = list(bins.values())
+        if len(env) >= DEPTH_AWARE_MIN_SAMPLES:
+            fy_arr = np.array([e[0] for e in env], np.float64)
+            h_arr = np.array([e[1] for e in env], np.float64)
             if fy_arr.max() - fy_arr.min() > 30:
-                # Theil-Sen: median of pairwise slopes — bounded outlier
-                # influence, unlike least squares (cv panel #1)
                 ts = scipy_stats.theilslopes(h_arr, fy_arr)
                 h_slope, h_intercept = float(ts[0]), float(ts[1])
-                if abs(h_slope) >= DEPTH_AWARE_MIN_SLOPE:
+                # physical gates: under any real camera over a ground plane,
+                # height GROWS toward the viewer (slope > 0) and h(y) = 0 at
+                # the horizon, which must lie ABOVE the observed walk area
+                horizon_row = -h_intercept / h_slope if abs(h_slope) > 1e-6 else None
+                # fit-quality gate: a true perspective envelope LIES on the
+                # line; frame-edge partial silhouettes fill bins with junk
+                # that fits badly (real-footage calibration finding)
+                resid = np.abs(h_arr - (h_slope * fy_arr + h_intercept))
+                tol = max(4.0, 0.08 * h_est_const)
+                fit_ok = float((resid <= tol).mean()) >= 0.7
+                plausible = (h_slope >= DEPTH_AWARE_MIN_SLOPE and
+                             horizon_row is not None and
+                             horizon_row < fy_arr.min() - 10 and fit_ok)
+                if plausible:
                     use_depth_aware = True
+                else:
+                    h_slope, h_intercept = 0.0, float(h_est_const)
 
         def expected_height(feet_y_pos):
             """Walker height expected at a given screen-space feet position."""

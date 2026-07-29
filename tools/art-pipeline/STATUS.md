@@ -2051,3 +2051,22 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   independent held-out batches + a 3D perspective arm agree; sensitivity
   flat on 4/5 constants. Open levers: coverage-guaranteeing path planner,
   --aligned harness mode, mixed mega-part splitting (#123).
+
+## Run 46 (2026-07-29) — perspective detector CALIBRATED against camera truth
+- Ivan: "did you test the detector against what we know from the 3D camera?"
+  We hadn't — and the test failed it. For a pinhole camera over a ground
+  plane h(y) = s*(y - y_horizon), so the fit must extrapolate to h=0 AT THE
+  HORIZON (measurable in the 3D render: row ~162). The old p70 tall-filter
+  fit gave slope 0.051 (true ~0.117) extrapolating to row -619, and let an
+  occlusion-contaminated real video fit slope -0.032 (physically impossible)
+  and falsely trigger the perspective model.
+- Fix: UPPER-ENVELOPE fit (per-20px-bin height maxima — occlusion only
+  shortens, so bin maxima are occlusion-robust) + physical gates (slope must
+  be positive; horizon extrapolation must lie above the walk area; >=70% of
+  envelope bins within 8% of the line). Calibration re-test: 3D depth video
+  slope 0.103 (near truth), single-depth sweeps correctly constant, both
+  real-footage false positives rejected, 2D bench 0 hard errors.
+- Confirmed answer to Ivan's projection question WITH data: real Emberwood
+  footage is orthographic-at-an-angle (slopes 0.005-0.016 after gating);
+  mwalk2 shows a genuine mild +0.043 pseudo-perspective (Veo drift) that the
+  gated detector now compensates rather than ignores.
