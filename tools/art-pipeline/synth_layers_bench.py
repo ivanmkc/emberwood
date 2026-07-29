@@ -109,9 +109,9 @@ def build_scene():
             crate_sprites, over_sprites)
 
 
-def draw_walker(img, x, feet_y, occluders_after):
+def draw_walker(img, x, feet_y):
     """Walker in plate space: magenta suit + skin head + dark boots (the
-    real Veo walkers are ~90%% suited, never 100%%)."""
+    real Veo walkers are ~90% suited, never 100%)."""
     sw, sh = 34, 64
     x0, y0 = int(x - sw / 2), int(feet_y - 8 - sh)
     suit = np.clip(np.array([255, 0, 255]) +
@@ -120,8 +120,6 @@ def draw_walker(img, x, feet_y, occluders_after):
     cv2.circle(img, (int(x), y0 - 8), 11, (150, 190, 235), -1)   # skin head
     cv2.rectangle(img, (x0 + 2, int(feet_y - 8)), (x0 + sw - 2, int(feet_y)),
                   (35, 30, 30), -1)                              # boots
-    for spr, col in occluders_after:
-        img[spr] = col
 
 
 def render_video(path, waypoints, scene, n_frames=180, smoke=True):
@@ -143,7 +141,7 @@ def render_video(path, waypoints, scene, n_frames=180, smoke=True):
                 spr, _, col = crate_sprites[k]
                 frame[spr] = col
             else:
-                draw_walker(frame, wx, wy, [])
+                draw_walker(frame, wx, wy)
         for spr, col in over_sprites:            # overhead ALWAYS on top
             frame[spr] = col
         if smoke:                                # smoke in FRONT of walker
