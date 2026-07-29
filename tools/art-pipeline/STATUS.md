@@ -1872,3 +1872,36 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - Map paint fix: class colors now painted over the full part mask (overhead
   parts inside the walkable ground mask were rendering untinted).
 - Classification regression: 0 hard errors throughout.
+
+## Run 43 (2026-07-29) — expert panel fixes + anti-overfitting suite (Ivan)
+- 4 independent expert reviews (algorithms, CV, math/stats, ML methodology)
+  over the estimator + benches. Convergent verdicts implemented:
+  * Theil-Sen replaces least-squares for the depth-aware height fit (bounded
+    outlier influence) + expected height evaluated at RECONSTRUCTED feet.
+  * Displacement-weighted votes: a dwelling walker no longer outvotes many
+    genuine crossings (votes scale with feet displacement per observation).
+  * Opportunity-scaled evidence gates: min_evid per part =
+    clamp(0.10*sqrt(area)*walker_width, 90, 450) — a decal and a wall no
+    longer share one absolute threshold.
+  * Soft base margin (3px core + size-scaled ramp) replaces the hard ±10px
+    dead-zone cliff.
+  * Footprint band: robust adaptive quantile of behind-feet rows replaces
+    raw max (single outlier cannot shrink the blocking band).
+  * Truncation anchoring: probe window h/3 (was 8px); zero-zero tie now
+    defaults SAFE (visible bottom), never blind reconstruction.
+  * GROUND rule: dominance ratio (ub > 2*(of+ob)) replaces additive gate.
+- Deferred with rationale: Dirichlet-Bayesian classifier (defer until
+  sensitivity sweeps show threshold cliffs), HSV chroma key (KEY_R in sweep),
+  background-model dwell fix (safe direction; paths traverse).
+- FOOTPRINT LOOSENESS ROOT CAUSE (instrumented frame trace): NOT a bug — an
+  observability limit. Dev crates are TALLER than the walker, so a walker
+  close behind one is fully hidden (zero keyed pixels). Deepest observable
+  behind-row = mask_top + walker_height — exactly where estimates sit.
+  Conservative bound is correct given evidence; tightening needs hidden-gap
+  track dead-reckoning (future work).
+- Anti-overfitting suite: synth_scene_family.py (randomized layouts, sizes,
+  colors, walker builds, nuisance intensities; layout-DERIVED probe paths;
+  dev seeds <100 / HELD-OUT >=100) + sweep_layers_bench.py (distribution
+  reporting, footprint quantiles with over/under-block counts, sensitivity
+  grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
+  pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
