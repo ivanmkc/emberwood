@@ -25,6 +25,14 @@ OUT = os.path.join(ROOT, 'docs/art-options/veo')
 BASE = ('Completely static locked-off camera: no camera movement, no zoom, no pan, no cuts. '
         'The pixel-art night-market scene stays EXACTLY as shown in the reference image — '
         'same layout, same lighting, nothing redecorated. ')
+PROMPTS_EXTRA = [
+ BASE + 'Two villagers cross the market diagonally: one from bottom-left toward the noodle stand, '
+        'stopping behind its counter; one from the right edge walking left along the back stalls. '
+        'Crisp pixel-art animation, characters scaled to the scene.',
+ BASE + 'One villager walks slowly from the bottom-center straight up the middle aisle, passing '
+        'under the hanging lanterns and behind the produce stall, ending at the far back. '
+        'Crisp pixel-art animation, character scaled to the scene.',
+]
 PROMPTS = [
  BASE + 'One villager in a brown coat walks slowly through the market: enters from the left '
         'edge, walks along the open ground, passes BEHIND the noodle stand counter so the '
@@ -71,7 +79,10 @@ def main():
     client = genai.Client(vertexai=True, project='adk-coding-agents',
                           location='us-central1')
     ops = []
-    for n, prompt in enumerate(PROMPTS):
+    import sys
+    plist = PROMPTS_EXTRA if '--extra' in sys.argv else PROMPTS
+    base_n = 3 if '--extra' in sys.argv else 0
+    for n, prompt in enumerate(plist, start=base_n):
         try:
             op = client.models.generate_videos(
                 model=MODEL, prompt=prompt,

@@ -47,6 +47,8 @@ def main():
 
     evidence = []
     dbg = []
+    iter_records = []
+    prev_verdicts = {}
     for mp4 in sorted(glob.glob(os.path.join(ROOT, 'docs/art-options/veo/walk*.mp4'))):
         cap = cv2.VideoCapture(mp4)
         frames = []
@@ -106,6 +108,36 @@ def main():
                 evidence.append(o2.MarkerEvidence(
                     (int(feet[0] * sx), gy), warp(vis), warp(occ), (0, 0)))
         dbg.append((os.path.basename(mp4), inliers))
+        # ---- posterior update after THIS video ----
+        it = len(dbg)
+        base_row_l = {}
+        for pid in blocking:
+            m = parts == pid
+            if m.any():
+                base_row_l[pid] = int(np.where(m.any(axis=1))[0][-1])
+        fp_l = frozenset(pid for pid in blocking)
+        interior_l = o2.interior_mask(parts)
+        post = o2.aggregate(evidence, parts, interior_l, blocking, 40, o2.CONCORDANCE, fp_l)
+        counts = {v: sum(1 for r in post.values() if r['verdict'] == v)
+                  for v in (o2.YSORT, o2.OVERHEAD, o2.CONTRA, o2.NOEV)}
+        changes = []
+        for pid, r in post.items():
+            if prev_verdicts.get(pid) != r['verdict']:
+                changes.append(f"{blocking.get(pid,'?')}: {prev_verdicts.get(pid,'new')} -> {r['verdict']}")
+        prev_verdicts = {pid: r['verdict'] for pid, r in post.items()}
+        tint = {o2.YSORT: (80, 230, 120), o2.OVERHEAD: (80, 170, 255),
+                o2.CONTRA: (255, 90, 90), o2.NOEV: (150, 150, 150)}
+        pb = plate[:, :, ::-1].astype(np.float32) * 0.32
+        for pid, r in post.items():
+            m = parts == pid
+            pb[m] = pb[m] * 0.40 + np.array(tint[r['verdict']], np.float32) * 0.60
+        oimg = Image.fromarray(pb.clip(0, 255).astype(np.uint8))
+        oimg.thumbnail((1400, 1400))
+        oimg.save(os.path.join(ROOT, f'docs/art-options/veo-iter{it}-zmap-{ROOM}.jpg'), quality=86)
+        iter_records.append({'iteration': it, 'video': os.path.basename(mp4),
+                             'cum_samples': len(evidence), 'verdicts': counts,
+                             'changes': changes[:12]})
+        print(f'iter {it} ({os.path.basename(mp4)}): cum {len(evidence)} samples, {counts}, {len(changes)} changes')
 
     print(f'total evidence samples: {len(evidence)}')
     base_row = {}
@@ -131,6 +163,7 @@ def main():
     for pid, r in base.items():
         r['label'] = blocking.get(pid, '?')
     json.dump({'room': ROOM, 'videos': dbg, 'evidence_samples': len(evidence),
+               'iterations': iter_records,
                'verdict_counts': counts,
                'objects': {str(k): v for k, v in sorted(base.items())}},
               open(os.path.join(ROOT, f'docs/art-options/veo-z-{ROOM}.json'), 'w'), indent=1)
