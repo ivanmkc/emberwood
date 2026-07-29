@@ -1703,3 +1703,19 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   orange door; player fully visible standing in the door mouth (312,212);
   player correctly occluded behind the facade pillar (355,196). Door trigger
   rect [281,197,349,207] — earlier verify accidentally teleported through it.
+
+## Run 38b (2026-07-29) — tri-rater codified in repo + plaza overhead SHIPPED
+- tools/art-pipeline/tri_rater_overhead.py: the tri-rater production path is
+  now a repo script (was job-tmp ephemeral — burned lesson). 3 independent
+  gemini-3.1-pro-preview raters per part crop (cyan outline, 90px context),
+  unanimity ships, RGB always cut from the shipped room asset.
+- plaza-market-inside: 212 parts (67 instances, segment_parts), 211 rated,
+  agreement 0.95/0.97/0.97 (best of the 3 scenes), 32 unanimous overhead
+  (roof edge, hanging herb bundles, ceiling pipes, drapes — nothing on the
+  floor). assets/rooms/plaza-market-inside.overhead.png shipped (160,808 px).
+- In-game verify: entered via the anchor door trigger by WALKING (teleport
+  into a trigger rect does not reliably fire it — use keyboard.down('w')
+  through the rect; g.mapId is the room-truth signal). Spawn/doorway clean,
+  no ghost; player correctly hidden under the herb bundles.
+- All 3 focus scenes now have tri-rater gold overhead layers live: bazaar
+  (35 parts), anchor (7), plaza (32).
