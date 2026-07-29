@@ -2224,3 +2224,17 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   table. Tri-rater game-wide overhead sweep running (batch 1: barge-cabin,
   canal-docks, control-room, gate-wall shipped; 7 rooms total have
   production overhead.png so far).
+
+## Run 53 (2026-07-29 ~20:15 UTC) — GAME-WIDE OVERHEAD SHIPPED; sweep board final
+- Tri-rater production sweep COMPLETE: 22/22 remaining rooms processed,
+  20 shipped + 2 honestly FLAGGED below the 0.85 agreement floor
+  (pump-station, rooftops — ambiguous suspended/grounded boundaries).
+  With the 3 focus scenes: 23 of 25 rooms in the game now have production
+  assets/rooms/<room>.overhead.png (agreement min 0.85, median 0.92),
+  all cut from the shipped room assets (ghost-impossible construction).
+- layers-sweep board rebuilt with BOTH arms for all 25 rooms: video-arm
+  estimates (15 probed rooms) + tri-rater overhead previews (23 shipped) +
+  flagged-room callouts. Verified URLs before push.
+- Remaining follow-ups for future windows: video probes for the 10 small
+  interiors + coverage top-ups for rooftops/power-plant (38-48% unvisited);
+  human review of the 2 flagged rooms; in-game spot verification batch.
