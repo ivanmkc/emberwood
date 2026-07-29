@@ -6,11 +6,11 @@
    "iteration": 1,
    "video": "walk0_stab.mp4",
    "counts": {
-    "collision": 161,
+    "collision": 158,
     "collision-prior": 33,
     "ground": 39,
-    "conflict": 4,
-    "overhead": 1
+    "overhead": 4,
+    "conflict": 4
    },
    "changes": []
   },
@@ -18,9 +18,10 @@
    "iteration": 2,
    "video": "walk1_stab.mp4",
    "counts": {
-    "collision": 148,
+    "collision": 145,
     "collision-prior": 16,
     "ground": 68,
+    "overhead": 3,
     "conflict": 6
    },
    "changes": [
@@ -28,24 +29,25 @@
     "part45: collision -> ground",
     "part62: collision-prior -> ground",
     "part63: collision-prior -> ground",
+    "part68: collision -> overhead",
     "part87: ground -> conflict",
     "part150: collision -> ground",
     "part153: collision-prior -> ground",
     "part178: collision-prior -> ground",
     "part180: collision -> ground",
     "part181: collision -> ground",
-    "part184: collision-prior -> ground",
-    "part185: collision-prior -> ground"
+    "part184: collision-prior -> ground"
    ]
   },
   {
    "iteration": 3,
    "video": "walk2_stab.mp4",
    "counts": {
-    "collision": 120,
+    "collision": 116,
     "collision-prior": 13,
     "ground": 95,
-    "conflict": 10
+    "conflict": 10,
+    "overhead": 4
    },
    "changes": [
     "part11: collision -> ground",
@@ -53,9 +55,9 @@
     "part13: collision -> ground",
     "part34: collision-prior -> conflict",
     "part58: collision -> ground",
-    "part68: collision -> ground",
+    "part68: overhead -> ground",
     "part81: collision -> ground",
-    "part87: conflict -> collision",
+    "part87: conflict -> overhead",
     "part90: collision -> ground",
     "part116: collision -> ground",
     "part124: collision -> ground",
@@ -66,11 +68,11 @@
    "iteration": 4,
    "video": "walk3_stab.mp4",
    "counts": {
-    "collision": 116,
+    "collision": 112,
     "collision-prior": 9,
     "ground": 104,
-    "conflict": 8,
-    "overhead": 1
+    "overhead": 5,
+    "conflict": 8
    },
    "changes": [
     "part28: collision-prior -> ground",

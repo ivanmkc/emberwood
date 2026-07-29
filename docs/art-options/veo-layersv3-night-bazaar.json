@@ -1,0 +1,57 @@
+{
+ "room": "night-bazaar",
+ "iterations": [
+  {
+   "iteration": 1,
+   "video": "mwalk0_stab.mp4",
+   "counts": {
+    "collision": 155,
+    "collision-prior": 28,
+    "ground": 55
+   },
+   "changes": []
+  },
+  {
+   "iteration": 2,
+   "video": "mwalk1_stab.mp4",
+   "counts": {
+    "collision": 143,
+    "collision-prior": 20,
+    "ground": 75
+   },
+   "changes": [
+    "part37: collision -> ground",
+    "part42: collision -> ground",
+    "part51: collision -> ground",
+    "part53: collision -> ground",
+    "part68: collision -> ground",
+    "part75: collision -> ground",
+    "part90: collision -> ground",
+    "part154: collision -> ground",
+    "part176: collision -> ground",
+    "part177: collision -> ground",
+    "part184: collision-prior -> ground",
+    "part185: collision-prior -> ground"
+   ]
+  },
+  {
+   "iteration": 3,
+   "video": "mwalk2_stab.mp4",
+   "counts": {
+    "collision": 137,
+    "collision-prior": 18,
+    "ground": 83
+   },
+   "changes": [
+    "part67: collision -> ground",
+    "part111: collision -> ground",
+    "part128: collision -> ground",
+    "part136: collision -> ground",
+    "part186: collision-prior -> ground",
+    "part187: collision-prior -> ground",
+    "part195: collision -> ground",
+    "part207: collision -> ground"
+   ]
+  }
+ ]
+}

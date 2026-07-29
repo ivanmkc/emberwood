@@ -1660,3 +1660,25 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   overhead 1, conflict 8, per-iteration layer maps layers-iterN-*.jpg.
 - QUEUED: GEPA prompt search for camera stillness (drift metric as scorer);
   board reorg one-algorithm-per-page (started).
+
+## Run 37 (2026-07-29) — GEPA camera lock + magenta-suit walkers + keyed 4-layer v3
+- veo_gepa.py: GEPA-lite over Veo prompts, score = 1/(1+ORB drift) + magenta-key
+  coverage. Winner "lock-c" ("screen recording of a 2D video game, viewport NEVER
+  scrolls") = 0.05px drift vs 42.45px for the old prompt. Saved in
+  docs/art-options/veo-gepa-night-bazaar.json.
+- Key-color search: magenta (255,0,255) min scene distance 172.9 (pure green only
+  155.9 — explains earlier produce-green collisions). Walkers now wear FLAT PURE
+  MAGENTA full-body suits.
+- 3 production videos (veo2/mwalk0-2.mp4 + gifs): suit compliance excellent
+  (fully magenta head-to-toe, median 3.5-5k key px/frame), stabilized residual
+  ~0px, homography 768-783 inliers (old arm: 6-200).
+- veo_layers_v3.py: walker = strict chroma key (dist<90 to #FF00FF) — Ivan's
+  smoke/effects false-positive defense. Occluder holes additionally require
+  hole pixels ≈ static background (kills walker head/feet + smoke-in-front:
+  raw hole px 12k/4.8k/8.5k → 478/194/280 after gate, verified visually as
+  correct rejections).
+- Result iter3: collision 137, collision-prior 18, ground 83, overhead 0,
+  conflict 0. Zero conflict = key working. Zero overhead = walkers never
+  actually passed behind anything (Veo kept them in front despite prompt) —
+  path problem, not algorithm problem. mwalk3/4 generating now with
+  occlusion-forcing paths ("counter hides the lower half of their body").

@@ -112,13 +112,16 @@ def main():
         changes = []
         for pid in pids:
             o_, u_ = votes_occ[pid], votes_under[pid]
-            passes_through = feet_hits[pid] >= 3   # Ivan: passes through => non-collider
+            passes_through = feet_hits[pid] >= 3
+            # Ivan's simplification: a collider can never be overlapped, so
+            # OBSERVED occlusion implies the character got under/behind it =>
+            # OVERHEAD; observed char-over => GROUND; untouched => COLLISION.
             if o_ + u_ == 0:
-                lay = 'collision' if blocks[pid] and not passes_through else 'collision-prior'
+                lay = 'collision' if (blocks[pid] and not passes_through) else 'collision-prior'
             elif min(o_, u_) / (o_ + u_) >= CONFLICT_RATIO and o_ + u_ >= 4 * MIN_VOTE_PX:
                 lay = 'conflict'
             elif o_ > u_:
-                lay = 'overhead' if (passes_through or not blocks[pid]) else 'collision'
+                lay = 'overhead'
             else:
                 lay = 'ground'
             layers[pid] = lay

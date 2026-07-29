@@ -1,0 +1,34 @@
+{
+ "results": {
+  "lock-a": {
+   "prompt": "Completely static locked-off camera: no camera movement, no zoom, no pan, no cuts. The pixel-art night-market scene stays EXACTLY as shown in the reference image \u2014 same layout, same lighting, nothing redecorated. One villager wearing a FLAT PURE MAGENTA (#FF00FF) full-body suit \u2014 hood, torso, legs, all the same solid flat magenta, no shading \u2014 walks slowly through the market: enters left, passes behind the noodle stand counter, exits right. Crisp pixel-art animation, character scaled to the scene. ",
+   "drift_median": 42.45,
+   "key_px_median": 1095.5,
+   "key_ok": 1.0,
+   "score": 1.023
+  },
+  "lock-b": {
+   "prompt": "Footage from a security camera bolted rigidly to a wall: the framing is absolutely fixed, tripod-locked, zero camera motion of any kind, no push-in, no drift, no cuts. The pixel-art night-market scene stays EXACTLY as shown in the reference image \u2014 same layout, same lighting, nothing redecorated. One villager wearing a FLAT PURE MAGENTA (#FF00FF) full-body suit \u2014 hood, torso, legs, all the same solid flat magenta, no shading \u2014 walks slowly through the market: enters left, passes behind the noodle stand counter, exits right. Crisp pixel-art animation, character scaled to the scene. ",
+   "drift_median": 0.2,
+   "key_px_median": 1289.0,
+   "key_ok": 1.0,
+   "score": 1.834
+  },
+  "lock-c": {
+   "prompt": "A screen recording of a 2D video game: the viewport NEVER scrolls or zooms \u2014 the background is a static bitmap and only sprites move. The pixel-art night-market scene stays EXACTLY as shown in the reference image \u2014 same layout, same lighting, nothing redecorated. One villager wearing a FLAT PURE MAGENTA (#FF00FF) full-body suit \u2014 hood, torso, legs, all the same solid flat magenta, no shading \u2014 walks slowly through the market: enters left, passes behind the noodle stand counter, exits right. Crisp pixel-art animation, character scaled to the scene. ",
+   "drift_median": 0.05,
+   "key_px_median": 1056.5,
+   "key_ok": 1.0,
+   "score": 1.954
+  },
+  "g2-tight": {
+   "prompt": "A screen recording of a 2D video game: the viewport NEVER scrolls or zooms \u2014 the background is a static bitmap and only sprites move. The pixel-art night-market scene stays EXACTLY as shown in the reference image \u2014 same layout, same lighting, nothing redecorated. One villager wearing a FLAT PURE MAGENTA (#FF00FF) full-body suit \u2014 hood, torso, legs, all the same solid flat magenta, no shading \u2014 walks slowly through the market: enters left, passes behind the noodle stand counter, exits right. Crisp pixel-art animation, character scaled to the scene. Frame 1 and frame 192 are identical except the character.",
+   "drift_median": 75.66,
+   "key_px_median": 1786.5,
+   "key_ok": 1.0,
+   "score": 1.013
+  }
+ },
+ "winner": "lock-c",
+ "winning_prompt": "A screen recording of a 2D video game: the viewport NEVER scrolls or zooms \u2014 the background is a static bitmap and only sprites move. The pixel-art night-market scene stays EXACTLY as shown in the reference image \u2014 same layout, same lighting, nothing redecorated. One villager wearing a FLAT PURE MAGENTA (#FF00FF) full-body suit \u2014 hood, torso, legs, all the same solid flat magenta, no shading \u2014 walks slowly through the market: enters left, passes behind the noodle stand counter, exits right. Crisp pixel-art animation, character scaled to the scene. "
+}
