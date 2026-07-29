@@ -153,18 +153,18 @@
     "notes": "OK"
   },
   "power-plant": {
-    "iterations_ok": 3,
+    "iterations_ok": 6,
     "iterations_skipped": 0,
     "final_counts": {
-      "collision": 83,
-      "collision-prior": 80,
-      "overhead": 6,
-      "ysort": 15,
-      "ground": 25
+      "collision": 70,
+      "collision-prior": 73,
+      "ysort": 23,
+      "ground": 36,
+      "overhead": 7
     },
-    "n_unreliable_parts": 80,
+    "n_unreliable_parts": 73,
     "n_total_parts": 209,
-    "notes": "80 collision-prior (unvisited) parts"
+    "notes": "73 collision-prior (unvisited) parts; RERUN with 3 cov top-ups: unvisited 80 -> 73"
   },
   "repair-bay": {
     "iterations_ok": 2,
@@ -195,18 +195,24 @@
     "notes": "19 collision-prior (unvisited) parts"
   },
   "rooftops": {
-    "iterations_ok": 3,
-    "iterations_skipped": 0,
+    "iterations_ok": 5,
+    "iterations_skipped": 1,
     "final_counts": {
-      "collision-prior": 105,
-      "collision": 90,
-      "ground": 10,
-      "ysort": 11,
-      "overhead": 4
+      "collision-prior": 99,
+      "collision": 82,
+      "ground": 14,
+      "ysort": 18,
+      "overhead": 7
     },
-    "n_unreliable_parts": 105,
+    "n_unreliable_parts": 99,
     "n_total_parts": 220,
-    "notes": "105 collision-prior (unvisited) parts"
+    "notes": "1 skipped: ['registration (6)']; 99 collision-prior (unvisited) parts; RERUN with 3 cov top-ups: unvisited 105 -> 99",
+    "skipped_details": [
+      {
+        "iter": 2,
+        "reason": "registration (6)"
+      }
+    ]
   },
   "transit": {
     "iterations_ok": 3,
@@ -366,5 +372,19 @@
     "n_unreliable_parts": 60,
     "n_total_parts": 146,
     "notes": "60 collision-prior (unvisited) parts; walk2 excluded (corrupt H264)"
+  },
+  "transit-office": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 79,
+      "overhead": 13,
+      "ground": 11,
+      "ysort": 16,
+      "collision-prior": 5
+    },
+    "n_unreliable_parts": 5,
+    "n_total_parts": 124,
+    "notes": "5 collision-prior (unvisited) parts"
   }
 }
