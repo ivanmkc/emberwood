@@ -1955,3 +1955,32 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   1455 vs occ_front 452). This is NOT from the synth3d changes — it appeared
   after the expert-panel commit (a6f1c6e) and is reproducible across runs.
   Flagged to team-lead for investigation.
+
+## Run 44 (2026-07-29) — HELD-OUT evaluation + sensitivity (code frozen at b06d51b)
+- HELD-OUT scene family (12 unseen seeds 100-111, never debugged against):
+  10 scenes evaluated (98 labeled parts), 2 scenes failed registration.
+  Per-class accuracy: ground 1.00±0.00, ysort 0.983±0.05 (p5 0.91),
+  overhead 0.69±0.31 (p5 0.15). Part-level hard-error rate 11.2%
+  (95% binomial upper bound ~14%). ERROR ANATOMY: 10/11 errors are
+  overhead->collision-prior NO-EVIDENCE cases (random layouts where derived
+  probe paths gave a suspended object no walker overlap — the prior holds
+  safely); 1 overhead->ground (seed100 part7) + 1 ysort->ground (seed103)
+  are genuine wrong-evidence cases for future study.
+- FOOTPRINT SAFETY on held-out: 43/43 conservative over-blocks, 0 unsafe
+  under-blocks. (Contrast: the 3D bench's tower scoring found 2 unsafe
+  under-blocks (+41px, +7px) with the PRE-freeze estimator — the depth-model
+  feet-overshoot the math panel predicted; synth3d agent re-running against
+  the frozen code.)
+- SENSITIVITY (5-value grids on dev seed 0, videos fixed): STATIC_T,
+  MIN_EVID, SIDE_MARGIN, KEY_R all ROBUST — accuracy FLAT across the full
+  swept ranges (20-70, 90-300, 5-20, 50-140). DEPTH_AWARE_TRUNC_FRAC robust
+  0.78-0.94, cliff at 0.70. Verdict: thresholds are not razor-tuned; the
+  binding constraint is probe-path COVERAGE, not parameters.
+- Registration robustness gap: seeds 104/106 failed at 52 inliers vs the 60
+  gate (low-contrast floors starve ORB). Fail-loud is correct; for
+  conforming game captures add a harness --aligned mode (fixed-camera
+  contract => identity homography). Open: coverage-guaranteeing path
+  planner per suspended part (would convert most remaining errors).
+- 3D bench (agent, verified from artifacts): classification PERFECT after
+  mask fixes (ground 3/3, ysort 11/11, overhead 7/7) — the earlier
+  "11 irreducible errors" claim was fully explained by the ground-mask bug.

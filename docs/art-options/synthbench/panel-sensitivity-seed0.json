@@ -1,0 +1,156 @@
+{
+ "seed": 0,
+ "baseline_hard_errors": 1,
+ "grid": [
+  {
+   "param": "STATIC_T",
+   "value": 20,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "STATIC_T",
+   "value": 30,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "STATIC_T",
+   "value": 40,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "STATIC_T",
+   "value": 55,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "STATIC_T",
+   "value": 70,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "MIN_EVID",
+   "value": 90,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "MIN_EVID",
+   "value": 135,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "MIN_EVID",
+   "value": 180,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "MIN_EVID",
+   "value": 240,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "MIN_EVID",
+   "value": 300,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "SIDE_MARGIN",
+   "value": 5,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "SIDE_MARGIN",
+   "value": 8,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "SIDE_MARGIN",
+   "value": 10,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "SIDE_MARGIN",
+   "value": 14,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "SIDE_MARGIN",
+   "value": 20,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "DEPTH_AWARE_TRUNC_FRAC",
+   "value": 0.7,
+   "hard_errors": 2,
+   "mean_acc": 0.667
+  },
+  {
+   "param": "DEPTH_AWARE_TRUNC_FRAC",
+   "value": 0.78,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "DEPTH_AWARE_TRUNC_FRAC",
+   "value": 0.85,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "DEPTH_AWARE_TRUNC_FRAC",
+   "value": 0.9,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "DEPTH_AWARE_TRUNC_FRAC",
+   "value": 0.94,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "KEY_R",
+   "value": 50,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "KEY_R",
+   "value": 70,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "KEY_R",
+   "value": 90,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "KEY_R",
+   "value": 115,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  },
+  {
+   "param": "KEY_R",
+   "value": 140,
+   "hard_errors": 1,
+   "mean_acc": 0.833
+  }
+ ]
+}
