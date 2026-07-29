@@ -89,7 +89,7 @@ def main():
 
     parts, ground, coll, plate = load_inputs(
         args.parts, args.ground, args.collision, args.plate)
-    videos = sorted(glob.glob(args.videos))
+    videos = sorted(v for pat in args.videos.split() for v in glob.glob(pat))
     if not videos:
         raise FileNotFoundError(f'no videos match {args.videos}')
     vw, vh = (int(x) for x in args.view.split('x'))
