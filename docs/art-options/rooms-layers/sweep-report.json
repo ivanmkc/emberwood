@@ -324,5 +324,47 @@
     "n_unreliable_parts": 41,
     "n_total_parts": 156,
     "notes": "41 collision-prior (unvisited) parts"
+  },
+  "pump-station": {
+    "iterations_ok": 2,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 126,
+      "collision-prior": 43,
+      "overhead": 9,
+      "ysort": 11,
+      "ground": 11
+    },
+    "n_unreliable_parts": 43,
+    "n_total_parts": 200,
+    "notes": "43 collision-prior (unvisited) parts"
+  },
+  "repair-office": {
+    "iterations_ok": 2,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 98,
+      "collision-prior": 27,
+      "overhead": 19,
+      "ground": 10,
+      "ysort": 28
+    },
+    "n_unreliable_parts": 27,
+    "n_total_parts": 182,
+    "notes": "27 collision-prior (unvisited) parts"
+  },
+  "salvage-shed": {
+    "iterations_ok": 2,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ysort": 13,
+      "collision": 53,
+      "collision-prior": 60,
+      "overhead": 12,
+      "ground": 8
+    },
+    "n_unreliable_parts": 60,
+    "n_total_parts": 146,
+    "notes": "60 collision-prior (unvisited) parts; walk2 excluded (corrupt H264)"
   }
 }
