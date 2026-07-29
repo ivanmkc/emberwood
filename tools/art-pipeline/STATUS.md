@@ -1533,3 +1533,23 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - Two of three focus scenes now fully on the magenta-first pipeline.
   Remaining: plaza-market-inside (interior; room-mode drive), then fused
   overhead for anchor/plaza.
+
+### Run 33: board readability study + overhaul (Ivan)
+- 3-newcomer panel (junior gamedev / ML engineer / technical artist) read the
+  board COLD (text dump + images) + 8-question debugging quiz vs a pre-written
+  key. Result: methods well understood (union-vs-majority, fusion rule, mask
+  misalignment story, probe paths near-perfect) but ALL THREE failed Q8b —
+  the z-verdict map had NO color legend anywhere; and all three logged the
+  same gaps: undefined jargon (NBP, roll, purity, consensus, plate, GEPA,
+  config space...), no live-vs-analysis status, methodology mixed into debug
+  pages, no per-iteration changelog, no pipeline flow view.
+- FIXES SHIPPED to the board (verified rendering via live screenshots):
+  (1) CURRENT STATUS dashboard (live vs analysis per asset), (2) GLOSSARY
+  card, (3) color legend on every map card, (4) per-iteration changelog on
+  the debug view, (5) Methodology & Audits page (heavy alerts moved out),
+  (6) NEW "Pipeline Debugger" page per Ivan: nested Pages steppers — arrow
+  through pseudocode one step at a time, active line highlighted, each step
+  showing its actual intermediate output (magenta pipeline 6 steps, z-fusion
+  6 steps). Verified: stepper renders with own arrow controls (1/6).
+- IN FLIGHT: algorithms/results re-audit (numeric recompute + logic review
+  agents) and a fresh-newcomer re-test on the rebuilt board.
