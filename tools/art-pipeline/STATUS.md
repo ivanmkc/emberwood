@@ -1585,3 +1585,19 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   hitbox at HIT ox4,oy7 vs this same PNG): door->mouth PASS x3, full flood
   98.6% of all hitbox-clear cells reachable (floor bbox covered). QUEUED:
   in-engine door-entry drive automation for interiors.
+
+### Run 34: INDEPENDENT PER-SOURCE VALIDATION (Ivan: "you combined algorithms
+### instead of verifying each independently") — he was right
+- Gold set: 114 z-relevant parts, 3 independent labelers (pairwise agreement
+  0.90/0.75/0.70, 77/114 unanimous, majority gold: 47 overhead / 67 grounded).
+- Per-source scores vs gold (alone): height-pro P=0.41/R=0.75; height-flash
+  P=0.56/R=0.71; both-agree P=0.50 (consensus adds NOTHING over flash —
+  correlated errors); veo verdicts P=0.00 with 10 WRONG vetoes (warp/
+  attribution noise — the "hard veto" was the least valid component);
+  composite A/B P=0.50 (coin-flip; also Flash-correlated with height).
+  SHIPPED fused layer: P=0.48 — half false positives. Fusion was premature.
+- CORRECTION SHIPPED: overhead layer re-emitted from UNANIMOUS 3-rater gold
+  parts only (gold-overhead-night-bazaar.png -> assets overhead layer).
+  Model fusion demoted to R&D until a source demonstrates >=0.8 precision
+  on held-out parts. Validation data committed
+  (z-source-validation-night-bazaar.json).
