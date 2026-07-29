@@ -1,0 +1,264 @@
+{
+ "votes": {
+  "1": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 2869,
+   "under_behind": 31660
+  },
+  "2": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 33500
+  },
+  "3": {
+   "occ_front": 0,
+   "occ_behind": 2698,
+   "under_front": 1923,
+   "under_behind": 0
+  },
+  "4": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "5": {
+   "occ_front": 0,
+   "occ_behind": 782,
+   "under_front": 1426,
+   "under_behind": 0
+  },
+  "6": {
+   "occ_front": 0,
+   "occ_behind": 578,
+   "under_front": 1369,
+   "under_behind": 0
+  },
+  "7": {
+   "occ_front": 0,
+   "occ_behind": 2410,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "8": {
+   "occ_front": 1686,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "9": {
+   "occ_front": 494,
+   "occ_behind": 506,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "10": {
+   "occ_front": 676,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "11": {
+   "occ_front": 1240,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  }
+ },
+ "base_y": {
+  "1": 699,
+  "2": 759,
+  "3": 519,
+  "4": 479,
+  "5": 539,
+  "6": 779,
+  "7": 379,
+  "8": 266,
+  "9": 240,
+  "10": 149,
+  "11": 205
+ },
+ "iterations": [
+  {
+   "iteration": 1,
+   "video": "swalk0.mp4",
+   "counts": {
+    "ground": 1,
+    "collision-prior": 8,
+    "ysort": 2
+   },
+   "changes": [],
+   "layers": {
+    "1": "ground",
+    "2": "collision-prior",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "collision-prior",
+    "7": "collision-prior",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
+   }
+  },
+  {
+   "iteration": 2,
+   "video": "swalk1.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 2,
+    "collision-prior": 7
+   },
+   "changes": [
+    "part2: collision-prior -> ground"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "collision-prior",
+    "7": "collision-prior",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
+   }
+  },
+  {
+   "iteration": 3,
+   "video": "swalk2.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 2,
+    "collision-prior": 6,
+    "overhead": 1
+   },
+   "changes": [
+    "part8: collision-prior -> overhead"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "collision-prior",
+    "7": "collision-prior",
+    "8": "overhead",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
+   }
+  },
+  {
+   "iteration": 4,
+   "video": "swalk3.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 3,
+    "collision-prior": 5,
+    "overhead": 1
+   },
+   "changes": [
+    "part6: collision-prior -> ysort"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "ysort",
+    "7": "collision-prior",
+    "8": "overhead",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
+   }
+  },
+  {
+   "iteration": 5,
+   "video": "swalk4.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 3,
+    "collision-prior": 4,
+    "overhead": 2
+   },
+   "changes": [
+    "part11: collision-prior -> overhead"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "ysort",
+    "7": "collision-prior",
+    "8": "overhead",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "overhead"
+   }
+  },
+  {
+   "iteration": 6,
+   "video": "swalk5.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 4,
+    "collision-prior": 2,
+    "overhead": 3
+   },
+   "changes": [
+    "part7: collision-prior -> ysort",
+    "part9: collision-prior -> overhead"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "ysort",
+    "7": "ysort",
+    "8": "overhead",
+    "9": "overhead",
+    "10": "collision-prior",
+    "11": "overhead"
+   }
+  },
+  {
+   "iteration": 7,
+   "video": "swalk6.mp4",
+   "counts": {
+    "ground": 2,
+    "ysort": 4,
+    "collision-prior": 1,
+    "overhead": 4
+   },
+   "changes": [
+    "part10: collision-prior -> overhead"
+   ],
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "ysort",
+    "4": "collision-prior",
+    "5": "ysort",
+    "6": "ysort",
+    "7": "ysort",
+    "8": "overhead",
+    "9": "overhead",
+    "10": "overhead",
+    "11": "overhead"
+   }
+  }
+ ]
+}

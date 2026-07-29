@@ -1,0 +1,29 @@
+{
+ "truth": {
+  "1": "ground",
+  "2": "ground",
+  "3": "ysort",
+  "4": "ysort",
+  "5": "ysort",
+  "6": "ysort",
+  "7": "ysort",
+  "8": "overhead",
+  "9": "overhead",
+  "10": "overhead",
+  "11": "overhead"
+ },
+ "pred": {
+  "1": "ground",
+  "2": "ground",
+  "3": "ysort",
+  "4": "collision-prior",
+  "5": "ysort",
+  "6": "ysort",
+  "7": "ysort",
+  "8": "overhead",
+  "9": "overhead",
+  "10": "overhead",
+  "11": "overhead"
+ },
+ "errors": []
+}

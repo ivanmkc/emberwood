@@ -1729,3 +1729,37 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   the battery-gated build allows) — top post-window item: plaza compose
   retune to open judged-walkable shelf aisles, re-gated by the offline
   battery (door->mouth x3 + flood).
+
+## Run 40 (2026-07-29) — feet-conditioned v4 + synthetic vetting (Ivan's respec)
+- Ivan: "whether something occludes depends on where the character is
+  standing" — layers are RENDERING BEHAVIORS now, not z-planes: GROUND
+  (always under char), YSORT (per-frame feet-vs-baseY comparison — the
+  engine's fg-cuts + baseY), OVERHEAD (always over; suspended only).
+  v3's "conflict" class was the y-sort signature misread as noise.
+- veo_layers_v4.py: every vote conditioned on walker feet vs part base:
+  occ+front=OVERHEAD (a standing object can never occlude a walker in front
+  of it), occ+behind=YSORT, under+behind=GROUND, under+front=weak. ±10px
+  base dead zone. NEW occlusion detector: expected-extent walker model
+  (h_est = p90 silhouette height; feet anchored at the un-truncated end;
+  occlusion = per-column gaps/truncation inside the expected box) — the old
+  hole-only detector was blind to truncation, the DOMINANT occlusion mode.
+- synth_layers_bench.py (Ivan: vet on synthetic before reapplying): procedural
+  2.5D scene, truth-by-construction (rugs/crates/lanterns/awning/wire),
+  engine-faithful y-sort compositor, adversarial smoke-in-front + flicker +
+  jitter + non-magenta head/boots. Bench caught 3 real bugs (truncation
+  blindness; box-side false occlusion; base-depth dead-zone path gap).
+  FINAL: 0 hard errors — ground 2/2, overhead 4/4, ysort 4/4 visited,
+  distractors 0 votes. Protocol insight: probe paths must cross under
+  suspended objects at feet-depths well past the base (dead zone).
+- Real bazaar (5 videos): overhead 70 / ysort 27 / ground 17 / coll 124.
+  vs 114-part tri-rater gold: P=0.55 R=0.36 — best automated source yet
+  (fusion 0.48, veo-v1 0.00) but below the unanimity gate. Limits are NOT
+  the algorithm: (a) mixed mega-parts (part87 = lanterns+ground in one part;
+  needs finer reseg), (b) Veo compositing infidelity — it draws the walker
+  IN FRONT of objects it should pass behind, violating y-sort physics the
+  synth bench proves we can read correctly. Tri-rater gold stays production;
+  veo-v4 = corroborating source.
+- 12h loop CLOSED (cron f44bc532 deleted; Ivan steering interactively).
+  Window shipped: magenta pipeline live on 3 scenes, GEPA camera lock,
+  keyed walker extraction, all-3-scenes tri-rater overhead, defect trend
+  bazaar 14.7->4.9% / anchor 6.1->2.6%, feet-conditioned v4 + synth bench.
