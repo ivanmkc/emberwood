@@ -56,11 +56,13 @@ SCENES = {
  'night-bazaar': 'docs/art-options/rooms/night-bazaar/plate.png',
  'night-bazaar-nowires': 'docs/art-options/rooms/night-bazaar/plate-nowires.png',
  'anchorroom-nowires': 'docs/art-options/rooms/anchorroom/plate-nowires.png',
+ 'plaza-market-inside-nowires': 'docs/art-options/rooms/plaza-market-inside/plate-nowires.png',
  'plaza-market-inside': 'docs/art-options/rooms/plaza-market-inside/plate.png',
 }
 WALK_REF = {  # consensus-walk reference per scene, where one exists
  'anchorroom': 'anchorroom', 'night-bazaar': 'night-bazaar',
- 'night-bazaar-nowires': 'night-bazaar', 'anchorroom-nowires': 'anchorroom', 'plaza-market-inside': 'plaza-market-inside',
+ 'night-bazaar-nowires': 'night-bazaar', 'anchorroom-nowires': 'anchorroom',
+ 'plaza-market-inside-nowires': 'plaza-market-inside', 'plaza-market-inside': 'plaza-market-inside',
 }
 MAG = np.array([255, 0, 255], np.int16)
 

@@ -12,7 +12,7 @@ const localPw = resolve(ROOT, 'node_modules', 'playwright', 'index.mjs');
 const pw = await import('file://' + (existsSync(localPw) ? localPw : tcPw));
 const { chromium } = pw;
 const ROOM = process.argv[2] || 'night-bazaar';
-const WOFF = { 'night-bazaar': -640, 'anchorroom': 0 }[ROOM] ?? 0;
+const WOFF = { 'night-bazaar': -640, 'anchorroom': 0, 'plaza-market-inside': 0 }[ROOM] ?? 0;
 const BASE = `http://localhost:8787/?room=${ROOM}`;
 const OUT = resolve(ROOT, 'tools', 'verify', '_drive-out');
 execSync(`mkdir -p "${OUT}"`);
@@ -41,6 +41,7 @@ async function engineCoords(page) {
     const bandDefs = {
       'night-bazaar': { e: [594, 0, 610, 447], n: [0, 30, 639, 46], w: [30, 0, 46, 447] },
       'anchorroom':   { e: [594, 94, 610, 438], w: [30, 174, 46, 438] },
+      'plaza-market-inside': { s: [306, 400, 326, 416] },
     };
     const bands = bandDefs[window.__driveRoom || 'night-bazaar'];
     // multi-source BFS FROM the goal band -> distance field; the walker then

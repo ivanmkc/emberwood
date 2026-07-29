@@ -1,0 +1,12 @@
+{
+ "changed_frac": 0.0141,
+ "judge": {
+  "wires_removed": true,
+  "objects_intact": true,
+  "artifacts": [
+   "missing wire texture on pipe near ceiling",
+   "missing wire texture above fridge"
+  ]
+ },
+ "candidates_seen": 3
+}

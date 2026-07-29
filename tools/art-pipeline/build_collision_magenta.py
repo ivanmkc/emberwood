@@ -69,8 +69,47 @@ skel = skeletonize(walk & ~covered)
 widened = cv2.dilate(skel.astype(np.uint8), np.ones((K + 2, K + 2), np.uint8)) > 0
 walk = walk | (widened & (cv2.dilate(walk.astype(np.uint8), np.ones((11, 11), np.uint8)) > 0))
 
+pre_frac = float(walk.mean())
 n, lab = cv2.connectedComponents(walk.astype(np.uint8))
-walk = lab == lab[sy, sx]
+comp = lab == lab[sy, sx]
+if float(comp.mean()) < 0.5 * pre_frac:
+    # spawn sits in a sliver (e.g. doorway threshold magenta won't paint):
+    # bridge with shipped collision around the spawn, then re-pick
+    # mirror the engine's openBorderStrip: carve the exit-mouth stub inward
+    # from the door rect until it meets painted floor (interiors keep door
+    # mouths closed on disk; the engine opens them at load)
+    sizes = np.bincount(lab.ravel())
+    sizes[0] = 0
+    main = lab == int(np.argmax(sizes))   # carve must reach the MAIN floor,
+    e = min(inst['exits'], key=lambda ex: abs(ex['rect'][0]*2 - sx) + abs(ex['rect'][1]*2 - sy))
+    ex0, ey0, ex1, ey1 = [v * 2 for v in e['rect']]
+    if e['edge'] in ('s', 'n'):
+        rng = range(ey0, -1, -4) if e['edge'] == 's' else range(ey1, H, 4)
+        hit = None
+        for yy in rng:
+            band = main[yy, ex0:ex1]
+            if band.mean() > 0.4:
+                hit = yy
+                break
+        if hit is None:
+            raise SystemExit('FATAL: no floor within reach of door stub')
+        ylo, yhi = (hit, min(H, ey1 + 4)) if e['edge'] == 's' else (max(0, ey0 - 4), hit)
+        walk[ylo:yhi, ex0:ex1] = True
+    else:
+        rng = range(ex0, -1, -4) if e['edge'] == 'e' else range(ex1, W, 4)
+        hit = None
+        for xx in rng:
+            if main[ey0:ey1, xx].mean() > 0.4:
+                hit = xx
+                break
+        if hit is None:
+            raise SystemExit('FATAL: no floor within reach of door stub')
+        xlo, xhi = (hit, min(W, ex1 + 4)) if e['edge'] == 'e' else (max(0, ex0 - 4), hit)
+        walk[ey0:ey1, xlo:xhi] = True
+    print(f'spawn sliver: carved {e["edge"]}-door mouth stub to floor (engine-mirror)')
+    n, lab = cv2.connectedComponents(walk.astype(np.uint8))
+    comp = lab == lab[sy, sx]
+walk = comp
 # audit fix: a borrowed corridor can be dropped by the spawn-component step if
 # it only connected through another borrowed region — verify AFTER selection
 for e in inst.get('exits', []):

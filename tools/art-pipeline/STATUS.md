@@ -1569,3 +1569,19 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   every exit band AFTER the spawn-component step (fail-loud), (2) veo_z
   plate registration now resizes to true 4:3 (1200x900). Collisions
   rebuilt + post-component verification green on both rooms.
+
+### Cycle 7 of 12h loop: PLAZA on magenta-first (all 3 focus scenes done)
+- Wire removal best-of-7 (1.41%; judge gate rejected 4 rolls for ALTERING
+  PRICE TAGS/CALENDars — the intact check earning its keep). Magenta v4:
+  5/5 rolls, 19.9% ground, IoU 0.888 vs walk (best scene yet; rug painted).
+- Two interior-specific builder fixes (generic): (a) spawn-sliver detection
+  (spawn sits in the doorway threshold magenta won't paint) -> carve the
+  door-mouth stub inward to the MAIN floor component, mirroring the engine's
+  openBorderStrip which opens door mouths at load (the shipped plaza PNG has
+  its mouth closed on disk too — static connectivity was never the interior
+  invariant); (b) carve targets the largest component, not nearest paint.
+- Acceptance: interiors cannot boot directly (?room falls back to world), so
+  the battery ran OFFLINE on the exact engine predicate (corner-sampled 8x8
+  hitbox at HIT ox4,oy7 vs this same PNG): door->mouth PASS x3, full flood
+  98.6% of all hitbox-clear cells reachable (floor bbox covered). QUEUED:
+  in-engine door-entry drive automation for interiors.
