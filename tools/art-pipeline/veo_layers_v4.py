@@ -38,10 +38,16 @@ MIN_VOTE_PX = 60
 STATIC_T = 40
 MIN_EVID = 3 * MIN_VOTE_PX   # pixels of a vote class before it may classify
 SIDE_MARGIN = 10             # plate px: |feet - base| below this = ambiguous
+MIN_WALKER_PX, MAX_WALKER_PX = 400, 30000   # keyed-component size gate
 
-COL_MAP = {'ground': (255, 80, 255), 'collision': (255, 150, 40),
-           'collision-prior': (150, 150, 150), 'overhead': (80, 160, 255),
-           'ysort': (60, 220, 120)}
+# the layer vocabulary — rendering BEHAVIORS, shared with synth_layers_bench
+GROUND, YSORT, OVERHEAD = 'ground', 'ysort', 'overhead'
+COLLISION, COLLISION_PRIOR = 'collision', 'collision-prior'
+FRONT, BEHIND = 'front', 'behind'
+
+COL_MAP = {GROUND: (255, 80, 255), COLLISION: (255, 150, 40),
+           COLLISION_PRIOR: (150, 150, 150), OVERHEAD: (80, 160, 255),
+           YSORT: (60, 220, 120)}
 
 
 def classify(v, blocks_pid, passes_through):
@@ -49,20 +55,20 @@ def classify(v, blocks_pid, passes_through):
     of, ob = v['occ_front'], v['occ_behind']
     uf, ub = v['under_front'], v['under_behind']
     if of + ob + uf + ub == 0:
-        return 'collision' if (blocks_pid and not passes_through) else 'collision-prior'
+        return COLLISION if (blocks_pid and not passes_through) else COLLISION_PRIOR
     if of >= MIN_EVID:
         # a standing object can NEVER occlude a walker in front of it —
         # solid occ_front is the unambiguous suspended signature
-        return 'overhead'
+        return OVERHEAD
     if ub >= MIN_EVID and of + ob < MIN_EVID:
-        return 'ground'
+        return GROUND
     if ob >= MIN_EVID or (uf >= MIN_EVID and ob > 0):
-        return 'ysort'
+        return YSORT
     if uf >= MIN_EVID:
         # front-only walkover is consistent with ground AND y-sort;
         # the collision prior decides (a non-blocker you walk over = ground)
-        return 'ysort' if blocks_pid else 'ground'
-    return 'collision' if (blocks_pid and not passes_through) else 'collision-prior'
+        return YSORT if blocks_pid else GROUND
+    return COLLISION if (blocks_pid and not passes_through) else COLLISION_PRIOR
 
 
 def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1200, 675)):
@@ -120,7 +126,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
             for c in range(1, n):
                 comp = (lab == c) & (keyed > 0)
                 a = int(comp.sum())
-                if 400 <= a <= 30000:
+                if MIN_WALKER_PX <= a <= MAX_WALKER_PX:
                     groups.append(comp)
             return groups, keyed > 0
 
@@ -197,7 +203,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                             continue
                         if abs(fpy - base_y[pid]) <= SIDE_MARGIN:
                             continue          # too close to the base to judge
-                        side = 'front' if fpy > base_y[pid] else 'behind'
+                        side = FRONT if fpy > base_y[pid] else BEHIND
                         V[pid][f'{kind}_{side}'] += int(ct)
 
         layers = {pid: classify(V[pid], blocks[pid], feet_hits[pid] >= 3)

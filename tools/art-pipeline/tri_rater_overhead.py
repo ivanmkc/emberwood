@@ -15,12 +15,14 @@ import json
 import os
 import sys
 
+import cv2
 import numpy as np
 from PIL import Image
 from google import genai
 from google.genai import errors as genai_errors
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OVERHEAD, GROUNDED = 'overhead', 'grounded'   # the rater label vocabulary
 RATER_MODEL = 'gemini-3.1-pro-preview'
 N_RATERS = 3
 MIN_PART_PX = 900          # below this a part is too small to judge or matter
@@ -51,7 +53,6 @@ def part_crop(plate, mask):
     x0 = max(0, xs.min() - PAD); x1 = min(plate.shape[1], xs.max() + PAD)
     crop = plate[y0:y1, x0:x1].copy()
     sub = mask[y0:y1, x0:x1]
-    import cv2
     edge = cv2.dilate(sub.astype(np.uint8), np.ones((5, 5), np.uint8)) > sub
     crop[edge] = (0, 255, 255)
     im = Image.fromarray(crop)
@@ -66,10 +67,10 @@ async def rate(client, im):
                 r = await client.aio.models.generate_content(
                     model=RATER_MODEL, contents=[im, PROMPT])
                 t = (r.text or '').strip().upper()
-                if 'OVERHEAD' in t:
-                    return 'overhead'
-                if 'GROUNDED' in t:
-                    return 'grounded'
+                if OVERHEAD.upper() in t:
+                    return OVERHEAD
+                if GROUNDED.upper() in t:
+                    return GROUNDED
             except (genai_errors.APIError, ValueError, OSError):
                 await asyncio.sleep(5)
         return None
@@ -91,7 +92,7 @@ async def main(room):
     for ri in range(1, N_RATERS + 1):
         res = await asyncio.gather(*[rate(client, crops[p]) for p in pids])
         raters[f'R{ri}'] = {str(p): v for p, v in zip(pids, res) if v}
-        n_over = sum(1 for v in res if v == 'overhead')
+        n_over = sum(1 for v in res if v == OVERHEAD)
         print(f'  R{ri}: {n_over} overhead / {len(pids)}')
 
     keys = [str(p) for p in pids]
@@ -102,8 +103,8 @@ async def main(room):
         return round(sum(raters[a][k] == raters[b][k] for k in common) / len(common), 2)
     agreement = {'12': agree('R1', 'R2'), '13': agree('R1', 'R3'), '23': agree('R2', 'R3')}
     unanimous = [k for k in keys
-                 if all(raters[f'R{i}'].get(k) == 'overhead' for i in range(1, N_RATERS + 1))]
-    gold = {k: ('overhead' if k in unanimous else 'grounded') for k in keys}
+                 if all(raters[f'R{i}'].get(k) == OVERHEAD for i in range(1, N_RATERS + 1))]
+    gold = {k: (OVERHEAD if k in unanimous else GROUNDED) for k in keys}
     out = {'room': room, 'raters': raters, 'gold': gold,
            'unanimous_overhead': unanimous, 'agreement': agreement}
     json.dump(out, open(os.path.join(

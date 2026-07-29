@@ -58,7 +58,7 @@ def build_scene():
         plate[y0:y1, x0:x1] = (60, 60, 140)
         plate[y0:y1:16, x0:x1] = (50, 50, 110)
         parts[y0:y1, x0:x1] = nid
-        truth[nid], base_of[nid] = 'ground', y1
+        truth[nid], base_of[nid] = v4.GROUND, y1
         nid += 1
     crate_sprites = []
     for x0, by, w, hf, ht in CRATES:
@@ -67,7 +67,7 @@ def build_scene():
         spr[by - hf - ht:by - hf, x0 + 8:x0 + w - 8] = True  # top face
         crate_sprites.append((spr, by, (30 + nid * 17 % 60, 90, 140 + nid * 23 % 80)))
         parts[spr] = nid
-        truth[nid], base_of[nid] = 'ysort', by
+        truth[nid], base_of[nid] = v4.YSORT, by
         nid += 1
     over_sprites = []
     for cx, cy, r in LANTERNS:
@@ -76,14 +76,14 @@ def build_scene():
         spr[cy - r - 60:cy - r, cx - 1:cx + 2] = True   # hanging string
         over_sprites.append((spr, (40, 190, 230)))
         parts[spr] = nid
-        truth[nid], base_of[nid] = 'overhead', cy + r
+        truth[nid], base_of[nid] = v4.OVERHEAD, cy + r
         nid += 1
     x0, y0, x1, y1 = AWNING
     spr = np.zeros((H, W), bool)
     spr[y0:y1, x0:x1] = True
     over_sprites.append((spr, (60, 60, 150)))
     parts[spr] = nid
-    truth[nid], base_of[nid] = 'overhead', y1
+    truth[nid], base_of[nid] = v4.OVERHEAD, y1
     nid += 1
     spr = np.zeros((H, W), bool)
     xs = np.arange(0, W)
@@ -92,7 +92,7 @@ def build_scene():
         spr[np.clip(ys + t, 0, H - 1), xs] = True
     over_sprites.append((spr, (30, 30, 30)))
     parts[spr] = nid
-    truth[nid], base_of[nid] = 'overhead', int(ys.max())
+    truth[nid], base_of[nid] = v4.OVERHEAD, int(ys.max())
     nid += 1
 
     ground = np.ones((H, W), bool)               # walkable floor incl. rugs
@@ -125,8 +125,7 @@ def draw_walker(img, x, feet_y, occluders_after):
 
 
 def render_video(path, waypoints, scene, n_frames=180, smoke=True):
-    (plate, static, parts, truth, base_of, ground, coll,
-     crate_sprites, over_sprites) = scene
+    plate, crate_sprites, over_sprites = scene[0], scene[7], scene[8]
     vw, vh = 1200, 675
     wr = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*'mp4v'), 24, (vw, vh))
     pts = np.array(waypoints, float)
@@ -139,14 +138,12 @@ def render_video(path, waypoints, scene, n_frames=180, smoke=True):
         # engine-faithful y-sort: crates + walker ordered by base anchor
         ents = [(by, 'crate', k) for k, (_, by, _) in enumerate(crate_sprites)]
         ents.append((wy, 'walker', -1))
-        walker_drawn = False
         for by, kind, k in sorted(ents):
             if kind == 'crate':
                 spr, _, col = crate_sprites[k]
                 frame[spr] = col
             else:
                 draw_walker(frame, wx, wy, [])
-                walker_drawn = True
         for spr, col in over_sprites:            # overhead ALWAYS on top
             frame[spr] = col
         if smoke:                                # smoke in FRONT of walker
@@ -206,12 +203,12 @@ def main():
     for pid, t in truth.items():
         p = pred.get(pid, 'missing')
         conf[(t, p)] = conf.get((t, p), 0) + 1
-        if p != t and not (t == 'ysort' and p in ('collision', 'collision-prior')):
+        if p != t and not (t == v4.YSORT and p in (v4.COLLISION, v4.COLLISION_PRIOR)):
             errors.append({'part': pid, 'truth': t, 'pred': p,
                            'votes': res['votes'][str(pid)]})
     print('\nconfusion (truth -> pred):')
     for (t, p), n in sorted(conf.items()):
-        flag = '' if t == p or (t == 'ysort' and p.startswith('collision')) else '  <-- WRONG'
+        flag = '' if t == p or (t == v4.YSORT and p.startswith(v4.COLLISION)) else '  <-- WRONG'
         print(f'  {t:9s} -> {p:15s} {n}{flag}')
     print(f'\nhard errors: {len(errors)}')
     for e in errors:
