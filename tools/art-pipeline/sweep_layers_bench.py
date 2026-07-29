@@ -54,7 +54,7 @@ def run_scene(seed, workdir, render=True):
     scene = fam.build_scene(spec)
     plate, static, parts, truth, base_of, ground, coll = scene[:7]
     layout = scene[9]
-    paths = fam.gen_paths(spec, layout)
+    paths = fam.gen_paths(spec, layout, parts=parts, base_of=base_of)
     vids = []
     for i, wp in enumerate(paths):
         p = os.path.join(workdir, f'walk{i}.mp4')
@@ -83,9 +83,13 @@ def run_scene(seed, workdir, render=True):
         est = res['footprint_top'].get(str(pid[0]))
         if est is not None:
             fp_errs.append(int(est - (by - layout['band_h'])))
+    unreach = {p: [s_ for s_, v in r.items() if v == 'UNREACHABLE']
+               for p, r in (spec['coverage_report'] or {}).items()}
+    unreach = {p: v for p, v in unreach.items() if v}
     return {'seed': seed, 'hard_errors': len(errors),
             'errors': errors[:8], 'per_class': per_class,
             'footprint_errs': fp_errs, 'n_parts': len(truth),
+            'planner_unreachable': unreach,
             'skipped_iters': len(res['iterations']) - len(good)}
 
 

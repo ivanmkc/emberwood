@@ -163,10 +163,74 @@ def build_scene(spec):
             crate_sprites, over_sprites, layout)
 
 
-def gen_paths(spec, layout):
-    """Derive probe paths FROM the sampled layout: behind + front + close-skim
-    per crate, deep sweeps under each suspended object, rug crossings."""
-    sh = spec['walker']['sh']
+PLAN_MIN_OVERLAP = 90        # px of walker-box/part overlap for a qualifying pass
+PLAN_DEAD_ZONE = 16          # feet must be this far from the base to count
+PLAN_MIN_RUN = 90            # qualifying positions must span this many x px
+
+
+def plan_coverage_paths(parts, base_y_map, walker_w, walker_h, bands):
+    """Coverage-guaranteeing planner (purely geometric — no truth input):
+    for EVERY part, find feet positions whose walker box overlaps the part by
+    >= PLAN_MIN_OVERLAP while the feet are clearly IN FRONT of the base, and
+    likewise clearly BEHIND, avoiding collision band rects. Returns sweep
+    segments + a per-part coverage report; parts with no qualifying position
+    on a side get a provable-unreachability certificate, not a silent gap."""
+    hgt, wid = parts.shape
+    boot = 8
+    kx, ky = walker_w, walker_h + boot
+    paths, report = [], {}
+    for pid in [int(p) for p in np.unique(parts) if p > 0]:
+        m = (parts == pid).astype(np.float32)
+        # overlap(x, y) = part px inside the walker box with FEET at (x, y):
+        # box spans rows y-ky..y, cols x-kx/2..x+kx/2 — a box filter with the
+        # anchor at the bottom-center of the kernel
+        ov = cv2.boxFilter(m, -1, (kx, ky), anchor=(kx // 2, ky - 1),
+                           normalize=False)
+        base = base_y_map[pid]
+        report[pid] = {}
+        for side, lo, hi in (('front', base + PLAN_DEAD_ZONE, hgt - 20),
+                             ('behind', 60 + ky, base - PLAN_DEAD_ZONE)):
+            best = None
+            for y in range(lo, hi, 4):
+                if not (0 <= y < hgt):
+                    continue
+                ok = ov[y] >= PLAN_MIN_OVERLAP
+                for x0b, y0b, x1b, y1b in bands:      # collision-band avoidance
+                    if y0b <= y <= y1b:
+                        ok[max(0, x0b - kx):x1b + kx] = False
+                xs = np.nonzero(ok)[0]
+                if not len(xs):
+                    continue
+                runs = np.split(xs, np.nonzero(np.diff(xs) > 8)[0] + 1)
+                run = max(runs, key=len)
+                if run[-1] - run[0] >= PLAN_MIN_RUN and (
+                        best is None or run[-1] - run[0] > best[2] - best[1]):
+                    best = (y, int(run[0]), int(run[-1]))
+            if best:
+                y, xa, xb = best
+                paths.append([(max(40, xa - 50), y), (min(wid - 40, xb + 50), y)])
+                report[pid][side] = {'y': y, 'x0': xa, 'x1': xb}
+            else:
+                report[pid][side] = 'UNREACHABLE'
+    # merge sweeps at similar depths into single wide passes — one video can
+    # cover several parts; without this a 15-part scene renders ~30 videos
+    merged = []
+    for seg in sorted(paths, key=lambda p: p[0][1]):
+        y = seg[0][1]
+        if merged and abs(merged[-1][0][1] - y) <= 14:
+            m = merged[-1]
+            x0 = min(m[0][0], seg[0][0]); x1 = max(m[1][0], seg[1][0])
+            merged[-1] = [(x0, m[0][1]), (x1, m[1][1])]
+        else:
+            merged.append(seg)
+    return merged, report
+
+
+def gen_paths(spec, layout, parts=None, base_of=None):
+    """Derive probe paths from the layout. When `parts`/`base_of` are given,
+    the coverage PLANNER guarantees every part a qualifying front and behind
+    pass where geometrically possible; heuristic crate skims and rug
+    crossings are kept as supplements."""
     paths = []
     behind, front, skim = [], [], []
     for x0, by, w, hf, ht in layout['crates']:
@@ -178,20 +242,18 @@ def gen_paths(spec, layout):
         paths.append([(80, behind[0][1])] + behind + [(W - 80, behind[-1][1])])
         paths.append([(80, front[0][1])] + front + [(W - 80, front[-1][1])])
         paths.append([(80, skim[0][1])] + skim + [(W - 80, skim[-1][1])])
-    for cx, cy, r in layout['lanterns']:
-        base = cy + r
-        d = base + int(sh * 0.75)
-        paths.append([(max(60, cx - 260), d), (min(W - 60, cx + 260), d)])
-    if layout['awning']:
-        ax0, ay0, ax1, ay1 = layout['awning']
-        d = ay1 + int(sh * 0.8)
-        paths.append([(ax0 + 30, d), (ax1 - 30, d)])
-    if layout['wire_base']:
-        d = layout['wire_base'] + int(sh * 0.85)
-        paths.append([(80, d), (W - 80, d)])
     for x0, y0, x1, y1 in layout['rugs']:
         my = (y0 + y1) // 2
         paths.append([(max(60, x0 - 80), my), (min(W - 60, x1 + 80), my)])
+    spec['coverage_report'] = None
+    if parts is not None:
+        bands = [(x0, by - layout['band_h'], x0 + w, by)
+                 for x0, by, w, hf, ht in layout['crates']]
+        wk = spec['walker']
+        planned, report = plan_coverage_paths(parts, base_of,
+                                              wk['sw'], wk['sh'], bands)
+        paths.extend(planned)
+        spec['coverage_report'] = {str(k): v for k, v in report.items()}
     return paths
 
 
