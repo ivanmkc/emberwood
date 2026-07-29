@@ -211,22 +211,39 @@ def plan_coverage_paths(parts, base_y_map, walker_w, walker_h, bands):
                     best = (y, int(run[0]), int(run[-1]))
             if best:
                 y, xa, xb = best
-                paths.append([(max(40, xa - 50), y), (min(wid - 40, xb + 50), y)])
+                paths.append({'y': y, 'x0': max(40, xa - 50),
+                              'x1': min(wid - 40, xb + 50),
+                              'pid': pid, 'side': side})
                 report[pid][side] = {'y': y, 'x0': xa, 'x1': xb}
             else:
                 report[pid][side] = 'UNREACHABLE'
     # merge sweeps at similar depths into single wide passes — one video can
-    # cover several parts; without this a 15-part scene renders ~30 videos
+    # cover several parts. A merge is only legal if the merged depth keeps
+    # EVERY member's dead-zone clearance to its own part's base (an early
+    # version merged a lantern's base+16 sweep to base+4, zeroing its votes)
+    def clearance_ok(y, members):
+        for m_ in members:
+            b_ = base_y_map[m_['pid']]
+            if m_['side'] == 'front' and y < b_ + PLAN_DEAD_ZONE:
+                return False
+            if m_['side'] == 'behind' and y > b_ - PLAN_DEAD_ZONE:
+                return False
+        return True
     merged = []
-    for seg in sorted(paths, key=lambda p: p[0][1]):
-        y = seg[0][1]
-        if merged and abs(merged[-1][0][1] - y) <= 14:
-            m = merged[-1]
-            x0 = min(m[0][0], seg[0][0]); x1 = max(m[1][0], seg[1][0])
-            merged[-1] = [(x0, m[0][1]), (x1, m[1][1])]
-        else:
-            merged.append(seg)
-    return merged, report
+    for seg in sorted(paths, key=lambda p: p['y']):
+        if merged:
+            grp = merged[-1]
+            cand_members = grp['members'] + [seg]
+            cand_y = int(round(np.mean([m_['y'] for m_ in cand_members])))
+            if abs(grp['y'] - seg['y']) <= 14 and clearance_ok(cand_y, cand_members):
+                grp['members'] = cand_members
+                grp['y'] = cand_y
+                grp['x0'] = min(grp['x0'], seg['x0'])
+                grp['x1'] = max(grp['x1'], seg['x1'])
+                continue
+        merged.append({'y': seg['y'], 'x0': seg['x0'], 'x1': seg['x1'],
+                       'members': [seg]})
+    return [[(g['x0'], g['y']), (g['x1'], g['y'])] for g in merged], report
 
 
 def gen_paths(spec, layout, parts=None, base_of=None):
