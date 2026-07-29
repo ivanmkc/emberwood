@@ -1,0 +1,24 @@
+{
+ "before": {
+  "TP": 11,
+  "FP": 4,
+  "FN": 36,
+  "TN": 63,
+  "P": 0.733,
+  "R": 0.234,
+  "F1": 0.355
+ },
+ "after": {
+  "TP": 17,
+  "FP": 5,
+  "FN": 97,
+  "TN": 320,
+  "P": 0.773,
+  "R": 0.149,
+  "F1": 0.25
+ },
+ "parts_split": 49,
+ "new_total_parts": 633,
+ "new_sub_parts": 395,
+ "disagreed_count": 52
+}

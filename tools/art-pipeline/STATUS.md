@@ -1928,6 +1928,29 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
 
+## Run 48 (2026-07-29) — Mixed mega-part splitting: night-bazaar
+- SPLIT: 49 of 238 parts with vspan > 225px re-subdivided via Felzenszwalb
+  (FELZ_MINSIZE=100, MIN_PART=750, ~4x finer than segment_parts.py).
+  238 parts -> 633 total (395 new sub-parts).
+- TRI-RATER: 355 ratable sub-parts rated by 3 independent VLM raters
+  (gemini-3.1-pro-preview). 82 unanimously overhead, 52 disagreed,
+  pairwise agreement 88-92%.
+- ESTIMATOR rerun: 5 stabilized bazaar videos, parts2 map.
+  Baseline (parts1): P=0.733 R=0.234 F1=0.355 (TP=11 FP=4 FN=36)
+  After (parts2): P=0.773 R=0.149 F1=0.250 (TP=17 FP=5 FN=97)
+- **NEGATIVE RESULT**: splitting converted 0 of the 17 gold-overhead
+  sub-parts from the 13 old FN tall parts to correct overhead predictions.
+  The segmentation worked (raters confirmed sub-parts ARE overhead), but
+  the estimator's collision/overhead distinction is the bottleneck — it
+  classifies all parts where walkers walk UNDER them as collision, not
+  overhead, regardless of part size. The fix must be on the classifier
+  side (distinguishing occ_front collision from occ_front overhead).
+- 2D dev bench: 0 hard errors (unchanged).
+- ARTIFACTS: split_mixed_parts.py, tri_rate_subparts.py,
+  _srcmasks_night-bazaar-parts2.npz, split-mixed-night-bazaar.json,
+  z-source-validation-night-bazaar-parts2.json, veo-layersv4-nb-parts2.json,
+  split-mixed-night-bazaar-score.json.
+
 ## Run 47 (2026-07-29) — 3D bench: calibrated height detector (dd9b339)
 - ESTIMATOR CHANGE (team-lead, dd9b339): perspective height detector
   recalibrated — upper-envelope fit (per-20px-bin maxima) with physical gates
