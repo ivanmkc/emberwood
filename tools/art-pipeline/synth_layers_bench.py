@@ -205,6 +205,24 @@ def main():
     conf, errors = layers_harness.score_vs_truth(pred, truth)
     for e in errors:
         e['votes'] = res['votes'][str(e['part'])]
+    # footprint-band accuracy (tower case): crates block only a 26px base
+    # band; footprint_top estimates must sit at/above the true band top
+    fp = res['footprint_top']
+    print('\nfootprint bands (crates: true band top = baseY-26):')
+    for x0, by, w, hf, ht in CRATES:
+        pid = [p for p, t in truth.items() if t == v4.YSORT and base_of[p] == by
+               and abs(np.nonzero(parts == p)[1].min() - x0) < 12]
+        if not pid:
+            continue
+        p = pid[0]
+        est = fp.get(str(p))
+        true_top = by - 26
+        if est is None:
+            print(f'  part {p}: no behind-evidence (unvisited) — no estimate')
+        else:
+            err = est - true_top
+            ok = 'OK' if -4 <= err <= 26 else 'BAD (would block walkable rows)' if err < -4 else 'loose'
+            print(f'  part {p}: est top {est} vs true {true_top} (err {err:+d}px) {ok}')
     print('\nconfusion (truth -> pred):')
     for (t, p), n in sorted(conf.items()):
         flag = '' if t == p or (t == v4.YSORT and p.startswith(v4.COLLISION)) else '  <-- WRONG'

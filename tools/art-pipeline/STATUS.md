@@ -1849,3 +1849,26 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   facade signs the walker can only overlap at doorways — geometry-limited
   evidence, consistent with tri-rater-ships / veo-corroborates. FPs 87/107
   are the familiar mixed mega-part class (task #123).
+
+## Run 42 (2026-07-29) — tower/footprint model + feet path traces (Ivan)
+- Ivan's tower case: a statue/tower occludes the walker passing BEHIND it but
+  collides only at its BASE band. Current pass-through logic would wrongly
+  vote the whole tower non-collider. Solution implemented: per-part FOOTPRINT
+  BAND estimation — every occluded-behind observation at feet row Y proves Y
+  walkable behind the part, so the blocking base starts below the deepest
+  such row: footprint_top = max(feet_y behind)+1 .. base_y. Emitted per part
+  in the result json. This evidence fills exactly the magenta pass's blind
+  spot (ground occluded behind the object is invisible to repainting).
+- Feet path traces (Ivan): estimator now links per-walker feet tracks
+  (greedy nearest-neighbor, 80px gate) and draws them on every iteration
+  estimate map (colored polylines, start ring / white end ring); track
+  points stored in the json.
+- 2D bench footprint scoring vs crate truth (26px bands): estimates are
+  conservative by 59-87px — SAFE direction (over-block, never under-block)
+  but too loose. Root-cause suspicion: at truncation time expected height is
+  evaluated at the VISIBLE bottom, not the reconstructed feet (interacts
+  with the depth-aware h(y)); plus probe paths never skim close behind the
+  bases. OPEN: fix h-at-reconstructed-feet + close-skim paths + 3D tower.
+- Map paint fix: class colors now painted over the full part mask (overhead
+  parts inside the walkable ground mask were rendering untinted).
+- Classification regression: 0 hard errors throughout.

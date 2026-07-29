@@ -76,6 +76,9 @@ def classify(v, blocks_pid, passes_through):
 
 DBG_PAD = 130                # crop margin around the walker in debug strips
 DBG_CASES = ('occ-front', 'occ-behind')
+TRACK_LINK_R = 80            # video px: feet within this radius join a track
+TRACE_COLORS = [(255, 230, 60), (80, 255, 120), (90, 200, 255), (255, 120, 60),
+                (230, 100, 255), (140, 255, 230)]
 
 
 def _write_debug_strips(out_prefix, it, case, obs, view_wh):
@@ -125,6 +128,10 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
     V = {p: {'occ_front': 0, 'occ_behind': 0, 'under_front': 0, 'under_behind': 0}
          for p in pids}
     feet_hits = {p: 0 for p in pids}
+    # footprint-band evidence (Ivan's tower case): a walker occluded from
+    # BEHIND a part at feet row Y proves row Y is walkable behind it — the
+    # blocking base band can only start BELOW the deepest such observation
+    feet_behind_max = {p: -1 for p in pids}
     records = []
     for it, mp4 in enumerate(video_paths, 1):
         cap = cv2.VideoCapture(mp4)
@@ -211,6 +218,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
 
         # pass 2: feet-conditioned votes with truncation-aware occlusion
         dbg_best = {c: {'score': 0} for c in DBG_CASES}
+        feet_obs = []   # (frame_idx, fx_video, feety_video, fpx_plate, fpy_plate)
         for fi in range(0, len(frames), 4):
             groups, keyed_all = walker_groups(frames[fi])
             static = np.abs(frames[fi].astype(np.int16) - bg).max(axis=2) < STATIC_T
@@ -254,9 +262,15 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                     np.float32([[[fx, float(feet_y)]]]), H).reshape(2)
                 fpy = int(np.clip(fp2[1] * sy, 0, parts.shape[0] - 1))
                 fpx = int(np.clip(fp2[0] * sx, 0, parts.shape[1] - 1))
+                feet_obs.append((fi, fx, float(feet_y), fpx, fpy))
                 pid_at_feet = int(parts[fpy, fpx])
                 if pid_at_feet > 0 and not ground[fpy, fpx]:
                     feet_hits[pid_at_feet] += 1
+                    # feet INSIDE the part's mask above its base = that row
+                    # is walkable behind/through it (tower-shaft case)
+                    if fpy < base_y[pid_at_feet] - SIDE_MARGIN:
+                        feet_behind_max[pid_at_feet] = max(
+                            feet_behind_max[pid_at_feet], fpy)
                 occ_px_by_side = {FRONT: 0, BEHIND: 0}
                 for kind, m in (('under', comp), ('occ', occ)):
                     yy, xx = np.nonzero(m)
@@ -277,6 +291,10 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                         V[pid][f'{kind}_{side}'] += int(ct)
                         if kind == 'occ':
                             occ_px_by_side[side] += int(ct)
+                            if side == BEHIND:
+                                # occluded from behind at feet row fpy: the
+                                # blocking base band starts below this row
+                                feet_behind_max[pid] = max(feet_behind_max[pid], fpy)
                 # track the strongest observation per debug case AT VOTE TIME
                 for case, side in zip(DBG_CASES, (FRONT, BEHIND)):
                     if occ_px_by_side[side] > dbg_best[case]['score']:
@@ -300,21 +318,56 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         counts = {}
         for l in layers.values():
             counts[l] = counts.get(l, 0) + 1
+        # link feet observations into per-walker tracks (Ivan: trace the
+        # feet of each character on the board maps)
+        tracks = []          # each: list of (frame, fpx_plate, fpy_plate)
+        open_tracks = []     # (last_frame, last_fx_video, last_fy_video, points)
+        for fi_, fx_, fy_, fpx_, fpy_ in feet_obs:
+            best_t, best_d = None, TRACK_LINK_R
+            for t in open_tracks:
+                if fi_ - t[0] > 16:
+                    continue
+                d = ((fx_ - t[1]) ** 2 + (fy_ - t[2]) ** 2) ** 0.5
+                if d < best_d:
+                    best_t, best_d = t, d
+            if best_t is None:
+                best_t = [fi_, fx_, fy_, []]
+                open_tracks.append(best_t)
+            best_t[0], best_t[1], best_t[2] = fi_, fx_, fy_
+            best_t[3].append((fi_, fpx_, fpy_))
+        tracks = [t[3] for t in open_tracks if len(t[3]) >= 4]
+
         b = plate_bgr[:, :, ::-1].astype(np.float32) * 0.30
         b[ground] = b[ground] * 0.55 + np.array((255, 80, 255), np.float32) * 0.225
         for pid in pids:
-            m = (parts == pid) & ~ground
+            m = parts == pid   # paint the full part: class color wins over ground tint
             b[m] = b[m] * 0.35 + np.array(COL_MAP[layers[pid]], np.float32) * 0.65
-        img = Image.fromarray(b.clip(0, 255).astype(np.uint8))
+        arr = b.clip(0, 255).astype(np.uint8)
+        for ti, tr in enumerate(tracks):
+            col = TRACE_COLORS[ti % len(TRACE_COLORS)]
+            pts = np.array([(p[1], p[2]) for p in tr], np.int32).reshape(-1, 1, 2)
+            cv2.polylines(arr, [pts], False, col, 3)
+            for _, px_, py_ in tr:
+                cv2.circle(arr, (px_, py_), 4, col, -1)
+            cv2.circle(arr, (tr[0][1], tr[0][2]), 9, col, 2)          # start ring
+            cv2.circle(arr, (tr[-1][1], tr[-1][2]), 9, (255, 255, 255), 2)  # end
+        img = Image.fromarray(arr)
         img.thumbnail((1400, 1400))
         img.save(f'{out_prefix}-iter{it}.jpg', quality=86)
         records.append({'iteration': it, 'video': os.path.basename(mp4),
                         'counts': counts, 'changes': changes[:14], 'debug': dbg_meta,
+                        'tracks': [[(int(f), int(x), int(y)) for f, x, y in tr]
+                                   for tr in tracks],
                         'layers': {str(k): v for k, v in layers.items()}})
-        print(f'iter {it}: {counts}, {len(changes)} changes')
+        print(f'iter {it}: {counts}, {len(changes)} changes, {len(tracks)} feet tracks')
 
+    # footprint-band estimate (tower case): the blocking base can only start
+    # BELOW the deepest feet row observed behind/through each part
+    footprint_top = {str(p): (feet_behind_max[p] + 1 if feet_behind_max[p] >= 0 else None)
+                     for p in pids}
     result = {'votes': {str(p): V[p] for p in pids},
               'base_y': {str(p): base_y[p] for p in pids},
+              'footprint_top': footprint_top,
               'iterations': records}
     json.dump(result, open(f'{out_prefix}.json', 'w'), indent=1)
     return result
