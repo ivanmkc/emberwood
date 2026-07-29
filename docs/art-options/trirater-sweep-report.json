@@ -153,23 +153,53 @@
    },
    "alpha_px": 51297,
    "status": "FLAGGED"
+  },
+  "repair-bay": {
+   "parts_rated": 124,
+   "unanimous_overhead": 13,
+   "agreement": {
+    "12": 0.95,
+    "13": 0.98,
+    "23": 0.96
+   },
+   "alpha_px": 26774,
+   "status": "shipped"
+  },
+  "repair-office": {
+   "parts_rated": 181,
+   "unanimous_overhead": 0,
+   "agreement": {
+    "12": 0.98,
+    "13": 0.97,
+    "23": 0.97
+   },
+   "alpha_px": 0,
+   "status": "shipped"
+  },
+  "residential": {
+   "parts_rated": 173,
+   "unanimous_overhead": 22,
+   "agreement": {
+    "12": 0.88,
+    "13": 0.91,
+    "23": 0.91
+   },
+   "alpha_px": 74743,
+   "status": "shipped"
   }
  },
  "flagged": [
   "pump-station"
  ],
  "remaining": [
-  "repair-bay",
-  "repair-office",
-  "residential",
   "rooftops",
   "salvage-shed",
   "transit",
   "transit-office",
   "underworks"
  ],
- "total_shipped": 13,
- "total_rooms_processed": 14,
+ "total_shipped": 16,
+ "total_rooms_processed": 17,
  "previously_shipped": [
   "anchorroom",
   "night-bazaar",
