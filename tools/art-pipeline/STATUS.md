@@ -2204,3 +2204,12 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
     estimator (synthetic: 1.00/1.00 with 0-unsafe footprints), running
     per-room via room-runner.
   The two arms + per-part unreliable flags are the complete tool.
+
+## Run 51 (2026-07-29) — HOLDOUT4: the planner stack generalizes
+- Fresh held-out seeds 160-171 vs current code (planner + clearance-aware
+  merging + hardening): part error rate 6.7% (batch progression 11.2% ->
+  8.2% -> 6.7%), 7/11 scenes fully clean, ysort 1.00, overhead 0.833,
+  ground 0.909 (single missed rug in seed162 — path gap), footprint 38/38
+  conservative / 0 unsafe. 1 scene failed registration (known ORB limit on
+  low-contrast floors). Remaining errors: 4 overhead->ysort/prior boundary
+  cases + 1 rug, no unreachability certificates involved.
