@@ -52,6 +52,46 @@
     "part195: collision -> ground",
     "part207: collision -> ground"
    ]
+  },
+  {
+   "iteration": 4,
+   "video": "mwalk3_stab.mp4",
+   "counts": {
+    "collision": 131,
+    "collision-prior": 18,
+    "ground": 87,
+    "conflict": 1,
+    "overhead": 1
+   },
+   "changes": [
+    "part45: collision -> ground",
+    "part68: ground -> conflict",
+    "part87: collision -> overhead",
+    "part123: collision -> ground",
+    "part133: collision -> ground",
+    "part135: collision -> ground",
+    "part157: collision -> ground"
+   ]
+  },
+  {
+   "iteration": 5,
+   "video": "mwalk4_stab.mp4",
+   "counts": {
+    "collision": 124,
+    "collision-prior": 18,
+    "ground": 94,
+    "conflict": 1,
+    "overhead": 1
+   },
+   "changes": [
+    "part130: collision -> ground",
+    "part131: collision -> ground",
+    "part132: collision -> ground",
+    "part201: collision -> ground",
+    "part202: collision -> ground",
+    "part203: collision -> ground",
+    "part214: collision -> ground"
+   ]
   }
  ]
 }

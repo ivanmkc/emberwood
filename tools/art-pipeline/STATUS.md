@@ -1682,3 +1682,11 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   actually passed behind anything (Veo kept them in front despite prompt) —
   path problem, not algorithm problem. mwalk3/4 generating now with
   occlusion-forcing paths ("counter hides the lower half of their body").
+- Run 37 addendum: mwalk3/4 (occlusion-forcing paths) generated + processed.
+  Final 5-video estimate: collision 124, collision-prior 18, ground 94,
+  overhead 1 (part87 — walker passed behind the mid-aisle lanterns, mwalk3
+  frame 188), conflict 1. Occlusion-path prompts re-induce some camera pan
+  (stabilizer black bars in mwalk3/4) but only keyed walker pixels vote, so
+  artifacts are harmless. Takeaway: Veo resists pass-behind paths — occlusion
+  evidence is expensive per video; tri-rater gold stays the production
+  overhead source, veo layer votes are corroborating evidence.
