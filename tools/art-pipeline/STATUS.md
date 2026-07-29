@@ -2213,3 +2213,14 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   conservative / 0 unsafe. 1 scene failed registration (known ORB limit on
   low-contrast floors). Remaining errors: 4 overhead->ysort/prior boundary
   cases + 1 rug, no unreachability certificates involved.
+
+## Run 52 (2026-07-29) — ALL-SCENES SWEEP LIVE
+- room-runner: 15/15 probed rooms through the harness, 0 failures (every
+  room registered; iterations skipped only where individual videos failed
+  gates). Per-room estimates + auto debug strips + feet traces in
+  docs/art-options/rooms-layers/.
+- New board emberwood/layers-sweep: per-room stepper (probe GIF + estimate
+  map + counts + reliability) over all 15 rooms, methodology header, sweep
+  table. Tri-rater game-wide overhead sweep running (batch 1: barge-cabin,
+  canal-docks, control-room, gate-wall shipped; 7 rooms total have
+  production overhead.png so far).
