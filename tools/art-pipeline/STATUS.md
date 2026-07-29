@@ -2250,3 +2250,15 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - 18h window deliverables complete: game-wide two-arm layer sweep live on
   emberwood/layers-sweep; 23/25 rooms with production overheads; estimator
   hardened + held-out validated (6.7%); all boards current.
+
+## Run 55 (2026-07-29 ~21:45 UTC) — ALL-SCENES SWEEP TRULY COMPLETE (25/25)
+- Fleet round 2: 36 videos for the 10 previously-unprobed interiors + cov
+  top-ups for rooftops/power-plant (84 probe videos total game-wide;
+  magenta 35/36 excellent; drift recovered by stabilization as usual).
+- room-runner round 2: ALL 25 rooms now have video-arm layer estimates,
+  zero rooms failed. Top-ups: rooftops unvisited 105->99, power-plant
+  80->73 — diminishing returns confirm remaining gray = walk-coverage
+  geometry, not defects.
+- layers-sweep board FINAL: 25 room pages, both arms, per-room counts
+  table, flagged rooms marked, in-game verification noted. This closes
+  Ivan's "apply the tool to all scenes" directive end-to-end.
