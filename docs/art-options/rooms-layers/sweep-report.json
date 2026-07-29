@@ -234,5 +234,53 @@
     "n_unreliable_parts": 30,
     "n_total_parts": 102,
     "notes": "30 collision-prior (unvisited) parts"
+  },
+  "barge-cabin": {
+    "iterations_ok": 2,
+    "iterations_skipped": 1,
+    "final_counts": {
+      "collision": 79,
+      "ysort": 15,
+      "collision-prior": 65,
+      "overhead": 21,
+      "ground": 6
+    },
+    "n_unreliable_parts": 65,
+    "n_total_parts": 186,
+    "notes": "1 skipped iterations: ['no walker found']; 65 collision-prior (unvisited) parts",
+    "skipped_details": [
+      {
+        "iter": 3,
+        "reason": "no walker found"
+      }
+    ]
+  },
+  "control-room": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 79,
+      "overhead": 10,
+      "collision-prior": 23,
+      "ysort": 15,
+      "ground": 10
+    },
+    "n_unreliable_parts": 23,
+    "n_total_parts": 137,
+    "notes": "23 collision-prior (unvisited) parts"
+  },
+  "grow-lab-office": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 163,
+      "ysort": 29,
+      "overhead": 3,
+      "collision-prior": 35,
+      "ground": 8
+    },
+    "n_unreliable_parts": 35,
+    "n_total_parts": 238,
+    "notes": "35 collision-prior (unvisited) parts"
   }
 }
