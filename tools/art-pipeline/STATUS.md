@@ -1927,3 +1927,31 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   reporting, footprint quantiles with over/under-block counts, sensitivity
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
+
+## Run 44 (2026-07-29) — 3D bench: tower case + footprint scoring + 21 parts
+- TOWER CASE (Ivan's directive): tall statue added to the 3D scene at (8,-4).
+  Narrow 0.5x3.5x0.5 shaft on a wider 1.4x0.5x1.4 base plinth. YSORT truth
+  for rendering (occludes the walker from behind), but COLLISION exists ONLY
+  at the base band. Collision mode renders the shaft invisible, plinth black.
+  Probe paths: deep-behind (z=-6), close skim (z=-5.0 with lateral sweep),
+  front pass (z=-2.5) for under_front on the shaft above the base.
+- FOOTPRINT SCORING: synth3d_bench.py now scores footprint_top estimates
+  against true collision band tops for all ysort parts. Truth = screen-space
+  projection of the collision band top (plinth top for the tower, full object
+  top for regular ysort parts). Reports per-part px error:
+    - 7 scored, 2 OK (err <=4px), 2 conservative (safe over-block), 3 unsafe
+    - Tower (pid 12): est 306 vs true 299 (err +7px) — 7px under-estimate
+    - Kiosk (pid 7): err +41px, brick GLB (pid 21): err +23px — same
+      observability-limit root cause as the 2D bench (objects taller than the
+      walker fully hide it from close behind)
+    - Median error +4px; no false-safe (no unsafe > 50px)
+- SCENE now 21 parts (was 20): 3 ground, 11 ysort (incl. tower), 7 overhead.
+  13 probe paths (was 9). Path 9 added at z=-1.5 under cable 1 to reinforce
+  occ_front for the smallest lantern (pid 15 was borderline under the
+  expert-panel's displacement-weighted voting).
+- **3D bench: 0 hard errors (21/21 correct)**:
+    ground->ground: 3 | ysort->ysort: 11 | overhead->overhead: 7
+- 2D bench regression: 1 hard error (pid 9 awning, overhead→ysort, occ_behind
+  1455 vs occ_front 452). This is NOT from the synth3d changes — it appeared
+  after the expert-panel commit (a6f1c6e) and is reproducible across runs.
+  Flagged to team-lead for investigation.

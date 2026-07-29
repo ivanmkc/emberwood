@@ -1,0 +1,51 @@
+[
+ {
+  "pid": 5,
+  "est_top": 335,
+  "true_top": 341,
+  "err_px": -6,
+  "label": "CONSERVATIVE (safe over-block)"
+ },
+ {
+  "pid": 7,
+  "est_top": 386,
+  "true_top": 345,
+  "err_px": 41,
+  "label": "UNSAFE (under-block)"
+ },
+ {
+  "pid": 8,
+  "est_top": 283,
+  "true_top": 279,
+  "err_px": 4,
+  "label": "OK"
+ },
+ {
+  "pid": 9,
+  "est_top": 470,
+  "true_top": 469,
+  "err_px": 1,
+  "label": "OK"
+ },
+ {
+  "pid": 12,
+  "est_top": 306,
+  "true_top": 299,
+  "err_px": 7,
+  "label": "UNSAFE (under-block)"
+ },
+ {
+  "pid": 20,
+  "est_top": 315,
+  "true_top": 327,
+  "err_px": -12,
+  "label": "CONSERVATIVE (safe over-block)"
+ },
+ {
+  "pid": 21,
+  "est_top": 544,
+  "true_top": 521,
+  "err_px": 23,
+  "label": "UNSAFE (under-block)"
+ }
+]

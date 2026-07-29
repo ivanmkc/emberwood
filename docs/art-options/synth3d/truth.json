@@ -25,118 +25,136 @@
     "baseWorldZ": -3,
     "baseScreenY": 302,
     "baseScreenX": 466,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 248
   },
   "5": {
     "truth": "ysort",
     "baseWorldZ": 1.8,
     "baseScreenY": 401,
     "baseScreenX": 364,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 341
   },
   "6": {
     "truth": "ysort",
     "baseWorldZ": -2.5,
     "baseScreenY": 328,
     "baseScreenX": 670,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 300
   },
   "7": {
     "truth": "ysort",
     "baseWorldZ": 0.6,
     "baseScreenY": 396,
     "baseScreenX": 561,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 345
   },
   "8": {
     "truth": "ysort",
     "baseWorldZ": -1.8,
     "baseScreenY": 341,
     "baseScreenX": 779,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 279
   },
   "9": {
     "truth": "ysort",
     "baseWorldZ": 4.25,
     "baseScreenY": 487,
     "baseScreenX": 734,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 469
   },
   "10": {
     "truth": "ysort",
     "baseWorldZ": 2.8,
     "baseScreenY": 425,
     "baseScreenX": 845,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 378
   },
   "11": {
     "truth": "ysort",
     "baseWorldZ": 5.7,
     "baseScreenY": 510,
     "baseScreenX": 462,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 457
   },
   "12": {
-    "truth": "overhead",
-    "baseWorldZ": -3,
-    "baseScreenY": 378,
-    "baseScreenX": 600,
-    "hasFootprint": false
+    "truth": "ysort",
+    "baseWorldZ": -3.3,
+    "baseScreenY": 314,
+    "baseScreenX": 873,
+    "hasFootprint": true,
+    "trueBandTopScreenY": 299
   },
   "13": {
     "truth": "overhead",
-    "baseWorldZ": 3,
+    "baseWorldZ": -3,
     "baseScreenY": 378,
     "baseScreenX": 600,
     "hasFootprint": false
   },
   "14": {
     "truth": "overhead",
-    "baseWorldZ": -3,
-    "baseScreenY": 328,
-    "baseScreenX": 530,
+    "baseWorldZ": 3,
+    "baseScreenY": 378,
+    "baseScreenX": 600,
     "hasFootprint": false
   },
   "15": {
     "truth": "overhead",
     "baseWorldZ": -3,
     "baseScreenY": 328,
-    "baseScreenX": 740,
+    "baseScreenX": 530,
     "hasFootprint": false
   },
   "16": {
+    "truth": "overhead",
+    "baseWorldZ": -3,
+    "baseScreenY": 328,
+    "baseScreenX": 740,
+    "hasFootprint": false
+  },
+  "17": {
     "truth": "overhead",
     "baseWorldZ": 3,
     "baseScreenY": 465,
     "baseScreenX": 470,
     "hasFootprint": false
   },
-  "17": {
+  "18": {
     "truth": "overhead",
     "baseWorldZ": -3,
     "baseScreenY": 320,
     "baseScreenX": 634,
     "hasFootprint": false
   },
-  "18": {
+  "19": {
     "truth": "overhead",
     "baseWorldZ": 3,
     "baseScreenY": 453,
     "baseScreenX": 813,
     "hasFootprint": false
   },
-  "19": {
+  "20": {
     "truth": "ysort",
     "baseWorldZ": -1.2465026855468748,
     "baseScreenY": 352,
     "baseScreenX": 345,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 327
   },
-  "20": {
+  "21": {
     "truth": "ysort",
     "baseWorldZ": 6.6000001430511475,
     "baseScreenY": 565,
     "baseScreenX": 600,
-    "hasFootprint": true
+    "hasFootprint": true,
+    "trueBandTopScreenY": 521
   }
 }

@@ -93,6 +93,20 @@ PATHS = [
     # to escape the +/-10px dead zone around the house's base_y)
     [(-7, -2.8), (-7, -2.3), (-7, -2.8), (-7, -2.3),
      (-7, -2.8), (-7, -2.3), (-7, -0.5)],
+    # Path 9: under cable 1 at z=-1.5, reinforcing occ_front for smaller
+    # hanging objects (lanterns at x=-2, x=4; sign at x=1)
+    [(-5, -1.5), (-2, -1.5), (1, -1.5), (4, -1.5), (7, -1.5)],
+    # Path 10: tower at (8,-4) — walker passes behind at several depths
+    # tower base front z = -3.3; behind requires z < -4.7
+    # deep behind (z=-6): clear occlusion evidence
+    [(8, -6), (8, -2.5)],
+    # Path 11: tower close skim — walker just behind the base (z=-5.0),
+    # feet project just below the collision band top, tightening the
+    # footprint bound
+    [(6, -5.0), (8, -5.0), (10, -5.0), (8, -5.0), (6, -5.0)],
+    # Path 12: tower front pass — walker walks in front (z=-2.5) to confirm
+    # under_front evidence for the tall shaft above the base
+    [(6, -2.5), (8, -2.5), (10, -2.5)],
 ]
 
 
@@ -417,6 +431,60 @@ def report_overhead_reachability(out_dir):
                   f'feet screen y={ex["feetScreenY"]}')
 
 
+def score_footprints(truth, out_dir):
+    """Score footprint_top estimates vs true collision band tops.
+
+    For each ysort part with a trueBandTopScreenY in the truth metadata,
+    compare the estimator's footprint_top estimate against the true band top
+    row. Negative error (estimate above true) = conservative over-block (safe).
+    Positive error beyond +4px = under-block (unsafe: walkable rows marked
+    into the collision band).
+    """
+    est_path = os.path.join(out_dir, 'synth3d-layers.json')
+    if not os.path.exists(est_path):
+        print('No estimator result json — skipping footprint scoring')
+        return []
+    with open(est_path) as f:
+        est = json.load(f)
+    fp = est.get('footprint_top', {})
+    errs = []
+    print('\n--- Footprint band scoring (ysort parts) ---')
+    for pid_str, info in sorted(truth.items(), key=lambda x: int(x[0])):
+        if info['truth'] != 'ysort':
+            continue
+        true_top = info.get('trueBandTopScreenY')
+        if true_top is None:
+            continue
+        est_top = fp.get(pid_str)
+        if est_top is None:
+            print(f'  pid {pid_str}: no behind-evidence (unvisited) — no estimate')
+            continue
+        err = est_top - true_top
+        if err < -4:
+            label = 'CONSERVATIVE (safe over-block)'
+        elif err > 4:
+            label = 'UNSAFE (under-block)'
+        else:
+            label = 'OK'
+        errs.append({'pid': int(pid_str), 'est_top': est_top,
+                     'true_top': true_top, 'err_px': err, 'label': label})
+        tag = ''
+        print(f'  pid {pid_str}{tag}: est {est_top} vs true {true_top} '
+              f'(err {err:+d}px) {label}')
+    if errs:
+        unsafe = sum(1 for e in errs if e['label'].startswith('UNSAFE'))
+        conserv = sum(1 for e in errs if e['label'].startswith('CONSERVATIVE'))
+        ok = sum(1 for e in errs if e['label'] == 'OK')
+        med_err = int(np.median([e['err_px'] for e in errs]))
+        print(f'  Summary: {len(errs)} scored, {ok} OK, {conserv} conservative, '
+              f'{unsafe} unsafe, median err {med_err:+d}px')
+    fp_path = os.path.join(out_dir, 'footprint-score.json')
+    with open(fp_path, 'w') as f:
+        json.dump(errs, f, indent=1)
+    print(f'  Wrote {fp_path}')
+    return errs
+
+
 def main():
     """Render the 3D scene, capture walks, and run the estimator via layers_harness."""
     os.makedirs(OUT, exist_ok=True)
@@ -458,6 +526,7 @@ def main():
         raise RuntimeError(f'layers_harness exited {harness_result.returncode}')
 
     report_overhead_reachability(OUT)
+    fp_errs = score_footprints(truth, OUT)
 
     score_path = os.path.join(OUT, 'synth3d-layers-score.json')
     if os.path.exists(score_path):
@@ -465,6 +534,7 @@ def main():
             score_data = json.load(f)
         n_errors = len(score_data.get('errors', []))
         print(f'\nHarness score: {n_errors} hard errors')
+        score_data['footprint_errs'] = fp_errs
         return score_data
 
     print('WARNING: no score file produced by layers_harness')

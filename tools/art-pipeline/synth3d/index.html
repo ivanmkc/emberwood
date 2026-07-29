@@ -232,6 +232,43 @@ const bench1 = makeBench(3, 4);
 const crate2 = makeBox(6, 2, 1.6, 1.4, 1.6, 0xAA8855);
 const barrel2 = makeCylinder(-3, 5, 0.7, 1.5, 0x775533);
 
+// ---- tower / statue (Ivan's tower case: YSORT, collision at BASE only) ----
+function makeTower(x, z) {
+  const group = new THREE.Group();
+  // wider base plinth: 1.4 x 0.5 x 1.4
+  const plinth = new THREE.Mesh(
+    new THREE.BoxGeometry(1.4, 0.5, 1.4),
+    new THREE.MeshLambertMaterial({ color: 0x667788 })
+  );
+  plinth.position.y = 0.25;
+  plinth.userData._towerBase = true;
+  group.add(plinth);
+  // narrow tall shaft: 0.5 x 3.5 x 0.5
+  const shaft = new THREE.Mesh(
+    new THREE.BoxGeometry(0.5, 3.5, 0.5),
+    new THREE.MeshLambertMaterial({ color: 0x889999 })
+  );
+  shaft.position.y = 0.5 + 3.5 / 2;  // sits on top of plinth
+  shaft.userData._towerShaft = true;
+  group.add(shaft);
+  // decorative cap
+  const cap = new THREE.Mesh(
+    new THREE.ConeGeometry(0.4, 0.6, 8),
+    new THREE.MeshLambertMaterial({ color: 0x556677 })
+  );
+  cap.position.y = 0.5 + 3.5 + 0.3;
+  group.add(cap);
+  group.position.set(x, 0, z);
+  scene.add(group);
+  // footprint band = base plinth only
+  const fp = { x0: x - 0.7, z0: z - 0.7, x1: x + 0.7, z1: z + 0.7 };
+  const pid = registerPart(group, 'ysort', z + 0.7, fp);
+  group.userData._towerPid = pid;
+  return group;
+}
+
+const tower1 = makeTower(8, -4);
+
 // ---- load CC0 GLB models as additional standing objects -------------------
 const gltfLoader = new GLTFLoader();
 const modelSlots = [
@@ -496,7 +533,10 @@ function setCollisionMode() {
 
   // standing objects rendered BLACK — their full screen footprint blocks
   // walking (matches the estimator's blocks threshold: >50% of non-ground
-  // pixels must be collision-blocked)
+  // pixels must be collision-blocked).
+  // EXCEPTION: tower parts — only the BASE PLINTH blocks walking, the tall
+  // shaft is walkable-behind (Ivan's tower case: the whole tower is YSORT
+  // for rendering but collision exists only at the base band)
   const blackMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
   for (const p of parts) {
     if (p.truth === 'ysort') {
@@ -506,7 +546,12 @@ function setCollisionMode() {
           if (!originalMaterials.has(child)) {
             originalMaterials.set(child, child.material);
           }
-          child.material = blackMat;
+          if (child.userData._towerShaft) {
+            // shaft is NOT collision — hide it so it doesn't render black
+            child.visible = false;
+          } else {
+            child.material = blackMat;
+          }
         }
       });
     } else {
@@ -526,12 +571,15 @@ function setNormalMode() {
   groundMesh.material = groundMat;
   for (const s of smokeSprites) s.mesh.visible = true;
 
-  // restore parts
+  // restore parts (including child visibility hidden by collision mode)
   for (const p of parts) {
     p.mesh.visible = true;
     p.mesh.traverse(child => {
-      if (child.isMesh && originalMaterials.has(child)) {
-        child.material = originalMaterials.get(child);
+      if (child.isMesh) {
+        child.visible = true;
+        if (originalMaterials.has(child)) {
+          child.material = originalMaterials.get(child);
+        }
       }
     });
   }
@@ -610,13 +658,30 @@ window.synth3d = {
       const screenPos = worldPos.clone().project(camera);
       const screenY = (1 - screenPos.y) / 2 * RENDER_H;
       const screenX = (1 + screenPos.x) / 2 * RENDER_W;
-      result[p.pid] = {
+      const info = {
         truth: p.truth,
         baseWorldZ: p.baseWorldZ,
         baseScreenY: Math.round(screenY),
         baseScreenX: Math.round(screenX),
         hasFootprint: !!p.footprintBand
       };
+      // for ysort parts: compute the true collision band top in screen space
+      // (footprint scoring — the estimator must discover this row)
+      if (p.truth === 'ysort') {
+        let bandTopWorldY;
+        if (p.mesh.userData && p.mesh.userData._towerPid) {
+          // tower: collision band = base plinth only (0.5 units tall)
+          bandTopWorldY = 0.5;
+        } else {
+          // regular standing objects: full silhouette is collision
+          const box = new THREE.Box3().setFromObject(p.mesh);
+          bandTopWorldY = box.max.y;
+        }
+        const bandTopWorld = new THREE.Vector3(worldPos.x, bandTopWorldY, worldPos.z);
+        const btProj = bandTopWorld.project(camera);
+        info.trueBandTopScreenY = Math.round((1 - btProj.y) / 2 * RENDER_H);
+      }
+      result[p.pid] = info;
     }
     return result;
   },
