@@ -1928,6 +1928,39 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
 
+## Run 49 (2026-07-29) — Evidence-driven part splitting: night-bazaar
+- APPROACH: replay the estimator's evidence-extraction loop, capture
+  per-part spatial evidence masks (occ_front, occ_behind, under_front,
+  under_behind in plate space), split parts where overhead and grounded
+  evidence are spatially separated (normed centroid separation >= 0.15).
+- EVIDENCE EXTRACTION: 8 registered videos, 637 walker observations.
+  58 parts had both overhead and grounded evidence; 26 qualified for
+  splitting (normed separation 0.15-0.68).
+- FINDING: the split candidates mostly target the WRONG parts. Of 26
+  candidates, only 3 are actual gold-overhead errors (pids 13, 97, 178).
+  The other 23 are correctly classified or unlabeled.
+- KEY BOTTLENECK: plate 2x resolution (sx=2.0) doubles med_w_plate,
+  raising min_evid to 213+ even for the smallest sub-parts. The 3 error
+  parts' occ_front evidence (37, 137, 0 px) is far below this threshold.
+  Splitting cannot push evidence above the opportunity-scaled gate.
+- ESTIMATOR rerun on parts3 (264 parts = 238 original + 26 split into 52):
+  Baseline (parts1): P=0.733 R=0.234 F1=0.355 (TP=11 FP=4 FN=36)
+  After (parts3): P=0.688 R=0.234 F1=0.349 (TP=11 FP=5 FN=36)
+- **NEGATIVE RESULT (WORSE THAN FELZENSZWALB)**: 0/3 error conversions,
+  plus 1 new false positive (pid121 upper sub incorrectly gained overhead)
+  and 1 regression (pid188 lost correct ground). The fundamental issue:
+  splitting DILUTES evidence — correctly-classified parts lose evidence
+  when split, falling below threshold. 24/36 gold-overhead errors have
+  zero evidence in all buckets (walkers never traverse), and 12/36 have
+  occ_front below threshold. Part granularity is NOT the bottleneck.
+- CONCLUSION: both colour-based (Run 48) and evidence-based splitting
+  are counterproductive. The real lever is evidence quantity — better
+  probe coverage (more/targeted walk videos) or classifier-side changes
+  (VLM prior, height-position heuristic).
+- ARTIFACTS: split_by_evidence.py, _srcmasks_night-bazaar-parts3.npz,
+  split-evidence-night-bazaar.json, veo-layersv4-nb-parts3.json (+5 iter
+  jpgs + dbg pngs), split-evidence-night-bazaar-score.json.
+
 ## Run 48 (2026-07-29) — Mixed mega-part splitting: night-bazaar
 - SPLIT: 49 of 238 parts with vspan > 225px re-subdivided via Felzenszwalb
   (FELZ_MINSIZE=100, MIN_PART=750, ~4x finer than segment_parts.py).

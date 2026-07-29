@@ -1,0 +1,38 @@
+{
+ "experiment": "evidence-driven-split",
+ "room": "night-bazaar",
+ "before": {
+  "n_parts": 238,
+  "TP": 11,
+  "FP": 4,
+  "FN": 36,
+  "TN": 63,
+  "P": 0.733,
+  "R": 0.234,
+  "F1": 0.355
+ },
+ "after": {
+  "n_parts": 264,
+  "splits": 26,
+  "separable_parts": 58,
+  "TP": 11,
+  "FP": 5,
+  "FN": 36,
+  "TN": 62,
+  "P": 0.688,
+  "R": 0.234,
+  "F1": 0.349
+ },
+ "target_errors_fixed": 0,
+ "regressions": [
+  "pid121: gold=grounded, was ground -> upper=overhead (false positive)",
+  "pid188: gold=grounded, was ground -> both subs collision-prior (lost correct classification)"
+ ],
+ "diagnosis": {
+  "error_coverage": "24/36 gold-overhead errors have zero evidence (walker never traverses)",
+  "insufficient_evidence": "12/36 have occ_front below opportunity-scaled min_evid",
+  "min_evid_bottleneck": "plate 2x resolution (sx=2.0) doubles med_w_plate, raising min_evid to 213+ even for small sub-parts",
+  "splitting_dilutes_evidence": "correctly-classified parts lose evidence when split, causing regressions"
+ },
+ "conclusion": "Evidence-driven splitting is counterproductive. The bottleneck is evidence quantity (coverage + proximity), not part granularity or evidence mixing."
+}
