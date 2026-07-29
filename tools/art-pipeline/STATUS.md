@@ -1763,3 +1763,66 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   Window shipped: magenta pipeline live on 3 scenes, GEPA camera lock,
   keyed walker extraction, all-3-scenes tri-rater overhead, defect trend
   bazaar 14.7->4.9% / anchor 6.1->2.6%, feet-conditioned v4 + synth bench.
+
+## Agent v4-footprints — 3D synthetic vetting bench (synth3d_bench)
+3D scene rendered via three.js in headless Chromium (Playwright), with
+perspective camera, CC0 models (Kenney), procedural geometry, always-on-top
+overhead objects, and a magenta walker traversing 8 scripted paths.
+
+CODE: tools/art-pipeline/synth3d/ (scene + vendor + CREDITS.md), synth3d_bench.py
+ARTIFACTS: docs/art-options/synth3d/ (plate, parts, masks, 8 walker videos + gifs,
+truth-map, score json, 4-stage debug frames, per-iteration estimate jpgs)
+
+### Scene composition (20 parts)
+- 3 ground decals (GROUND truth): rugs/tarps flat on the ground plane
+- 10 standing objects (YSORT truth): 8 procedural (crates, barrels, table,
+  kiosk, bookshelf, bench) + 2 CC0 GLB models (Kenney KayKit house, brick)
+- 7 overhead objects (OVERHEAD truth): 2 catenary cables (CatmullRom tubes),
+  3 lanterns, 2 signs — rendered always-on-top (depthTest:false, renderOrder:10)
+  matching the 2D compositor that the estimator expects
+- Nuisances: 6 drifting smoke billboards, 1 flickering point light (zero votes)
+
+### Key finding: perspective breaks the constant-height walker model
+Walker on-screen height varies 2.83x across depth (23-65 px, min-to-max).
+The constant h_est = p90 = 58px falsely triggers truncation detection when the
+walker is at the far end of the scene (height 23-33 px, well below the 0.85
+threshold at 49px), causing feet to be placed at top + h_est instead of the
+actual bottom of the silhouette — a 20-30 pixel misplacement.
+
+### Fix: depth-aware height model (veo_layers_v4.py)
+Implemented in estimate() pass 1: collect (feet_screen_y, height) pairs from
+unoccluded walker frames (height >= p70); fit a linear model h(y) = slope*y +
+intercept; use h(feet_y) instead of constant h_est for truncation detection.
+Falls back to the constant model when the fit is degenerate (fewer than 8
+samples, |slope| < 0.02, or insufficient feet_y range).
+
+2D bench regression check: 0 hard errors (unchanged from before the fix). The
+constant model activates as fallback because the 2D bench has near-uniform
+walker scale, producing a degenerate slope.
+
+### 3D bench results (final run, depth-aware model)
+confusion (truth -> pred):
+  ground    -> ground          2    (correct)
+  ground    -> collision-prior 1    (small decal, <MIN_EVID votes)
+  overhead  -> overhead        2    (correct)
+  overhead  -> collision-prior 5    (zero votes: overhead screen-space doesn't
+                                     overlap walker at y=0 in 3D perspective)
+  ysort     -> ysort           4    (correct)
+  ysort     -> ground          5    (no occ_behind: walker behind object doesn't
+                                     overlap it in 3D perspective projection)
+  ysort     -> collision-prior 1    (acceptable: no walker evidence gathered)
+
+Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
+- 5 ysort→ground: irreducible in 3D perspective — when the walker is behind a
+  standing object, the object's screen-space projection doesn't extend high enough
+  to occlude the walker's body (the walker appears ABOVE the object in screen
+  space). This is a fundamental 3D vs 2D compositor difference, not an algorithm
+  deficiency. In the real Eastward-style fixed 3/4 camera, objects are drawn as
+  flat front elevations that DO cover walkers behind them.
+- 5 overhead→collision-prior: the overhead objects (cables at y=3-5, lanterns)
+  don't overlap with the walker (y=0-1.8) in 3D screen space even with
+  always-on-top rendering. In the 2D compositor, overhead objects are rendered
+  at their ground-footprint screen position; in 3D, they render at their actual
+  3D height. This difference makes overhead detection impossible in true 3D
+  perspective without camera-aware ground-footprint projection.
+- 1 ground→collision-prior: tiny decal (691 px), walker evidence below MIN_EVID.

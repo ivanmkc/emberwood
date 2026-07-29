@@ -1,0 +1,471 @@
+{
+ "votes": {
+  "1": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 1054,
+   "under_behind": 12121
+  },
+  "2": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 1641
+  },
+  "3": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 94,
+   "under_behind": 0
+  },
+  "4": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 428,
+   "under_behind": 0
+  },
+  "5": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 1992,
+   "under_behind": 0
+  },
+  "6": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 397,
+   "under_behind": 0
+  },
+  "7": {
+   "occ_front": 0,
+   "occ_behind": 193,
+   "under_front": 1790,
+   "under_behind": 74
+  },
+  "8": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 1368,
+   "under_behind": 0
+  },
+  "9": {
+   "occ_front": 0,
+   "occ_behind": 748,
+   "under_front": 1129,
+   "under_behind": 65
+  },
+  "10": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 1514,
+   "under_behind": 480
+  },
+  "11": {
+   "occ_front": 0,
+   "occ_behind": 1154,
+   "under_front": 2753,
+   "under_behind": 0
+  },
+  "12": {
+   "occ_front": 192,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "13": {
+   "occ_front": 1686,
+   "occ_behind": 1918,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "14": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "15": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "16": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "17": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "18": {
+   "occ_front": 0,
+   "occ_behind": 0,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "19": {
+   "occ_front": 0,
+   "occ_behind": 100,
+   "under_front": 0,
+   "under_behind": 0
+  },
+  "20": {
+   "occ_front": 0,
+   "occ_behind": 5766,
+   "under_front": 3942,
+   "under_behind": 1700
+  }
+ },
+ "base_y": {
+  "1": 486,
+  "2": 377,
+  "3": 332,
+  "4": 314,
+  "5": 419,
+  "6": 318,
+  "7": 391,
+  "8": 340,
+  "9": 486,
+  "10": 445,
+  "11": 532,
+  "12": 223,
+  "13": 330,
+  "14": 265,
+  "15": 265,
+  "16": 374,
+  "17": 254,
+  "18": 367,
+  "19": 357,
+  "20": 562
+ },
+ "iterations": [
+  {
+   "iteration": 1,
+   "video": "walk0.mp4",
+   "counts": {
+    "collision-prior": 19,
+    "collision": 1
+   },
+   "changes": [],
+   "debug": {},
+   "layers": {
+    "1": "collision-prior",
+    "2": "collision-prior",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "collision-prior",
+    "6": "collision-prior",
+    "7": "collision-prior",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "collision",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "collision-prior"
+   }
+  },
+  {
+   "iteration": 2,
+   "video": "walk1.mp4",
+   "counts": {
+    "collision-prior": 19,
+    "collision": 1
+   },
+   "changes": [],
+   "debug": {},
+   "layers": {
+    "1": "collision-prior",
+    "2": "collision-prior",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "collision-prior",
+    "6": "collision-prior",
+    "7": "collision-prior",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "collision",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "collision-prior"
+   }
+  },
+  {
+   "iteration": 3,
+   "video": "walk2.mp4",
+   "counts": {
+    "collision-prior": 14,
+    "ground": 5,
+    "overhead": 1
+   },
+   "changes": [
+    "part2: collision-prior -> ground",
+    "part5: collision-prior -> ground",
+    "part6: collision-prior -> ground",
+    "part7: collision-prior -> ground",
+    "part8: collision-prior -> ground",
+    "part13: collision -> overhead"
+   ],
+   "debug": {
+    "occ-front": {
+     "frame": 116,
+     "occ_px": 171
+    }
+   },
+   "layers": {
+    "1": "collision-prior",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "ground",
+    "6": "ground",
+    "7": "ground",
+    "8": "ground",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "collision-prior"
+   }
+  },
+  {
+   "iteration": 4,
+   "video": "walk3.mp4",
+   "counts": {
+    "collision-prior": 14,
+    "ground": 5,
+    "overhead": 1
+   },
+   "changes": [],
+   "debug": {
+    "occ-behind": {
+     "frame": 24,
+     "occ_px": 291
+    }
+   },
+   "layers": {
+    "1": "collision-prior",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "ground",
+    "6": "ground",
+    "7": "ground",
+    "8": "ground",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior",
+    "12": "collision-prior",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "collision-prior"
+   }
+  },
+  {
+   "iteration": 5,
+   "video": "walk4.mp4",
+   "counts": {
+    "ground": 6,
+    "collision-prior": 12,
+    "ysort": 1,
+    "overhead": 1
+   },
+   "changes": [
+    "part1: collision-prior -> ground",
+    "part11: collision-prior -> ysort"
+   ],
+   "debug": {
+    "occ-behind": {
+     "frame": 72,
+     "occ_px": 331
+    }
+   },
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "ground",
+    "6": "ground",
+    "7": "ground",
+    "8": "ground",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "ysort",
+    "12": "collision-prior",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "collision-prior"
+   }
+  },
+  {
+   "iteration": 6,
+   "video": "walk5.mp4",
+   "counts": {
+    "ground": 7,
+    "collision-prior": 9,
+    "ysort": 3,
+    "overhead": 1
+   },
+   "changes": [
+    "part9: collision-prior -> ysort",
+    "part10: collision-prior -> ground",
+    "part20: collision-prior -> ysort"
+   ],
+   "debug": {
+    "occ-behind": {
+     "frame": 176,
+     "occ_px": 732
+    }
+   },
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "ground",
+    "6": "ground",
+    "7": "ground",
+    "8": "ground",
+    "9": "ysort",
+    "10": "ground",
+    "11": "ysort",
+    "12": "collision-prior",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "ysort"
+   }
+  },
+  {
+   "iteration": 7,
+   "video": "walk6.mp4",
+   "counts": {
+    "ground": 6,
+    "collision-prior": 8,
+    "ysort": 4,
+    "overhead": 2
+   },
+   "changes": [
+    "part7: ground -> ysort",
+    "part12: collision-prior -> overhead"
+   ],
+   "debug": {
+    "occ-front": {
+     "frame": 92,
+     "occ_px": 108
+    },
+    "occ-behind": {
+     "frame": 12,
+     "occ_px": 680
+    }
+   },
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "collision-prior",
+    "5": "ground",
+    "6": "ground",
+    "7": "ysort",
+    "8": "ground",
+    "9": "ysort",
+    "10": "ground",
+    "11": "ysort",
+    "12": "overhead",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "ysort"
+   }
+  },
+  {
+   "iteration": 8,
+   "video": "walk7.mp4",
+   "counts": {
+    "ground": 7,
+    "collision-prior": 7,
+    "ysort": 4,
+    "overhead": 2
+   },
+   "changes": [
+    "part4: collision-prior -> ground"
+   ],
+   "debug": {
+    "occ-front": {
+     "frame": 128,
+     "occ_px": 158
+    },
+    "occ-behind": {
+     "frame": 160,
+     "occ_px": 171
+    }
+   },
+   "layers": {
+    "1": "ground",
+    "2": "ground",
+    "3": "collision-prior",
+    "4": "ground",
+    "5": "ground",
+    "6": "ground",
+    "7": "ysort",
+    "8": "ground",
+    "9": "ysort",
+    "10": "ground",
+    "11": "ysort",
+    "12": "overhead",
+    "13": "overhead",
+    "14": "collision-prior",
+    "15": "collision-prior",
+    "16": "collision-prior",
+    "17": "collision-prior",
+    "18": "collision-prior",
+    "19": "collision-prior",
+    "20": "ysort"
+   }
+  }
+ ]
+}

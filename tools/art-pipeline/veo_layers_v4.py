@@ -39,6 +39,9 @@ STATIC_T = 40
 MIN_EVID = 3 * MIN_VOTE_PX   # pixels of a vote class before it may classify
 SIDE_MARGIN = 10             # plate px: |feet - base| below this = ambiguous
 MIN_WALKER_PX, MAX_WALKER_PX = 400, 30000   # keyed-component size gate
+DEPTH_AWARE_MIN_SAMPLES = 8   # minimum (feet_y, height) pairs for a valid fit
+DEPTH_AWARE_MIN_SLOPE = 0.02  # minimum |slope| before falling back to constant
+DEPTH_AWARE_TRUNC_FRAC = 0.85 # silhouette/expected fraction below which truncation kicks in
 
 # the layer vocabulary — rendering BEHAVIORS, shared with synth_layers_bench
 GROUND, YSORT, OVERHEAD = 'ground', 'ysort', 'overhead'
@@ -162,17 +165,49 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                     groups.append(comp)
             return groups, keyed > 0
 
-        # pass 1: expected walker height = 90th pct of silhouette heights
-        heights = []
+        # pass 1: build walker height model — either depth-aware h(feet_y)
+        # or constant h_est depending on whether a robust linear fit succeeds.
+        # Under perspective, walker height varies with screen-space depth
+        # (near camera = tall, far = short). The constant model uses p90 of
+        # all observed heights; the depth-aware model fits h(y) = slope*y + intercept
+        # from (feet_y, height) pairs sampled from unoccluded frames.
+        height_samples = []   # (feet_y, height) pairs
         for fi in range(0, len(frames), 4):
             for comp in walker_groups(frames[fi])[0]:
                 ys = np.nonzero(comp)[0]
-                heights.append(int(ys.max() - ys.min()))
-        if not heights:
+                h = int(ys.max() - ys.min())
+                feet_y_sample = int(ys.max())
+                height_samples.append((feet_y_sample, h))
+        if not height_samples:
             records.append({'iteration': it, 'video': os.path.basename(mp4),
                             'skipped': 'no walker found'})
             continue
-        h_est = int(np.percentile(heights, 90))
+        all_heights = [s[1] for s in height_samples]
+        h_est_const = int(np.percentile(all_heights, 90))
+
+        # attempt depth-aware linear fit from the tallest observations
+        # (unoccluded walkers should be at or near their full height)
+        h_p70 = np.percentile(all_heights, 70)
+        tall_samples = [(fy, h) for fy, h in height_samples if h >= h_p70]
+        use_depth_aware = False
+        h_slope = 0.0
+        h_intercept = float(h_est_const)
+        if len(tall_samples) >= DEPTH_AWARE_MIN_SAMPLES:
+            fy_arr = np.array([s[0] for s in tall_samples], np.float64)
+            h_arr = np.array([s[1] for s in tall_samples], np.float64)
+            if fy_arr.max() - fy_arr.min() > 30:
+                coeffs = np.polyfit(fy_arr, h_arr, 1)
+                h_slope, h_intercept = float(coeffs[0]), float(coeffs[1])
+                if abs(h_slope) >= DEPTH_AWARE_MIN_SLOPE:
+                    use_depth_aware = True
+
+        def expected_height(feet_y_pos):
+            """Walker height expected at a given screen-space feet position."""
+            if use_depth_aware:
+                return max(10, int(h_slope * feet_y_pos + h_intercept))
+            return h_est_const
+
+        h_est = h_est_const  # backward compat for debug strips
 
         # pass 2: feet-conditioned votes with truncation-aware occlusion
         dbg_best = {c: {'score': 0} for c in DBG_CASES}
@@ -184,17 +219,18 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                 ys, xs = np.nonzero(comp)
                 x0, x1, y0, y1 = int(xs.min()), int(xs.max()), int(ys.min()), int(ys.max())
                 h_vis = y1 - y0
-                # anchor feet at the un-truncated end: if the silhouette is
-                # short AND static object pixels sit right below its bottom,
-                # the walker is cut off from below -> true feet = top + h_est
+                # depth-aware expected height at this screen position;
+                # uses the linear model when perspective is significant,
+                # falls back to the constant p90 model otherwise
+                h_exp = expected_height(y1)
                 trunc_below = trunc_above = False
-                if h_vis >= 0.85 * h_est:
+                if h_vis >= DEPTH_AWARE_TRUNC_FRAC * h_exp:
                     feet_y = y1
                 else:
                     below = occluder[y1 + 1:y1 + 9, x0:x1 + 1].sum()
                     above = occluder[max(0, y0 - 8):y0, x0:x1 + 1].sum()
                     if below >= above:
-                        feet_y, trunc_below = y0 + h_est, True
+                        feet_y, trunc_below = y0 + h_exp, True
                     else:
                         feet_y, trunc_above = y1, True
                 feet_y = min(feet_y, vh - 1)
@@ -211,7 +247,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                     if trunc_below:
                         occ[col.max() + 1:feet_y + 1, cx_] = True
                     if trunc_above:
-                        occ[max(0, feet_y - h_est):col.min(), cx_] = True
+                        occ[max(0, feet_y - h_exp):col.min(), cx_] = True
                 occ &= occluder
 
                 fp2 = cv2.perspectiveTransform(
@@ -248,7 +284,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                             'score': occ_px_by_side[side], 'fi': fi,
                             'frame': frames[fi].copy(), 'keyed': keyed_all.copy(),
                             'comp': comp, 'occ': occ,
-                            'geom': (x0, y0, x1, y1, int(feet_y), h_est, fx)}
+                            'geom': (x0, y0, x1, y1, int(feet_y), h_exp, fx)}
 
         dbg_meta = {}
         for case in DBG_CASES:
