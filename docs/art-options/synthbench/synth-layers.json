@@ -90,6 +90,12 @@
     "ysort": 2
    },
    "changes": [],
+   "debug": {
+    "occ-behind": {
+     "frame": 80,
+     "occ_px": 1054
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "collision-prior",
@@ -115,6 +121,7 @@
    "changes": [
     "part2: collision-prior -> ground"
    ],
+   "debug": {},
    "layers": {
     "1": "ground",
     "2": "ground",
@@ -141,6 +148,12 @@
    "changes": [
     "part8: collision-prior -> overhead"
    ],
+   "debug": {
+    "occ-front": {
+     "frame": 36,
+     "occ_px": 510
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "ground",
@@ -167,6 +180,12 @@
    "changes": [
     "part6: collision-prior -> ysort"
    ],
+   "debug": {
+    "occ-behind": {
+     "frame": 28,
+     "occ_px": 578
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "ground",
@@ -193,6 +212,12 @@
    "changes": [
     "part11: collision-prior -> overhead"
    ],
+   "debug": {
+    "occ-front": {
+     "frame": 32,
+     "occ_px": 83
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "ground",
@@ -220,6 +245,16 @@
     "part7: collision-prior -> ysort",
     "part9: collision-prior -> overhead"
    ],
+   "debug": {
+    "occ-front": {
+     "frame": 128,
+     "occ_px": 1115
+    },
+    "occ-behind": {
+     "frame": 20,
+     "occ_px": 816
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "ground",
@@ -246,6 +281,16 @@
    "changes": [
     "part10: collision-prior -> overhead"
    ],
+   "debug": {
+    "occ-front": {
+     "frame": 132,
+     "occ_px": 480
+    },
+    "occ-behind": {
+     "frame": 48,
+     "occ_px": 506
+    }
+   },
    "layers": {
     "1": "ground",
     "2": "ground",

@@ -71,11 +71,43 @@ def classify(v, blocks_pid, passes_through):
     return COLLISION if (blocks_pid and not passes_through) else COLLISION_PRIOR
 
 
+DBG_PAD = 130                # crop margin around the walker in debug strips
+DBG_CASES = ('occ-front', 'occ-behind')
+
+
+def _write_debug_strips(out_prefix, it, case, obs, view_wh):
+    """Emit the 4-stage debugger strip for one tracked observation, straight
+    from the estimator's own internal state (Ivan: artifacts must be rendered
+    DURING algorithm iteration, not reconstructed after the fact)."""
+    vw, vh = view_wh
+    frame, keyed, occ = obs['frame'], obs['keyed'], obs['occ']
+    x0, y0, x1, y1, feet_y, h_est, fx = obs['geom']
+    cx0, cy0 = max(0, x0 - DBG_PAD), max(0, y0 - DBG_PAD)
+    cx1, cy1 = min(vw, x1 + DBG_PAD), min(vh, y1 + DBG_PAD + 30)
+    def crop(im):
+        return im[cy0:cy1, cx0:cx1]
+    base = f'{out_prefix}-iter{it}-dbg-{case}'
+    cv2.imwrite(f'{base}-1frame.png', crop(frame))
+    s2 = frame.copy()
+    s2[keyed] = (0, 255, 0)
+    cv2.imwrite(f'{base}-2keyed.png', crop(s2))
+    s3 = frame.copy()
+    cv2.rectangle(s3, (x0 - 2, feet_y - h_est), (x1 + 2, feet_y), (0, 255, 255), 2)
+    cv2.circle(s3, (int(fx), feet_y), 5, (0, 0, 255), -1)
+    cv2.imwrite(f'{base}-3box.png', crop(s3))
+    s4 = frame.copy()
+    s4[occ] = (0, 0, 255)
+    cv2.imwrite(f'{base}-4occ.png', crop(s4))
+
+
 def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1200, 675)):
     """Run the estimator. parts: int32 id map (plate space). ground: bool
     walkable mask. coll: bool (True = walkable) at parts resolution.
     plate_bgr: BGR plate. video_paths: list of mp4s (one iteration each).
-    Writes <out_prefix>-iterN.jpg + <out_prefix>.json; returns the result."""
+    Writes <out_prefix>-iterN.jpg + <out_prefix>.json, plus per-iteration
+    4-stage debugger strips (<out_prefix>-iterN-dbg-<case>-<stage>.png) for
+    the strongest occ-front and occ-behind observations, rendered from the
+    algorithm's live state at vote time; returns the result."""
     vw, vh = view_wh
     plate_small = cv2.resize(plate_bgr, (1200, 900))
     sx, sy = plate_bgr.shape[1] / 1200, plate_bgr.shape[0] / 900
@@ -143,6 +175,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         h_est = int(np.percentile(heights, 90))
 
         # pass 2: feet-conditioned votes with truncation-aware occlusion
+        dbg_best = {c: {'score': 0} for c in DBG_CASES}
         for fi in range(0, len(frames), 4):
             groups, keyed_all = walker_groups(frames[fi])
             static = np.abs(frames[fi].astype(np.int16) - bg).max(axis=2) < STATIC_T
@@ -188,6 +221,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                 pid_at_feet = int(parts[fpy, fpx])
                 if pid_at_feet > 0 and not ground[fpy, fpx]:
                     feet_hits[pid_at_feet] += 1
+                occ_px_by_side = {FRONT: 0, BEHIND: 0}
                 for kind, m in (('under', comp), ('occ', occ)):
                     yy, xx = np.nonzero(m)
                     if not len(yy):
@@ -205,7 +239,23 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                             continue          # too close to the base to judge
                         side = FRONT if fpy > base_y[pid] else BEHIND
                         V[pid][f'{kind}_{side}'] += int(ct)
+                        if kind == 'occ':
+                            occ_px_by_side[side] += int(ct)
+                # track the strongest observation per debug case AT VOTE TIME
+                for case, side in zip(DBG_CASES, (FRONT, BEHIND)):
+                    if occ_px_by_side[side] > dbg_best[case]['score']:
+                        dbg_best[case] = {
+                            'score': occ_px_by_side[side], 'fi': fi,
+                            'frame': frames[fi].copy(), 'keyed': keyed_all.copy(),
+                            'comp': comp, 'occ': occ,
+                            'geom': (x0, y0, x1, y1, int(feet_y), h_est, fx)}
 
+        dbg_meta = {}
+        for case in DBG_CASES:
+            if dbg_best[case]['score'] > 0:
+                _write_debug_strips(out_prefix, it, case, dbg_best[case], (vw, vh))
+                dbg_meta[case] = {'frame': dbg_best[case]['fi'],
+                                  'occ_px': dbg_best[case]['score']}
         layers = {pid: classify(V[pid], blocks[pid], feet_hits[pid] >= 3)
                   for pid in pids}
         prev = records[-1].get('layers', {}) if records else {}
@@ -223,7 +273,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         img.thumbnail((1400, 1400))
         img.save(f'{out_prefix}-iter{it}.jpg', quality=86)
         records.append({'iteration': it, 'video': os.path.basename(mp4),
-                        'counts': counts, 'changes': changes[:14],
+                        'counts': counts, 'changes': changes[:14], 'debug': dbg_meta,
                         'layers': {str(k): v for k, v in layers.items()}})
         print(f'iter {it}: {counts}, {len(changes)} changes')
 
