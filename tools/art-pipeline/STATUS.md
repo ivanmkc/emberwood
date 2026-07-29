@@ -1842,3 +1842,10 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - synth3d agent: 432d911 standards fixes verified (sys.path, docstrings,
   harness routing); rework in flight for the ground-mask bug that
   invalidated its "irreducible 11 errors" claim.
+- Run 41b: anchor probes processed through layers_harness (first real-scene
+  harness use). 3 videos, 764-771 inliers, iter3: overhead 11 / ysort 26 /
+  ground 10. vs 54-part gold: P=0.25 R=0.11 — only part27 (PLAZA MARKET
+  sign, the dwell path) corroborated. Expected: anchor gold overheads are
+  facade signs the walker can only overlap at doorways — geometry-limited
+  evidence, consistent with tri-rater-ships / veo-corroborates. FPs 87/107
+  are the familiar mixed mega-part class (task #123).
