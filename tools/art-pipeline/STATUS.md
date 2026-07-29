@@ -1928,6 +1928,32 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
 
+## Run 45 (2026-07-29) — 3D bench: collision-safe paths + re-frozen estimator (fdf3911)
+- COLLISION-SAFE PATHS: all 13 probe paths now stay outside collision bands.
+  Previous paths let the walker walk THROUGH objects' footprint bands (the
+  kiosk +41px came from the walker inside the kiosk's collision rect,
+  self-falsifying footprint evidence). Added COLLISION_BANDS constant and
+  validate_paths() runtime check — bench fails if any interpolated frame
+  crosses a band.
+- FOOTPRINT DIAGNOSIS (pre-fix): +41px kiosk was NOT h(y) over-reconstruction.
+  The behind-feet observation was directly observed (h_vis=51 >= 0.85*h_exp=42,
+  no truncation). Root cause: walker walking through the collision band at a
+  shallow depth (z=0.48, only 0.12 units behind kiosk at z=0.6). Tower and
+  brick unsafe cases were caused by the adaptive ~p80 quantile discarding
+  deep-behind observations as outliers when they were the most informative.
+- RE-FROZEN ESTIMATOR (fdf3911): conservative p25 footprint aggregate,
+  occ_front consensus exemption, <5 observations = None (no estimate).
+- **3D bench: 0 hard errors (21/21 correct)**:
+    ground->ground: 3 | ysort->ysort: 8, collision: 3 | overhead->overhead: 7
+- FOOTPRINT SCORING (4 scored, 7 None = no estimate):
+    - pid 8 (bookshelf): err +4px OK
+    - pid 12 (tower): err -16px CONSERVATIVE (was +7px UNSAFE)
+    - pid 21 (brick): err -26px CONSERVATIVE (was +23px UNSAFE)
+    - pid 7 (kiosk): err +10px UNSAFE (was +41px) — observability limit persists
+      but evidence is now honest (not self-falsified by walking through the band)
+    - 7 parts: no estimate (None) — <5 behind-observations, safe full-sprite prior
+    - Median error: -6px (conservative bias, correct direction)
+
 ## Run 44 (2026-07-29) — 3D bench: tower case + footprint scoring + 21 parts
 - TOWER CASE (Ivan's directive): tall statue added to the 3D scene at (8,-4).
   Narrow 0.5x3.5x0.5 shaft on a wider 1.4x0.5x1.4 base plinth. YSORT truth

@@ -46,66 +46,142 @@ VIDEO_FPS = 24
 VIDEO_FRAMES = 192   # 8 seconds at 24fps
 SERVER_PORT = 8321
 
+# collision footprint bands in world space: (name, x0, z0, x1, z1)
+# sourced from the JS scene's registerPart footprintBand values.
+# walker waypoints must stay outside these rects (real captures obey physics)
+COLLISION_BANDS = [
+    ('crate1',    -5.0, -5.0, -3.0, -3.0),
+    ('barrel1',   -6.8,  0.2, -5.2,  1.8),
+    ('table',      1.2, -3.5,  2.8, -2.5),
+    ('kiosk',     -1.9, -0.6,  0.9,  0.6),  # makeKiosk(-1,0) ±0.9, ±0.6
+    ('bookshelf',  4.4, -2.2,  5.6, -1.8),
+    ('bench',      2.0,  3.75, 4.0,  4.25),
+    ('crate2',     5.2,  1.2,  6.8,  2.8),
+    ('barrel2',   -3.7,  4.3, -2.3,  5.7),
+    ('tower',      7.3, -4.7,  8.7, -3.3),
+    ('house',     -8.2, -2.9, -5.8, -1.2),  # approximate from GLB bbox
+    ('brick',     -1.0,  5.4,  1.0,  7.0),  # approximate from GLB bbox
+]
+COLLISION_MARGIN = 0.15  # walker half-width clearance beyond the band edge
+
+
+def _in_band(x, z):
+    """Return the band name if (x, z) falls inside any collision band."""
+    for name, x0, z0, x1, z1 in COLLISION_BANDS:
+        if (x0 - COLLISION_MARGIN <= x <= x1 + COLLISION_MARGIN and
+                z0 - COLLISION_MARGIN <= z <= z1 + COLLISION_MARGIN):
+            return name
+    return None
+
+
+def validate_paths(paths, n_frames=192):
+    """Check that no interpolated walker position crosses a collision band."""
+    clean = True
+    for pi, wp in enumerate(paths):
+        pts = np.array(wp, float)
+        seg = np.linspace(0, len(pts) - 1, n_frames)
+        for f in range(n_frames):
+            i = min(int(seg[f]), len(pts) - 2)
+            t = seg[f] - i
+            p = pts[i] * (1 - t) + pts[i + 1] * t
+            hit = _in_band(p[0], p[1])
+            if hit:
+                print(f'  COLLISION: path {pi} frame {f} at '
+                      f'({p[0]:.2f}, {p[1]:.2f}) in {hit}')
+                clean = False
+                break
+    return clean
+
+
 # walker waypoint paths in world-space (x, z)
 # z > 0 = closer to camera = lower on screen = "in front"
 # z < 0 = farther from camera = higher on screen = "behind"
 # standing objects at: crate1(-4,-4), barrel1(-6,1), table(2,-3), kiosk(-1,0),
 #   bookshelf(5,-2), bench(3,4), crate2(6,2), barrel2(-3,5),
-#   house(-7,-2), brick(0,6)
+#   house(-7,-2), brick(0,6), tower(8,-4)
 # overhead cables at z=-3 and z=3; lanterns/signs hang from them
+# ALL waypoints are OUTSIDE collision bands — real captures obey physics.
 PATHS = [
     # Path 0: left-to-right BEHIND all objects (z=-6)
     [(-10, -6), (-5, -6), (0, -6), (5, -6), (10, -6)],
     # Path 1: left-to-right IN FRONT of all objects (z=8)
     [(-10, 8), (-5, 8), (0, 8), (5, 8), (10, 8)],
-    # Path 2: serpentine behind then in front of each standing object
-    # tighter z-offsets (1.0 behind base, 1.0 in front) to maximize occlusion
-    # crate1(-4,-4): base z=-3.5, behind=-4.8 front=-2.5
-    # table(2,-3): base z=-2.5, behind=-3.8 front=-1.5
-    # kiosk(-1,0): base z=0.6, behind=-0.8 front=1.8
-    # bookshelf(5,-2): base z=-1.8, behind=-3.0 front=-0.5
-    # barrel1(-6,1): base z=1.5, behind=0 front=2.8
-    [(-4, -4.8), (-4, -2.5), (2, -3.8), (2, -1.5), (-1, -0.8),
-     (-1, 1.8), (5, -3.5), (5, -0.5), (-6, 0.0), (-6, 2.8),
-     (-7, -3.5), (-7, -0.5)],
-    # Path 3: under cable 1 — walker at z=-2 (in front of cable at z=-3)
-    # so walker feet project below the cable's base_y, escaping the
-    # +/-10px dead zone in the estimator's front/behind classification.
-    [(-10, -2), (-5, -2), (-2, -2), (0, -2), (1, -2), (4, -2), (10, -2)],
-    # Path 4: under cable 2 — walker at z=4 (in front of cable at z=3)
-    [(-10, 4), (-5, 4), (-3, 4), (0, 4), (5, 4), (10, 4)],
-    # Path 5: behind+front of remaining objects (tighter offsets)
-    # bench(3,4) base=4.25: behind=3.0 front=5.5
-    # crate2(6,2) base=2.4: behind=1.0 front=3.5
-    # barrel2(-3,5) base=5.45: behind=4.0 front=6.5
-    # brick(0,6) base≈6.5: behind=5.0 front=7.5
-    [(3, 3.0), (3, 5.5), (6, 1.0), (6, 3.5), (-3, 4.0),
-     (-3, 6.5), (0, 5.0), (0, 7.5)],
-    # Path 6: extreme perspective sweep (close z=8 → far z=-7)
-    [(0, 8), (0, 4), (0, 0), (0, -4), (0, -7),
-     (0, -4), (0, 0), (0, 4), (0, 8)],
-    # Path 7: across decals at their z-positions
-    # Path 7: across decals at their z-positions
-    # decal1(-2,3), decal2(9,-6), decal3(-5,-3)
-    [(-2, 3), (-2, 4.5), (9, -6), (9, -4.5), (-5, -3), (-5, -1.5)],
-    # Path 8: focused house.glb coverage at (-7,-2) — walker behind the
-    # house at z=-2.5 to z=-2.8 (close enough for screen overlap, far enough
-    # to escape the +/-10px dead zone around the house's base_y)
-    [(-7, -2.8), (-7, -2.3), (-7, -2.8), (-7, -2.3),
-     (-7, -2.8), (-7, -2.3), (-7, -0.5)],
+    # Path 2: serpentine — walker skirts OUTSIDE each standing object's
+    # collision band (behind then in front). Waypoints placed just beyond
+    # the band edge so the interpolated path never enters the rect.
+    # Path 2: serpentine — behind then in front of each object, staying
+    # strictly outside all collision bands. Each object visited at the
+    # same x but z offset beyond the band edge + margin.
+    # crate1(-4,-4): band z[-5.15,-2.85], use x=-2.8 (outside band x[-5.15,-2.85])
+    [(-2.8, -5.2), (-2.8, -2.8),
+    # route to table via z=-2.2 corridor (above table band z[-3.65,-2.35])
+     (0.9, -2.2), (3.1, -2.2),
+    # table(2,-3): behind z=-3.7, front z=-2.2 (at x=3.1, outside band x)
+     (3.1, -3.7), (3.1, -2.2),
+    # kiosk(-1,0): at x=-2.2 (outside band x[-2.05,1.05])
+     (-2.2, -0.8), (-2.2, 0.8),
+    # route kiosk→bookshelf: go to z=-1.5 first (clear of kiosk z=0.75)
+    # then to x=3.8 at z=-1.5 (clear of bookshelf z=-1.65), then down
+     (-2.2, -1.5), (3.8, -1.5),
+    # bookshelf(5,-2): at x=3.8 (outside band x[4.25,5.75])
+     (3.8, -2.4), (3.8, -1.5),
+    # route bookshelf→barrel1: stay below kiosk z at -0.8 (below kiosk z=-0.75)
+     (-2.2, -0.8), (-5.0, -0.8),
+    # barrel1(-6,1): at x=-5.0 (outside band x[-6.95,-5.05])
+     (-5.0, 0.0), (-5.0, 2.0),
+    # route barrel1→house: go to z=-0.9 at x=-5.0 (below kiosk z=-0.75)
+     (-5.0, -0.9), (-5.5, -0.9),
+    # house(-7,-2): at x=-5.5 (outside band x[-8.35,-5.65])
+     (-5.5, -3.1), (-5.5, -0.9)],
+    # Path 3: under cable 1 at z=-1.4 (above bookshelf band z[-2.35,-1.65]
+    # with margin, and above table band z[-3.65,-2.35]).
+    # Skip house x[-8.35,-5.65]
+    [(-5.5, -1.4), (-2, -1.4), (0, -1.4), (1, -1.4), (4, -1.4),
+     (6, -1.4), (10, -1.4)],
+    # Path 4: under cable 2 at z=4.5, skip barrel2 x[-3.85,-2.15]+margin
+    [(-10, 4.5), (-5, 4.5), (-4.0, 4.5), (-4.0, 4.0),
+     (-2.0, 4.0), (-2.0, 4.5), (0, 4.5), (5, 4.5), (10, 4.5)],
+    # Path 5: behind+front of remaining objects, each pair at constant x
+    # so interpolation is purely vertical (no diagonal band crossings)
+    [(1.7, 3.5), (1.7, 4.5),      # bench at x=1.7
+     (1.7, 0.9),                    # navigate at x=1.7 down to z=0.9 (safe corridor)
+     (4.8, 0.9), (4.8, 3.1),      # crate2 at x=4.8
+     (4.8, 4.5),                    # navigate to z=4.5 (above bench z[3.6,4.4]+margin)
+     (-1.8, 4.5),                   # cross at z=4.5 (outside bench z band)
+     (-1.8, 4.0), (-1.8, 6.0),    # barrel2 at x=-1.8
+     (-1.3, 6.0),                   # navigate at z=6.0 to x=-1.3
+     (-1.3, 5.1), (-1.3, 7.3)],   # brick at x=-1.3
+    # Path 6: perspective sweep — zigzag x to dodge each band
+    [(1.3, 8), (1.3, 7.3),                          # start far front
+     (-1.3, 7.3), (-1.3, 5.1),                      # brick band x[-1.15,1.15]: go x=-1.3
+     (-2.2, 0.8),                                    # kiosk band x[-2.05,1.05]: go x=-2.2
+     (-2.2, -0.8),                                   # pass behind kiosk
+     (0.9, -0.8), (0.9, -2.2),                      # table band x[1.05,2.95]: stay x=0.9
+     (0.9, -5.2), (0.9, -7),                        # far behind
+     (0.9, -5.2), (0.9, -2.2),                      # return
+     (-2.2, -0.8), (-2.2, 0.8),
+     (-1.3, 5.1), (-1.3, 7.3),
+     (1.3, 7.3), (1.3, 8)],
+    # Path 7: decal coverage — explicit intermediate points around bands
+    [(-2, 3), (-2, 4.5),                             # decal1
+     (1.7, 4.5), (1.7, 0), (3.8, 0), (3.8, -2.4),  # route outside bench x via x=1.7, then z=0
+     (6.0, -2.4), (7.0, -3.0), (9.0, -3.0), (9, -6), # route around tower x
+     (9, -5.2),                                      # decal2
+     (9.0, -3.0), (7.0, -3.0), (6.0, -3.7), (3.1, -3.7),  # route around tower x
+     (0.9, -3.7), (-2.7, -3.7), (-2.7, -2.7),        # route around crate1 z top
+     (-5, -2.7), (-5, -1.5)],                          # decal3
+    # Path 8: house coverage at x=-5.5 (just outside house band x1=-5.65)
+    [(-5.5, -3.1), (-5.5, -1.0), (-5.5, -3.1), (-5.5, -1.0),
+     (-5.5, -3.1), (-5.5, -1.0), (-5.5, -0.5)],
     # Path 9: under cable 1 at z=-1.5, reinforcing occ_front for smaller
     # hanging objects (lanterns at x=-2, x=4; sign at x=1)
     [(-5, -1.5), (-2, -1.5), (1, -1.5), (4, -1.5), (7, -1.5)],
-    # Path 10: tower at (8,-4) — walker passes behind at several depths
-    # tower base front z = -3.3; behind requires z < -4.7
-    # deep behind (z=-6): clear occlusion evidence
-    [(8, -6), (8, -2.5)],
-    # Path 11: tower close skim — walker just behind the base (z=-5.0),
-    # feet project just below the collision band top, tightening the
-    # footprint bound
-    [(6, -5.0), (8, -5.0), (10, -5.0), (8, -5.0), (6, -5.0)],
-    # Path 12: tower front pass — walker walks in front (z=-2.5) to confirm
-    # under_front evidence for the tall shaft above the base
+    # Path 10: tower behind/front — x=7.1 (outside tower band x[7.15,8.85])
+    # Need x=7.0 to clear margin
+    [(7.0, -5.0), (7.0, -3.1)],
+    # Path 11: tower close skim at z=-4.9, x outside tower band
+    [(6, -4.9), (7.0, -4.9), (9.0, -4.9), (7.0, -4.9), (6, -4.9)],
+    # Path 12: tower front pass at z=-2.5 (well in front of band z1=-3.3)
     [(6, -2.5), (8, -2.5), (10, -2.5)],
 ]
 
@@ -489,6 +565,11 @@ def main():
     """Render the 3D scene, capture walks, and run the estimator via layers_harness."""
     os.makedirs(OUT, exist_ok=True)
     print('=== Synth3D Layer Bench ===')
+
+    print('\n--- Validating paths vs collision bands ---')
+    if not validate_paths(PATHS, VIDEO_FRAMES):
+        raise RuntimeError('probe paths cross collision bands — fix waypoints')
+    print(f'  {len(PATHS)} paths validated, 0 collisions')
 
     print('\n--- Rendering 3D scene ---')
     plate_bgr, parts_map, ground, coll, _, truth = render_scene(OUT)

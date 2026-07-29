@@ -1,7 +1,8 @@
 {
  "confusion": {
   "ground->ground": 3,
-  "ysort->ysort": 11,
+  "ysort->ysort": 8,
+  "ysort->collision": 3,
   "overhead->overhead": 7
  },
  "errors": []
