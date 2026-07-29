@@ -396,8 +396,13 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                                  MIN_EVID_FLOOR, MIN_EVID_CAP))
         def consensus_votes(pid):
             # temporal consensus: buckets fed by fewer than MIN_BUCKET_FRAMES
-            # distinct frames are treated as noise
-            return {b: (V[pid][b] if len(F[pid][b]) >= MIN_BUCKET_FRAMES else 0)
+            # distinct frames are treated as noise. occ_front is EXEMPT: it is
+            # the axiom-bearing bucket (a standing object can never occlude a
+            # walker in front) and is already quadruple-gated (chroma key,
+            # static background, parts mask, boundary guard) — zeroing it let
+            # suspended objects with behind-side occlusion masquerade as ysort
+            return {b: (V[pid][b] if b == 'occ_front'
+                        or len(F[pid][b]) >= MIN_BUCKET_FRAMES else 0)
                     for b in V[pid]}
         layers = {pid: classify(consensus_votes(pid), blocks[pid],
                                 feet_hits[pid] >= 3, min_evid_for(pid))
@@ -454,16 +459,19 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
     # footprint-band estimate (tower case): robust adaptive quantile of the
     # behind-feet rows — approaches the max as observations grow but stays
     # bounded away from single outliers (math panel #4)
+    # under-blocking is UNSAFE (players clip into bases) while over-blocking
+    # is invisible — so the aggregate leans conservative: fewer than 5
+    # observations yields NO estimate (sparse evidence can be falsified by
+    # probes that ignore collision, e.g. Veo walkers), else the 25th
+    # percentile of behind-rows (3D-bench finding: the adaptive ~p80 quantile
+    # under-blocked bimodal shallow+deep observation mixes)
     footprint_top = {}
     for p in pids:
         obs = sorted(behind_rows[p])
-        if not obs:
+        if len(obs) < 5:
             footprint_top[str(p)] = None
-        elif len(obs) < 5:
-            footprint_top[str(p)] = int(obs[-1]) + 1
         else:
-            k = int(len(obs) * (1 - 1 / max(2.0, len(obs) ** 0.5)))
-            footprint_top[str(p)] = int(obs[min(k, len(obs) - 1)]) + 1
+            footprint_top[str(p)] = int(np.percentile(obs, 25)) + 1
     result = {'votes': {str(p): V[p] for p in pids},
               'base_y': {str(p): base_y[p] for p in pids},
               'footprint_top': footprint_top,
