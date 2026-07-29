@@ -1,0 +1,238 @@
+{
+  "anchorroom": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 91,
+      "overhead": 12,
+      "ysort": 8,
+      "ground": 5,
+      "collision-prior": 10
+    },
+    "n_unreliable_parts": 10,
+    "n_total_parts": 126,
+    "notes": "OK"
+  },
+  "canal-docks": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ysort": 11,
+      "collision": 78,
+      "collision-prior": 26,
+      "ground": 7,
+      "overhead": 1
+    },
+    "n_unreliable_parts": 26,
+    "n_total_parts": 123,
+    "notes": "26 collision-prior (unvisited) parts"
+  },
+  "gate-wall": {
+    "iterations_ok": 2,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 52,
+      "collision-prior": 40,
+      "overhead": 1,
+      "ground": 3,
+      "ysort": 1
+    },
+    "n_unreliable_parts": 40,
+    "n_total_parts": 97,
+    "notes": "40 collision-prior (unvisited) parts"
+  },
+  "hydroponics": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 118,
+      "overhead": 20,
+      "collision-prior": 45,
+      "ysort": 19,
+      "ground": 6
+    },
+    "n_unreliable_parts": 45,
+    "n_total_parts": 208,
+    "notes": "45 collision-prior (unvisited) parts"
+  },
+  "night-bazaar": {
+    "iterations_ok": 8,
+    "iterations_skipped": 5,
+    "skipped_details": [
+      {
+        "iter": 9,
+        "reason": "no walker found"
+      },
+      {
+        "iter": 10,
+        "reason": "no walker found"
+      },
+      {
+        "iter": 11,
+        "reason": "no walker found"
+      },
+      {
+        "iter": 12,
+        "reason": "no walker found"
+      },
+      {
+        "iter": 13,
+        "reason": "registration (6)"
+      }
+    ],
+    "final_counts": {
+      "collision": 127,
+      "collision-prior": 14,
+      "ysort": 45,
+      "overhead": 40,
+      "ground": 12
+    },
+    "n_unreliable_parts": 14,
+    "n_total_parts": 238,
+    "notes": "5 skipped iterations: ['no walker found', 'no walker found', 'no walker found', 'no walker found', 'registration (6)']; 14 collision-prior (unvisited) parts"
+  },
+  "noodle-bar": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ysort": 52,
+      "collision": 123,
+      "ground": 10,
+      "collision-prior": 23,
+      "overhead": 15
+    },
+    "n_unreliable_parts": 23,
+    "n_total_parts": 223,
+    "notes": "23 collision-prior (unvisited) parts"
+  },
+  "observatory": {
+    "iterations_ok": 2,
+    "iterations_skipped": 1,
+    "skipped_details": [
+      {
+        "iter": 2,
+        "reason": "registration (11)"
+      }
+    ],
+    "final_counts": {
+      "ysort": 7,
+      "collision": 93,
+      "collision-prior": 39,
+      "overhead": 16,
+      "ground": 3
+    },
+    "n_unreliable_parts": 39,
+    "n_total_parts": 158,
+    "notes": "1 skipped iterations: ['registration (11)']; 39 collision-prior (unvisited) parts"
+  },
+  "outskirts": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 102,
+      "ground": 3,
+      "overhead": 3,
+      "ysort": 10,
+      "collision-prior": 20
+    },
+    "n_unreliable_parts": 20,
+    "n_total_parts": 138,
+    "notes": "20 collision-prior (unvisited) parts"
+  },
+  "plaza-market-inside": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 181,
+      "ground": 2,
+      "overhead": 8,
+      "ysort": 21
+    },
+    "n_unreliable_parts": 0,
+    "n_total_parts": 212,
+    "notes": "OK"
+  },
+  "power-plant": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 83,
+      "collision-prior": 80,
+      "overhead": 6,
+      "ysort": 15,
+      "ground": 25
+    },
+    "n_unreliable_parts": 80,
+    "n_total_parts": 209,
+    "notes": "80 collision-prior (unvisited) parts"
+  },
+  "repair-bay": {
+    "iterations_ok": 2,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 58,
+      "ysort": 9,
+      "overhead": 3,
+      "collision-prior": 49,
+      "ground": 6
+    },
+    "n_unreliable_parts": 49,
+    "n_total_parts": 125,
+    "notes": "49 collision-prior (unvisited) parts"
+  },
+  "residential": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 130,
+      "collision-prior": 19,
+      "ground": 4,
+      "ysort": 13,
+      "overhead": 10
+    },
+    "n_unreliable_parts": 19,
+    "n_total_parts": 176,
+    "notes": "19 collision-prior (unvisited) parts"
+  },
+  "rooftops": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision-prior": 105,
+      "collision": 90,
+      "ground": 10,
+      "ysort": 11,
+      "overhead": 4
+    },
+    "n_unreliable_parts": 105,
+    "n_total_parts": 220,
+    "notes": "105 collision-prior (unvisited) parts"
+  },
+  "transit": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "collision": 157,
+      "ysort": 44,
+      "collision-prior": 32,
+      "overhead": 7,
+      "ground": 10
+    },
+    "n_unreliable_parts": 32,
+    "n_total_parts": 250,
+    "notes": "32 collision-prior (unvisited) parts"
+  },
+  "underworks": {
+    "iterations_ok": 3,
+    "iterations_skipped": 0,
+    "final_counts": {
+      "ground": 11,
+      "collision": 53,
+      "ysort": 8,
+      "collision-prior": 30
+    },
+    "n_unreliable_parts": 30,
+    "n_total_parts": 102,
+    "notes": "30 collision-prior (unvisited) parts"
+  }
+}
