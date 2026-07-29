@@ -1826,3 +1826,19 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   3D height. This difference makes overhead detection impossible in true 3D
   perspective without camera-aware ground-footprint projection.
 - 1 ground→collision-prior: tiny decal (691 px), walker evidence below MIN_EVID.
+
+## Run 41 (2026-07-29) — vetted v4 re-applied to real bazaar; anchor probes generating
+- Fresh real-scene run with the depth-aware height model + auto debug strips:
+  final counts unchanged (collision 103 / overhead 70 / ysort 27 / ground 17)
+  and P=0.55 R=0.36 vs gold — REPRODUCIBLE; depth-aware model correctly
+  falls back to constant height on the near-uniform-scale 3/4 game view.
+- estimate() auto-emitted 4-stage debug strips for all 5 real iterations
+  (both cases). iter1 occ-front is a textbook live capture: walker behind
+  the noodle counter, head hidden behind the hanging NOODLE sign, evidence
+  on the sign with feet in front -> overhead vote.
+- 3 anchorroom magenta-walker probes generating via Veo (GEPA-locked prompt,
+  beacon pass-behind + PLAZA MARKET sign dwell paths) -> will run through
+  layers_harness with the 126-part anchor map vs the 7-sign gold.
+- synth3d agent: 432d911 standards fixes verified (sys.path, docstrings,
+  harness routing); rework in flight for the ground-mask bug that
+  invalidated its "irreducible 11 errors" claim.
