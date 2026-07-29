@@ -24,11 +24,15 @@ from PIL import Image
 from skimage.segmentation import felzenszwalb
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SCENES = {
- 'night-bazaar': 'docs/art-options/rooms/night-bazaar/plate.png',
- 'anchorroom': 'docs/art-options/nbp-scifi-anchor-clean.png',
- 'plaza-market-inside': 'docs/art-options/rooms/plaza-market-inside/plate.png',
-}
+ALL_ROOMS = [
+    'anchorroom', 'barge-cabin', 'canal-docks', 'control-room', 'gate-wall',
+    'grow-lab-office', 'guard-post', 'home-interior-a', 'hydroponics',
+    'night-bazaar', 'noodle-bar', 'observatory', 'observatory-dome',
+    'outskirts', 'plaza-market-inside', 'power-plant', 'pump-station',
+    'repair-bay', 'repair-office', 'residential', 'rooftops', 'salvage-shed',
+    'transit', 'transit-office', 'underworks',
+]
+SCENES = {r: f'docs/art-options/rooms/{r}/plate.png' for r in ALL_ROOMS}
 CHAR_AREA = 80 * 176
 SPLIT_ABOVE = int(CHAR_AREA * 1.5)   # instances bigger than this get subdivided
 MIN_PART = 3000                       # merge fragments below this into neighbors
@@ -71,6 +75,8 @@ def run(room):
     npz = os.path.join(ROOT, 'tools/art-pipeline', f'_srcmasks_{room}-aligned2.npz')
     if not os.path.exists(npz):
         npz = os.path.join(ROOT, 'tools/art-pipeline', f'_srcmasks_{room}-aligned.npz')
+    if not os.path.exists(npz):
+        npz = os.path.join(ROOT, 'tools/art-pipeline', f'_srcmasks_{room}.npz')
     inst = np.load(npz)['inst']
 
     parts = np.zeros_like(inst, dtype=np.int32)

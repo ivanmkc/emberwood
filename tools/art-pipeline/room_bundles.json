@@ -1,0 +1,177 @@
+{
+  "anchorroom": {
+    "parts": "tools/art-pipeline/_srcmasks_anchorroom-parts.npz",
+    "ground": "docs/art-options/ground-prior-anchorroom.png",
+    "collision": "assets/rooms/anchorroom.collision.png",
+    "plate": "docs/art-options/rooms/anchorroom/plate.png",
+    "status": "ready"
+  },
+  "barge-cabin": {
+    "parts": "tools/art-pipeline/_srcmasks_barge-cabin-parts.npz",
+    "ground": "docs/art-options/ground-prior-barge-cabin.png",
+    "collision": "assets/rooms/barge-cabin.collision.png",
+    "plate": "docs/art-options/rooms/barge-cabin/plate.png",
+    "status": "ready"
+  },
+  "canal-docks": {
+    "parts": "tools/art-pipeline/_srcmasks_canal-docks-parts.npz",
+    "ground": "docs/art-options/ground-prior-canal-docks.png",
+    "collision": "assets/rooms/canal-docks.collision.png",
+    "plate": "docs/art-options/rooms/canal-docks/plate.png",
+    "status": "ready"
+  },
+  "control-room": {
+    "parts": "tools/art-pipeline/_srcmasks_control-room-parts.npz",
+    "ground": "docs/art-options/ground-prior-control-room.png",
+    "collision": "assets/rooms/control-room.collision.png",
+    "plate": "docs/art-options/rooms/control-room/plate.png",
+    "status": "ready"
+  },
+  "gate-wall": {
+    "parts": "tools/art-pipeline/_srcmasks_gate-wall-parts.npz",
+    "ground": "docs/art-options/ground-prior-gate-wall.png",
+    "collision": "assets/rooms/gate-wall.collision.png",
+    "plate": "docs/art-options/rooms/gate-wall/plate.png",
+    "status": "ready"
+  },
+  "grow-lab-office": {
+    "parts": "tools/art-pipeline/_srcmasks_grow-lab-office-parts.npz",
+    "ground": "docs/art-options/ground-prior-grow-lab-office.png",
+    "collision": "assets/rooms/grow-lab-office.collision.png",
+    "plate": "docs/art-options/rooms/grow-lab-office/plate.png",
+    "status": "ready"
+  },
+  "guard-post": {
+    "parts": "tools/art-pipeline/_srcmasks_guard-post-parts.npz",
+    "ground": "docs/art-options/ground-prior-guard-post.png",
+    "collision": "assets/rooms/guard-post.collision.png",
+    "plate": "docs/art-options/rooms/guard-post/plate.png",
+    "status": "ready"
+  },
+  "home-interior-a": {
+    "parts": "tools/art-pipeline/_srcmasks_home-interior-a-parts.npz",
+    "ground": "docs/art-options/ground-prior-home-interior-a.png",
+    "collision": "assets/rooms/home-interior-a.collision.png",
+    "plate": "docs/art-options/rooms/home-interior-a/plate.png",
+    "status": "ready"
+  },
+  "hydroponics": {
+    "parts": "tools/art-pipeline/_srcmasks_hydroponics-parts.npz",
+    "ground": "docs/art-options/ground-prior-hydroponics.png",
+    "collision": "assets/rooms/hydroponics.collision.png",
+    "plate": "docs/art-options/rooms/hydroponics/plate.png",
+    "status": "ready"
+  },
+  "night-bazaar": {
+    "parts": "tools/art-pipeline/_srcmasks_night-bazaar-parts.npz",
+    "ground": "docs/art-options/ground-prior-night-bazaar.png",
+    "collision": "assets/rooms/night-bazaar.collision.png",
+    "plate": "docs/art-options/rooms/night-bazaar/plate.png",
+    "status": "ready"
+  },
+  "noodle-bar": {
+    "parts": "tools/art-pipeline/_srcmasks_noodle-bar-parts.npz",
+    "ground": "docs/art-options/ground-prior-noodle-bar.png",
+    "collision": "assets/rooms/noodle-bar.collision.png",
+    "plate": "docs/art-options/rooms/noodle-bar/plate.png",
+    "status": "ready"
+  },
+  "observatory": {
+    "parts": "tools/art-pipeline/_srcmasks_observatory-parts.npz",
+    "ground": "docs/art-options/ground-prior-observatory.png",
+    "collision": "assets/rooms/observatory.collision.png",
+    "plate": "docs/art-options/rooms/observatory/plate.png",
+    "status": "ready"
+  },
+  "observatory-dome": {
+    "parts": "tools/art-pipeline/_srcmasks_observatory-dome-parts.npz",
+    "ground": "docs/art-options/ground-prior-observatory-dome.png",
+    "collision": "assets/rooms/observatory-dome.collision.png",
+    "plate": "docs/art-options/rooms/observatory-dome/plate.png",
+    "status": "ready"
+  },
+  "outskirts": {
+    "parts": "tools/art-pipeline/_srcmasks_outskirts-parts.npz",
+    "ground": "docs/art-options/ground-prior-outskirts.png",
+    "collision": "assets/rooms/outskirts.collision.png",
+    "plate": "docs/art-options/rooms/outskirts/plate.png",
+    "status": "ready"
+  },
+  "plaza-market-inside": {
+    "parts": "tools/art-pipeline/_srcmasks_plaza-market-inside-parts.npz",
+    "ground": "docs/art-options/ground-prior-plaza-market-inside.png",
+    "collision": "assets/rooms/plaza-market-inside.collision.png",
+    "plate": "docs/art-options/rooms/plaza-market-inside/plate.png",
+    "status": "ready"
+  },
+  "power-plant": {
+    "parts": "tools/art-pipeline/_srcmasks_power-plant-parts.npz",
+    "ground": "docs/art-options/ground-prior-power-plant.png",
+    "collision": "assets/rooms/power-plant.collision.png",
+    "plate": "docs/art-options/rooms/power-plant/plate.png",
+    "status": "ready"
+  },
+  "pump-station": {
+    "parts": "tools/art-pipeline/_srcmasks_pump-station-parts.npz",
+    "ground": "docs/art-options/ground-prior-pump-station.png",
+    "collision": "assets/rooms/pump-station.collision.png",
+    "plate": "docs/art-options/rooms/pump-station/plate.png",
+    "status": "ready"
+  },
+  "repair-bay": {
+    "parts": "tools/art-pipeline/_srcmasks_repair-bay-parts.npz",
+    "ground": "docs/art-options/ground-prior-repair-bay.png",
+    "collision": "assets/rooms/repair-bay.collision.png",
+    "plate": "docs/art-options/rooms/repair-bay/plate.png",
+    "status": "ready"
+  },
+  "repair-office": {
+    "parts": "tools/art-pipeline/_srcmasks_repair-office-parts.npz",
+    "ground": "docs/art-options/ground-prior-repair-office.png",
+    "collision": "assets/rooms/repair-office.collision.png",
+    "plate": "docs/art-options/rooms/repair-office/plate.png",
+    "status": "ready"
+  },
+  "residential": {
+    "parts": "tools/art-pipeline/_srcmasks_residential-parts.npz",
+    "ground": "docs/art-options/ground-prior-residential.png",
+    "collision": "assets/rooms/residential.collision.png",
+    "plate": "docs/art-options/rooms/residential/plate.png",
+    "status": "ready"
+  },
+  "rooftops": {
+    "parts": "tools/art-pipeline/_srcmasks_rooftops-parts.npz",
+    "ground": "docs/art-options/ground-prior-rooftops.png",
+    "collision": "assets/rooms/rooftops.collision.png",
+    "plate": "docs/art-options/rooms/rooftops/plate.png",
+    "status": "ready"
+  },
+  "salvage-shed": {
+    "parts": "tools/art-pipeline/_srcmasks_salvage-shed-parts.npz",
+    "ground": "docs/art-options/ground-prior-salvage-shed.png",
+    "collision": "assets/rooms/salvage-shed.collision.png",
+    "plate": "docs/art-options/rooms/salvage-shed/plate.png",
+    "status": "ready"
+  },
+  "transit": {
+    "parts": "tools/art-pipeline/_srcmasks_transit-parts.npz",
+    "ground": "docs/art-options/ground-prior-transit.png",
+    "collision": "assets/rooms/transit.collision.png",
+    "plate": "docs/art-options/rooms/transit/plate.png",
+    "status": "ready"
+  },
+  "transit-office": {
+    "parts": "tools/art-pipeline/_srcmasks_transit-office-parts.npz",
+    "ground": "docs/art-options/ground-prior-transit-office.png",
+    "collision": "assets/rooms/transit-office.collision.png",
+    "plate": "docs/art-options/rooms/transit-office/plate.png",
+    "status": "ready"
+  },
+  "underworks": {
+    "parts": "tools/art-pipeline/_srcmasks_underworks-parts.npz",
+    "ground": "docs/art-options/ground-prior-underworks.png",
+    "collision": "assets/rooms/underworks.collision.png",
+    "plate": "docs/art-options/rooms/underworks/plate.png",
+    "status": "ready"
+  }
+}
