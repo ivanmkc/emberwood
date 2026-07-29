@@ -1719,3 +1719,13 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   no ghost; player correctly hidden under the herb bundles.
 - All 3 focus scenes now have tri-rater gold overhead layers live: bazaar
   (35 parts), anchor (7), plaza (32).
+
+## Run 39 (2026-07-29 05:55 UTC) — closing audit of the 12h window
+- verify_defects trend (VLM walkability judge vs shipped collision):
+  anchorroom 2.56% (was 6.06%), night-bazaar 4.90% (was 14.71% pre-magenta),
+  plaza-market-inside 13.54% missed-walk / 0.01% false-walk.
+- Read: the magenta-first pipeline cut bazaar defects 3x. Plaza collision is
+  CONSERVATIVE (nothing walk-through-walls; judge wants more floor open than
+  the battery-gated build allows) — top post-window item: plaza compose
+  retune to open judged-walkable shelf aisles, re-gated by the offline
+  battery (door->mouth x3 + flood).
