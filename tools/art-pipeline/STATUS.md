@@ -1928,6 +1928,29 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   grids over STATIC_T/MIN_EVID/SIDE_MARGIN/TRUNC_FRAC/KEY_R re-estimating
   pre-rendered videos). Regression after all fixes: dev bench 0 hard errors.
 
+## Run 46 (2026-07-29) — 3D bench: MIN_WALKER_PX 400→120 + trace rendering
+- ESTIMATOR CHANGES (team-lead, on main): MIN_WALKER_PX lowered from 400 to
+  120 — far-depth perspective walkers (~250 keyed px) were falling below the
+  old gate, producing zero observations for entire far segments. The chroma
+  contract justifies the lower floor (only the suit can key). Trace rendering
+  now keeps ALL track fragments (>=2 points, was >=4), draws dashed bridges
+  between consecutive fragments (the hidden-behind-object gaps), and lone
+  observations as white dots.
+- **3D bench: 0 hard errors (21/21 correct)**:
+    ground->ground: 3 | ysort->ysort: 8, collision: 3 | overhead->overhead: 7
+- FOOTPRINT SCORING (4 scored, 7 None = no estimate):
+    - pid 7 (kiosk): err +0px OK (was +10px UNSAFE) — lower size gate lets
+      far-depth walkers contribute observations that tighten the p25 quantile
+    - pid 8 (bookshelf): err +4px OK (unchanged)
+    - pid 12 (tower): err -16px CONSERVATIVE (unchanged)
+    - pid 21 (brick): err -27px CONSERVATIVE (was -26px, rounding)
+    - 7 parts: no estimate (None) — <5 behind-observations, safe full-sprite prior
+    - Summary: 4 scored, 2 OK, 2 conservative, **0 unsafe**, median err -8px
+- TRACE MAPS: eyeballed iter1/3/6/10/13. Far-behind walks (walk0, z=-6) now
+  show full-width traces that were previously invisible under the 400px gate.
+  Dashed occlusion bridges visible through objects. All walks span their full
+  paths.
+
 ## Run 45 (2026-07-29) — 3D bench: collision-safe paths + re-frozen estimator (fdf3911)
 - COLLISION-SAFE PATHS: all 13 probe paths now stay outside collision bands.
   Previous paths let the walker walk THROUGH objects' footprint bands (the

@@ -1,10 +1,10 @@
 [
  {
   "pid": 7,
-  "est_top": 355,
+  "est_top": 345,
   "true_top": 345,
-  "err_px": 10,
-  "label": "UNSAFE (under-block)"
+  "err_px": 0,
+  "label": "OK"
  },
  {
   "pid": 8,
@@ -22,9 +22,9 @@
  },
  {
   "pid": 21,
-  "est_top": 495,
+  "est_top": 494,
   "true_top": 521,
-  "err_px": -26,
+  "err_px": -27,
   "label": "CONSERVATIVE (safe over-block)"
  }
 ]
