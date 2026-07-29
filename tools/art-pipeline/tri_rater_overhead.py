@@ -39,12 +39,19 @@ PROMPT = (
  'Answer with exactly one word: OVERHEAD or GROUNDED.'
 )
 
-SCENES = {
- 'night-bazaar': ('docs/art-options/rooms/night-bazaar/plate.png', 'night-bazaar'),
- 'anchorroom': ('docs/art-options/rooms/anchorroom/plate.png', 'anchorroom'),
- 'plaza-market-inside': ('docs/art-options/rooms/plaza-market-inside/plate.png',
-                         'plaza-market-inside'),
-}
+def _load_scenes():
+    """Build SCENES dict from room_bundles.json (data-driven, not hardcoded)."""
+    manifest = os.path.join(ROOT, 'tools/art-pipeline/room_bundles.json')
+    with open(manifest) as f:
+        bundles = json.load(f)
+    scenes = {}
+    for room, info in bundles.items():
+        plate_rel = info.get('plate', f'docs/art-options/rooms/{room}/plate.png')
+        scenes[room] = (plate_rel, room)
+    return scenes
+
+
+SCENES = _load_scenes()
 
 
 def part_crop(plate, mask):
@@ -62,7 +69,7 @@ def part_crop(plate, mask):
 
 async def rate(client, im):
     async with SEM:
-        for _ in range(4):
+        for attempt in range(6):
             try:
                 r = await client.aio.models.generate_content(
                     model=RATER_MODEL, contents=[im, PROMPT])
@@ -71,16 +78,41 @@ async def rate(client, im):
                     return OVERHEAD
                 if GROUNDED.upper() in t:
                     return GROUNDED
-            except (genai_errors.APIError, ValueError, OSError):
-                await asyncio.sleep(5)
+            except (genai_errors.APIError, ValueError, OSError) as e:
+                backoff = min(60, 5 * (2 ** attempt))
+                if '429' in str(e) or 'quota' in str(e).lower():
+                    backoff = min(120, 10 * (2 ** attempt))
+                await asyncio.sleep(backoff)
         return None
 
 
 async def main(room):
+    """Rate one room's parts and emit overhead assets.
+
+    Returns a result dict for sweep accumulation, or None on error.
+    """
+    if room not in SCENES:
+        print(f'[{room}] not in SCENES manifest — skipping')
+        return None
     plate_rel, asset = SCENES[room]
-    plate = np.asarray(Image.open(os.path.join(ROOT, plate_rel)).convert('RGB'))
-    parts = np.load(os.path.join(ROOT, 'tools/art-pipeline',
-                                 f'_srcmasks_{room}-parts.npz'))['inst']
+    plate_path = os.path.join(ROOT, plate_rel)
+    if not os.path.exists(plate_path):
+        print(f'[{room}] plate missing: {plate_rel}')
+        return None
+    plate = np.asarray(Image.open(plate_path).convert('RGB'))
+
+    parts_path = os.path.join(ROOT, 'tools/art-pipeline',
+                              f'_srcmasks_{room}-parts.npz')
+    if not os.path.exists(parts_path):
+        print(f'[{room}] parts mask missing')
+        return None
+    parts = np.load(parts_path)['inst']
+
+    jpg_path = os.path.join(ROOT, 'assets', 'rooms', f'{asset}.jpg')
+    if not os.path.exists(jpg_path):
+        print(f'[{room}] room asset JPG missing: {jpg_path}')
+        return None
+
     pids = [int(p) for p in np.unique(parts) if p > 0
             and (parts == p).sum() >= MIN_PART_PX]
     print(f'[{room}] rating {len(pids)} parts x {N_RATERS} raters')
@@ -111,14 +143,14 @@ async def main(room):
         ROOT, 'docs/art-options', f'z-source-validation-{room}.json'), 'w'), indent=1)
     print(f'  unanimous overhead: {len(unanimous)} parts, agreement {agreement}')
 
-    room_img = np.asarray(Image.open(os.path.join(
-        ROOT, 'assets', 'rooms', f'{asset}.jpg')).convert('RGB'))
+    room_img = np.asarray(Image.open(jpg_path).convert('RGB'))
     alpha = np.zeros(parts.shape, bool)
     for k in unanimous:
         alpha |= parts == int(k)
     a_small = np.asarray(Image.fromarray((alpha * 255).astype(np.uint8))
                          .resize((room_img.shape[1], room_img.shape[0]),
                                  Image.Resampling.NEAREST))
+    alpha_px = int((a_small > 0).sum())
     rgba = np.dstack([room_img, a_small])
     Image.fromarray(rgba, 'RGBA').save(os.path.join(
         ROOT, 'assets', 'rooms', f'{asset}.overhead.png'))
@@ -127,9 +159,63 @@ async def main(room):
         np.array([80, 160, 255], np.float32) * 0.7
     Image.fromarray(ov.clip(0, 255).astype(np.uint8)).save(os.path.join(
         ROOT, 'docs/art-options', f'overhead-gold-{room}-preview.jpg'), quality=88)
-    print(f'  shipped assets/rooms/{asset}.overhead.png '
-          f'({int((a_small > 0).sum())} alpha px)')
+    print(f'  shipped assets/rooms/{asset}.overhead.png ({alpha_px} alpha px)')
+
+    return {'parts_rated': len(pids), 'unanimous_overhead_count': len(unanimous),
+            'agreement': agreement, 'alpha_px': alpha_px}
+
+
+async def sweep(rooms, report_path=None):
+    """Run tri-rater on a list of rooms, accumulating a sweep report.
+
+    Stops and flags any room whose pairwise agreement drops below 0.85.
+    Returns the sweep report dict.
+    """
+    if report_path is None:
+        report_path = os.path.join(ROOT, 'docs/art-options/trirater-sweep-report.json')
+    if os.path.exists(report_path):
+        with open(report_path) as f:
+            report = json.load(f)
+    else:
+        report = {'rooms': {}, 'flagged': []}
+
+    for room in rooms:
+        if room in report['rooms']:
+            print(f'[{room}] already in report — skipping')
+            continue
+        print(f'\n=== {room} ===')
+        result = await main(room)
+        if result is None:
+            report['rooms'][room] = {'status': 'error'}
+            continue
+
+        min_agree = min(result['agreement'].values())
+        entry = {
+            'parts_rated': result['parts_rated'],
+            'unanimous_overhead': result['unanimous_overhead_count'],
+            'agreement': result['agreement'],
+            'alpha_px': result['alpha_px'],
+            'status': 'shipped' if min_agree >= 0.85 else 'FLAGGED'
+        }
+        report['rooms'][room] = entry
+
+        if min_agree < 0.85:
+            report['flagged'].append(room)
+            print(f'  *** FLAGGED: agreement {min_agree:.2f} < 0.85 — stopping')
+            json.dump(report, open(report_path, 'w'), indent=1)
+            return report
+
+        json.dump(report, open(report_path, 'w'), indent=1)
+
+    print(f'\nSweep complete: {len(report["rooms"])} rooms')
+    json.dump(report, open(report_path, 'w'), indent=1)
+    return report
 
 
 if __name__ == '__main__':
-    asyncio.run(main(sys.argv[1] if len(sys.argv) > 1 else 'plaza-market-inside'))
+    if len(sys.argv) > 1 and sys.argv[1] == '--sweep':
+        focus = {'anchorroom', 'night-bazaar', 'plaza-market-inside'}
+        rooms = [r for r in SCENES if r not in focus]
+        asyncio.run(sweep(rooms))
+    else:
+        asyncio.run(main(sys.argv[1] if len(sys.argv) > 1 else 'plaza-market-inside'))
