@@ -1601,3 +1601,18 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   Model fusion demoted to R&D until a source demonstrates >=0.8 precision
   on held-out parts. Validation data committed
   (z-source-validation-night-bazaar.json).
+
+### Cycle 8 of 12h loop: height-query v2 — honest negative
+- Hypothesis: batched-thumbnail presentation caused the low height precision;
+  v2 re-queried all 114 gold parts with the EXACT gold-labeler presentation
+  (zoomed 520px crop, red outline, one part per call), tune/holdout split.
+- RESULT: holdout precision pro 0.52 / flash 0.50 / both-agree 0.53 — no
+  better than batched. Presentation was NOT the failure mode; single-shot
+  VLM height judgment on this art plateaus near coin-flip precision, far
+  below the 0.8 re-entry bar. (height-v2-night-bazaar.json)
+- REFRAME: the validated production method for overhead layers is TRI-RATER
+  AGENT CONSENSUS on zoomed crops (0.90 pairwise agreement; unanimous parts
+  shipped in-game). It differs from single-shot queries in deliberation and
+  self-consistent criteria per rater. Single-model height/composite/veo
+  sources remain R&D. Next scene overhead layers will use the tri-rater
+  pipeline directly (13 sheets, 3 raters, unanimity gate).
