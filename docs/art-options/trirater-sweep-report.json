@@ -186,20 +186,70 @@
    },
    "alpha_px": 74743,
    "status": "shipped"
+  },
+  "rooftops": {
+   "parts_rated": 220,
+   "unanimous_overhead": 36,
+   "agreement": {
+    "12": 0.84,
+    "13": 0.88,
+    "23": 0.85
+   },
+   "alpha_px": 80345,
+   "status": "FLAGGED"
+  },
+  "salvage-shed": {
+   "parts_rated": 146,
+   "unanimous_overhead": 24,
+   "agreement": {
+    "12": 0.94,
+    "13": 0.95,
+    "23": 0.94
+   },
+   "alpha_px": 129408,
+   "status": "shipped"
+  },
+  "transit": {
+   "parts_rated": 246,
+   "unanimous_overhead": 59,
+   "agreement": {
+    "12": 0.91,
+    "13": 0.91,
+    "23": 0.9
+   },
+   "alpha_px": 140028,
+   "status": "shipped"
+  },
+  "transit-office": {
+   "parts_rated": 124,
+   "unanimous_overhead": 10,
+   "agreement": {
+    "12": 0.97,
+    "13": 0.94,
+    "23": 0.93
+   },
+   "alpha_px": 77350,
+   "status": "shipped"
+  },
+  "underworks": {
+   "parts_rated": 102,
+   "unanimous_overhead": 18,
+   "agreement": {
+    "12": 0.89,
+    "13": 0.89,
+    "23": 0.86
+   },
+   "alpha_px": 236383,
+   "status": "shipped"
   }
  },
  "flagged": [
-  "pump-station"
+  "pump-station",
+  "rooftops"
  ],
- "remaining": [
-  "rooftops",
-  "salvage-shed",
-  "transit",
-  "transit-office",
-  "underworks"
- ],
- "total_shipped": 16,
- "total_rooms_processed": 17,
+ "remaining": [],
+ "total_shipped": 20,
+ "total_rooms_processed": 22,
  "previously_shipped": [
   "anchorroom",
   "night-bazaar",
