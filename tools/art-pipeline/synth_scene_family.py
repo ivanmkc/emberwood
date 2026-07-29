@@ -165,7 +165,10 @@ def build_scene(spec):
 
 PLAN_MIN_OVERLAP = 90        # px of walker-box/part overlap for a qualifying pass
 PLAN_DEAD_ZONE = 16          # feet must be this far from the base to count
-PLAN_MIN_RUN = 90            # qualifying positions must span this many x px
+PLAN_MIN_RUN = 30            # qualifying positions must span this many x px:
+                             # planned segments are short and slow, so 30px
+                             # yields >=3 sampled overlap frames; 90 falsely
+                             # certified small lanterns UNREACHABLE
 
 
 def plan_coverage_paths(parts, base_y_map, walker_w, walker_h, bands):
