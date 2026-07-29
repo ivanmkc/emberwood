@@ -46,6 +46,7 @@ FLICKER = (1040, 620, 1140, 720)                 # brightness-oscillating patch
 
 
 def build_scene():
+    """Build the procedural plate, part-id map, truth labels and masks."""
     plate = np.zeros((H, W, 3), np.uint8)
     plate[:] = (78, 92, 108)                     # BGR floor
     tex = RNG.integers(-12, 12, (H // 4, W // 4, 3)).astype(np.float32)
@@ -124,6 +125,9 @@ def draw_walker(img, x, feet_y):
 
 
 def render_video(path, waypoints, scene, n_frames=180, smoke=True):
+    """Render one walker probe video along `waypoints` with engine-faithful
+    y-sort compositing, overhead always on top, and the smoke/flicker/jitter
+    nuisances."""
     plate, crate_sprites, over_sprites = scene[0], scene[7], scene[8]
     vw, vh = 1200, 675
     wr = cv2.VideoWriter(path, cv2.VideoWriter_fourcc(*'mp4v'), 24, (vw, vh))
@@ -183,6 +187,7 @@ PATHS = [
 
 
 def main():
+    """Generate the scene + probe videos, run the estimator, score vs truth."""
     os.makedirs(OUT, exist_ok=True)
     scene = build_scene()
     plate, static, parts, truth, base_of, ground, coll = scene[:7]

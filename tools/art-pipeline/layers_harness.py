@@ -74,6 +74,7 @@ def load_inputs(parts_npz, ground_png, coll_png, plate_png):
 
 
 def main():
+    """CLI: run the estimator on any file-based video source, optionally scored."""
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--parts', required=True)
