@@ -2091,3 +2091,31 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   footage is orthographic-at-an-angle (slopes 0.005-0.016 after gating);
   mwalk2 shows a genuine mild +0.043 pseudo-perspective (Veo drift) that the
   gated detector now compensates rather than ignores.
+
+## Run 47 (2026-07-29) — real-Veo inference hardening (Ivan: foolproof given
+## contract-conforming videos) + error triage
+- New diagnose_real_run.py triages every gold disagreement: MIXED-GEOMETRY
+  (segmentation limit) / NO-EVIDENCE (Veo coverage) / CONFLICT / CLEAN-
+  EVIDENCE-WRONG (our bug). Estimator now emits per-part 'unreliable' flags
+  (mixed-geometry parts spanning >2.5 walker heights — the tool says "cannot
+  infer here" instead of guessing).
+- Anchor triage: ZERO clean inference bugs — every miss is segmentation or
+  coverage. Bazaar triage: 14 mixed-geometry, 16 no-evidence, 11 "bugs" of
+  which most are insufficient-evidence-for-part-size (need more probes) and
+  3 were false-overheads investigated visually:
+  * part107 = GOLD LABEL ERROR (it is plainly a suspended canopy section;
+    estimator right, raters wrong) — label-noise column.
+  * part185 = frame-edge truncation phantom -> FIXED with a frame-edge
+    guard (walkers clipped by the video border produce no evidence).
+  * part101 = attribution smear (walker cut by the noodle counter; box
+    blames the adjacent mat too). Three fix attempts (strict contiguity,
+    gap-tolerant contiguity, per-column cutter attribution) all collapsed
+    recall or regressed the bench — REVERTED; documented as the known
+    limitation, 1 part affected.
+- Also: flat-decal occ veto (parts inside the walkable-ground prior cannot
+  occlude — correct by construction, zero recall cost).
+- NET on real bazaar (fresh runs, current estimator): P 0.65 -> 0.73 at
+  R 0.23, 2D bench 0 errors throughout. Anchor P=0.50 R=0.33.
+- 18h program running: scene-prep agent building per-room harness bundles
+  for ALL rooms; veo-fleet agent generating magenta-walker probes (coverage
+  extras for bazaar first, then all ready rooms, 45-video cap).

@@ -166,6 +166,19 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
     F = {p: {'occ_front': set(), 'occ_behind': set(),
              'under_front': set(), 'under_behind': set()} for p in pids}
     feet_hits = {p: 0 for p in pids}
+    # mixed-geometry self-diagnosis: a part whose mask spans far more than a
+    # walker height (e.g. one segment covering lanterns AND aisle ground) has
+    # no meaningful base anchor — the tool must SAY it cannot infer there
+    # rather than emit a confident wrong answer (Ivan: foolproof means
+    # knowing your own limits)
+    part_vspan = {}
+    ground_frac = {}
+    for pid in pids:
+        m_ = parts == pid
+        ys_ = np.nonzero(m_)[0]
+        part_vspan[pid] = int(ys_.max() - ys_.min())
+        ground_frac[pid] = float(ground[m_].mean())
+
     # footprint-band evidence (Ivan's tower case): a walker occluded from
     # BEHIND a part at feet row Y proves row Y is walkable behind it. The
     # band top is a robust QUANTILE of these rows, not the raw max — a single
@@ -290,6 +303,11 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
             for comp in groups:
                 ys, xs = np.nonzero(comp)
                 x0, x1, y0, y1 = int(xs.min()), int(xs.max()), int(ys.min()), int(ys.max())
+                if x0 <= 2 or x1 >= vw - 3 or y1 >= vh - 3:
+                    # walker clipped by the FRAME edge: the short silhouette
+                    # is not occlusion — reconstruction here blamed innocent
+                    # parts near the border (bazaar mat false positives)
+                    continue
                 h_vis = y1 - y0
                 # depth-aware expected height at this screen position;
                 # uses the linear model when perspective is significant,
@@ -518,8 +536,14 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
             footprint_top[str(p)] = None
         else:
             footprint_top[str(p)] = int(np.percentile(obs, 25)) + 1
+    # walker height in plate px ~ 2x median keyed width (suit aspect ~0.5)
+    walker_h_plate = float(np.median(walker_widths) * 2.0 * sy) if walker_widths else 90.0
+    unreliable = {str(p): 'mixed-geometry (span %.1fx walker height)' % (
+                      part_vspan[p] / walker_h_plate)
+                  for p in pids if part_vspan[p] > 2.5 * walker_h_plate}
     result = {'votes': {str(p): V[p] for p in pids},
               'base_y': {str(p): base_y[p] for p in pids},
+              'unreliable': unreliable,
               'footprint_top': footprint_top,
               'behind_rows': {str(p): sorted(behind_rows[p])[-40:] for p in pids
                               if behind_rows[p]},
