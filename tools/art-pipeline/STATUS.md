@@ -1629,3 +1629,16 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
 - Round-2 readability: first reader ~10/10 and caught a REAL stale row —
   dashboard credited the invalidated fusion as the live bazaar overhead
   source; fixed to "unanimous 3-rater gold (35 parts)".
+
+### Run 35: round-2 readability audit — per-reader debug page (Ivan)
+- 3 fresh personas re-ran the 10-question quiz on the current board: ALL
+  10/10 (round 1: 6.5-7/8 with a universal z-legend failure). New board page
+  "Readability Audits (per-reader)": one card per reader with score, answer
+  highlights, verbatim confusion log, suggestions + round-1 comparison table.
+- Readers now catch OUR bugs: all three flagged the stale "fused 3-source z"
+  dashboard/SHIPPED text contradicting the validation card — fixed (current
+  source = unanimous 3-rater gold, 35 parts; anchor overhead HELD).
+- Their residual fixes applied: gap-covering ops named in the stepper
+  (borrow-corridors + widen-lanes), veo P=0.00 bridged to cause (homography
+  registration + part-granularity attribution), plain-English metric glosses
+  in the glossary.
