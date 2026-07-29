@@ -13,25 +13,25 @@ size changes with depth? If so, we implement and validate a depth-aware fix.
 
 CC0 3D models from Kenney (kenney.nl); remaining objects are three.js
 procedural geometry. See synth3d/CREDITS.md for full provenance.
+
+Run from tools/art-pipeline (cwd-based sibling imports)::
+
+    cd tools/art-pipeline && python3 synth3d_bench.py
 """
 import base64
 import http.server
-import io
 import json
 import os
 import subprocess
 import sys
 import threading
-import time
 
 import cv2
 import numpy as np
 from PIL import Image
 
-# ---- path setup: ensure art-pipeline is importable -----------------------
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
-sys.path.insert(0, SCRIPT_DIR)
 
 import veo_layers_v4 as v4
 import veo_walk
@@ -376,57 +376,6 @@ def make_truth_map(plate_bgr, parts_map, truth, out_dir):
     print(f'Saved truth-map: {path}')
 
 
-def score(truth, result, out_dir):
-    """Score estimator predictions against ground truth, print confusion."""
-    last_iter = [r for r in result['iterations'] if 'skipped' not in r]
-    if not last_iter:
-        print('ERROR: all iterations skipped')
-        return {'errors': ['all iterations skipped']}
-
-    pred = {int(k): v for k, v in last_iter[-1]['layers'].items()}
-    conf = {}
-    errors = []
-    for pid_str, info in truth.items():
-        pid = int(pid_str)
-        t = info['truth']
-        p = pred.get(pid, 'missing')
-        conf[(t, p)] = conf.get((t, p), 0) + 1
-        acceptable = (
-            t == p
-            or (t == v4.YSORT and p in (v4.COLLISION, v4.COLLISION_PRIOR))
-        )
-        if not acceptable:
-            errors.append({
-                'part': pid, 'truth': t, 'pred': p,
-                'votes': result['votes'].get(str(pid), {})
-            })
-
-    print('\nconfusion (truth -> pred):')
-    for (t, p), n in sorted(conf.items()):
-        flag = ''
-        ok = (t == p or (t == v4.YSORT and p.startswith('collision')))
-        if not ok:
-            flag = '  <-- WRONG'
-        print(f'  {t:9s} -> {p:15s} {n}{flag}')
-    print(f'\nhard errors: {len(errors)}')
-    for e in errors:
-        print(' ', e)
-
-    score_data = {
-        'truth': {str(k): v['truth'] for k, v in truth.items()},
-        'pred': {str(k): pred.get(k, 'missing') for k in
-                 (int(p) for p in truth)},
-        'confusion': {f'{t}->{p}': n for (t, p), n in conf.items()},
-        'errors': errors,
-        'hard_error_count': len(errors),
-    }
-    score_path = os.path.join(out_dir, 'synth3d-score.json')
-    with open(score_path, 'w') as f:
-        json.dump(score_data, f, indent=1)
-    print(f'Saved score: {score_path}')
-    return score_data
-
-
 def make_debug_frames(plate_bgr, parts_map, truth, video_paths, out_dir):
     """Generate 4-stage debug frames for 2 interesting walker positions.
 
@@ -500,45 +449,58 @@ def make_debug_frames(plate_bgr, parts_map, truth, video_paths, out_dir):
 
 
 def main():
+    """Render the 3D scene, capture walks, and run the estimator via layers_harness."""
     os.makedirs(OUT, exist_ok=True)
     print('=== Synth3D Layer Bench ===')
 
-    # render all passes
     print('\n--- Rendering 3D scene ---')
     plate_bgr, parts_map, ground, coll, _, truth = render_scene(OUT)
 
-    # assemble videos from frame sequences
     print('\n--- Assembling videos ---')
     video_paths = assemble_videos(OUT)
 
-    # make GIFs
     print('\n--- Making GIFs ---')
     make_gifs(video_paths, OUT)
 
-    # save parts npz
-    save_parts_npz(parts_map, OUT)
+    npz_path = save_parts_npz(parts_map, OUT)
 
-    # truth map visualization
     print('\n--- Truth map ---')
     make_truth_map(plate_bgr, parts_map, truth, OUT)
 
-    # debug frames
     print('\n--- Debug frames ---')
     make_debug_frames(plate_bgr, parts_map, truth, video_paths, OUT)
 
-    # run estimator
-    print('\n--- Running estimator ---')
-    result = v4.estimate(
-        parts_map, ground, coll, plate_bgr, video_paths,
-        os.path.join(OUT, 'synth3d-layers'),
-        view_wh=(RENDER_W, RENDER_H)
+    flat_truth = {pid: info['truth'] for pid, info in truth.items()}
+    flat_truth_path = os.path.join(OUT, 'truth-harness.json')
+    with open(flat_truth_path, 'w') as f:
+        json.dump(flat_truth, f, indent=1)
+
+    print('\n--- Running estimator via layers_harness ---')
+    harness_result = subprocess.run(
+        [sys.executable, os.path.join(SCRIPT_DIR, 'layers_harness.py'),
+         '--parts', npz_path,
+         '--ground', os.path.join(OUT, 'ground.png'),
+         '--collision', os.path.join(OUT, 'collision.png'),
+         '--plate', os.path.join(OUT, 'plate.png'),
+         '--videos', os.path.join(OUT, 'walk*.mp4'),
+         '--out', os.path.join(OUT, 'synth3d-layers'),
+         '--truth', flat_truth_path,
+         '--view', f'{RENDER_W}x{RENDER_H}'],
+        cwd=SCRIPT_DIR, timeout=300,
     )
+    if harness_result.returncode != 0:
+        raise RuntimeError(f'layers_harness exited {harness_result.returncode}')
 
-    # score
-    print('\n--- Scoring ---')
-    score_data = score(truth, result, OUT)
+    score_path = os.path.join(OUT, 'synth3d-layers-score.json')
+    if os.path.exists(score_path):
+        with open(score_path) as f:
+            score_data = json.load(f)
+        n_errors = len(score_data.get('errors', []))
+        print(f'\nHarness score: {n_errors} hard errors')
+        return score_data
 
-    return score_data
+    print('WARNING: no score file produced by layers_harness')
+    return {}
 
 
 if __name__ == '__main__':

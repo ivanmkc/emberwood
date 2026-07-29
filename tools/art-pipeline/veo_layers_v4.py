@@ -321,6 +321,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
 
 
 def main():
+    """Run the estimator on the default ROOM's production magenta-walker videos."""
     parts = np.load(os.path.join(ROOT, f'tools/art-pipeline/_srcmasks_{ROOM}-parts.npz'))['inst']
     ground = np.asarray(Image.open(os.path.join(
         ROOT, f'docs/art-options/magenta-ground-{ROOM}-nowires.png')).convert('L')) > 127
