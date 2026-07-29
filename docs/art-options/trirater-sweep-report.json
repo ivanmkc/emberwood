@@ -1,0 +1,178 @@
+{
+ "rooms": {
+  "barge-cabin": {
+   "parts_rated": 182,
+   "unanimous_overhead": 16,
+   "agreement": {
+    "12": 0.97,
+    "13": 0.97,
+    "23": 0.96
+   },
+   "alpha_px": 61003,
+   "status": "shipped"
+  },
+  "canal-docks": {
+   "parts_rated": 123,
+   "unanimous_overhead": 16,
+   "agreement": {
+    "12": 0.96,
+    "13": 0.93,
+    "23": 0.93
+   },
+   "alpha_px": 35363,
+   "status": "shipped"
+  },
+  "control-room": {
+   "parts_rated": 137,
+   "unanimous_overhead": 11,
+   "agreement": {
+    "12": 0.94,
+    "13": 0.95,
+    "23": 0.92
+   },
+   "alpha_px": 29715,
+   "status": "shipped"
+  },
+  "gate-wall": {
+   "parts_rated": 97,
+   "unanimous_overhead": 10,
+   "agreement": {
+    "12": 0.92,
+    "13": 0.94,
+    "23": 0.94
+   },
+   "alpha_px": 22979,
+   "status": "shipped"
+  },
+  "grow-lab-office": {
+   "parts_rated": 235,
+   "unanimous_overhead": 21,
+   "agreement": {
+    "12": 0.92,
+    "13": 0.91,
+    "23": 0.89
+   },
+   "alpha_px": 45359,
+   "status": "shipped"
+  },
+  "guard-post": {
+   "parts_rated": 163,
+   "unanimous_overhead": 10,
+   "agreement": {
+    "12": 0.93,
+    "13": 0.96,
+    "23": 0.93
+   },
+   "alpha_px": 30220,
+   "status": "shipped"
+  },
+  "home-interior-a": {
+   "parts_rated": 179,
+   "unanimous_overhead": 4,
+   "agreement": {
+    "12": 0.95,
+    "13": 0.96,
+    "23": 0.97
+   },
+   "alpha_px": 6917,
+   "status": "shipped"
+  },
+  "hydroponics": {
+   "parts_rated": 207,
+   "unanimous_overhead": 20,
+   "agreement": {
+    "12": 0.91,
+    "13": 0.92,
+    "23": 0.92
+   },
+   "alpha_px": 69616,
+   "status": "shipped"
+  },
+  "noodle-bar": {
+   "parts_rated": 219,
+   "unanimous_overhead": 23,
+   "agreement": {
+    "12": 0.95,
+    "13": 0.95,
+    "23": 0.94
+   },
+   "alpha_px": 223563,
+   "status": "shipped"
+  },
+  "observatory": {
+   "parts_rated": 158,
+   "unanimous_overhead": 13,
+   "agreement": {
+    "12": 0.85,
+    "13": 0.89,
+    "23": 0.85
+   },
+   "alpha_px": 30840,
+   "status": "shipped"
+  },
+  "observatory-dome": {
+   "parts_rated": 156,
+   "unanimous_overhead": 8,
+   "agreement": {
+    "12": 0.9,
+    "13": 0.9,
+    "23": 0.93
+   },
+   "alpha_px": 33545,
+   "status": "shipped"
+  },
+  "outskirts": {
+   "parts_rated": 138,
+   "unanimous_overhead": 31,
+   "agreement": {
+    "12": 0.87,
+    "13": 0.86,
+    "23": 0.88
+   },
+   "alpha_px": 82042,
+   "status": "shipped"
+  },
+  "power-plant": {
+   "parts_rated": 206,
+   "unanimous_overhead": 21,
+   "agreement": {
+    "12": 0.95,
+    "13": 0.92,
+    "23": 0.94
+   },
+   "alpha_px": 56278,
+   "status": "shipped"
+  },
+  "pump-station": {
+   "parts_rated": 200,
+   "unanimous_overhead": 20,
+   "agreement": {
+    "12": 0.87,
+    "13": 0.84,
+    "23": 0.9
+   },
+   "alpha_px": 51297,
+   "status": "FLAGGED"
+  }
+ },
+ "flagged": [
+  "pump-station"
+ ],
+ "remaining": [
+  "repair-bay",
+  "repair-office",
+  "residential",
+  "rooftops",
+  "salvage-shed",
+  "transit",
+  "transit-office",
+  "underworks"
+ ],
+ "total_shipped": 13,
+ "total_rooms_processed": 14,
+ "previously_shipped": [
+  "anchorroom",
+  "night-bazaar",
+  "plaza-market-inside"
+ ]
+}
