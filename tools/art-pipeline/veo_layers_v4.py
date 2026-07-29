@@ -42,6 +42,8 @@ MIN_EVID_FLOOR, MIN_EVID_CAP = 90, 450   # opportunity-scaled bounds (math panel
 EVID_ALPHA = 0.10            # min_evid = alpha * sqrt(part_area) * walker_width
 SIDE_MARGIN = 10             # kept for probe-path guidance docs
 SOFT_MARGIN_CORE = 3.0       # hard-zero zone; soft ramp beyond (math panel #5)
+BOUNDARY_GUARD = 3           # px: under-votes within this of a part edge are
+                             # registration bleed, not evidence (dev finding)
 MIN_WALKER_PX, MAX_WALKER_PX = 400, 30000   # keyed-component size gate
 DEPTH_AWARE_MIN_SAMPLES = 8   # minimum (feet_y, height) pairs for a valid fit
 DEPTH_AWARE_MIN_SLOPE = 0.02  # minimum |slope| before falling back to constant
@@ -133,6 +135,13 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
         nong = m & ~ground
         blocks[pid] = bool(nong.sum() and (~coll[nong]).mean() > 0.5)
 
+    # under-vote boundary guard: suit pixels within BOUNDARY_GUARD px of a
+    # part edge are homography-registration bleed — a walker can never truly
+    # be drawn over an overhead part, yet 2-3px misregistration makes
+    # adjacent suit pixels land inside it and vote 'under'
+    pk = np.ones((2 * BOUNDARY_GUARD + 1,) * 2, np.uint8)
+    pf = parts.astype(np.float32)
+    near_edge = (cv2.dilate(pf, pk) != cv2.erode(pf, pk))
     V = {p: {'occ_front': 0, 'occ_behind': 0, 'under_front': 0, 'under_behind': 0}
          for p in pids}
     feet_hits = {p: 0 for p in pids}
@@ -316,6 +325,11 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                         np.float32(np.stack([xx, yy], 1)).reshape(-1, 1, 2), H).reshape(-1, 2)
                     px = np.clip((pts[:, 0] * sx).astype(int), 0, parts.shape[1] - 1)
                     py = np.clip((pts[:, 1] * sy).astype(int), 0, parts.shape[0] - 1)
+                    if kind == 'under':
+                        keep = ~near_edge[py, px]
+                        if not keep.any():
+                            continue
+                        px, py = px[keep], py[keep]
                     ids, cts = np.unique(parts[py, px], return_counts=True)
                     for pid, ct in zip(ids, cts):
                         pid = int(pid)

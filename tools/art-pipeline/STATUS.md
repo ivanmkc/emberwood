@@ -1842,6 +1842,28 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - synth3d agent: 432d911 standards fixes verified (sys.path, docstrings,
   harness routing); rework in flight for the ground-mask bug that
   invalidated its "irreducible 11 errors" claim.
+- **CORRECTION**: the "11 irreducible errors" claim from the initial 3D bench
+  run was WRONG. Verification found three bugs in the scene masks + probes:
+  (1) ground mask rendered standing objects as walkable (all parts hidden in
+  ground mode → nong=0 → blocks=False → ysort fell through to ground);
+  (2) collision mask used thin footprint bands that didn't cover enough of the
+  standing objects' screen pixels to pass the >50% blocks threshold;
+  (3) overhead probe paths at z=-3 put the walker's feet within the +/-10px
+  SIDE_MARGIN dead zone of the parts' base_y, causing all observations to be
+  discarded as ambiguous.
+  Fixes applied: (1) ground + collision modes now render ysort objects as black
+  (full silhouette subtracted); (2) overhead cables lowered + lanterns reshaped
+  to flat 2.0x0.5 boxes centered in the walker's body range (partial overlap
+  leaves 400+ magenta px visible for detection); (3) cable probe paths shifted
+  to z=-2 / z=4 (in front of cables at z=-3 / z=3) to escape the dead zone;
+  (4) all behind-offsets tightened to ensure walker feet project >10px beyond
+  standing objects' base_y; (5) house.glb scaled to 0.9 so the walker's body
+  extends past its screen footprint for partial occlusion.
+  Screen-space reachability sweep (getOverheadReachability) proves all 7
+  overhead parts reachable at >80 walkable ground positions each.
+  **Corrected 3D bench results (0 hard errors)**:
+    ground->ground  3  |  overhead->overhead  7  |  ysort->ysort  10
+  2D bench regression check: 0 hard errors (depth-aware fallback still active).
 - Run 41b: anchor probes processed through layers_harness (first real-scene
   harness use). 3 videos, 764-771 inliers, iter3: overhead 11 / ysort 26 /
   ground 10. vs 54-part gold: P=0.25 R=0.11 — only part27 (PLAZA MARKET

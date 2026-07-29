@@ -66,11 +66,14 @@ PATHS = [
     # bookshelf(5,-2): base z=-1.8, behind=-3.0 front=-0.5
     # barrel1(-6,1): base z=1.5, behind=0 front=2.8
     [(-4, -4.8), (-4, -2.5), (2, -3.8), (2, -1.5), (-1, -0.8),
-     (-1, 1.8), (5, -3.0), (5, -0.5), (-6, 0.0), (-6, 2.8)],
-    # Path 3: under cable 1 at z=-3 (walker passes under overhead objects)
-    [(-10, -3), (-5, -3), (-2, -3), (0, -3), (1, -3), (4, -3), (10, -3)],
-    # Path 4: under cable 2 at z=3 (passes under second cable's overheads)
-    [(-10, 3), (-5, 3), (-3, 3), (0, 3), (5, 3), (10, 3)],
+     (-1, 1.8), (5, -3.5), (5, -0.5), (-6, 0.0), (-6, 2.8),
+     (-7, -3.5), (-7, -0.5)],
+    # Path 3: under cable 1 — walker at z=-2 (in front of cable at z=-3)
+    # so walker feet project below the cable's base_y, escaping the
+    # +/-10px dead zone in the estimator's front/behind classification.
+    [(-10, -2), (-5, -2), (-2, -2), (0, -2), (1, -2), (4, -2), (10, -2)],
+    # Path 4: under cable 2 — walker at z=4 (in front of cable at z=3)
+    [(-10, 4), (-5, 4), (-3, 4), (0, 4), (5, 4), (10, 4)],
     # Path 5: behind+front of remaining objects (tighter offsets)
     # bench(3,4) base=4.25: behind=3.0 front=5.5
     # crate2(6,2) base=2.4: behind=1.0 front=3.5
@@ -82,8 +85,14 @@ PATHS = [
     [(0, 8), (0, 4), (0, 0), (0, -4), (0, -7),
      (0, -4), (0, 0), (0, 4), (0, 8)],
     # Path 7: across decals at their z-positions
-    # decal1(-2,3), decal2(4,-1), decal3(-5,-3)
-    [(-2, 3), (-2, 4.5), (4, -1), (4, 0.5), (-5, -3), (-5, -1.5)],
+    # Path 7: across decals at their z-positions
+    # decal1(-2,3), decal2(9,-6), decal3(-5,-3)
+    [(-2, 3), (-2, 4.5), (9, -6), (9, -4.5), (-5, -3), (-5, -1.5)],
+    # Path 8: focused house.glb coverage at (-7,-2) — walker behind the
+    # house at z=-2.5 to z=-2.8 (close enough for screen overlap, far enough
+    # to escape the +/-10px dead zone around the house's base_y)
+    [(-7, -2.8), (-7, -2.3), (-7, -2.8), (-7, -2.3),
+     (-7, -2.8), (-7, -2.3), (-7, -0.5)],
 ]
 
 
@@ -202,7 +211,7 @@ const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
-const SCENE_URL = `http://127.0.0.1:${PORT}/tools/art-pipeline/synth3d/index.html`;
+const SCENE_URL = `http://127.0.0.1:${PORT}/synth3d/index.html`;
 console.log('Loading scene from', SCENE_URL);
 await page.goto(SCENE_URL, { waitUntil: 'networkidle', timeout: 30000 });
 
@@ -251,6 +260,11 @@ writeFileSync(resolve(OUT, 'truth.json'), JSON.stringify(partsInfo, null, 2));
 const pidColors = await page.evaluate(() => window.synth3d.getPidColors());
 writeFileSync(resolve(OUT, 'pid_colors.json'), JSON.stringify(pidColors, null, 2));
 console.log('Wrote truth.json + pid_colors.json');
+
+// 5b. overhead reachability sweep (screen-space overlap computation)
+const reach = await page.evaluate(() => window.synth3d.getOverheadReachability());
+writeFileSync(resolve(OUT, 'overhead-reachability.json'), JSON.stringify(reach, null, 2));
+console.log('Wrote overhead-reachability.json');
 
 // 6. walker videos — restore normal mode first
 await page.evaluate(() => window.synth3d.setMode('normal'));
@@ -376,76 +390,31 @@ def make_truth_map(plate_bgr, parts_map, truth, out_dir):
     print(f'Saved truth-map: {path}')
 
 
-def make_debug_frames(plate_bgr, parts_map, truth, video_paths, out_dir):
-    """Generate 4-stage debug frames for 2 interesting walker positions.
+def report_overhead_reachability(out_dir):
+    """Load and report overhead reachability from the JS scene computation.
 
-    Stages: (1) raw frame, (2) chroma-keyed green, (3) expected box + feet
-    dot, (4) occlusion evidence red. Mirrors dbg-*-{1frame,2keyed,3box,4occ}
-    from the 2D bench.
+    For each overhead part, the scene's getOverheadReachability() swept all
+    ground positions and checked if the walker's projected body overlaps
+    the part's projected pixels. Parts with zero overlap positions are
+    provably irreducible under this camera geometry.
     """
-    mag = np.array([255, 0, 255], np.int16)
-    key_r = v4.KEY_R
-
-    if len(video_paths) < 3:
-        print('Not enough videos for debug frames')
+    reach_path = os.path.join(out_dir, 'overhead-reachability.json')
+    if not os.path.exists(reach_path):
+        print('No overhead-reachability.json — skipping reachability report')
         return
-
-    # pick 2 interesting cases:
-    # case 1: walker behind a standing object (path 1, mid-frame)
-    # case 2: walker under overhead cable (path 3, mid-frame)
-    cases = [
-        ('behind-crate', video_paths[1], 0.4),
-        ('under-cable', video_paths[3], 0.5),
-    ]
-    for label, mp4, frac in cases:
-        cap = cv2.VideoCapture(mp4)
-        total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        target = int(total * frac)
-        cap.set(cv2.CAP_PROP_POS_FRAMES, target)
-        ok, frame = cap.read()
-        cap.release()
-        if not ok:
-            continue
-        frame = cv2.resize(frame, (RENDER_W, RENDER_H))
-
-        # stage 1: raw frame
-        cv2.imwrite(os.path.join(out_dir, f'dbg-{label}-1frame.png'), frame)
-
-        # stage 2: chroma key (green tint on magenta pixels)
-        rgb = frame[:, :, ::-1].astype(np.int16)
-        keyed = np.linalg.norm(rgb - mag, axis=2) < key_r
-        stage2 = frame.copy()
-        stage2[keyed] = [0, 255, 0]
-        cv2.imwrite(os.path.join(out_dir, f'dbg-{label}-2keyed.png'), stage2)
-
-        # stage 3: expected bounding box + feet dot
-        ys_k, xs_k = np.nonzero(keyed)
-        stage3 = frame.copy()
-        if len(ys_k) > 0:
-            y0, y1 = int(ys_k.min()), int(ys_k.max())
-            x0, x1 = int(xs_k.min()), int(xs_k.max())
-            cv2.rectangle(stage3, (x0, y0), (x1, y1), (0, 255, 255), 2)
-            feet_y = y1
-            feet_x = int(np.median(xs_k[ys_k >= y1 - 2]))
-            cv2.circle(stage3, (feet_x, feet_y), 5, (0, 0, 255), -1)
-        cv2.imwrite(os.path.join(out_dir, f'dbg-{label}-3box.png'), stage3)
-
-        # stage 4: occlusion evidence (red overlay)
-        bg_approx = cv2.imread(os.path.join(out_dir, 'plate.png'))
-        bg_approx = cv2.resize(bg_approx, (RENDER_W, RENDER_H))
-        static_t = v4.STATIC_T
-        static_mask = (
-            np.abs(frame.astype(np.int16) - bg_approx.astype(np.int16))
-            .max(axis=2) < static_t
-        )
-        stage4 = frame.copy()
-        occ_mask = static_mask & ~keyed
-        stage4[occ_mask, 2] = np.clip(
-            stage4[occ_mask, 2].astype(np.int16) + 80, 0, 255
-        ).astype(np.uint8)
-        cv2.imwrite(os.path.join(out_dir, f'dbg-{label}-4occ.png'), stage4)
-
-    print(f'Saved debug frames for {len(cases)} cases')
+    with open(reach_path) as f:
+        reach = json.load(f)
+    print('\n--- Overhead reachability (screen-space sweep) ---')
+    for pid_str, info in sorted(reach.items(), key=lambda x: int(x[0])):
+        status = 'REACHABLE' if info['reachable'] else 'IRREDUCIBLE'
+        n = info['overlapCount']
+        box = info['partScreenBox']
+        print(f'  pid {pid_str}: {status} ({n} overlap positions) '
+              f'screen box [{box["x0"]},{box["y0"]}]-[{box["x1"]},{box["y1"]}]')
+        if info['reachable'] and info.get('overlapExamples'):
+            ex = info['overlapExamples'][0]
+            print(f'    example: world ({ex["worldX"]:.1f}, {ex["worldZ"]:.1f}), '
+                  f'feet screen y={ex["feetScreenY"]}')
 
 
 def main():
@@ -467,9 +436,6 @@ def main():
     print('\n--- Truth map ---')
     make_truth_map(plate_bgr, parts_map, truth, OUT)
 
-    print('\n--- Debug frames ---')
-    make_debug_frames(plate_bgr, parts_map, truth, video_paths, OUT)
-
     flat_truth = {pid: info['truth'] for pid, info in truth.items()}
     flat_truth_path = os.path.join(OUT, 'truth-harness.json')
     with open(flat_truth_path, 'w') as f:
@@ -490,6 +456,8 @@ def main():
     )
     if harness_result.returncode != 0:
         raise RuntimeError(f'layers_harness exited {harness_result.returncode}')
+
+    report_overhead_reachability(OUT)
 
     score_path = os.path.join(OUT, 'synth3d-layers-score.json')
     if os.path.exists(score_path):

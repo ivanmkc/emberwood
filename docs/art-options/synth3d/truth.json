@@ -8,9 +8,9 @@
   },
   "2": {
     "truth": "ground",
-    "baseWorldZ": 0,
-    "baseScreenY": 357,
-    "baseScreenX": 747,
+    "baseWorldZ": -5,
+    "baseScreenY": 270,
+    "baseScreenX": 883,
     "hasFootprint": false
   },
   "3": {
@@ -93,21 +93,21 @@
   "14": {
     "truth": "overhead",
     "baseWorldZ": -3,
-    "baseScreenY": 330,
+    "baseScreenY": 328,
     "baseScreenX": 530,
     "hasFootprint": false
   },
   "15": {
     "truth": "overhead",
     "baseWorldZ": -3,
-    "baseScreenY": 330,
+    "baseScreenY": 328,
     "baseScreenX": 740,
     "hasFootprint": false
   },
   "16": {
     "truth": "overhead",
     "baseWorldZ": 3,
-    "baseScreenY": 468,
+    "baseScreenY": 465,
     "baseScreenX": 470,
     "hasFootprint": false
   },
@@ -127,9 +127,9 @@
   },
   "19": {
     "truth": "ysort",
-    "baseWorldZ": -0.744171142578125,
-    "baseScreenY": 362,
-    "baseScreenX": 341,
+    "baseWorldZ": -1.2465026855468748,
+    "baseScreenY": 352,
+    "baseScreenX": 345,
     "hasFootprint": true
   },
   "20": {

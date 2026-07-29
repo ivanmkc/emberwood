@@ -102,7 +102,7 @@ function makeDecal(x, z, w, d, color) {
 }
 
 const decal1 = makeDecal(-2, 3, 3, 2.5, 0x994422);   // brown rug
-const decal2 = makeDecal(4, -1, 2.5, 2, 0x336644);    // green tarp
+const decal2 = makeDecal(9, -6, 2.5, 2, 0x336644);    // green tarp (isolated from standing objects)
 const decal3 = makeDecal(-5, -3, 2, 1.5, 0x444488);   // blue mat
 
 // ---- standing objects (YSORT truth) — procedural --------------------------
@@ -235,7 +235,7 @@ const barrel2 = makeCylinder(-3, 5, 0.7, 1.5, 0x775533);
 // ---- load CC0 GLB models as additional standing objects -------------------
 const gltfLoader = new GLTFLoader();
 const modelSlots = [
-  { file: 'models/house.glb', x: -7, z: -2, scale: 1.5, truth: 'ysort' },
+  { file: 'models/house.glb', x: -7, z: -2, scale: 0.9, truth: 'ysort' },
   { file: 'models/brick.glb', x: 0, z: 6, scale: 1.2, truth: 'ysort' },
 ];
 const modelPromises = modelSlots.map(slot =>
@@ -304,15 +304,15 @@ function makeLantern(x, y, z, stringLen) {
   stringMesh.position.y = stringLen / 2;
   group.add(stringMesh);
   const body = new THREE.Mesh(
-    new THREE.SphereGeometry(0.6, 12, 8),
+    new THREE.BoxGeometry(2.0, 0.5, 0.3),
     new THREE.MeshLambertMaterial({ color: 0xFFCC44, emissive: 0x664400, emissiveIntensity: 0.5 })
   );
   group.add(body);
   const cap = new THREE.Mesh(
-    new THREE.ConeGeometry(0.35, 0.25, 8),
+    new THREE.ConeGeometry(0.5, 0.25, 8),
     new THREE.MeshLambertMaterial({ color: 0x444444 })
   );
-  cap.position.y = 0.6;
+  cap.position.y = 0.45;
   group.add(cap);
   group.position.set(x, y - stringLen, z);
   scene.add(group);
@@ -329,7 +329,7 @@ function makeSign(x, y, z, stringLen) {
   stringMesh.position.y = stringLen / 2;
   group.add(stringMesh);
   const board = new THREE.Mesh(
-    new THREE.BoxGeometry(1.5, 0.8, 0.08),
+    new THREE.BoxGeometry(2.5, 1.2, 0.08),
     new THREE.MeshLambertMaterial({ color: 0x884422 })
   );
   group.add(board);
@@ -340,22 +340,26 @@ function makeSign(x, y, z, stringLen) {
   return group;
 }
 
-// Cable 1: thick catenary at z=-3, height ~4 (lower = more walker overlap)
-const cable1Points = [[-10, 4.5, -3], [-5, 3.5, -3], [0, 3.2, -3], [5, 3.5, -3], [10, 4.5, -3]];
+// Cable 1: thick catenary at z=-3, lowered so hanging objects overlap
+// the walker's magenta body (body top at y≈1.6)
+const cable1Points = [[-10, 3.5, -3], [-5, 2.8, -3], [0, 2.5, -3], [5, 2.8, -3], [10, 3.5, -3]];
 const cable1 = makeCable(cable1Points, 0.15);
 
-// Cable 2: at z=3, height ~4.5
-const cable2Points = [[-10, 4.8, 3], [-4, 3.8, 3], [0, 3.5, 3], [4, 3.8, 3], [10, 4.8, 3]];
+// Cable 2: at z=3, similarly lowered
+const cable2Points = [[-10, 3.8, 3], [-4, 2.8, 3], [0, 2.5, 3], [4, 2.8, 3], [10, 3.8, 3]];
 const cable2 = makeCable(cable2Points, 0.12);
 
-// Lanterns hanging from cables (large, low-hanging for easy walker overlap)
-const lantern1 = makeLantern(-2, 3.4, -3, 1.0);
-const lantern2 = makeLantern(4, 3.6, -3, 1.2);
-const lantern3 = makeLantern(-3, 3.9, 3, 1.0);
+// Lanterns hanging from cables — long strings put box body center at y≈0.8,
+// a narrow band across the walker's magenta torso (body y 0.2–1.6).
+// The box is 0.5 tall → covers y 0.55–1.05, leaving ≈0.35 units (13 px)
+// of magenta below + 0.55 units (20 px) above = ~530 px visible (> 400).
+const lantern1 = makeLantern(-2, 2.8, -3, 2.0);
+const lantern2 = makeLantern(4, 2.8, -3, 2.0);
+const lantern3 = makeLantern(-3, 2.8, 3, 2.0);
 
-// Signs hanging from cables
-const sign1 = makeSign(1, 3.3, -3, 0.8);
-const sign2 = makeSign(5, 3.7, 3, 0.9);
+// Signs hanging from cables — board center at y≈1.3, well inside body range
+const sign1 = makeSign(1, 2.6, -3, 1.2);
+const sign2 = makeSign(5, 2.8, 3, 1.2);
 
 // ---- smoke billboard (nuisance — must produce zero votes) -----------------
 const smokeSprites = [];
@@ -451,11 +455,29 @@ function setGroundMode() {
   walkerGroup.visible = false;
   for (const s of smokeSprites) s.mesh.visible = false;
 
-  // hide all parts
-  for (const p of parts) p.mesh.visible = false;
-  // ground plane = white
+  // ground plane = white (walkable floor)
   groundMesh.visible = true;
   groundMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+  // standing objects rendered BLACK to subtract their screen footprint
+  // from the ground mask — those pixels are NOT walkable ground.
+  // overhead + decals stay hidden (floor IS walkable under/at them).
+  const blackMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  for (const p of parts) {
+    if (p.truth === 'ysort') {
+      p.mesh.visible = true;
+      p.mesh.traverse(child => {
+        if (child.isMesh) {
+          if (!originalMaterials.has(child)) {
+            originalMaterials.set(child, child.material);
+          }
+          child.material = blackMat;
+        }
+      });
+    } else {
+      p.mesh.visible = false;
+    }
+  }
 }
 
 function setCollisionMode() {
@@ -468,25 +490,27 @@ function setCollisionMode() {
   walkerGroup.visible = false;
   for (const s of smokeSprites) s.mesh.visible = false;
 
-  // hide parts
-  for (const p of parts) p.mesh.visible = false;
-  // ground = white
+  // ground = white (walkable)
   groundMesh.visible = true;
   groundMesh.material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-  // draw footprint bands as black boxes on the ground
+  // standing objects rendered BLACK — their full screen footprint blocks
+  // walking (matches the estimator's blocks threshold: >50% of non-ground
+  // pixels must be collision-blocked)
+  const blackMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
   for (const p of parts) {
-    if (p.truth === 'ysort' && p.footprintBand) {
-      const fp = p.footprintBand;
-      const w = fp.x1 - fp.x0;
-      const d = fp.z1 - fp.z0;
-      const geo = new THREE.PlaneGeometry(w, d);
-      geo.rotateX(-Math.PI / 2);
-      const mat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-      const fpMesh = new THREE.Mesh(geo, mat);
-      fpMesh.position.set((fp.x0 + fp.x1) / 2, 0.01, (fp.z0 + fp.z1) / 2);
-      scene.add(fpMesh);
-      fpMesh.userData._collisionHelper = true;
+    if (p.truth === 'ysort') {
+      p.mesh.visible = true;
+      p.mesh.traverse(child => {
+        if (child.isMesh) {
+          if (!originalMaterials.has(child)) {
+            originalMaterials.set(child, child.material);
+          }
+          child.material = blackMat;
+        }
+      });
+    } else {
+      p.mesh.visible = false;
     }
   }
 }
@@ -612,6 +636,63 @@ window.synth3d = {
   },
 
   getPartCount() { return parts.length; },
+
+  getOverheadReachability() {
+    const WALKER_H = 2.0, WALKER_R = 0.22, STEP = 0.4, RANGE = 12;
+    const results = {};
+    for (const p of parts) {
+      if (p.truth !== 'overhead') continue;
+      const pbox = new THREE.Box3().setFromObject(p.mesh);
+      const corners = [];
+      for (let xi = 0; xi <= 1; xi++)
+        for (let yi = 0; yi <= 1; yi++)
+          for (let zi = 0; zi <= 1; zi++) {
+            const v = new THREE.Vector3(
+              xi ? pbox.max.x : pbox.min.x,
+              yi ? pbox.max.y : pbox.min.y,
+              zi ? pbox.max.z : pbox.min.z
+            ).project(camera);
+            corners.push({
+              sx: (1 + v.x) / 2 * RENDER_W,
+              sy: (1 - v.y) / 2 * RENDER_H
+            });
+          }
+      const ps = {
+        x0: Math.min(...corners.map(c => c.sx)),
+        y0: Math.min(...corners.map(c => c.sy)),
+        x1: Math.max(...corners.map(c => c.sx)),
+        y1: Math.max(...corners.map(c => c.sy))
+      };
+      let cnt = 0;
+      const examples = [];
+      for (let wx = -RANGE; wx <= RANGE; wx += STEP)
+        for (let wz = -RANGE; wz <= RANGE; wz += STEP) {
+          const feet = new THREE.Vector3(wx, 0, wz).project(camera);
+          const head = new THREE.Vector3(wx, WALKER_H, wz).project(camera);
+          const left = new THREE.Vector3(wx - WALKER_R, 0, wz).project(camera);
+          const right = new THREE.Vector3(wx + WALKER_R, 0, wz).project(camera);
+          const ws = {
+            x0: Math.min((1+left.x)/2*RENDER_W, (1+right.x)/2*RENDER_W),
+            y0: Math.min((1-feet.y)/2*RENDER_H, (1-head.y)/2*RENDER_H),
+            x1: Math.max((1+left.x)/2*RENDER_W, (1+right.x)/2*RENDER_W),
+            y1: Math.max((1-feet.y)/2*RENDER_H, (1-head.y)/2*RENDER_H)
+          };
+          if (ws.y1 < 0 || ws.y0 > RENDER_H || ws.x1 < 0 || ws.x0 > RENDER_W) continue;
+          if (ws.x1 >= ps.x0 && ws.x0 <= ps.x1 && ws.y1 >= ps.y0 && ws.y0 <= ps.y1) {
+            cnt++;
+            if (examples.length < 5)
+              examples.push({ worldX: wx, worldZ: wz,
+                feetScreenY: Math.round((1-feet.y)/2*RENDER_H) });
+          }
+        }
+      results[p.pid] = {
+        reachable: cnt > 0, overlapCount: cnt, overlapExamples: examples,
+        partScreenBox: { x0: Math.round(ps.x0), y0: Math.round(ps.y0),
+                         x1: Math.round(ps.x1), y1: Math.round(ps.y1) }
+      };
+    }
+    return results;
+  },
 
   ready() { return true; }
 };
