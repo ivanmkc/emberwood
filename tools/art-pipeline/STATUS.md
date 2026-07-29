@@ -2010,3 +2010,21 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - 3D bench (agent, verified from artifacts): classification PERFECT after
   mask fixes (ground 3/3, ysort 11/11, overhead 7/7) — the earlier
   "11 irreducible errors" claim was fully explained by the ground-mask bug.
+
+## Run 45 (2026-07-29) — re-freeze validation: SECOND held-out batch + 3D footprint safety
+- Re-freeze fixes (fdf3911: occ_front consensus exemption + conservative p25
+  footprint with <5-obs -> None) validated on a FRESH held-out batch (seeds
+  120-131, first batch was spent): 11 scenes / 110 parts. ground 1.00,
+  ysort 0.985, overhead 0.797 (up from 0.69) — part error rate 8.2%
+  (down from 11.2%), 5/11 scenes fully clean, footprint 38/38 conservative,
+  0 unsafe. 1 scene failed registration (same low-contrast-floor limit).
+- 3D bench (agent, 2afb869, collision-safe paths): classification 21/21;
+  footprint tower/brick flipped UNSAFE -> CONSERVATIVE, kiosk +41 -> +10px
+  (residual = observability limit), median err -6px, 7 sparse parts
+  correctly None (full-sprite blocking prior). The kiosk lesson is now a
+  bench invariant: probe paths must not cross collision bands (validate_paths
+  gate) — collision-ignoring probes self-falsify footprint evidence.
+- Rigor program CLOSED: 4 expert panels reviewed and fixes landed; two
+  independent held-out batches + a 3D perspective arm agree; sensitivity
+  flat on 4/5 constants. Open levers: coverage-guaranteeing path planner,
+  --aligned harness mode, mixed mega-part splitting (#123).

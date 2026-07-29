@@ -1,0 +1,241 @@
+{
+ "n_scenes": 6,
+ "failed_scenes": [],
+ "per_class_accuracy": {
+  "ground": {
+   "mean": 1.0,
+   "std": 0.0,
+   "p5": 1.0,
+   "p95": 1.0
+  },
+  "ysort": {
+   "mean": 0.967,
+   "std": 0.075,
+   "p5": 0.85,
+   "p95": 1.0
+  },
+  "overhead": {
+   "mean": 0.753,
+   "std": 0.151,
+   "p5": 0.542,
+   "p95": 0.95
+  }
+ },
+ "hard_errors": {
+  "total": 6,
+  "scenes_clean": 1,
+  "max_in_scene": 2
+ },
+ "footprint_err_px": {
+  "n": 19,
+  "median": -75.0,
+  "p25": -91.5,
+  "p75": -56.0,
+  "min": -127,
+  "max": -31,
+  "over_blocks_conservative": 19,
+  "under_blocks_unsafe": 0
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  5,
+  7,
+  9
+ ],
+ "results": [
+  {
+   "seed": 0,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     4,
+     4
+    ],
+    "overhead": [
+     1,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -70,
+    -105,
+    -56,
+    -75
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 1,
+   "hard_errors": 0,
+   "errors": [],
+   "per_class": {
+    "ground": [
+     2,
+     2
+    ],
+    "ysort": [
+     3,
+     3
+    ],
+    "overhead": [
+     2,
+     2
+    ]
+   },
+   "footprint_errs": [
+    -37,
+    -45,
+    -110
+   ],
+   "n_parts": 7,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 2,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     5,
+     5
+    ],
+    "overhead": [
+     4,
+     5
+    ]
+   },
+   "footprint_errs": [
+    -74,
+    -111
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 5,
+   "hard_errors": 2,
+   "errors": [
+    {
+     "part": 6,
+     "truth": "ysort",
+     "pred": "ground"
+    },
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     2,
+     2
+    ],
+    "ysort": [
+     4,
+     5
+    ],
+    "overhead": [
+     3,
+     4
+    ]
+   },
+   "footprint_errs": [
+    -75,
+    -81
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 7,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 10,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     5,
+     5
+    ],
+    "overhead": [
+     4,
+     5
+    ]
+   },
+   "footprint_errs": [
+    -89,
+    -31,
+    -94,
+    -127,
+    -65
+   ],
+   "n_parts": 11,
+   "skipped_iters": 0
+  },
+  {
+   "seed": 9,
+   "hard_errors": 1,
+   "errors": [
+    {
+     "part": 7,
+     "truth": "overhead",
+     "pred": "collision-prior"
+    }
+   ],
+   "per_class": {
+    "ground": [
+     1,
+     1
+    ],
+    "ysort": [
+     3,
+     3
+    ],
+    "overhead": [
+     2,
+     3
+    ]
+   },
+   "footprint_errs": [
+    -51,
+    -56,
+    -84
+   ],
+   "n_parts": 7,
+   "skipped_iters": 2
+  }
+ ]
+}
