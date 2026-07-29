@@ -2175,3 +2175,22 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - 18h program running: scene-prep agent building per-room harness bundles
   for ALL rooms; veo-fleet agent generating magenta-walker probes (coverage
   extras for bazaar first, then all ready rooms, 45-video cap).
+
+## Run 50 (2026-07-29 ~17:10 UTC) — 18h all-scenes program, mid-window status
+- Room bundles: 25/25 ready (scene-prep agent, ad18d77; spot-verified from
+  artifacts). segment_parts extended to all rooms; ground priors derived
+  from nbp floor class where magenta doesn't exist.
+- Veo fleet: probes committed for 9 rooms (27 videos) + bazaar coverage
+  extras + plaza; ~38/45 video cap used; quality gates green so far.
+- Coverage experiment (bazaar 5->8 videos): +1 recall conversion, but
+  precision fell on mixed parts (P 0.73->0.57 all-parts; 0.60 with the
+  tool's reliability filter). Combined with the splitting negative result
+  (runs 48-49: granularity NOT the bottleneck; 24/36 errors are pure
+  coverage), the honest conclusion for bazaar's gold score: mixed-part
+  segmentation noise caps precision; conversions must come from rooms with
+  cleaner segmentation. The tool's per-part 'unreliable' flag is the
+  production answer for mixed parts (excluded from claims).
+- room-runner agent started: layers_harness over every probed room, quality
+  gates + sweep-report.json, batched commits.
+- holdout4 (planner + all fixes, seeds 160-171) still running under heavy
+  shared CPU.
