@@ -1553,3 +1553,19 @@ Model pinning skipped: Vertex exposes no dated alias for gemini-3-pro-image.
   6 steps). Verified: stepper renders with own arrow controls (1/6).
 - IN FLIGHT: algorithms/results re-audit (numeric recompute + logic review
   agents) and a fresh-newcomer re-test on the rebuilt board.
+
+### Run 33b: re-audits green + fixes
+- RE-READ TEST on rebuilt board: fresh newcomer scored 10/10 questions
+  correct (9 at confidence 5/5) including the previously-failed z-verdict
+  legend question and the new dashboard/stepper questions. Residual
+  confusions (4 minor) clarified in glossary/status.
+- NUMERIC AUDIT: 5 exact PASS + 1 marginal — every headline number
+  (magenta fracs, collision integrity/exit connectivity, fused 7.51%,
+  tier joins 8/15 with zero vote-attribution mismatches, veo counts,
+  parts/parent map) recomputed from committed artifacts. Edge agreement
+  claim corrected: 0.958 recomputed vs 0.963 logged.
+- LOGIC AUDIT: composite A/B truth table, magenta gates, drive harness
+  CONFIRMED. Two real defects FIXED: (1) build_collision now re-verifies
+  every exit band AFTER the spawn-component step (fail-loud), (2) veo_z
+  plate registration now resizes to true 4:3 (1200x900). Collisions
+  rebuilt + post-component verification green on both rooms.

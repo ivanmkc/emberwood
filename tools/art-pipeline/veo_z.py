@@ -41,8 +41,8 @@ def main():
     parent = {int(k): v for k, v in pmeta['parent'].items()}
     blocking = {pid: f'part{pid}<{parent[pid]}>' for pid in parent if parent[pid] in iblock}
     plate = cv2.imread(os.path.join(ROOT, f'docs/art-options/rooms/{ROOM}/plate.png'))
-    plate_small = cv2.resize(plate, (1200, 896))
-    sx, sy = plate.shape[1] / 1200, plate.shape[0] / 896
+    plate_small = cv2.resize(plate, (1200, 900))  # true 4:3: anisotropic stretch degrades ORB matching
+    sx, sy = plate.shape[1] / 1200, plate.shape[0] / 900
     interior = o2.interior_mask(parts)
 
     evidence = []

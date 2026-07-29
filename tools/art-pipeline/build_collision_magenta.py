@@ -71,6 +71,12 @@ walk = walk | (widened & (cv2.dilate(walk.astype(np.uint8), np.ones((11, 11), np
 
 n, lab = cv2.connectedComponents(walk.astype(np.uint8))
 walk = lab == lab[sy, sx]
+# audit fix: a borrowed corridor can be dropped by the spawn-component step if
+# it only connected through another borrowed region — verify AFTER selection
+for e in inst.get('exits', []):
+    if not reachable(walk, e):
+        raise SystemExit(f'FATAL: exit {e["edge"]} unreachable after spawn-component '
+                         '(borrow was disconnected) — needs manual corridor')
 Image.fromarray((walk * 255).astype(np.uint8)).save(
     os.path.join(ROOT, f'assets/rooms/{ROOM}.collision.png'))
-print('rebuilt: walk frac', round(float(walk.mean()), 3))
+print('rebuilt: walk frac', round(float(walk.mean()), 3), '| all exits verified post-component')
