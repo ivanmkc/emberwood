@@ -2381,3 +2381,31 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   human review for pump-station + rooftops overheads; Ivan decisions:
   emberwood PR #4 (recommend close), termchart PR #293 (stepper UX).
 - Scratch A/B worktrees removed; main tree clean at 0d3d713 + this entry.
+
+## Run 61 (2026-07-30 ~15:00 UTC) — 25-room re-sweep with ba16b84 (task #137)
+- All 25 rooms re-estimated from cached stabilized videos with the fixed
+  estimator into docs/art-options/rooms-layers-v2/ (old rooms-layers/
+  kept as the pre-fix record).
+- Pure-estimator deltas are small and surgical, as the holdout pairing
+  predicted: night-bazaar part190 overhead->ground (the gold-confirmed
+  fix, now in production output), 1-part flips in barge-cabin,
+  home-interior-a, transit. 19/25 rooms byte-equivalent class counts.
+- pump-station overhead 9->27 and repair-office 19->26 are NOT estimator
+  drift: their original runs used only 2 videos (all that existed then);
+  the re-sweep uses 3. Extra-evidence conversions with strong pure
+  occ_front votes (600-3200 px) — the same coverage effect as the bazaar
+  cov top-ups. pump-station was a tri-rater FLAGGED room; the video arm
+  now sees its suspended pipework.
+- salvage-shed exposed a real robustness gap: salvage-shed-walk2_stab.mp4
+  is a corrupt H.264 stream (0 decodable frames) and estimate() crashed
+  on the empty stack. Fixed in this commit: <12 decoded frames => the
+  iteration is recorded as skipped ('no frames decoded'), never a room
+  crash. 2D bench re-verified 0 hard errors; salvage-shed then completed
+  on its 2 good videos.
+- Fact-check for the record: veo-fleet's A/B report claims the original
+  Veo prompts lacked the magenta costume — FALSE for the production path
+  (veo_gepa.py SUIT line + veo_gen_one.py both carry it; run 54 measured
+  35/36 magenta-excellent). The costume was missing only from the NEW
+  prompt_translate.py on PR #5, now fixed there (0673e52). Its real
+  findings stand: waypoint markers survive Veo generation; steering is
+  suggestive-not-proven from one pair.

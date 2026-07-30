@@ -195,6 +195,11 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                 break
             frames.append(cv2.resize(fr, (vw, vh)))
         cap.release()
+        if len(frames) < 12:
+            # corrupt/truncated stream: skip the iteration, never crash the room
+            records.append({'iteration': it, 'video': os.path.basename(mp4),
+                            'skipped': f'no frames decoded ({len(frames)})'})
+            continue
         bg = np.median(np.stack(frames[::6]), axis=0).astype(np.uint8)
         H, inl = vz.homography(bg, plate_small)
         print(f'iter {it}: inliers {inl}')
