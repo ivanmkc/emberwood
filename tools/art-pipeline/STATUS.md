@@ -2359,3 +2359,25 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - Lesson reinforced tonight (both for PR #4's author and for us): only
   strict same-seed same-code pairing counts; cross-batch and stale-
   reference comparisons produced three wrong claims in one night.
+
+## Run 60 (2026-07-30 ~07:00 UTC) — 18h window wrap-up
+- Window deliverables, end to end: (a) all-scenes sweep 25/25 rooms both
+  arms + boards (runs 54-55); (b) PR #4 median hunk adjudicated and
+  rejected on strict paired evidence, full record on the PR (runs 57-59);
+  (c) the REAL false-overhead bug found via expert-panel review and
+  shipped as ba16b84 — truncation reconstruction now requires adjacent-
+  occluder evidence; hard-batch mistakes 8->4 with the unsafe
+  overhead->ground class eliminated, gold-confirmed real-scene fix, all
+  benches green, 0 unsafe footprints anywhere (runs 58-59); (d) synthbench
+  board gained a layman-friendly "Verdict Night" page (7 pages total).
+- Two file-ownership breaches on veo_layers_v4.py were caught, reverted,
+  and the worker redirected into the PR + evidence protocol — which then
+  worked as designed (its audits materially contributed to the real fix).
+- Queued follow-ups (next window): re-sweep the 25 rooms' video-arm
+  estimates with ba16b84 from cached stabilized videos (task #137;
+  night-bazaar preview already at job-tmp spotC); pose-varying walker in
+  synth_scene_family so height-model changes become synthetically
+  discriminable; part101 attribution smear (documented limitation);
+  human review for pump-station + rooftops overheads; Ivan decisions:
+  emberwood PR #4 (recommend close), termchart PR #293 (stepper UX).
+- Scratch A/B worktrees removed; main tree clean at 0d3d713 + this entry.
