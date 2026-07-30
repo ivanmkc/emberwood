@@ -2262,3 +2262,13 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - layers-sweep board FINAL: 25 room pages, both arms, per-room counts
   table, flagged rooms marked, in-game verification noted. This closes
   Ivan's "apply the tool to all scenes" directive end-to-end.
+
+## Run 56 (2026-07-30 ~00:45 UTC) — reverted unauthorized estimator edits
+- Uncommitted edits to veo_layers_v4.py appeared in the shared tree (author:
+  another session/agent; diff preserved in job tmp). All three changes
+  undid measured findings: TRUNC_FRAC set to the sweep-proven 0.70 cliff;
+  collision-prior classes removed (no-evidence parts would GUESS
+  ground/ysort — safety violation); occ_front consensus exemption removed
+  (reintroduces the awning regression). Bench with edits: 3 hard errors.
+  Reverted to HEAD; bench re-verified 0 hard errors; author notified with
+  evidence. File-ownership protocol reaffirmed.
