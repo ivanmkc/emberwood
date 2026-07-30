@@ -54,14 +54,21 @@ VEO_TIMEOUT = 900
 
 
 def load_room_data(room, root=ROOT):
-    """Load parts mask, ground, collision, and plate for a room."""
+    """Load parts mask, ground, collision, and plate for a room.
+
+    The ground mask is optional — only 3 rooms (the original focus scenes)
+    have it. When absent, returns None for ground; callers that need it
+    should fall back to using the collision mask directly.
+    """
     parts = np.load(os.path.join(
         root, f'tools/art-pipeline/_srcmasks_{room}-parts.npz'))['inst']
 
+    ground = None
     ground_path = os.path.join(root, f'docs/art-options/magenta-ground-{room}-nowires.png')
     if not os.path.exists(ground_path):
         ground_path = os.path.join(root, f'docs/art-options/magenta-ground-{room}.png')
-    ground = np.asarray(Image.open(ground_path).convert('L')) > 127
+    if os.path.exists(ground_path):
+        ground = np.asarray(Image.open(ground_path).convert('L')) > 127
 
     coll_path = os.path.join(root, f'assets/rooms/{room}.collision.png')
     coll = np.asarray(
@@ -99,13 +106,21 @@ def compute_base_y(parts):
     return base_y
 
 
-def compute_collision_bands(parts, coll, ground):
-    """Compute collision band rects for the coverage planner."""
+def compute_collision_bands(parts, coll, ground=None):
+    """Compute collision band rects for the coverage planner.
+
+    When ground is None (no magenta-ground mask available), treats all
+    non-walkable part pixels as potential blockers. This is conservative
+    (may produce extra bands) but safe.
+    """
     pids = [int(p) for p in np.unique(parts) if p > 0]
     bands = []
     for pid in pids:
         m = parts == pid
-        nong = m & ~ground
+        if ground is not None:
+            nong = m & ~ground
+        else:
+            nong = m
         blocked = ~coll & nong
         if blocked.any():
             ys, xs = np.nonzero(blocked)
@@ -216,6 +231,16 @@ def plan_round(room, estimator_json, parts, ground, coll, plate,
     return paths, prompts, waypointed, scores, summary, report
 
 
+def _classified_pct(summary):
+    """Return the right classified percentage for stopping decisions.
+
+    Uses relevant_classified_pct (dont-care excluded) when available,
+    falling back to classified_pct for backward compatibility with
+    summaries produced without the walkable mask.
+    """
+    return summary.get('relevant_classified_pct', summary['classified_pct'])
+
+
 def should_stop(history, max_rounds=MAX_ROUNDS):
     """Evaluate the stopping criterion.
 
@@ -230,16 +255,17 @@ def should_stop(history, max_rounds=MAX_ROUNDS):
     if latest['unvisited'] == 0 and latest['under_evidenced'] == 0:
         return True, 'all parts classified'
 
-    if latest['classified_pct'] >= STOP_CLASSIFIED_PCT:
-        return True, f'classified_pct {latest["classified_pct"]}% >= {STOP_CLASSIFIED_PCT}%'
+    pct = _classified_pct(latest)
+    if pct >= STOP_CLASSIFIED_PCT:
+        return True, f'relevant_classified_pct {pct}% >= {STOP_CLASSIFIED_PCT}%'
 
     if len(history) >= 2:
         prev = history[-2]
-        gain = latest['classified_pct'] - prev['classified_pct']
+        gain = _classified_pct(latest) - _classified_pct(prev)
         if gain < MARGINAL_GAIN_FLOOR:
             if len(history) >= 3:
                 prev2 = history[-3]
-                gain2 = prev['classified_pct'] - prev2['classified_pct']
+                gain2 = _classified_pct(prev) - _classified_pct(prev2)
                 if gain2 < MARGINAL_GAIN_FLOOR:
                     return True, (f'diminishing returns: last two gains '
                                   f'{gain2:.1f}%, {gain:.1f}% < {MARGINAL_GAIN_FLOOR}%')

@@ -1,0 +1,102 @@
+{
+  "barge-cabin": {
+    "status": "all_unreachable",
+    "needs_work": 125,
+    "relevant_classified_pct": 24.4
+  },
+  "salvage-shed": {
+    "status": "all_unreachable",
+    "needs_work": 75,
+    "relevant_classified_pct": 32.5
+  },
+  "gate-wall": {
+    "status": "planned",
+    "relevant_classified_pct": 42.7,
+    "needs_work": 41,
+    "reachable": 33,
+    "unreachable": 8,
+    "paths": 23,
+    "prompts": 12,
+    "ground_mask": "no"
+  },
+  "repair-bay": {
+    "status": "planned",
+    "relevant_classified_pct": 45.6,
+    "needs_work": 47,
+    "reachable": 38,
+    "unreachable": 9,
+    "paths": 25,
+    "prompts": 19,
+    "ground_mask": "no"
+  },
+  "rooftops": {
+    "status": "planned",
+    "relevant_classified_pct": 45.6,
+    "needs_work": 87,
+    "reachable": 74,
+    "unreachable": 13,
+    "paths": 41,
+    "prompts": 23,
+    "ground_mask": "no"
+  },
+  "night-bazaar": {
+    "status": "planned",
+    "relevant_classified_pct": 48.9,
+    "needs_work": 66,
+    "reachable": 15,
+    "unreachable": 51,
+    "paths": 11,
+    "prompts": 8,
+    "ground_mask": "yes"
+  },
+  "transit-office": {
+    "status": "planned",
+    "relevant_classified_pct": 52.3,
+    "needs_work": 17,
+    "reachable": 6,
+    "unreachable": 11,
+    "paths": 4,
+    "prompts": 4,
+    "ground_mask": "no"
+  },
+  "underworks": {
+    "status": "all_unreachable",
+    "needs_work": 34,
+    "relevant_classified_pct": 53.0
+  },
+  "observatory-dome": {
+    "status": "planned",
+    "relevant_classified_pct": 53.8,
+    "needs_work": 63,
+    "reachable": 8,
+    "unreachable": 55,
+    "paths": 7,
+    "prompts": 4,
+    "ground_mask": "no"
+  },
+  "power-plant": {
+    "status": "planned",
+    "relevant_classified_pct": 56.0,
+    "needs_work": 76,
+    "reachable": 55,
+    "unreachable": 21,
+    "paths": 30,
+    "prompts": 16,
+    "ground_mask": "no"
+  },
+  "observatory": {
+    "status": "planned",
+    "relevant_classified_pct": 59.1,
+    "needs_work": 41,
+    "reachable": 14,
+    "unreachable": 27,
+    "paths": 10,
+    "prompts": 10,
+    "ground_mask": "no"
+  },
+  "control-room": {
+    "status": "all_unreachable",
+    "needs_work": 36,
+    "relevant_classified_pct": 59.4
+  }
+}
