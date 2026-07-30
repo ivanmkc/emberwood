@@ -323,7 +323,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                     if below == 0 and above == 0:
                         # no adjacent occluder found: default to the SAFE
                         # anchor (visible bottom), never reconstruct blindly
-                        feet_y, trunc_above = y1, True
+                        feet_y = y1
                     elif below >= above:
                         # evaluate h at the RECONSTRUCTED feet, not the visible
                         # bottom — one fixed-point step (cv panel #1 bootstrap)

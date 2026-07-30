@@ -2299,3 +2299,36 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
 - Note: d671122 landed on main (pushed) = dev-v4fix-summary.json only,
   data from the CONFOUNDED two-change branch run — read it as branch
   evidence, not a main-code artifact. No code delta; A/B arms unaffected.
+
+## Run 58 (2026-07-30 ~04:15 UTC) — SHIPPED: reconstruction requires occluder
+## evidence (variant C); PR #4 median hunk formally rejected
+- Median A/B verdict (posted on PR #4): paired holdout seeds 200-211 came
+  back IDENTICAL — same 8 hard errors, same failing parts, byte-identical
+  footprints. Only delta: 6 wrong labels shift ground->collision-prior
+  (safer wrong answer, incidental). Real bazaar vs 114-part gold: 1 fix
+  (part190) but 2 regressions (part189, part152 both grounded -> pred
+  OVERHEAD) and part101 untouched (781->715 occ_front). Net-negative;
+  recommend close. Ivan decides.
+- The real bug (found via veo-fleet's expert panel, confirmed in code):
+  the no-adjacent-occluder truncation branch said "never reconstruct
+  blindly" but set trunc_above=True anyway — a falsely-fired truncation
+  gate painted any static part above the suit-top as an occluder.
+- Variant C = one line: that branch now anchors feet at the visible
+  bottom and does NOT reconstruct; the two evidence-backed branches
+  (adjacent occluder found below/above) reconstruct as before.
+- Evidence (all fresh runs): 2D bench 0 errs; 3D bench 0 errs, footprints
+  0 unsafe (2 exact, 2 conservative); dev seeds 0,1,2,5,7,9: 0 hard errs
+  all classes 1.0 (frozen-HEAD baseline: 3 errs, overhead 0.892); FRESH
+  holdout seeds 220-231 (never used): 4 errs/12 scenes, overhead 0.903,
+  ysort+ground 1.0, footprints 49/49 conservative (baseline batch rate:
+  8 errs/10 scenes, overhead 0.802) — paired baseline on 220-231 running,
+  numbers to follow; real bazaar (8 stab videos): EXACTLY one part
+  changes, part190 overhead->ground, gold-confirmed fix, 0 regressions.
+- Residual variant-C holdout errors are all weak/no-evidence overheads
+  (2 -> safe collision-prior incl. 1 planner-certified UNREACHABLE,
+  2 -> ysort); ZERO unsafe overhead->ground errors remain.
+- part101 unchanged (781 occ_front): its phantom votes flow through
+  branches WITH real adjacent-occluder pixels — stays a documented
+  limitation of the attribution path (3 carving attempts + this negative
+  result). Backlog: pose-varying walker in the scene family so future
+  height-model changes are synthetically discriminable.
