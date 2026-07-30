@@ -2272,3 +2272,30 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   (reintroduces the awning regression). Bench with edits: 3 hard errors.
   Reverted to HEAD; bench re-verified 0 hard errors; author notified with
   evidence. File-ownership protocol reaffirmed.
+
+## Run 57 (2026-07-30 ~01:40 UTC) — PR #4 review + median-only A/B launched
+- veo-fleet opened draft PR #4 (fix/v4-false-overhead-median-height): (a)
+  h_est_const p90 -> median, (b) classify() no-evidence collision-prior
+  replaced by gfrac>=0.5 ground/ysort guessing, (c) comment stripping. It
+  also left the SHARED checkout switched onto its branch — returned to
+  main, bench re-verified 0 hard errors at HEAD.
+- Review posted (request changes): change (b) must come out — same safety
+  violation reverted at run 56; COLLISION_PRIOR is the honest "unvisited"
+  signal the sweep report + coverage planner consume; and it CONFOUNDS the
+  validation (guessing earns free accuracy on unvisited true-GROUND parts,
+  so its 3->1 dev improvement can't be attributed to the median fix).
+- Change (a) median-vs-p90 is plausible (inflated h_exp -> phantom
+  head-zone truncation -> false occ smear, the bazaar part101 class) with
+  a symmetric counter-risk (occluded frames drag median down -> missed
+  truncation). Decisive evidence in flight: paired A/B, median-ONLY vs
+  baseline, fresh held-out seeds 200-211 (one run each, report-only) +
+  night-bazaar spot check on the identical 8 stabilized probe videos.
+  Median-only re-passed the fixed 2D bench: 0 hard errors.
+- Corrections to veo-fleet's audit: "ground prior exactly as Ivan
+  requested" has no basis in the session record (Ivan asleep all window);
+  holdout3-summary.json in the PR is a byte-identical pre-existing
+  baseline-era artifact (seeds 140-151), NOT the fix's holdout run — its
+  overfitting-gap analysis was built on misattributed data.
+- Note: d671122 landed on main (pushed) = dev-v4fix-summary.json only,
+  data from the CONFOUNDED two-change branch run — read it as branch
+  evidence, not a main-code artifact. No code delta; A/B arms unaffected.
