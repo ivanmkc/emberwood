@@ -67,27 +67,29 @@ COL_MAP = {GROUND: (255, 80, 255), COLLISION: (255, 150, 40),
            YSORT: (60, 220, 120)}
 
 
-def classify(v, blocks_pid, passes_through, min_evid=MIN_EVID, gfrac=0.0):
+def classify(v, blocks_pid, passes_through, min_evid=MIN_EVID):
     """One part's layer from its feet-conditioned vote counts.
 
     min_evid is opportunity-scaled per part (math panel #2): a tiny decal and
-    a wall-sized part must not share one absolute pixel threshold.
-    gfrac is the fraction of the part overlapping walkable ground — the prior
-    for parts without video evidence (ground prior from the consensus)."""
+    a wall-sized part must not share one absolute pixel threshold."""
     of, ob = v['occ_front'], v['occ_behind']
     uf, ub = v['under_front'], v['under_behind']
     if of + ob + uf + ub == 0:
-        return GROUND if gfrac >= 0.5 and not blocks_pid else YSORT
+        return COLLISION if (blocks_pid and not passes_through) else COLLISION_PRIOR
     if of >= min_evid:
+        # a standing object can NEVER occlude a walker in front of it —
+        # solid occ_front is the unambiguous suspended signature
         return OVERHEAD
-    ground_dom = 4 if blocks_pid else 2
+    ground_dom = 4 if blocks_pid else 2   # a blocking footprint is a strong
     if ub >= min_evid * (2 if blocks_pid else 1) and ub > ground_dom * (of + ob):
-        return GROUND
+        return GROUND                     # prior — overriding it needs more
     if ob >= min_evid or (uf >= min_evid and ob > 0):
         return YSORT
     if uf >= min_evid:
+        # front-only walkover is consistent with ground AND y-sort;
+        # the collision prior decides (a non-blocker you walk over = ground)
         return YSORT if blocks_pid else GROUND
-    return GROUND if gfrac >= 0.5 and not blocks_pid else YSORT
+    return COLLISION if (blocks_pid and not passes_through) else COLLISION_PRIOR
 
 
 DBG_PAD = 130                # crop margin around the walker in debug strips
@@ -392,6 +394,8 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                         pid = int(pid)
                         if pid <= 0 or ct < MIN_VOTE_PX:
                             continue
+                        # soft base margin (math panel #5): hard-zero only in
+                        # the 3px core, linear ramp scaled to part size
                         sigma_base = max(5.0, 0.01 * part_area[pid] ** 0.5,
                                          FEET_SIGMA_FRAC * h_exp * sy)
                         w_side = min(1.0, max(
@@ -408,6 +412,8 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                         if kind == 'occ':
                             occ_px_by_side[side] += int(ct)
                             if side == BEHIND:
+                                # occluded from behind at feet row fpy: the
+                                # blocking base band starts below this row
                                 behind_rows[pid].append(fpy)
                 # track the strongest observation per debug case AT VOTE TIME
                 for case, side in zip(DBG_CASES, (FRONT, BEHIND)):
@@ -429,12 +435,17 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
             return float(np.clip(EVID_ALPHA * part_area[pid] ** 0.5 * med_w_plate,
                                  MIN_EVID_FLOOR, MIN_EVID_CAP))
         def consensus_votes(pid):
+            # temporal consensus: buckets fed by fewer than MIN_BUCKET_FRAMES
+            # distinct frames are treated as noise. occ_front is EXEMPT: it is
+            # the axiom-bearing bucket (a standing object can never occlude a
+            # walker in front) and is already quadruple-gated (chroma key,
+            # static background, parts mask, boundary guard) — zeroing it let
+            # suspended objects with behind-side occlusion masquerade as ysort
             return {b: (V[pid][b] if b == 'occ_front'
                         or len(F[pid][b]) >= MIN_BUCKET_FRAMES else 0)
                     for b in V[pid]}
         layers = {pid: classify(consensus_votes(pid), blocks[pid],
-                                feet_hits[pid] >= 3, min_evid_for(pid),
-                                ground_frac[pid])
+                                feet_hits[pid] >= 3, min_evid_for(pid))
                   for pid in pids}
         prev = records[-1].get('layers', {}) if records else {}
         changes = [f'part{p}: {prev[str(p)]} -> {l}' for p, l in layers.items()
