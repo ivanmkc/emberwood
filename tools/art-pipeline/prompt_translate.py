@@ -21,6 +21,7 @@ BASE_PROMPT = (
     'reference image — same layout, same lighting, nothing redecorated. '
 )
 
+MAGENTA_COSTUME = 'wearing a bright magenta/hot-pink full-body suit'
 WALK_SUFFIX = 'Crisp pixel-art animation, character scaled to the scene.'
 
 
@@ -107,8 +108,8 @@ def translate_path_natural(path, width, height):
         coverage = 'a short distance'
 
     desc = (
-        f'One villager walks {direction}, starting from the {h_start} '
-        f'and ending at the {h_end}, {depth}. '
+        f'One villager {MAGENTA_COSTUME} walks {direction}, starting from '
+        f'the {h_start} and ending at the {h_end}, {depth}. '
         f'The walker covers {coverage} at a steady pace.'
     )
     return desc
@@ -141,9 +142,9 @@ def translate_path_waypoint(path, markers, width, height):
     direction = _direction(path[0][0], path[0][1], path[-1][0], path[-1][1])
 
     return (
-        f'One villager walks {direction}, following the numbered waypoints '
-        f'painted on the ground: {wp_text}. The walker passes {depth}, '
-        f'stepping exactly through each numbered circle in order.'
+        f'One villager {MAGENTA_COSTUME} walks {direction}, following the '
+        f'numbered waypoints painted on the ground: {wp_text}. The walker '
+        f'passes {depth}, stepping exactly through each numbered circle in order.'
     )
 
 
