@@ -244,7 +244,7 @@ def estimate(parts, ground, coll, plate_bgr, video_paths, out_prefix, view_wh=(1
                             'skipped': 'no walker found'})
             continue
         all_heights = [s[1] for s in height_samples]
-        h_est_const = int(np.percentile(all_heights, 90))
+        h_est_const = int(np.median(all_heights))
 
         # depth-aware fit on the UPPER ENVELOPE: per feet-row bin maxima.
         # Occlusion can only SHORTEN a silhouette, i.e. push samples below
