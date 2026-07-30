@@ -2332,3 +2332,30 @@ Hard errors: 11 (6 correct, 1 acceptable collision-prior, 4 scene-coverage gaps)
   limitation of the attribution path (3 carving attempts + this negative
   result). Backlog: pose-varying walker in the scene family so future
   height-model changes are synthetically discriminable.
+
+## Run 59 (2026-07-30 ~06:30 UTC) — variant C evidence CORRECTED + completed:
+## strict pairing shrinks two claims, then vindicates the fix properly
+- CORRECTION 1: run 58 cited "dev 0 errs vs baseline 3". A fresh pure-
+  baseline run (14185fb) on dev 0,1,2,5,7,9 scores 0 errors — the "3"
+  came from STALE references (dev-planner2 predates later estimator
+  fixes; veo-fleet's baseline measurement likewise). Dev seeds: paired
+  no-op, claim retracted.
+- CORRECTION 2: run 58's "fresh holdout 4/12 vs baseline batch 8/10" was
+  cross-batch. Paired baseline on 220-231 is IDENTICAL to variant C
+  (same 4 errors, same parts). The 220 batch is just easier.
+- The MISSING CELL decides it: variant C run on the harder 200-211 batch,
+  paired vs the existing baseline data: 8 -> 4 hard errors. All six
+  eliminated errors are the UNSAFE class overhead->GROUND (suspended
+  objects that would render under the player): seeds 200 (part8 fixed,
+  part9 -> safe collision-prior), 203, 207, 209, 211. Overhead accuracy
+  0.802 -> 0.947. Cost: ONE new error (seed 201 part2 ysort->overhead;
+  milder failure class — object always on top vs walk-under corruption),
+  plausibly via changed height-fit sample composition. Footprints: 0
+  unsafe in both arms. ysort 0.986 -> 0.971 (that one part).
+- Final variant C ledger (ba16b84): 200-batch paired 8->4 with the
+  unsafe class wiped; 220-batch + dev paired no-ops; real bazaar 1 gold-
+  confirmed fix 0 regressions; 2D+3D benches green; footprints safe
+  everywhere. The fix stands, now on honest numbers.
+- Lesson reinforced tonight (both for PR #4's author and for us): only
+  strict same-seed same-code pairing counts; cross-batch and stale-
+  reference comparisons produced three wrong claims in one night.
