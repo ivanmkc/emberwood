@@ -13,9 +13,7 @@ Two modes:
 Usage:
   python prompt_translate.py <paths.json> <plate_width> <plate_height>
 """
-import json
 import math
-import sys
 
 BASE_PROMPT = (
     'Completely static locked-off camera: no camera movement, no zoom, '
@@ -205,6 +203,7 @@ def generate_prompts(paths, width, height, markers=None, max_walkers_per_video=2
 
 if __name__ == '__main__':
     import argparse
+    import json
     parser = argparse.ArgumentParser()
     parser.add_argument('paths_json')
     parser.add_argument('width', type=int)

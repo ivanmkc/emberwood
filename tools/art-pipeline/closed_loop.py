@@ -34,7 +34,6 @@ import glob
 import io
 import json
 import os
-import sys
 import time
 
 import cv2
@@ -186,8 +185,8 @@ def plan_round(room, estimator_json, parts, ground, coll, plate,
         pid = int(pid_str)
         if pid in target_pids:
             target_report[pid_str] = sides
-            for side_name, side_val in sides.items():
-                if side_val != 'UNREACHABLE':
+            for val in sides.values():
+                if val != 'UNREACHABLE':
                     reachable_targets.add(pid)
 
     paths = targeted_paths_from_report(report, target_pids)
@@ -334,9 +333,16 @@ def cmd_plan(args):
 
 
 def cmd_run(args):
-    """Run the full closed loop with Veo generation."""
+    """Run the full closed loop with Veo generation.
+
+    --mode controls the A/B test arms:
+      waypoint: paint numbered markers on the plate, reference them in prompts
+      natural:  describe walks using spatial zones only (no markers)
+      both:     generate one video per arm per round for paired comparison
+    """
     room = args.room
     max_rounds = args.max_rounds
+    mode = getattr(args, 'mode', 'waypoint')
     parts, ground, coll, plate = load_room_data(room)
     vids = find_videos(room)
 
@@ -389,18 +395,35 @@ def cmd_run(args):
             print('No prompts generated (all parts classified or unreachable)')
             break
 
-        print(f'\nGenerating {len(prompts)} targeted videos...')
-        use_waypoints = waypointed is not None
-        plate_for_veo = waypointed if use_waypoints else plate
+        h, w = plate.shape[:2]
+        natural_prompts = pt.generate_prompts(paths, w, h, markers=None)
 
+        print(f'\nGenerating targeted videos (mode={mode})...')
         new_vids = []
-        for i, prompt in enumerate(prompts[:3]):
-            vid_path = os.path.join(out_base, f'{room}',
-                                    f'adaptive_r{round_n}_p{i}.mp4')
-            os.makedirs(os.path.dirname(vid_path), exist_ok=True)
-            ok = generate_video(plate_for_veo, prompt, vid_path)
-            if ok:
-                new_vids.append(vid_path)
+        if mode in ('waypoint', 'both') and waypointed is not None:
+            for i, prompt in enumerate(prompts[:3]):
+                vid_path = os.path.join(out_base, f'{room}',
+                                        f'adaptive_r{round_n}_wp{i}.mp4')
+                os.makedirs(os.path.dirname(vid_path), exist_ok=True)
+                ok = generate_video(waypointed, prompt, vid_path)
+                if ok:
+                    new_vids.append(vid_path)
+        if mode in ('natural', 'both'):
+            for i, prompt in enumerate(natural_prompts[:3]):
+                vid_path = os.path.join(out_base, f'{room}',
+                                        f'adaptive_r{round_n}_nl{i}.mp4')
+                os.makedirs(os.path.dirname(vid_path), exist_ok=True)
+                ok = generate_video(plate, prompt, vid_path)
+                if ok:
+                    new_vids.append(vid_path)
+        if mode == 'waypoint' and waypointed is None:
+            for i, prompt in enumerate(natural_prompts[:3]):
+                vid_path = os.path.join(out_base, f'{room}',
+                                        f'adaptive_r{round_n}_nl{i}.mp4')
+                os.makedirs(os.path.dirname(vid_path), exist_ok=True)
+                ok = generate_video(plate, prompt, vid_path)
+                if ok:
+                    new_vids.append(vid_path)
 
         if not new_vids:
             print('All video generations failed this round.')
@@ -448,6 +471,11 @@ def main():
     p_run = sub.add_parser('run', help='Full loop with Veo generation')
     p_run.add_argument('room')
     p_run.add_argument('--max-rounds', type=int, default=MAX_ROUNDS)
+    p_run.add_argument('--mode', choices=['waypoint', 'natural', 'both'],
+                        default='waypoint',
+                        help='A/B arm: waypoint (paint markers), natural '
+                             '(spatial zone descriptions only), or both '
+                             '(one video per arm per round for paired comparison)')
     p_run.set_defaults(func=cmd_run)
 
     p_score = sub.add_parser('score', help='Score existing results')

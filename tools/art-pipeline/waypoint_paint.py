@@ -12,8 +12,6 @@ paths.json is a list of segments: [{"y": int, "x0": int, "x1": int, "pid": int, 
 or the merged format from plan_coverage_paths: [[[x0,y0],[x1,y1]], ...]
 """
 import json
-import os
-import sys
 
 import cv2
 import numpy as np
