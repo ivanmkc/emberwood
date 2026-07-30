@@ -201,8 +201,10 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 6,
-    "ysort": 5
+    "ground": 1,
+    "collision-prior": 5,
+    "ysort": 2,
+    "collision": 3
    },
    "changes": [],
    "debug": {
@@ -581,16 +583,16 @@
    ],
    "layers": {
     "1": "ground",
-    "2": "ground",
+    "2": "collision-prior",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
-    "6": "ysort",
-    "7": "ysort",
-    "8": "ground",
-    "9": "ground",
-    "10": "ground",
-    "11": "ground"
+    "6": "collision",
+    "7": "collision",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
    }
   },
   {
@@ -602,10 +604,15 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 6,
-    "ysort": 5
+    "ground": 2,
+    "ysort": 3,
+    "collision": 2,
+    "collision-prior": 4
    },
-   "changes": [],
+   "changes": [
+    "part2: collision-prior -> ground",
+    "part6: collision -> ysort"
+   ],
    "debug": {
     "occ-behind": {
      "frame": 74,
@@ -1065,14 +1072,14 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
-    "7": "ysort",
-    "8": "ground",
-    "9": "ground",
-    "10": "ground",
-    "11": "ground"
+    "7": "collision",
+    "8": "collision-prior",
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
    }
   },
   {
@@ -1084,12 +1091,14 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 5,
-    "ysort": 5,
-    "overhead": 1
+    "ground": 2,
+    "ysort": 3,
+    "collision": 2,
+    "overhead": 1,
+    "collision-prior": 3
    },
    "changes": [
-    "part8: ground -> overhead"
+    "part8: collision-prior -> overhead"
    ],
    "debug": {
     "occ-front": {
@@ -1549,14 +1558,14 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
-    "7": "ysort",
+    "7": "collision",
     "8": "overhead",
-    "9": "ground",
-    "10": "ground",
-    "11": "ground"
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
    }
   },
   {
@@ -1568,9 +1577,11 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 5,
-    "ysort": 5,
-    "overhead": 1
+    "ground": 2,
+    "ysort": 3,
+    "collision": 2,
+    "overhead": 1,
+    "collision-prior": 3
    },
    "changes": [],
    "debug": {
@@ -1999,14 +2010,14 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
-    "7": "ysort",
+    "7": "collision",
     "8": "overhead",
-    "9": "ground",
-    "10": "ground",
-    "11": "ground"
+    "9": "collision-prior",
+    "10": "collision-prior",
+    "11": "collision-prior"
    }
   },
   {
@@ -2018,13 +2029,15 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 3,
-    "ysort": 6,
-    "overhead": 2
+    "ground": 2,
+    "ysort": 4,
+    "collision": 2,
+    "overhead": 2,
+    "collision-prior": 1
    },
    "changes": [
-    "part9: ground -> ysort",
-    "part11: ground -> overhead"
+    "part9: collision-prior -> ysort",
+    "part11: collision-prior -> overhead"
    ],
    "debug": {
     "occ-front": {
@@ -2494,13 +2507,13 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
-    "7": "ysort",
+    "7": "collision",
     "8": "overhead",
     "9": "ysort",
-    "10": "ground",
+    "10": "collision-prior",
     "11": "overhead"
    }
   },
@@ -2513,11 +2526,14 @@
     "h_const": 46
    },
    "counts": {
-    "ground": 3,
-    "ysort": 5,
-    "overhead": 3
+    "ground": 2,
+    "ysort": 4,
+    "collision": 1,
+    "overhead": 3,
+    "collision-prior": 1
    },
    "changes": [
+    "part7: collision -> ysort",
     "part9: ysort -> overhead"
    ],
    "debug": {
@@ -2988,13 +3004,13 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
     "7": "ysort",
     "8": "overhead",
     "9": "overhead",
-    "10": "ground",
+    "10": "collision-prior",
     "11": "overhead"
    }
   },
@@ -3008,11 +3024,12 @@
    },
    "counts": {
     "ground": 2,
-    "ysort": 5,
+    "ysort": 4,
+    "collision": 1,
     "overhead": 4
    },
    "changes": [
-    "part10: ground -> overhead"
+    "part10: collision-prior -> overhead"
    ],
    "debug": {
     "occ-front": {
@@ -3482,7 +3499,7 @@
     "1": "ground",
     "2": "ground",
     "3": "ysort",
-    "4": "ysort",
+    "4": "collision",
     "5": "ysort",
     "6": "ysort",
     "7": "ysort",
