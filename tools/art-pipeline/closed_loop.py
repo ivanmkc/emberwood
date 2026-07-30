@@ -166,7 +166,9 @@ def plan_round(room, estimator_json, parts, ground, coll, plate,
     """
     from synth_scene_family import plan_coverage_paths
 
-    scores = cs.score_room(estimator_json, parts, walker_w)
+    scores = cs.score_room(estimator_json, parts, walker_w,
+                           walkable_mask=coll,
+                           walker_w=walker_w, walker_h=walker_h)
     summary = cs.summarize(scores)
     needs_work = cs.under_evidenced_pids(scores)
 

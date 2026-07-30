@@ -5,7 +5,12 @@ Reads estimator output JSON + parts mask, computes:
   - evidence ratio: winning bucket votes / opportunity-scaled min_evid
   - vote margin: winning vs second-best bucket (normalized)
   - entropy: Shannon entropy of the 4-bucket distribution
-  - coverage tier: 'well-evidenced', 'under-evidenced', 'unreachable', 'unvisited'
+  - coverage tier: 'well-evidenced', 'under-evidenced', 'unvisited', 'dont-care'
+
+The dont-care tier identifies parts whose pixels never overlap the player
+sprite's screen-space extent at any reachable walkable position.  Their
+layer classification cannot affect rendering, so they are excluded from
+the coverage denominator.
 
 Usage:
   python confidence_score.py <estimator.json> <parts_mask.npz> [--walker-width 30]
@@ -13,13 +18,48 @@ Usage:
 import json
 import math
 
+import cv2
 import numpy as np
+from scipy import ndimage
 
 EVID_ALPHA = 0.10
 MIN_EVID_FLOOR, MIN_EVID_CAP = 90, 450
 BUCKETS = ('occ_front', 'occ_behind', 'under_front', 'under_behind')
 WELL_EVIDENCED_RATIO = 2.0
 UNDER_EVIDENCED_RATIO = 0.5
+
+
+def compute_observation_zone(walkable_mask, walker_w=30, walker_h=70):
+    """Compute the screen-space region reachable by any player sprite position.
+
+    Uses the largest connected walkable component (reachable from spawn),
+    then dilates by the walker sprite box anchored at the feet (bottom-center).
+    Returns a boolean mask of the same shape as walkable_mask.
+    """
+    labeled, n = ndimage.label(walkable_mask)
+    if n > 1:
+        sizes = ndimage.sum(walkable_mask, labeled, range(1, n + 1))
+        biggest = int(np.argmax(sizes)) + 1
+        reachable = labeled == biggest
+    else:
+        reachable = walkable_mask
+
+    kernel = np.ones((walker_h, walker_w), dtype=np.uint8)
+    anchor = (walker_w // 2, walker_h - 1)
+    dilated = cv2.dilate(reachable.astype(np.uint8) * 255, kernel, anchor=anchor)
+    return dilated > 0
+
+
+def compute_dont_care(parts_mask, observation_zone, pid_strs):
+    """Return the set of pid_strs whose part pixels have zero overlap with
+    the observation zone.  These parts can never affect rendering because
+    the player sprite never occupies that screen region."""
+    dc = set()
+    for pid_str in pid_strs:
+        part = parts_mask == int(pid_str)
+        if (part & observation_zone).sum() == 0:
+            dc.add(pid_str)
+    return dc
 
 
 def min_evid_for(part_area, walker_w_plate):
@@ -87,12 +127,16 @@ def score_part(votes, part_area, walker_w_plate, layer, unreliable=False,
 
 
 def score_room(estimator_json, parts_mask, walker_w_plate=None,
-               ground_mask=None, coll_mask=None):
+               ground_mask=None, coll_mask=None, walkable_mask=None,
+               walker_w=30, walker_h=70):
     """Score all parts in a room. Returns {pid_str: score_dict}.
 
     If ground_mask and coll_mask are provided, computes has_blocker per part
     (part has non-ground pixels with collision barriers). Otherwise falls back
     to inferring blockers from the layer classification.
+
+    If walkable_mask is provided, computes the observation zone and marks
+    parts with zero sprite overlap as dont-care (tier='dont-care').
     """
     with open(estimator_json) as f:
         data = json.load(f)
@@ -104,6 +148,12 @@ def score_room(estimator_json, parts_mask, walker_w_plate=None,
     unreliable_set = set(data.get('unreliable', {}).keys())
     last_iter = data['iterations'][-1] if data['iterations'] else {}
     layers = last_iter.get('layers', {})
+
+    obs_zone = None
+    dont_care_set = set()
+    if walkable_mask is not None:
+        obs_zone = compute_observation_zone(walkable_mask, walker_w, walker_h)
+        dont_care_set = compute_dont_care(parts_mask, obs_zone, votes.keys())
 
     part_areas = {}
     blockers = {}
@@ -123,6 +173,16 @@ def score_room(estimator_json, parts_mask, walker_w_plate=None,
 
     scores = {}
     for pid_str in votes:
+        if pid_str in dont_care_set:
+            scores[pid_str] = {
+                'layer': layers.get(pid_str, 'collision-prior'),
+                'evidence_ratio': 0.0, 'margin': 0.0, 'entropy': 0.0,
+                'winner_bucket': 'n/a', 'winner_votes': 0,
+                'total_votes': sum(votes[pid_str][b] for b in BUCKETS),
+                'threshold': 0.0, 'tier': 'dont-care',
+            }
+            continue
+
         layer = layers.get(pid_str, 'collision-prior')
         scores[pid_str] = score_part(
             votes[pid_str],
@@ -137,7 +197,13 @@ def score_room(estimator_json, parts_mask, walker_w_plate=None,
 
 
 def summarize(scores):
-    """Aggregate confidence scores into a room-level summary."""
+    """Aggregate confidence scores into a room-level summary.
+
+    When dont-care parts are present, reports both the raw classified_pct
+    (all parts in denominator) and relevant_classified_pct (dont-care
+    excluded from the denominator).  The relevant metric is the one that
+    matters for coverage budgeting.
+    """
     tiers = {}
     for s in scores.values():
         tiers[s['tier']] = tiers.get(s['tier'], 0) + 1
@@ -149,14 +215,16 @@ def summarize(scores):
     unvisited = tiers.get('unvisited', 0)
     unreliable = tiers.get('unreliable', 0)
     structural = tiers.get('structural', 0)
+    dont_care = tiers.get('dont-care', 0)
 
     classified = well + adequate + structural
+    relevant = total - dont_care
     ratios = [s['evidence_ratio'] for s in scores.values()
-              if s['tier'] not in ('unvisited', 'unreliable', 'structural')]
+              if s['tier'] not in ('unvisited', 'unreliable', 'structural', 'dont-care')]
     margins = [s['margin'] for s in scores.values()
-               if s['tier'] not in ('unvisited', 'unreliable', 'structural')]
+               if s['tier'] not in ('unvisited', 'unreliable', 'structural', 'dont-care')]
 
-    return {
+    result = {
         'total_parts': total,
         'well_evidenced': well,
         'adequate': adequate,
@@ -164,27 +232,47 @@ def summarize(scores):
         'under_evidenced': under,
         'unvisited': unvisited,
         'unreliable': unreliable,
+        'dont_care': dont_care,
+        'relevant_parts': relevant,
         'classified_pct': round(100 * classified / max(1, total), 1),
+        'relevant_classified_pct': round(100 * classified / max(1, relevant), 1),
         'median_evidence_ratio': round(float(np.median(ratios)), 3) if ratios else 0.0,
         'median_margin': round(float(np.median(margins)), 3) if margins else 0.0,
     }
+    return result
 
 
 def under_evidenced_pids(scores):
-    """Return pids that need more evidence (not unreachable, not well-classified)."""
+    """Return pids that need more evidence.
+
+    Excludes dont-care parts (player can't interact with them) along
+    with unreliable and already-classified parts.
+    """
     return [pid for pid, s in scores.items()
             if s['tier'] in ('unvisited', 'under-evidenced')]
 
 
 if __name__ == '__main__':
     import argparse
+    from PIL import Image
+
     parser = argparse.ArgumentParser()
     parser.add_argument('estimator_json')
     parser.add_argument('parts_mask_npz')
     parser.add_argument('--walker-width', type=float, default=30.0)
+    parser.add_argument('--collision-png', help='collision mask for dont-care computation')
     args = parser.parse_args()
 
-    scores = score_room(args.estimator_json, args.parts_mask_npz, args.walker_width)
+    parts = np.load(args.parts_mask_npz)['inst']
+    walkable = None
+    if args.collision_png:
+        walkable = np.asarray(
+            Image.open(args.collision_png).convert('L')
+            .resize((parts.shape[1], parts.shape[0]),
+                    Image.Resampling.NEAREST)) > 127
+
+    scores = score_room(args.estimator_json, parts, args.walker_width,
+                        walkable_mask=walkable)
     summary = summarize(scores)
     print(json.dumps(summary, indent=2))
 
