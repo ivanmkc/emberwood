@@ -1,17 +1,17 @@
 {
   "summary": {
     "total_parts": 125,
-    "well_evidenced": 8,
-    "adequate": 13,
-    "structural": 26,
+    "well_evidenced": 9,
+    "adequate": 9,
+    "structural": 36,
     "under_evidenced": 10,
     "unvisited": 37,
-    "unreliable": 9,
-    "dont_care": 22,
-    "relevant_parts": 103,
-    "classified_pct": 37.6,
-    "relevant_classified_pct": 45.6,
-    "median_evidence_ratio": 1.111,
+    "unreliable": 8,
+    "dont_care": 16,
+    "relevant_parts": 109,
+    "classified_pct": 43.2,
+    "relevant_classified_pct": 49.5,
+    "median_evidence_ratio": 1.217,
     "median_margin": 1.0
   },
   "under_evidenced": [

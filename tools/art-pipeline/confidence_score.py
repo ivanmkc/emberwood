@@ -34,6 +34,10 @@ def compute_observation_zone(walkable_mask, walker_w=30, walker_h=70):
 
     Uses the largest connected walkable component (reachable from spawn),
     then dilates by the walker sprite box anchored at the feet (bottom-center).
+    The sprite extends UPWARD from the feet in screen coords (y-down), so
+    the anchor is at the top of the kernel: (walker_w//2, 0).  OpenCV
+    mirrors the structuring element around the anchor for dilation.
+
     Returns a boolean mask of the same shape as walkable_mask.
     """
     labeled, n = ndimage.label(walkable_mask)
@@ -45,9 +49,33 @@ def compute_observation_zone(walkable_mask, walker_w=30, walker_h=70):
         reachable = walkable_mask
 
     kernel = np.ones((walker_h, walker_w), dtype=np.uint8)
-    anchor = (walker_w // 2, walker_h - 1)
+    anchor = (walker_w // 2, 0)
     dilated = cv2.dilate(reachable.astype(np.uint8) * 255, kernel, anchor=anchor)
+
+    _assert_observation_zone_direction(dilated, reachable, walker_h)
+
     return dilated > 0
+
+
+def _assert_observation_zone_direction(dilated, walkable, walker_h):
+    """Verify the dilation extended UPWARD from walkable pixels, not downward.
+
+    A single walkable pixel at row r should produce dilated pixels in
+    rows [max(0, r-walker_h+1) .. r], NOT [r .. r+walker_h-1].
+    """
+    walk_rows = np.nonzero(walkable.any(axis=1))[0]
+    if len(walk_rows) == 0:
+        return
+    topmost_walk = int(walk_rows.min())
+    dil_rows = np.nonzero((dilated > 0).any(axis=1))[0]
+    if len(dil_rows) == 0:
+        return
+    topmost_dil = int(dil_rows.min())
+    assert topmost_dil <= topmost_walk, (
+        f'Observation zone extends downward instead of upward: '
+        f'topmost walkable row={topmost_walk}, topmost dilated row={topmost_dil}. '
+        f'Check the cv2.dilate anchor — it should be (w//2, 0) not (w//2, h-1).'
+    )
 
 
 def compute_dont_care(parts_mask, observation_zone, pid_strs):

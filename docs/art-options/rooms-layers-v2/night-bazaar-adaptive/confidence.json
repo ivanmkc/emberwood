@@ -1,18 +1,18 @@
 {
   "summary": {
     "total_parts": 238,
-    "well_evidenced": 55,
+    "well_evidenced": 56,
     "adequate": 10,
     "structural": 0,
-    "under_evidenced": 23,
-    "unvisited": 43,
+    "under_evidenced": 21,
+    "unvisited": 41,
     "unreliable": 2,
-    "dont_care": 105,
-    "relevant_parts": 133,
-    "classified_pct": 27.3,
-    "relevant_classified_pct": 48.9,
-    "median_evidence_ratio": 6.223,
-    "median_margin": 0.772
+    "dont_care": 108,
+    "relevant_parts": 130,
+    "classified_pct": 27.7,
+    "relevant_classified_pct": 50.8,
+    "median_evidence_ratio": 6.518,
+    "median_margin": 0.784
   },
   "under_evidenced": [
     "1",
@@ -28,6 +28,7 @@
     "34",
     "35",
     "43",
+    "46",
     "48",
     "59",
     "61",
@@ -36,6 +37,7 @@
     "72",
     "73",
     "77",
+    "81",
     "88",
     "90",
     "97",
@@ -54,13 +56,12 @@
     "163",
     "164",
     "165",
-    "166",
-    "168",
     "178",
     "185",
     "186",
     "189",
     "191",
+    "195",
     "199",
     "200",
     "208",
@@ -73,14 +74,9 @@
     "223",
     "224",
     "225",
-    "226",
     "227",
-    "228",
-    "229",
     "231",
-    "236",
-    "237",
-    "238"
+    "236"
   ],
   "reachable_targets": [
     90,
@@ -99,5 +95,5 @@
     231,
     236
   ],
-  "unreachable_count": 51
+  "unreachable_count": 47
 }
