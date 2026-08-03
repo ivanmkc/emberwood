@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "total_parts": 124,
+    "well_evidenced": 16,
+    "adequate": 10,
+    "structural": 5,
+    "under_evidenced": 20,
+    "unvisited": 1,
+    "unreliable": 4,
+    "dont_care": 68,
+    "relevant_parts": 56,
+    "classified_pct": 25.0,
+    "relevant_classified_pct": 55.4,
+    "median_evidence_ratio": 2.463,
+    "median_margin": 0.952
+  },
+  "under_evidenced": [
+    "20",
+    "50",
+    "51",
+    "53",
+    "56",
+    "57",
+    "58",
+    "64",
+    "65",
+    "69",
+    "97",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "112",
+    "115",
+    "121",
+    "124"
+  ],
+  "reachable_targets": [
+    51,
+    56,
+    57,
+    110,
+    111,
+    112,
+    115
+  ],
+  "unreachable_count": 14
+}

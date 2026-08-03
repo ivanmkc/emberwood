@@ -1,0 +1,94 @@
+{
+  "barge-cabin": {
+    "status": "all_unreachable",
+    "needs_work": 127,
+    "relevant_classified_pct": 25.0
+  },
+  "salvage-shed": {
+    "status": "all_unreachable",
+    "needs_work": 84,
+    "relevant_classified_pct": 30.0
+  },
+  "gate-wall": {
+    "status": "planned",
+    "relevant_classified_pct": 43.4,
+    "needs_work": 41,
+    "reachable": 33,
+    "unreachable": 8,
+    "prompts": 12
+  },
+  "rooftops": {
+    "status": "planned",
+    "relevant_classified_pct": 44.5,
+    "needs_work": 87,
+    "reachable": 75,
+    "unreachable": 12,
+    "prompts": 23
+  },
+  "repair-bay": {
+    "status": "planned",
+    "relevant_classified_pct": 49.5,
+    "needs_work": 47,
+    "reachable": 38,
+    "unreachable": 9,
+    "prompts": 19
+  },
+  "night-bazaar": {
+    "status": "planned",
+    "relevant_classified_pct": 50.8,
+    "needs_work": 62,
+    "reachable": 15,
+    "unreachable": 47,
+    "prompts": 8
+  },
+  "observatory-dome": {
+    "status": "planned",
+    "relevant_classified_pct": 53.2,
+    "needs_work": 63,
+    "reachable": 8,
+    "unreachable": 55,
+    "prompts": 4
+  },
+  "underworks": {
+    "status": "all_unreachable",
+    "needs_work": 34,
+    "relevant_classified_pct": 53.6
+  },
+  "transit-office": {
+    "status": "planned",
+    "relevant_classified_pct": 55.4,
+    "needs_work": 21,
+    "reachable": 7,
+    "unreachable": 14,
+    "prompts": 5
+  },
+  "home-interior-a": {
+    "status": "planned",
+    "relevant_classified_pct": 56.3,
+    "needs_work": 32,
+    "reachable": 5,
+    "unreachable": 27,
+    "prompts": 4
+  },
+  "power-plant": {
+    "status": "planned",
+    "relevant_classified_pct": 56.7,
+    "needs_work": 77,
+    "reachable": 55,
+    "unreachable": 22,
+    "prompts": 16
+  },
+  "observatory": {
+    "status": "planned",
+    "relevant_classified_pct": 57.6,
+    "needs_work": 41,
+    "reachable": 14,
+    "unreachable": 27,
+    "prompts": 10
+  },
+  "control-room": {
+    "status": "all_unreachable",
+    "needs_work": 36,
+    "relevant_classified_pct": 59.4
+  }
+}
